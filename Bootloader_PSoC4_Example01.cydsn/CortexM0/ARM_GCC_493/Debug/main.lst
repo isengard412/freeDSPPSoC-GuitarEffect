@@ -1,0 +1,378 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccT54zES.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"main.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.main,"ax",%progbits
+  18              		.align	2
+  19              		.global	main
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	main, %function
+  23              	main:
+  24              	.LFB34:
+  25              		.file 1 ".\\main.c"
+   1:.\main.c      **** /*******************************************************************************
+   2:.\main.c      **** * File: main.c
+   3:.\main.c      **** *
+   4:.\main.c      **** * Version: 1.0
+   5:.\main.c      **** *
+   6:.\main.c      **** * Description:
+   7:.\main.c      **** *  This example project demonstrates the basic operation of Bootloader component
+   8:.\main.c      **** *
+   9:.\main.c      **** ********************************************************************************
+  10:.\main.c      **** * Copyright 2014, Cypress Semiconductor Corporation. All rights reserved.
+  11:.\main.c      **** * This software is owned by Cypress Semiconductor Corporation and is protected
+  12:.\main.c      **** * by and subject to worldwide patent and copyright laws and treaties.
+  13:.\main.c      **** * Therefore, you may use this software only as provided in the license agreement
+  14:.\main.c      **** * accompanying the software package from which you obtained this software.
+  15:.\main.c      **** * CYPRESS AND ITS SUPPLIERS MAKE NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  16:.\main.c      **** * WITH REGARD TO THIS SOFTWARE, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT,
+  17:.\main.c      **** * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  18:.\main.c      **** *******************************************************************************/
+  19:.\main.c      **** #include <project.h>
+  20:.\main.c      **** 
+  21:.\main.c      **** int main()
+  22:.\main.c      **** {
+  26              		.loc 1 22 0
+  27              		.cfi_startproc
+  28 0000 80B5     		push	{r7, lr}
+  29              		.cfi_def_cfa_offset 8
+  30              		.cfi_offset 7, -8
+  31              		.cfi_offset 14, -4
+  32 0002 00AF     		add	r7, sp, #0
+  33              		.cfi_def_cfa_register 7
+  23:.\main.c      ****     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
+  24:.\main.c      **** 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccT54zES.s 			page 2
+
+
+  25:.\main.c      ****     CyGlobalIntEnable;
+  34              		.loc 1 25 0
+  35              	@ 25 ".\main.c" 1
+  36 0004 62B6     		CPSIE   i
+  37              	@ 0 "" 2
+  26:.\main.c      **** 
+  27:.\main.c      ****     /* Turn on blue LED */
+  28:.\main.c      ****     Bootloader_Status_Write(0u);
+  38              		.loc 1 28 0
+  39              		.code	16
+  40 0006 0020     		mov	r0, #0
+  41 0008 FFF7FEFF 		bl	Bootloader_Status_Write
+  29:.\main.c      **** 
+  30:.\main.c      ****     /* Start bootloader communication */
+  31:.\main.c      ****     Bootloader_Start();
+  42              		.loc 1 31 0
+  43 000c FFF7FEFF 		bl	Bootloader_Start
+  44              	.L2:
+  32:.\main.c      **** 
+  33:.\main.c      ****     for(;;)
+  34:.\main.c      ****     {
+  35:.\main.c      ****         /* Place your application code here. */
+  36:.\main.c      ****     }
+  45              		.loc 1 36 0 discriminator 1
+  46 0010 FEE7     		b	.L2
+  47              		.cfi_endproc
+  48              	.LFE34:
+  49              		.size	main, .-main
+  50 0012 C046     		.text
+  51              	.Letext0:
+  52              		.section	.debug_info,"",%progbits
+  53              	.Ldebug_info0:
+  54 0000 99000000 		.4byte	0x99
+  55 0004 0400     		.2byte	0x4
+  56 0006 00000000 		.4byte	.Ldebug_abbrev0
+  57 000a 04       		.byte	0x4
+  58 000b 01       		.uleb128 0x1
+  59 000c 0E000000 		.4byte	.LASF13
+  60 0010 01       		.byte	0x1
+  61 0011 9F010000 		.4byte	.LASF14
+  62 0015 D7000000 		.4byte	.LASF15
+  63 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  64 001d 00000000 		.4byte	0
+  65 0021 00000000 		.4byte	.Ldebug_line0
+  66 0025 02       		.uleb128 0x2
+  67 0026 01       		.byte	0x1
+  68 0027 06       		.byte	0x6
+  69 0028 8D010000 		.4byte	.LASF0
+  70 002c 02       		.uleb128 0x2
+  71 002d 01       		.byte	0x1
+  72 002e 08       		.byte	0x8
+  73 002f 4D010000 		.4byte	.LASF1
+  74 0033 02       		.uleb128 0x2
+  75 0034 02       		.byte	0x2
+  76 0035 05       		.byte	0x5
+  77 0036 69010000 		.4byte	.LASF2
+  78 003a 02       		.uleb128 0x2
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccT54zES.s 			page 3
+
+
+  79 003b 02       		.byte	0x2
+  80 003c 07       		.byte	0x7
+  81 003d 7A010000 		.4byte	.LASF3
+  82 0041 02       		.uleb128 0x2
+  83 0042 04       		.byte	0x4
+  84 0043 05       		.byte	0x5
+  85 0044 60010000 		.4byte	.LASF4
+  86 0048 02       		.uleb128 0x2
+  87 0049 04       		.byte	0x4
+  88 004a 07       		.byte	0x7
+  89 004b AE000000 		.4byte	.LASF5
+  90 004f 02       		.uleb128 0x2
+  91 0050 08       		.byte	0x8
+  92 0051 05       		.byte	0x5
+  93 0052 00000000 		.4byte	.LASF6
+  94 0056 02       		.uleb128 0x2
+  95 0057 08       		.byte	0x8
+  96 0058 07       		.byte	0x7
+  97 0059 C0000000 		.4byte	.LASF7
+  98 005d 03       		.uleb128 0x3
+  99 005e 04       		.byte	0x4
+ 100 005f 05       		.byte	0x5
+ 101 0060 696E7400 		.ascii	"int\000"
+ 102 0064 02       		.uleb128 0x2
+ 103 0065 04       		.byte	0x4
+ 104 0066 07       		.byte	0x7
+ 105 0067 9C000000 		.4byte	.LASF8
+ 106 006b 02       		.uleb128 0x2
+ 107 006c 04       		.byte	0x4
+ 108 006d 04       		.byte	0x4
+ 109 006e 99010000 		.4byte	.LASF9
+ 110 0072 02       		.uleb128 0x2
+ 111 0073 08       		.byte	0x8
+ 112 0074 04       		.byte	0x4
+ 113 0075 73010000 		.4byte	.LASF10
+ 114 0079 02       		.uleb128 0x2
+ 115 007a 01       		.byte	0x1
+ 116 007b 08       		.byte	0x8
+ 117 007c 5B010000 		.4byte	.LASF11
+ 118 0080 02       		.uleb128 0x2
+ 119 0081 04       		.byte	0x4
+ 120 0082 07       		.byte	0x7
+ 121 0083 A8010000 		.4byte	.LASF12
+ 122 0087 04       		.uleb128 0x4
+ 123 0088 A9000000 		.4byte	.LASF16
+ 124 008c 01       		.byte	0x1
+ 125 008d 15       		.byte	0x15
+ 126 008e 5D000000 		.4byte	0x5d
+ 127 0092 00000000 		.4byte	.LFB34
+ 128 0096 12000000 		.4byte	.LFE34-.LFB34
+ 129 009a 01       		.uleb128 0x1
+ 130 009b 9C       		.byte	0x9c
+ 131 009c 00       		.byte	0
+ 132              		.section	.debug_abbrev,"",%progbits
+ 133              	.Ldebug_abbrev0:
+ 134 0000 01       		.uleb128 0x1
+ 135 0001 11       		.uleb128 0x11
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccT54zES.s 			page 4
+
+
+ 136 0002 01       		.byte	0x1
+ 137 0003 25       		.uleb128 0x25
+ 138 0004 0E       		.uleb128 0xe
+ 139 0005 13       		.uleb128 0x13
+ 140 0006 0B       		.uleb128 0xb
+ 141 0007 03       		.uleb128 0x3
+ 142 0008 0E       		.uleb128 0xe
+ 143 0009 1B       		.uleb128 0x1b
+ 144 000a 0E       		.uleb128 0xe
+ 145 000b 55       		.uleb128 0x55
+ 146 000c 17       		.uleb128 0x17
+ 147 000d 11       		.uleb128 0x11
+ 148 000e 01       		.uleb128 0x1
+ 149 000f 10       		.uleb128 0x10
+ 150 0010 17       		.uleb128 0x17
+ 151 0011 00       		.byte	0
+ 152 0012 00       		.byte	0
+ 153 0013 02       		.uleb128 0x2
+ 154 0014 24       		.uleb128 0x24
+ 155 0015 00       		.byte	0
+ 156 0016 0B       		.uleb128 0xb
+ 157 0017 0B       		.uleb128 0xb
+ 158 0018 3E       		.uleb128 0x3e
+ 159 0019 0B       		.uleb128 0xb
+ 160 001a 03       		.uleb128 0x3
+ 161 001b 0E       		.uleb128 0xe
+ 162 001c 00       		.byte	0
+ 163 001d 00       		.byte	0
+ 164 001e 03       		.uleb128 0x3
+ 165 001f 24       		.uleb128 0x24
+ 166 0020 00       		.byte	0
+ 167 0021 0B       		.uleb128 0xb
+ 168 0022 0B       		.uleb128 0xb
+ 169 0023 3E       		.uleb128 0x3e
+ 170 0024 0B       		.uleb128 0xb
+ 171 0025 03       		.uleb128 0x3
+ 172 0026 08       		.uleb128 0x8
+ 173 0027 00       		.byte	0
+ 174 0028 00       		.byte	0
+ 175 0029 04       		.uleb128 0x4
+ 176 002a 2E       		.uleb128 0x2e
+ 177 002b 00       		.byte	0
+ 178 002c 3F       		.uleb128 0x3f
+ 179 002d 19       		.uleb128 0x19
+ 180 002e 03       		.uleb128 0x3
+ 181 002f 0E       		.uleb128 0xe
+ 182 0030 3A       		.uleb128 0x3a
+ 183 0031 0B       		.uleb128 0xb
+ 184 0032 3B       		.uleb128 0x3b
+ 185 0033 0B       		.uleb128 0xb
+ 186 0034 49       		.uleb128 0x49
+ 187 0035 13       		.uleb128 0x13
+ 188 0036 11       		.uleb128 0x11
+ 189 0037 01       		.uleb128 0x1
+ 190 0038 12       		.uleb128 0x12
+ 191 0039 06       		.uleb128 0x6
+ 192 003a 40       		.uleb128 0x40
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccT54zES.s 			page 5
+
+
+ 193 003b 18       		.uleb128 0x18
+ 194 003c 9642     		.uleb128 0x2116
+ 195 003e 19       		.uleb128 0x19
+ 196 003f 00       		.byte	0
+ 197 0040 00       		.byte	0
+ 198 0041 00       		.byte	0
+ 199              		.section	.debug_aranges,"",%progbits
+ 200 0000 1C000000 		.4byte	0x1c
+ 201 0004 0200     		.2byte	0x2
+ 202 0006 00000000 		.4byte	.Ldebug_info0
+ 203 000a 04       		.byte	0x4
+ 204 000b 00       		.byte	0
+ 205 000c 0000     		.2byte	0
+ 206 000e 0000     		.2byte	0
+ 207 0010 00000000 		.4byte	.LFB34
+ 208 0014 12000000 		.4byte	.LFE34-.LFB34
+ 209 0018 00000000 		.4byte	0
+ 210 001c 00000000 		.4byte	0
+ 211              		.section	.debug_ranges,"",%progbits
+ 212              	.Ldebug_ranges0:
+ 213 0000 00000000 		.4byte	.LFB34
+ 214 0004 12000000 		.4byte	.LFE34
+ 215 0008 00000000 		.4byte	0
+ 216 000c 00000000 		.4byte	0
+ 217              		.section	.debug_line,"",%progbits
+ 218              	.Ldebug_line0:
+ 219 0000 3C000000 		.section	.debug_str,"MS",%progbits,1
+ 219      02001F00 
+ 219      00000201 
+ 219      FB0E0D00 
+ 219      01010101 
+ 220              	.LASF6:
+ 221 0000 6C6F6E67 		.ascii	"long long int\000"
+ 221      206C6F6E 
+ 221      6720696E 
+ 221      7400
+ 222              	.LASF13:
+ 223 000e 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 223      4320342E 
+ 223      392E3320 
+ 223      32303135 
+ 223      30333033 
+ 224 0041 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 224      20726576 
+ 224      6973696F 
+ 224      6E203232 
+ 224      31323230 
+ 225 0074 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 225      66756E63 
+ 225      74696F6E 
+ 225      2D736563 
+ 225      74696F6E 
+ 226              	.LASF8:
+ 227 009c 756E7369 		.ascii	"unsigned int\000"
+ 227      676E6564 
+ 227      20696E74 
+ 227      00
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccT54zES.s 			page 6
+
+
+ 228              	.LASF16:
+ 229 00a9 6D61696E 		.ascii	"main\000"
+ 229      00
+ 230              	.LASF5:
+ 231 00ae 6C6F6E67 		.ascii	"long unsigned int\000"
+ 231      20756E73 
+ 231      69676E65 
+ 231      6420696E 
+ 231      7400
+ 232              	.LASF7:
+ 233 00c0 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 233      206C6F6E 
+ 233      6720756E 
+ 233      7369676E 
+ 233      65642069 
+ 234              	.LASF15:
+ 235 00d7 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Google Drive\\Virtuell"
+ 235      73657273 
+ 235      5C4C756B 
+ 235      61732043 
+ 235      72657574 
+ 236 0106 65205265 		.ascii	"e Realitaeten\\PSoCWorkspace\\VRProject\\Bootloader"
+ 236      616C6974 
+ 236      61657465 
+ 236      6E5C5053 
+ 236      6F43576F 
+ 237 0136 5F50536F 		.ascii	"_PSoC4_Example01.cydsn\000"
+ 237      43345F45 
+ 237      78616D70 
+ 237      6C653031 
+ 237      2E637964 
+ 238              	.LASF1:
+ 239 014d 756E7369 		.ascii	"unsigned char\000"
+ 239      676E6564 
+ 239      20636861 
+ 239      7200
+ 240              	.LASF11:
+ 241 015b 63686172 		.ascii	"char\000"
+ 241      00
+ 242              	.LASF4:
+ 243 0160 6C6F6E67 		.ascii	"long int\000"
+ 243      20696E74 
+ 243      00
+ 244              	.LASF2:
+ 245 0169 73686F72 		.ascii	"short int\000"
+ 245      7420696E 
+ 245      7400
+ 246              	.LASF10:
+ 247 0173 646F7562 		.ascii	"double\000"
+ 247      6C6500
+ 248              	.LASF3:
+ 249 017a 73686F72 		.ascii	"short unsigned int\000"
+ 249      7420756E 
+ 249      7369676E 
+ 249      65642069 
+ 249      6E7400
+ 250              	.LASF0:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccT54zES.s 			page 7
+
+
+ 251 018d 7369676E 		.ascii	"signed char\000"
+ 251      65642063 
+ 251      68617200 
+ 252              	.LASF9:
+ 253 0199 666C6F61 		.ascii	"float\000"
+ 253      7400
+ 254              	.LASF14:
+ 255 019f 2E5C6D61 		.ascii	".\\main.c\000"
+ 255      696E2E63 
+ 255      00
+ 256              	.LASF12:
+ 257 01a8 73697A65 		.ascii	"sizetype\000"
+ 257      74797065 
+ 257      00
+ 258              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

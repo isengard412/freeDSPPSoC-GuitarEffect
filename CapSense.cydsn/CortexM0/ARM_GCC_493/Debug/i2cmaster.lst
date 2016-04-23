@@ -1,0 +1,915 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"i2cmaster.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.I2CInit,"ax",%progbits
+  18              		.align	2
+  19              		.global	I2CInit
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	I2CInit, %function
+  23              	I2CInit:
+  24              	.LFB34:
+  25              		.file 1 ".\\i2cmaster.c"
+   1:.\i2cmaster.c **** /* ========================================
+   2:.\i2cmaster.c **** * File Name: capsense.h
+   3:.\i2cmaster.c **** *
+   4:.\i2cmaster.c **** * Version: 0
+   5:.\i2cmaster.c **** * Author: Lukas Creutzburg
+   6:.\i2cmaster.c **** *
+   7:.\i2cmaster.c **** *  Description:
+   8:.\i2cmaster.c **** *  CapSense module
+   9:.\i2cmaster.c **** *
+  10:.\i2cmaster.c **** * =================================================================================================
+  11:.\i2cmaster.c **** */
+  12:.\i2cmaster.c **** #include "i2cmaster.h"
+  13:.\i2cmaster.c **** 
+  14:.\i2cmaster.c **** /* Variables */
+  15:.\i2cmaster.c **** 
+  16:.\i2cmaster.c **** //_________________________________
+  17:.\i2cmaster.c **** 
+  18:.\i2cmaster.c **** /*******************************************************************************
+  19:.\i2cmaster.c **** * Function Name:  UARTInit
+  20:.\i2cmaster.c **** ********************************************************************************
+  21:.\i2cmaster.c **** *
+  22:.\i2cmaster.c **** * Summary:
+  23:.\i2cmaster.c **** *   Initializes CapSense  
+  24:.\i2cmaster.c **** *
+  25:.\i2cmaster.c **** * Parameters:  
+  26:.\i2cmaster.c **** *  None
+  27:.\i2cmaster.c **** *
+  28:.\i2cmaster.c **** * Return: 
+  29:.\i2cmaster.c **** *  None 
+  30:.\i2cmaster.c **** *  
+  31:.\i2cmaster.c **** *******************************************************************************/
+  32:.\i2cmaster.c **** void I2CInit(void)
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 2
+
+
+  33:.\i2cmaster.c **** {
+  26              		.loc 1 33 0
+  27              		.cfi_startproc
+  28 0000 80B5     		push	{r7, lr}
+  29              		.cfi_def_cfa_offset 8
+  30              		.cfi_offset 7, -8
+  31              		.cfi_offset 14, -4
+  32 0002 00AF     		add	r7, sp, #0
+  33              		.cfi_def_cfa_register 7
+  34:.\i2cmaster.c ****     I2CM_Start();
+  34              		.loc 1 34 0
+  35 0004 FFF7FEFF 		bl	I2CM_Start
+  35:.\i2cmaster.c **** }
+  36              		.loc 1 35 0
+  37 0008 BD46     		mov	sp, r7
+  38              		@ sp needed
+  39 000a 80BD     		pop	{r7, pc}
+  40              		.cfi_endproc
+  41              	.LFE34:
+  42              		.size	I2CInit, .-I2CInit
+  43              		.section	.text.I2CWriteCommandPacket,"ax",%progbits
+  44              		.align	2
+  45              		.global	I2CWriteCommandPacket
+  46              		.code	16
+  47              		.thumb_func
+  48              		.type	I2CWriteCommandPacket, %function
+  49              	I2CWriteCommandPacket:
+  50              	.LFB35:
+  36:.\i2cmaster.c **** //_________________________________________________________________
+  37:.\i2cmaster.c **** 
+  38:.\i2cmaster.c **** 
+  39:.\i2cmaster.c **** /*******************************************************************************
+  40:.\i2cmaster.c **** * Function Name: I2CWriteCommandPacket
+  41:.\i2cmaster.c **** ********************************************************************************
+  42:.\i2cmaster.c **** *
+  43:.\i2cmaster.c **** * Summary:
+  44:.\i2cmaster.c **** *  Sends command via I2C
+  45:.\i2cmaster.c **** *
+  46:.\i2cmaster.c **** * Parameters:  
+  47:.\i2cmaster.c **** *   uint8: command to send
+  48:.\i2cmaster.c **** * Return: 
+  49:.\i2cmaster.c **** *   uint32: current state
+  50:.\i2cmaster.c **** *   Returns status of the transfer. There are two statuses
+  51:.\i2cmaster.c **** *   - TRANSFER_CMPLT: transfer completed successfully.
+  52:.\i2cmaster.c **** *   - TRANSFER_ERROR: the error occurred while transfer.
+  53:.\i2cmaster.c **** *
+  54:.\i2cmaster.c **** *******************************************************************************/
+  55:.\i2cmaster.c **** uint32 I2CWriteCommandPacket(uint8 cmd)
+  56:.\i2cmaster.c **** {
+  51              		.loc 1 56 0
+  52              		.cfi_startproc
+  53 0000 80B5     		push	{r7, lr}
+  54              		.cfi_def_cfa_offset 8
+  55              		.cfi_offset 7, -8
+  56              		.cfi_offset 14, -4
+  57 0002 84B0     		sub	sp, sp, #16
+  58              		.cfi_def_cfa_offset 24
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 3
+
+
+  59 0004 00AF     		add	r7, sp, #0
+  60              		.cfi_def_cfa_register 7
+  61 0006 021C     		mov	r2, r0
+  62 0008 FB1D     		add	r3, r7, #7
+  63 000a 1A70     		strb	r2, [r3]
+  57:.\i2cmaster.c ****     uint8  buffer[BUFFER_SIZE];
+  58:.\i2cmaster.c ****     uint32 status = TRANSFER_ERROR;
+  64              		.loc 1 58 0
+  65 000c FF23     		mov	r3, #255
+  66 000e FB60     		str	r3, [r7, #12]
+  59:.\i2cmaster.c **** 
+  60:.\i2cmaster.c ****     /* Initialize buffer with packet */
+  61:.\i2cmaster.c ****     buffer[PACKET_SOP_POS] = PACKET_SOP;
+  67              		.loc 1 61 0
+  68 0010 0823     		mov	r3, #8
+  69 0012 FB18     		add	r3, r7, r3
+  70 0014 0122     		mov	r2, #1
+  71 0016 1A70     		strb	r2, [r3]
+  62:.\i2cmaster.c ****     buffer[PACKET_CMD_POS] = cmd;
+  72              		.loc 1 62 0
+  73 0018 0823     		mov	r3, #8
+  74 001a FB18     		add	r3, r7, r3
+  75 001c FA1D     		add	r2, r7, #7
+  76 001e 1278     		ldrb	r2, [r2]
+  77 0020 5A70     		strb	r2, [r3, #1]
+  63:.\i2cmaster.c ****     buffer[PACKET_EOP_POS] = PACKET_EOP;
+  78              		.loc 1 63 0
+  79 0022 0823     		mov	r3, #8
+  80 0024 FB18     		add	r3, r7, r3
+  81 0026 1722     		mov	r2, #23
+  82 0028 9A70     		strb	r2, [r3, #2]
+  64:.\i2cmaster.c **** 
+  65:.\i2cmaster.c ****     (void) I2CM_I2CMasterWriteBuf(I2C_SLAVE_ADDR, buffer, PACKET_SIZE, \
+  83              		.loc 1 65 0
+  84 002a 0823     		mov	r3, #8
+  85 002c FB18     		add	r3, r7, r3
+  86 002e 0820     		mov	r0, #8
+  87 0030 191C     		mov	r1, r3
+  88 0032 0322     		mov	r2, #3
+  89 0034 0023     		mov	r3, #0
+  90 0036 FFF7FEFF 		bl	I2CM_I2CMasterWriteBuf
+  66:.\i2cmaster.c ****                                   I2CM_I2C_MODE_COMPLETE_XFER);
+  67:.\i2cmaster.c **** 
+  68:.\i2cmaster.c ****     /* Waits until master completes write transfer */
+  69:.\i2cmaster.c ****     while (0u == (I2CM_I2CMasterStatus() & I2CM_I2C_MSTAT_WR_CMPLT))
+  91              		.loc 1 69 0
+  92 003a C046     		mov	r8, r8
+  93              	.L3:
+  94              		.loc 1 69 0 is_stmt 0 discriminator 1
+  95 003c FFF7FEFF 		bl	I2CM_I2CMasterStatus
+  96 0040 021C     		mov	r2, r0
+  97 0042 0223     		mov	r3, #2
+  98 0044 1340     		and	r3, r2
+  99 0046 F9D0     		beq	.L3
+  70:.\i2cmaster.c ****     {
+  71:.\i2cmaster.c ****     }
+  72:.\i2cmaster.c **** 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 4
+
+
+  73:.\i2cmaster.c ****     /* Displays transfer status */
+  74:.\i2cmaster.c ****     if (0u == (I2CM_I2C_MSTAT_ERR_XFER & I2CM_I2CMasterStatus()))
+ 100              		.loc 1 74 0 is_stmt 1
+ 101 0048 FFF7FEFF 		bl	I2CM_I2CMasterStatus
+ 102 004c 021C     		mov	r2, r0
+ 103 004e 8023     		mov	r3, #128
+ 104 0050 9B00     		lsl	r3, r3, #2
+ 105 0052 1340     		and	r3, r2
+ 106 0054 06D1     		bne	.L4
+  75:.\i2cmaster.c ****     {
+  76:.\i2cmaster.c ****         /* Check if all bytes was written */
+  77:.\i2cmaster.c ****         if (I2CM_I2CMasterGetWriteBufSize() == BUFFER_SIZE)
+ 107              		.loc 1 77 0
+ 108 0056 FFF7FEFF 		bl	I2CM_I2CMasterGetWriteBufSize
+ 109 005a 031E     		sub	r3, r0, #0
+ 110 005c 032B     		cmp	r3, #3
+ 111 005e 01D1     		bne	.L4
+  78:.\i2cmaster.c ****         {
+  79:.\i2cmaster.c ****             //RGB_LED_ON_GREEN;
+  80:.\i2cmaster.c ****             status = TRANSFER_CMPLT;
+ 112              		.loc 1 80 0
+ 113 0060 0023     		mov	r3, #0
+ 114 0062 FB60     		str	r3, [r7, #12]
+ 115              	.L4:
+  81:.\i2cmaster.c ****         }
+  82:.\i2cmaster.c ****     }
+  83:.\i2cmaster.c ****     else
+  84:.\i2cmaster.c ****     {
+  85:.\i2cmaster.c ****         //RGB_LED_ON_RED;
+  86:.\i2cmaster.c ****     }
+  87:.\i2cmaster.c **** 
+  88:.\i2cmaster.c ****     (void) I2CM_I2CMasterClearStatus();
+ 116              		.loc 1 88 0
+ 117 0064 FFF7FEFF 		bl	I2CM_I2CMasterClearStatus
+  89:.\i2cmaster.c **** 
+  90:.\i2cmaster.c ****     return (status);
+ 118              		.loc 1 90 0
+ 119 0068 FB68     		ldr	r3, [r7, #12]
+  91:.\i2cmaster.c **** }
+ 120              		.loc 1 91 0
+ 121 006a 181C     		mov	r0, r3
+ 122 006c BD46     		mov	sp, r7
+ 123 006e 04B0     		add	sp, sp, #16
+ 124              		@ sp needed
+ 125 0070 80BD     		pop	{r7, pc}
+ 126              		.cfi_endproc
+ 127              	.LFE35:
+ 128              		.size	I2CWriteCommandPacket, .-I2CWriteCommandPacket
+ 129 0072 C046     		.section	.text.I2CReadStatusPacket,"ax",%progbits
+ 130              		.align	2
+ 131              		.global	I2CReadStatusPacket
+ 132              		.code	16
+ 133              		.thumb_func
+ 134              		.type	I2CReadStatusPacket, %function
+ 135              	I2CReadStatusPacket:
+ 136              	.LFB36:
+  92:.\i2cmaster.c **** //_________________________________________________________________
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 5
+
+
+  93:.\i2cmaster.c **** 
+  94:.\i2cmaster.c **** 
+  95:.\i2cmaster.c **** /*******************************************************************************
+  96:.\i2cmaster.c **** * Function Name: I2CReadStatusPacket
+  97:.\i2cmaster.c **** ********************************************************************************
+  98:.\i2cmaster.c **** * Summary:
+  99:.\i2cmaster.c **** *  Read command from slave
+ 100:.\i2cmaster.c **** *
+ 101:.\i2cmaster.c **** * Parameters:
+ 102:.\i2cmaster.c **** *  None
+ 103:.\i2cmaster.c **** *
+ 104:.\i2cmaster.c **** * Return:
+ 105:.\i2cmaster.c **** *  Returns status of the transfer. There are two statuses
+ 106:.\i2cmaster.c **** *  - TRANSFER_CMPLT: transfer completed successfully.
+ 107:.\i2cmaster.c **** *  - TRANSFER_ERROR: the error occurred while transfer.
+ 108:.\i2cmaster.c **** *
+ 109:.\i2cmaster.c **** *******************************************************************************/
+ 110:.\i2cmaster.c **** uint32 I2CReadStatusPacket(void)
+ 111:.\i2cmaster.c **** {
+ 137              		.loc 1 111 0
+ 138              		.cfi_startproc
+ 139 0000 80B5     		push	{r7, lr}
+ 140              		.cfi_def_cfa_offset 8
+ 141              		.cfi_offset 7, -8
+ 142              		.cfi_offset 14, -4
+ 143 0002 82B0     		sub	sp, sp, #8
+ 144              		.cfi_def_cfa_offset 16
+ 145 0004 00AF     		add	r7, sp, #0
+ 146              		.cfi_def_cfa_register 7
+ 112:.\i2cmaster.c ****     uint8  buffer[BUFFER_SIZE];
+ 113:.\i2cmaster.c ****     uint32 status = TRANSFER_ERROR;
+ 147              		.loc 1 113 0
+ 148 0006 FF23     		mov	r3, #255
+ 149 0008 7B60     		str	r3, [r7, #4]
+ 114:.\i2cmaster.c **** 
+ 115:.\i2cmaster.c ****     (void) I2CM_I2CMasterReadBuf(I2C_SLAVE_ADDR, buffer, PACKET_SIZE, \
+ 150              		.loc 1 115 0
+ 151 000a 3B1C     		mov	r3, r7
+ 152 000c 0820     		mov	r0, #8
+ 153 000e 191C     		mov	r1, r3
+ 154 0010 0322     		mov	r2, #3
+ 155 0012 0023     		mov	r3, #0
+ 156 0014 FFF7FEFF 		bl	I2CM_I2CMasterReadBuf
+ 116:.\i2cmaster.c ****                                  I2CM_I2C_MODE_COMPLETE_XFER);
+ 117:.\i2cmaster.c **** 
+ 118:.\i2cmaster.c ****     /* Waits until master complete read transfer */
+ 119:.\i2cmaster.c ****     while (0u == (I2CM_I2CMasterStatus() & I2CM_I2C_MSTAT_RD_CMPLT))
+ 157              		.loc 1 119 0
+ 158 0018 C046     		mov	r8, r8
+ 159              	.L8:
+ 160              		.loc 1 119 0 is_stmt 0 discriminator 1
+ 161 001a FFF7FEFF 		bl	I2CM_I2CMasterStatus
+ 162 001e 021C     		mov	r2, r0
+ 163 0020 0123     		mov	r3, #1
+ 164 0022 1340     		and	r3, r2
+ 165 0024 F9D0     		beq	.L8
+ 120:.\i2cmaster.c ****     {
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 6
+
+
+ 121:.\i2cmaster.c ****     }
+ 122:.\i2cmaster.c **** 
+ 123:.\i2cmaster.c ****     /* Displays transfer status */
+ 124:.\i2cmaster.c ****     if (0u == (I2CM_I2C_MSTAT_ERR_XFER & I2CM_I2CMasterStatus()))
+ 166              		.loc 1 124 0 is_stmt 1
+ 167 0026 FFF7FEFF 		bl	I2CM_I2CMasterStatus
+ 168 002a 021C     		mov	r2, r0
+ 169 002c 8023     		mov	r3, #128
+ 170 002e 9B00     		lsl	r3, r3, #2
+ 171 0030 1340     		and	r3, r2
+ 172 0032 13D1     		bne	.L9
+ 125:.\i2cmaster.c ****     {
+ 126:.\i2cmaster.c ****         /* Check packet structure */
+ 127:.\i2cmaster.c ****         if ((I2CM_I2CMasterGetReadBufSize() == BUFFER_SIZE) &&
+ 173              		.loc 1 127 0
+ 174 0034 FFF7FEFF 		bl	I2CM_I2CMasterGetReadBufSize
+ 175 0038 031E     		sub	r3, r0, #0
+ 176 003a 032B     		cmp	r3, #3
+ 177 003c 10D1     		bne	.L11
+ 128:.\i2cmaster.c ****             (PACKET_SOP == buffer[PACKET_SOP_POS]) &&
+ 178              		.loc 1 128 0 discriminator 1
+ 179 003e 3B1C     		mov	r3, r7
+ 180 0040 1B78     		ldrb	r3, [r3]
+ 127:.\i2cmaster.c ****             (PACKET_SOP == buffer[PACKET_SOP_POS]) &&
+ 181              		.loc 1 127 0 discriminator 1
+ 182 0042 012B     		cmp	r3, #1
+ 183 0044 0CD1     		bne	.L11
+ 129:.\i2cmaster.c ****             (PACKET_EOP == buffer[PACKET_EOP_POS]))
+ 184              		.loc 1 129 0
+ 185 0046 3B1C     		mov	r3, r7
+ 186 0048 9B78     		ldrb	r3, [r3, #2]
+ 128:.\i2cmaster.c ****             (PACKET_SOP == buffer[PACKET_SOP_POS]) &&
+ 187              		.loc 1 128 0
+ 188 004a 172B     		cmp	r3, #23
+ 189 004c 08D1     		bne	.L11
+ 130:.\i2cmaster.c ****         {
+ 131:.\i2cmaster.c ****             /* Check packet status */
+ 132:.\i2cmaster.c ****             if (STS_CMD_DONE == buffer[PACKET_STS_POS])
+ 190              		.loc 1 132 0
+ 191 004e 3B1C     		mov	r3, r7
+ 192 0050 5B78     		ldrb	r3, [r3, #1]
+ 193 0052 002B     		cmp	r3, #0
+ 194 0054 04D1     		bne	.L11
+ 133:.\i2cmaster.c ****             {
+ 134:.\i2cmaster.c ****                 //RGB_LED_ON_GREEN;
+ 135:.\i2cmaster.c ****                 status = TRANSFER_CMPLT;
+ 195              		.loc 1 135 0
+ 196 0056 0023     		mov	r3, #0
+ 197 0058 7B60     		str	r3, [r7, #4]
+ 198 005a 01E0     		b	.L11
+ 199              	.L9:
+ 136:.\i2cmaster.c ****             }
+ 137:.\i2cmaster.c ****         }
+ 138:.\i2cmaster.c ****     }
+ 139:.\i2cmaster.c ****     else
+ 140:.\i2cmaster.c ****     {
+ 141:.\i2cmaster.c ****         //RGB_LED_ON_RED;
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 7
+
+
+ 142:.\i2cmaster.c ****         status = TRANSFER_ERROR;
+ 200              		.loc 1 142 0
+ 201 005c FF23     		mov	r3, #255
+ 202 005e 7B60     		str	r3, [r7, #4]
+ 203              	.L11:
+ 143:.\i2cmaster.c ****     }
+ 144:.\i2cmaster.c **** 
+ 145:.\i2cmaster.c ****     (void) I2CM_I2CMasterClearStatus();
+ 204              		.loc 1 145 0
+ 205 0060 FFF7FEFF 		bl	I2CM_I2CMasterClearStatus
+ 146:.\i2cmaster.c **** 
+ 147:.\i2cmaster.c ****     return (status);
+ 206              		.loc 1 147 0
+ 207 0064 7B68     		ldr	r3, [r7, #4]
+ 148:.\i2cmaster.c **** }
+ 208              		.loc 1 148 0
+ 209 0066 181C     		mov	r0, r3
+ 210 0068 BD46     		mov	sp, r7
+ 211 006a 02B0     		add	sp, sp, #8
+ 212              		@ sp needed
+ 213 006c 80BD     		pop	{r7, pc}
+ 214              		.cfi_endproc
+ 215              	.LFE36:
+ 216              		.size	I2CReadStatusPacket, .-I2CReadStatusPacket
+ 217 006e C046     		.text
+ 218              	.Letext0:
+ 219              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 220              		.section	.debug_info,"",%progbits
+ 221              	.Ldebug_info0:
+ 222 0000 3F010000 		.4byte	0x13f
+ 223 0004 0400     		.2byte	0x4
+ 224 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 225 000a 04       		.byte	0x4
+ 226 000b 01       		.uleb128 0x1
+ 227 000c 58000000 		.4byte	.LASF18
+ 228 0010 01       		.byte	0x1
+ 229 0011 09010000 		.4byte	.LASF19
+ 230 0015 7F010000 		.4byte	.LASF20
+ 231 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 232 001d 00000000 		.4byte	0
+ 233 0021 00000000 		.4byte	.Ldebug_line0
+ 234 0025 02       		.uleb128 0x2
+ 235 0026 01       		.byte	0x1
+ 236 0027 06       		.byte	0x6
+ 237 0028 46010000 		.4byte	.LASF0
+ 238 002c 02       		.uleb128 0x2
+ 239 002d 01       		.byte	0x1
+ 240 002e 08       		.byte	0x8
+ 241 002f E6000000 		.4byte	.LASF1
+ 242 0033 02       		.uleb128 0x2
+ 243 0034 02       		.byte	0x2
+ 244 0035 05       		.byte	0x5
+ 245 0036 6E010000 		.4byte	.LASF2
+ 246 003a 02       		.uleb128 0x2
+ 247 003b 02       		.byte	0x2
+ 248 003c 07       		.byte	0x7
+ 249 003d 33010000 		.4byte	.LASF3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 8
+
+
+ 250 0041 02       		.uleb128 0x2
+ 251 0042 04       		.byte	0x4
+ 252 0043 05       		.byte	0x5
+ 253 0044 F9000000 		.4byte	.LASF4
+ 254 0048 02       		.uleb128 0x2
+ 255 0049 04       		.byte	0x4
+ 256 004a 07       		.byte	0x7
+ 257 004b 2F000000 		.4byte	.LASF5
+ 258 004f 02       		.uleb128 0x2
+ 259 0050 08       		.byte	0x8
+ 260 0051 05       		.byte	0x5
+ 261 0052 00000000 		.4byte	.LASF6
+ 262 0056 02       		.uleb128 0x2
+ 263 0057 08       		.byte	0x8
+ 264 0058 07       		.byte	0x7
+ 265 0059 41000000 		.4byte	.LASF7
+ 266 005d 03       		.uleb128 0x3
+ 267 005e 04       		.byte	0x4
+ 268 005f 05       		.byte	0x5
+ 269 0060 696E7400 		.ascii	"int\000"
+ 270 0064 02       		.uleb128 0x2
+ 271 0065 04       		.byte	0x4
+ 272 0066 07       		.byte	0x7
+ 273 0067 15000000 		.4byte	.LASF8
+ 274 006b 04       		.uleb128 0x4
+ 275 006c 29000000 		.4byte	.LASF9
+ 276 0070 02       		.byte	0x2
+ 277 0071 3801     		.2byte	0x138
+ 278 0073 2C000000 		.4byte	0x2c
+ 279 0077 04       		.uleb128 0x4
+ 280 0078 78010000 		.4byte	.LASF10
+ 281 007c 02       		.byte	0x2
+ 282 007d 3901     		.2byte	0x139
+ 283 007f 3A000000 		.4byte	0x3a
+ 284 0083 04       		.uleb128 0x4
+ 285 0084 0E000000 		.4byte	.LASF11
+ 286 0088 02       		.byte	0x2
+ 287 0089 3A01     		.2byte	0x13a
+ 288 008b 48000000 		.4byte	0x48
+ 289 008f 02       		.uleb128 0x2
+ 290 0090 04       		.byte	0x4
+ 291 0091 04       		.byte	0x4
+ 292 0092 52010000 		.4byte	.LASF12
+ 293 0096 02       		.uleb128 0x2
+ 294 0097 08       		.byte	0x8
+ 295 0098 04       		.byte	0x4
+ 296 0099 02010000 		.4byte	.LASF13
+ 297 009d 02       		.uleb128 0x2
+ 298 009e 01       		.byte	0x1
+ 299 009f 08       		.byte	0x8
+ 300 00a0 F4000000 		.4byte	.LASF14
+ 301 00a4 02       		.uleb128 0x2
+ 302 00a5 04       		.byte	0x4
+ 303 00a6 07       		.byte	0x7
+ 304 00a7 EA010000 		.4byte	.LASF15
+ 305 00ab 05       		.uleb128 0x5
+ 306 00ac 2B010000 		.4byte	.LASF21
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 9
+
+
+ 307 00b0 01       		.byte	0x1
+ 308 00b1 20       		.byte	0x20
+ 309 00b2 00000000 		.4byte	.LFB34
+ 310 00b6 0C000000 		.4byte	.LFE34-.LFB34
+ 311 00ba 01       		.uleb128 0x1
+ 312 00bb 9C       		.byte	0x9c
+ 313 00bc 06       		.uleb128 0x6
+ 314 00bd 58010000 		.4byte	.LASF22
+ 315 00c1 01       		.byte	0x1
+ 316 00c2 37       		.byte	0x37
+ 317 00c3 83000000 		.4byte	0x83
+ 318 00c7 00000000 		.4byte	.LFB35
+ 319 00cb 72000000 		.4byte	.LFE35-.LFB35
+ 320 00cf 01       		.uleb128 0x1
+ 321 00d0 9C       		.byte	0x9c
+ 322 00d1 00010000 		.4byte	0x100
+ 323 00d5 07       		.uleb128 0x7
+ 324 00d6 636D6400 		.ascii	"cmd\000"
+ 325 00da 01       		.byte	0x1
+ 326 00db 37       		.byte	0x37
+ 327 00dc 6B000000 		.4byte	0x6b
+ 328 00e0 02       		.uleb128 0x2
+ 329 00e1 91       		.byte	0x91
+ 330 00e2 6F       		.sleb128 -17
+ 331 00e3 08       		.uleb128 0x8
+ 332 00e4 E3010000 		.4byte	.LASF16
+ 333 00e8 01       		.byte	0x1
+ 334 00e9 39       		.byte	0x39
+ 335 00ea 00010000 		.4byte	0x100
+ 336 00ee 02       		.uleb128 0x2
+ 337 00ef 91       		.byte	0x91
+ 338 00f0 70       		.sleb128 -16
+ 339 00f1 08       		.uleb128 0x8
+ 340 00f2 22000000 		.4byte	.LASF17
+ 341 00f6 01       		.byte	0x1
+ 342 00f7 3A       		.byte	0x3a
+ 343 00f8 83000000 		.4byte	0x83
+ 344 00fc 02       		.uleb128 0x2
+ 345 00fd 91       		.byte	0x91
+ 346 00fe 74       		.sleb128 -12
+ 347 00ff 00       		.byte	0
+ 348 0100 09       		.uleb128 0x9
+ 349 0101 6B000000 		.4byte	0x6b
+ 350 0105 10010000 		.4byte	0x110
+ 351 0109 0A       		.uleb128 0xa
+ 352 010a A4000000 		.4byte	0xa4
+ 353 010e 02       		.byte	0x2
+ 354 010f 00       		.byte	0
+ 355 0110 0B       		.uleb128 0xb
+ 356 0111 17010000 		.4byte	.LASF23
+ 357 0115 01       		.byte	0x1
+ 358 0116 6E       		.byte	0x6e
+ 359 0117 83000000 		.4byte	0x83
+ 360 011b 00000000 		.4byte	.LFB36
+ 361 011f 6E000000 		.4byte	.LFE36-.LFB36
+ 362 0123 01       		.uleb128 0x1
+ 363 0124 9C       		.byte	0x9c
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 10
+
+
+ 364 0125 08       		.uleb128 0x8
+ 365 0126 E3010000 		.4byte	.LASF16
+ 366 012a 01       		.byte	0x1
+ 367 012b 70       		.byte	0x70
+ 368 012c 00010000 		.4byte	0x100
+ 369 0130 02       		.uleb128 0x2
+ 370 0131 91       		.byte	0x91
+ 371 0132 70       		.sleb128 -16
+ 372 0133 08       		.uleb128 0x8
+ 373 0134 22000000 		.4byte	.LASF17
+ 374 0138 01       		.byte	0x1
+ 375 0139 71       		.byte	0x71
+ 376 013a 83000000 		.4byte	0x83
+ 377 013e 02       		.uleb128 0x2
+ 378 013f 91       		.byte	0x91
+ 379 0140 74       		.sleb128 -12
+ 380 0141 00       		.byte	0
+ 381 0142 00       		.byte	0
+ 382              		.section	.debug_abbrev,"",%progbits
+ 383              	.Ldebug_abbrev0:
+ 384 0000 01       		.uleb128 0x1
+ 385 0001 11       		.uleb128 0x11
+ 386 0002 01       		.byte	0x1
+ 387 0003 25       		.uleb128 0x25
+ 388 0004 0E       		.uleb128 0xe
+ 389 0005 13       		.uleb128 0x13
+ 390 0006 0B       		.uleb128 0xb
+ 391 0007 03       		.uleb128 0x3
+ 392 0008 0E       		.uleb128 0xe
+ 393 0009 1B       		.uleb128 0x1b
+ 394 000a 0E       		.uleb128 0xe
+ 395 000b 55       		.uleb128 0x55
+ 396 000c 17       		.uleb128 0x17
+ 397 000d 11       		.uleb128 0x11
+ 398 000e 01       		.uleb128 0x1
+ 399 000f 10       		.uleb128 0x10
+ 400 0010 17       		.uleb128 0x17
+ 401 0011 00       		.byte	0
+ 402 0012 00       		.byte	0
+ 403 0013 02       		.uleb128 0x2
+ 404 0014 24       		.uleb128 0x24
+ 405 0015 00       		.byte	0
+ 406 0016 0B       		.uleb128 0xb
+ 407 0017 0B       		.uleb128 0xb
+ 408 0018 3E       		.uleb128 0x3e
+ 409 0019 0B       		.uleb128 0xb
+ 410 001a 03       		.uleb128 0x3
+ 411 001b 0E       		.uleb128 0xe
+ 412 001c 00       		.byte	0
+ 413 001d 00       		.byte	0
+ 414 001e 03       		.uleb128 0x3
+ 415 001f 24       		.uleb128 0x24
+ 416 0020 00       		.byte	0
+ 417 0021 0B       		.uleb128 0xb
+ 418 0022 0B       		.uleb128 0xb
+ 419 0023 3E       		.uleb128 0x3e
+ 420 0024 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 11
+
+
+ 421 0025 03       		.uleb128 0x3
+ 422 0026 08       		.uleb128 0x8
+ 423 0027 00       		.byte	0
+ 424 0028 00       		.byte	0
+ 425 0029 04       		.uleb128 0x4
+ 426 002a 16       		.uleb128 0x16
+ 427 002b 00       		.byte	0
+ 428 002c 03       		.uleb128 0x3
+ 429 002d 0E       		.uleb128 0xe
+ 430 002e 3A       		.uleb128 0x3a
+ 431 002f 0B       		.uleb128 0xb
+ 432 0030 3B       		.uleb128 0x3b
+ 433 0031 05       		.uleb128 0x5
+ 434 0032 49       		.uleb128 0x49
+ 435 0033 13       		.uleb128 0x13
+ 436 0034 00       		.byte	0
+ 437 0035 00       		.byte	0
+ 438 0036 05       		.uleb128 0x5
+ 439 0037 2E       		.uleb128 0x2e
+ 440 0038 00       		.byte	0
+ 441 0039 3F       		.uleb128 0x3f
+ 442 003a 19       		.uleb128 0x19
+ 443 003b 03       		.uleb128 0x3
+ 444 003c 0E       		.uleb128 0xe
+ 445 003d 3A       		.uleb128 0x3a
+ 446 003e 0B       		.uleb128 0xb
+ 447 003f 3B       		.uleb128 0x3b
+ 448 0040 0B       		.uleb128 0xb
+ 449 0041 27       		.uleb128 0x27
+ 450 0042 19       		.uleb128 0x19
+ 451 0043 11       		.uleb128 0x11
+ 452 0044 01       		.uleb128 0x1
+ 453 0045 12       		.uleb128 0x12
+ 454 0046 06       		.uleb128 0x6
+ 455 0047 40       		.uleb128 0x40
+ 456 0048 18       		.uleb128 0x18
+ 457 0049 9642     		.uleb128 0x2116
+ 458 004b 19       		.uleb128 0x19
+ 459 004c 00       		.byte	0
+ 460 004d 00       		.byte	0
+ 461 004e 06       		.uleb128 0x6
+ 462 004f 2E       		.uleb128 0x2e
+ 463 0050 01       		.byte	0x1
+ 464 0051 3F       		.uleb128 0x3f
+ 465 0052 19       		.uleb128 0x19
+ 466 0053 03       		.uleb128 0x3
+ 467 0054 0E       		.uleb128 0xe
+ 468 0055 3A       		.uleb128 0x3a
+ 469 0056 0B       		.uleb128 0xb
+ 470 0057 3B       		.uleb128 0x3b
+ 471 0058 0B       		.uleb128 0xb
+ 472 0059 27       		.uleb128 0x27
+ 473 005a 19       		.uleb128 0x19
+ 474 005b 49       		.uleb128 0x49
+ 475 005c 13       		.uleb128 0x13
+ 476 005d 11       		.uleb128 0x11
+ 477 005e 01       		.uleb128 0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 12
+
+
+ 478 005f 12       		.uleb128 0x12
+ 479 0060 06       		.uleb128 0x6
+ 480 0061 40       		.uleb128 0x40
+ 481 0062 18       		.uleb128 0x18
+ 482 0063 9642     		.uleb128 0x2116
+ 483 0065 19       		.uleb128 0x19
+ 484 0066 01       		.uleb128 0x1
+ 485 0067 13       		.uleb128 0x13
+ 486 0068 00       		.byte	0
+ 487 0069 00       		.byte	0
+ 488 006a 07       		.uleb128 0x7
+ 489 006b 05       		.uleb128 0x5
+ 490 006c 00       		.byte	0
+ 491 006d 03       		.uleb128 0x3
+ 492 006e 08       		.uleb128 0x8
+ 493 006f 3A       		.uleb128 0x3a
+ 494 0070 0B       		.uleb128 0xb
+ 495 0071 3B       		.uleb128 0x3b
+ 496 0072 0B       		.uleb128 0xb
+ 497 0073 49       		.uleb128 0x49
+ 498 0074 13       		.uleb128 0x13
+ 499 0075 02       		.uleb128 0x2
+ 500 0076 18       		.uleb128 0x18
+ 501 0077 00       		.byte	0
+ 502 0078 00       		.byte	0
+ 503 0079 08       		.uleb128 0x8
+ 504 007a 34       		.uleb128 0x34
+ 505 007b 00       		.byte	0
+ 506 007c 03       		.uleb128 0x3
+ 507 007d 0E       		.uleb128 0xe
+ 508 007e 3A       		.uleb128 0x3a
+ 509 007f 0B       		.uleb128 0xb
+ 510 0080 3B       		.uleb128 0x3b
+ 511 0081 0B       		.uleb128 0xb
+ 512 0082 49       		.uleb128 0x49
+ 513 0083 13       		.uleb128 0x13
+ 514 0084 02       		.uleb128 0x2
+ 515 0085 18       		.uleb128 0x18
+ 516 0086 00       		.byte	0
+ 517 0087 00       		.byte	0
+ 518 0088 09       		.uleb128 0x9
+ 519 0089 01       		.uleb128 0x1
+ 520 008a 01       		.byte	0x1
+ 521 008b 49       		.uleb128 0x49
+ 522 008c 13       		.uleb128 0x13
+ 523 008d 01       		.uleb128 0x1
+ 524 008e 13       		.uleb128 0x13
+ 525 008f 00       		.byte	0
+ 526 0090 00       		.byte	0
+ 527 0091 0A       		.uleb128 0xa
+ 528 0092 21       		.uleb128 0x21
+ 529 0093 00       		.byte	0
+ 530 0094 49       		.uleb128 0x49
+ 531 0095 13       		.uleb128 0x13
+ 532 0096 2F       		.uleb128 0x2f
+ 533 0097 0B       		.uleb128 0xb
+ 534 0098 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 13
+
+
+ 535 0099 00       		.byte	0
+ 536 009a 0B       		.uleb128 0xb
+ 537 009b 2E       		.uleb128 0x2e
+ 538 009c 01       		.byte	0x1
+ 539 009d 3F       		.uleb128 0x3f
+ 540 009e 19       		.uleb128 0x19
+ 541 009f 03       		.uleb128 0x3
+ 542 00a0 0E       		.uleb128 0xe
+ 543 00a1 3A       		.uleb128 0x3a
+ 544 00a2 0B       		.uleb128 0xb
+ 545 00a3 3B       		.uleb128 0x3b
+ 546 00a4 0B       		.uleb128 0xb
+ 547 00a5 27       		.uleb128 0x27
+ 548 00a6 19       		.uleb128 0x19
+ 549 00a7 49       		.uleb128 0x49
+ 550 00a8 13       		.uleb128 0x13
+ 551 00a9 11       		.uleb128 0x11
+ 552 00aa 01       		.uleb128 0x1
+ 553 00ab 12       		.uleb128 0x12
+ 554 00ac 06       		.uleb128 0x6
+ 555 00ad 40       		.uleb128 0x40
+ 556 00ae 18       		.uleb128 0x18
+ 557 00af 9642     		.uleb128 0x2116
+ 558 00b1 19       		.uleb128 0x19
+ 559 00b2 00       		.byte	0
+ 560 00b3 00       		.byte	0
+ 561 00b4 00       		.byte	0
+ 562              		.section	.debug_aranges,"",%progbits
+ 563 0000 2C000000 		.4byte	0x2c
+ 564 0004 0200     		.2byte	0x2
+ 565 0006 00000000 		.4byte	.Ldebug_info0
+ 566 000a 04       		.byte	0x4
+ 567 000b 00       		.byte	0
+ 568 000c 0000     		.2byte	0
+ 569 000e 0000     		.2byte	0
+ 570 0010 00000000 		.4byte	.LFB34
+ 571 0014 0C000000 		.4byte	.LFE34-.LFB34
+ 572 0018 00000000 		.4byte	.LFB35
+ 573 001c 72000000 		.4byte	.LFE35-.LFB35
+ 574 0020 00000000 		.4byte	.LFB36
+ 575 0024 6E000000 		.4byte	.LFE36-.LFB36
+ 576 0028 00000000 		.4byte	0
+ 577 002c 00000000 		.4byte	0
+ 578              		.section	.debug_ranges,"",%progbits
+ 579              	.Ldebug_ranges0:
+ 580 0000 00000000 		.4byte	.LFB34
+ 581 0004 0C000000 		.4byte	.LFE34
+ 582 0008 00000000 		.4byte	.LFB35
+ 583 000c 72000000 		.4byte	.LFE35
+ 584 0010 00000000 		.4byte	.LFB36
+ 585 0014 6E000000 		.4byte	.LFE36
+ 586 0018 00000000 		.4byte	0
+ 587 001c 00000000 		.4byte	0
+ 588              		.section	.debug_line,"",%progbits
+ 589              	.Ldebug_line0:
+ 590 0000 AF000000 		.section	.debug_str,"MS",%progbits,1
+ 590      02004800 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 14
+
+
+ 590      00000201 
+ 590      FB0E0D00 
+ 590      01010101 
+ 591              	.LASF6:
+ 592 0000 6C6F6E67 		.ascii	"long long int\000"
+ 592      206C6F6E 
+ 592      6720696E 
+ 592      7400
+ 593              	.LASF11:
+ 594 000e 75696E74 		.ascii	"uint32\000"
+ 594      333200
+ 595              	.LASF8:
+ 596 0015 756E7369 		.ascii	"unsigned int\000"
+ 596      676E6564 
+ 596      20696E74 
+ 596      00
+ 597              	.LASF17:
+ 598 0022 73746174 		.ascii	"status\000"
+ 598      757300
+ 599              	.LASF9:
+ 600 0029 75696E74 		.ascii	"uint8\000"
+ 600      3800
+ 601              	.LASF5:
+ 602 002f 6C6F6E67 		.ascii	"long unsigned int\000"
+ 602      20756E73 
+ 602      69676E65 
+ 602      6420696E 
+ 602      7400
+ 603              	.LASF7:
+ 604 0041 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 604      206C6F6E 
+ 604      6720756E 
+ 604      7369676E 
+ 604      65642069 
+ 605              	.LASF18:
+ 606 0058 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 606      4320342E 
+ 606      392E3320 
+ 606      32303135 
+ 606      30333033 
+ 607 008b 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 607      20726576 
+ 607      6973696F 
+ 607      6E203232 
+ 607      31323230 
+ 608 00be 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 608      66756E63 
+ 608      74696F6E 
+ 608      2D736563 
+ 608      74696F6E 
+ 609              	.LASF1:
+ 610 00e6 756E7369 		.ascii	"unsigned char\000"
+ 610      676E6564 
+ 610      20636861 
+ 610      7200
+ 611              	.LASF14:
+ 612 00f4 63686172 		.ascii	"char\000"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 15
+
+
+ 612      00
+ 613              	.LASF4:
+ 614 00f9 6C6F6E67 		.ascii	"long int\000"
+ 614      20696E74 
+ 614      00
+ 615              	.LASF13:
+ 616 0102 646F7562 		.ascii	"double\000"
+ 616      6C6500
+ 617              	.LASF19:
+ 618 0109 2E5C6932 		.ascii	".\\i2cmaster.c\000"
+ 618      636D6173 
+ 618      7465722E 
+ 618      6300
+ 619              	.LASF23:
+ 620 0117 49324352 		.ascii	"I2CReadStatusPacket\000"
+ 620      65616453 
+ 620      74617475 
+ 620      73506163 
+ 620      6B657400 
+ 621              	.LASF21:
+ 622 012b 49324349 		.ascii	"I2CInit\000"
+ 622      6E697400 
+ 623              	.LASF3:
+ 624 0133 73686F72 		.ascii	"short unsigned int\000"
+ 624      7420756E 
+ 624      7369676E 
+ 624      65642069 
+ 624      6E7400
+ 625              	.LASF0:
+ 626 0146 7369676E 		.ascii	"signed char\000"
+ 626      65642063 
+ 626      68617200 
+ 627              	.LASF12:
+ 628 0152 666C6F61 		.ascii	"float\000"
+ 628      7400
+ 629              	.LASF22:
+ 630 0158 49324357 		.ascii	"I2CWriteCommandPacket\000"
+ 630      72697465 
+ 630      436F6D6D 
+ 630      616E6450 
+ 630      61636B65 
+ 631              	.LASF2:
+ 632 016e 73686F72 		.ascii	"short int\000"
+ 632      7420696E 
+ 632      7400
+ 633              	.LASF10:
+ 634 0178 75696E74 		.ascii	"uint16\000"
+ 634      313600
+ 635              	.LASF20:
+ 636 017f 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Google Drive\\Virtuell"
+ 636      73657273 
+ 636      5C4C756B 
+ 636      61732043 
+ 636      72657574 
+ 637 01ae 65205265 		.ascii	"e Realitaeten\\PSoCWorkspace\\VRProject\\CapSense.c"
+ 637      616C6974 
+ 637      61657465 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJXy7or.s 			page 16
+
+
+ 637      6E5C5053 
+ 637      6F43576F 
+ 638 01de 7964736E 		.ascii	"ydsn\000"
+ 638      00
+ 639              	.LASF16:
+ 640 01e3 62756666 		.ascii	"buffer\000"
+ 640      657200
+ 641              	.LASF15:
+ 642 01ea 73697A65 		.ascii	"sizetype\000"
+ 642      74797065 
+ 642      00
+ 643              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

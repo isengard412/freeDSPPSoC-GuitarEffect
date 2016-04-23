@@ -1,0 +1,797 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 6
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"capsense.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.comm	curPos,2,2
+  18              		.comm	oldPos,2,2
+  19              		.section	.text.CapSenseInit,"ax",%progbits
+  20              		.align	2
+  21              		.global	CapSenseInit
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	CapSenseInit, %function
+  25              	CapSenseInit:
+  26              	.LFB34:
+  27              		.file 1 ".\\capsense.c"
+   1:.\capsense.c  **** /* ========================================
+   2:.\capsense.c  **** * File Name: capsense.h
+   3:.\capsense.c  **** *
+   4:.\capsense.c  **** * Version: 0
+   5:.\capsense.c  **** * Author: Lukas Creutzburg
+   6:.\capsense.c  **** *
+   7:.\capsense.c  **** *  Description:
+   8:.\capsense.c  **** *  CapSense module
+   9:.\capsense.c  **** *
+  10:.\capsense.c  **** * =================================================================================================
+  11:.\capsense.c  **** */
+  12:.\capsense.c  **** #include "capsense.h"
+  13:.\capsense.c  **** 
+  14:.\capsense.c  **** /* Variables */
+  15:.\capsense.c  **** 
+  16:.\capsense.c  **** uint16 curPos, oldPos;
+  17:.\capsense.c  **** 
+  18:.\capsense.c  **** //_________________________________
+  19:.\capsense.c  **** 
+  20:.\capsense.c  **** /*******************************************************************************
+  21:.\capsense.c  **** * Function Name:  CapSenseInit
+  22:.\capsense.c  **** ********************************************************************************
+  23:.\capsense.c  **** *
+  24:.\capsense.c  **** * Summary:
+  25:.\capsense.c  **** *   Initializes CapSense  
+  26:.\capsense.c  **** *
+  27:.\capsense.c  **** * Parameters:  
+  28:.\capsense.c  **** *  None
+  29:.\capsense.c  **** *
+  30:.\capsense.c  **** * Return: 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 2
+
+
+  31:.\capsense.c  **** *  None 
+  32:.\capsense.c  **** *  
+  33:.\capsense.c  **** *******************************************************************************/
+  34:.\capsense.c  **** void CapSenseInit(void)
+  35:.\capsense.c  **** {
+  28              		.loc 1 35 0
+  29              		.cfi_startproc
+  30 0000 80B5     		push	{r7, lr}
+  31              		.cfi_def_cfa_offset 8
+  32              		.cfi_offset 7, -8
+  33              		.cfi_offset 14, -4
+  34 0002 00AF     		add	r7, sp, #0
+  35              		.cfi_def_cfa_register 7
+  36:.\capsense.c  ****     /* Start CapSense components */
+  37:.\capsense.c  ****     CapSense_CSD_Start();
+  36              		.loc 1 37 0
+  37 0004 FFF7FEFF 		bl	CapSense_CSD_Start
+  38:.\capsense.c  ****     
+  39:.\capsense.c  ****     /* Initialize baselines */
+  40:.\capsense.c  ****     CapSense_CSD_InitializeAllBaselines();
+  38              		.loc 1 40 0
+  39 0008 FFF7FEFF 		bl	CapSense_CSD_InitializeAllBaselines
+  41:.\capsense.c  **** }
+  40              		.loc 1 41 0
+  41 000c BD46     		mov	sp, r7
+  42              		@ sp needed
+  43 000e 80BD     		pop	{r7, pc}
+  44              		.cfi_endproc
+  45              	.LFE34:
+  46              		.size	CapSenseInit, .-CapSenseInit
+  47              		.section	.text.CapSense_DisplayState,"ax",%progbits
+  48              		.align	2
+  49              		.global	CapSense_DisplayState
+  50              		.code	16
+  51              		.thumb_func
+  52              		.type	CapSense_DisplayState, %function
+  53              	CapSense_DisplayState:
+  54              	.LFB35:
+  42:.\capsense.c  **** //_________________________________________________________
+  43:.\capsense.c  **** 
+  44:.\capsense.c  **** /*******************************************************************************
+  45:.\capsense.c  **** * Function Name: CapSense_DisplayState
+  46:.\capsense.c  **** ********************************************************************************
+  47:.\capsense.c  **** *
+  48:.\capsense.c  **** * Summary:
+  49:.\capsense.c  **** *  Get current CapSense State
+  50:.\capsense.c  **** *
+  51:.\capsense.c  **** * Parameters:  
+  52:.\capsense.c  **** *   None
+  53:.\capsense.c  **** * Return: 
+  54:.\capsense.c  **** *   uint32: Position on slider
+  55:.\capsense.c  **** *
+  56:.\capsense.c  **** *******************************************************************************/
+  57:.\capsense.c  **** uint32 CapSense_DisplayState(void)
+  58:.\capsense.c  **** {
+  55              		.loc 1 58 0
+  56              		.cfi_startproc
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 3
+
+
+  57 0000 80B5     		push	{r7, lr}
+  58              		.cfi_def_cfa_offset 8
+  59              		.cfi_offset 7, -8
+  60              		.cfi_offset 14, -4
+  61 0002 82B0     		sub	sp, sp, #8
+  62              		.cfi_def_cfa_offset 16
+  63 0004 00AF     		add	r7, sp, #0
+  64              		.cfi_def_cfa_register 7
+  59:.\capsense.c  ****     /* Find Slider Position */
+  60:.\capsense.c  ****     curPos = CapSense_CSD_GetCentroidPos(CapSense_CSD_LINEARSLIDER0__LS);
+  65              		.loc 1 60 0
+  66 0006 0020     		mov	r0, #0
+  67 0008 FFF7FEFF 		bl	CapSense_CSD_GetCentroidPos
+  68 000c 031C     		mov	r3, r0
+  69 000e 1A1C     		mov	r2, r3
+  70 0010 114B     		ldr	r3, .L6
+  71 0012 1A80     		strh	r2, [r3]
+  61:.\capsense.c  **** 
+  62:.\capsense.c  ****     /* Reset position */
+  63:.\capsense.c  ****     if(curPos == 0xFFFFu)
+  72              		.loc 1 63 0
+  73 0014 104B     		ldr	r3, .L6
+  74 0016 1B88     		ldrh	r3, [r3]
+  75 0018 104A     		ldr	r2, .L6+4
+  76 001a 9342     		cmp	r3, r2
+  77 001c 02D1     		bne	.L3
+  64:.\capsense.c  ****     {
+  65:.\capsense.c  ****         curPos = 0u;
+  78              		.loc 1 65 0
+  79 001e 0E4B     		ldr	r3, .L6
+  80 0020 0022     		mov	r2, #0
+  81 0022 1A80     		strh	r2, [r3]
+  82              	.L3:
+  66:.\capsense.c  ****     }
+  67:.\capsense.c  **** 
+  68:.\capsense.c  ****     /* Move bargraph */
+  69:.\capsense.c  ****     if (curPos != oldPos)
+  83              		.loc 1 69 0
+  84 0024 0C4B     		ldr	r3, .L6
+  85 0026 1A88     		ldrh	r2, [r3]
+  86 0028 0D4B     		ldr	r3, .L6+8
+  87 002a 1B88     		ldrh	r3, [r3]
+  88 002c 9A42     		cmp	r2, r3
+  89 002e 0DD0     		beq	.L4
+  70:.\capsense.c  ****     {
+  71:.\capsense.c  ****         oldPos = curPos;
+  90              		.loc 1 71 0
+  91 0030 094B     		ldr	r3, .L6
+  92 0032 1A88     		ldrh	r2, [r3]
+  93 0034 0A4B     		ldr	r3, .L6+8
+  94 0036 1A80     		strh	r2, [r3]
+  72:.\capsense.c  ****         /* Display Slider bargraph */
+  73:.\capsense.c  ****         if (curPos != 0u)
+  95              		.loc 1 73 0
+  96 0038 074B     		ldr	r3, .L6
+  97 003a 1B88     		ldrh	r3, [r3]
+  98 003c 002B     		cmp	r3, #0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 4
+
+
+  99 003e 05D0     		beq	.L4
+ 100              	.LBB2:
+  74:.\capsense.c  ****         {
+  75:.\capsense.c  ****             uint32 myInt = (uint32)curPos << SLIDER_POS_TO_COMPARE_SHIFT; 
+ 101              		.loc 1 75 0
+ 102 0040 054B     		ldr	r3, .L6
+ 103 0042 1B88     		ldrh	r3, [r3]
+ 104 0044 5B02     		lsl	r3, r3, #9
+ 105 0046 7B60     		str	r3, [r7, #4]
+  76:.\capsense.c  ****             return myInt;
+ 106              		.loc 1 76 0
+ 107 0048 7B68     		ldr	r3, [r7, #4]
+ 108 004a 01E0     		b	.L5
+ 109              	.L4:
+ 110              	.LBE2:
+  77:.\capsense.c  ****         }
+  78:.\capsense.c  ****     }
+  79:.\capsense.c  ****     //not moved
+  80:.\capsense.c  ****     return -1;
+ 111              		.loc 1 80 0
+ 112 004c 0123     		mov	r3, #1
+ 113 004e 5B42     		neg	r3, r3
+ 114              	.L5:
+  81:.\capsense.c  **** }
+ 115              		.loc 1 81 0
+ 116 0050 181C     		mov	r0, r3
+ 117 0052 BD46     		mov	sp, r7
+ 118 0054 02B0     		add	sp, sp, #8
+ 119              		@ sp needed
+ 120 0056 80BD     		pop	{r7, pc}
+ 121              	.L7:
+ 122              		.align	2
+ 123              	.L6:
+ 124 0058 00000000 		.word	curPos
+ 125 005c FFFF0000 		.word	65535
+ 126 0060 00000000 		.word	oldPos
+ 127              		.cfi_endproc
+ 128              	.LFE35:
+ 129              		.size	CapSense_DisplayState, .-CapSense_DisplayState
+ 130              		.section	.text.CapSense_Refresh,"ax",%progbits
+ 131              		.align	2
+ 132              		.global	CapSense_Refresh
+ 133              		.code	16
+ 134              		.thumb_func
+ 135              		.type	CapSense_Refresh, %function
+ 136              	CapSense_Refresh:
+ 137              	.LFB36:
+  82:.\capsense.c  **** //_________________________________________________________
+  83:.\capsense.c  **** 
+  84:.\capsense.c  **** /*******************************************************************************
+  85:.\capsense.c  **** * Function Name: CapSense_Refresh
+  86:.\capsense.c  **** ********************************************************************************
+  87:.\capsense.c  **** *
+  88:.\capsense.c  **** * Summary:
+  89:.\capsense.c  **** *  Refresh CapSense
+  90:.\capsense.c  **** *
+  91:.\capsense.c  **** * Parameters:  
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 5
+
+
+  92:.\capsense.c  **** *   None
+  93:.\capsense.c  **** * Return: 
+  94:.\capsense.c  **** *   uint32: Position on slider
+  95:.\capsense.c  **** *
+  96:.\capsense.c  **** *******************************************************************************/
+  97:.\capsense.c  **** int32 CapSense_Refresh(void)
+  98:.\capsense.c  **** {
+ 138              		.loc 1 98 0
+ 139              		.cfi_startproc
+ 140 0000 80B5     		push	{r7, lr}
+ 141              		.cfi_def_cfa_offset 8
+ 142              		.cfi_offset 7, -8
+ 143              		.cfi_offset 14, -4
+ 144 0002 00AF     		add	r7, sp, #0
+ 145              		.cfi_def_cfa_register 7
+  99:.\capsense.c  ****     /* Check whether the scanning of all enabled widgets is completed. */
+ 100:.\capsense.c  ****         if(0u == CapSense_CSD_IsBusy())
+ 146              		.loc 1 100 0
+ 147 0004 FFF7FEFF 		bl	CapSense_CSD_IsBusy
+ 148 0008 031E     		sub	r3, r0, #0
+ 149 000a 03D1     		bne	.L9
+ 101:.\capsense.c  ****         {
+ 102:.\capsense.c  ****             /* Update all baselines */
+ 103:.\capsense.c  ****             CapSense_CSD_UpdateEnabledBaselines();
+ 150              		.loc 1 103 0
+ 151 000c FFF7FEFF 		bl	CapSense_CSD_UpdateEnabledBaselines
+ 104:.\capsense.c  **** 
+ 105:.\capsense.c  ****             /* Start scanning all enabled sensors */
+ 106:.\capsense.c  ****             CapSense_CSD_ScanEnabledWidgets();
+ 152              		.loc 1 106 0
+ 153 0010 FFF7FEFF 		bl	CapSense_CSD_ScanEnabledWidgets
+ 154              	.L9:
+ 107:.\capsense.c  ****         }
+ 108:.\capsense.c  **** 
+ 109:.\capsense.c  ****         /* Display CapSense state using LEDs */
+ 110:.\capsense.c  ****         return CapSense_DisplayState();
+ 155              		.loc 1 110 0
+ 156 0014 FFF7FEFF 		bl	CapSense_DisplayState
+ 157 0018 031C     		mov	r3, r0
+ 111:.\capsense.c  **** }
+ 158              		.loc 1 111 0
+ 159 001a 181C     		mov	r0, r3
+ 160 001c BD46     		mov	sp, r7
+ 161              		@ sp needed
+ 162 001e 80BD     		pop	{r7, pc}
+ 163              		.cfi_endproc
+ 164              	.LFE36:
+ 165              		.size	CapSense_Refresh, .-CapSense_Refresh
+ 166              		.text
+ 167              	.Letext0:
+ 168              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 169              		.section	.debug_info,"",%progbits
+ 170              	.Ldebug_info0:
+ 171 0000 22010000 		.4byte	0x122
+ 172 0004 0400     		.2byte	0x4
+ 173 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 174 000a 04       		.byte	0x4
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 6
+
+
+ 175 000b 01       		.uleb128 0x1
+ 176 000c C8000000 		.4byte	.LASF18
+ 177 0010 01       		.byte	0x1
+ 178 0011 B7010000 		.4byte	.LASF19
+ 179 0015 22000000 		.4byte	.LASF20
+ 180 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 181 001d 00000000 		.4byte	0
+ 182 0021 00000000 		.4byte	.Ldebug_line0
+ 183 0025 02       		.uleb128 0x2
+ 184 0026 01       		.byte	0x1
+ 185 0027 06       		.byte	0x6
+ 186 0028 98010000 		.4byte	.LASF0
+ 187 002c 02       		.uleb128 0x2
+ 188 002d 01       		.byte	0x1
+ 189 002e 08       		.byte	0x8
+ 190 002f 56010000 		.4byte	.LASF1
+ 191 0033 02       		.uleb128 0x2
+ 192 0034 02       		.byte	0x2
+ 193 0035 05       		.byte	0x5
+ 194 0036 C4010000 		.4byte	.LASF2
+ 195 003a 02       		.uleb128 0x2
+ 196 003b 02       		.byte	0x2
+ 197 003c 07       		.byte	0x7
+ 198 003d 85010000 		.4byte	.LASF3
+ 199 0041 02       		.uleb128 0x2
+ 200 0042 04       		.byte	0x4
+ 201 0043 05       		.byte	0x5
+ 202 0044 75010000 		.4byte	.LASF4
+ 203 0048 02       		.uleb128 0x2
+ 204 0049 04       		.byte	0x4
+ 205 004a 07       		.byte	0x7
+ 206 004b 94000000 		.4byte	.LASF5
+ 207 004f 02       		.uleb128 0x2
+ 208 0050 08       		.byte	0x8
+ 209 0051 05       		.byte	0x5
+ 210 0052 00000000 		.4byte	.LASF6
+ 211 0056 02       		.uleb128 0x2
+ 212 0057 08       		.byte	0x8
+ 213 0058 07       		.byte	0x7
+ 214 0059 A6000000 		.4byte	.LASF7
+ 215 005d 03       		.uleb128 0x3
+ 216 005e 04       		.byte	0x4
+ 217 005f 05       		.byte	0x5
+ 218 0060 696E7400 		.ascii	"int\000"
+ 219 0064 02       		.uleb128 0x2
+ 220 0065 04       		.byte	0x4
+ 221 0066 07       		.byte	0x7
+ 222 0067 A4010000 		.4byte	.LASF8
+ 223 006b 04       		.uleb128 0x4
+ 224 006c CE010000 		.4byte	.LASF9
+ 225 0070 02       		.byte	0x2
+ 226 0071 3901     		.2byte	0x139
+ 227 0073 3A000000 		.4byte	0x3a
+ 228 0077 04       		.uleb128 0x4
+ 229 0078 0E000000 		.4byte	.LASF10
+ 230 007c 02       		.byte	0x2
+ 231 007d 3A01     		.2byte	0x13a
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 7
+
+
+ 232 007f 48000000 		.4byte	0x48
+ 233 0083 04       		.uleb128 0x4
+ 234 0084 F4010000 		.4byte	.LASF11
+ 235 0088 02       		.byte	0x2
+ 236 0089 3D01     		.2byte	0x13d
+ 237 008b 41000000 		.4byte	0x41
+ 238 008f 02       		.uleb128 0x2
+ 239 0090 04       		.byte	0x4
+ 240 0091 04       		.byte	0x4
+ 241 0092 B1010000 		.4byte	.LASF12
+ 242 0096 02       		.uleb128 0x2
+ 243 0097 08       		.byte	0x8
+ 244 0098 04       		.byte	0x4
+ 245 0099 7E010000 		.4byte	.LASF13
+ 246 009d 02       		.uleb128 0x2
+ 247 009e 01       		.byte	0x1
+ 248 009f 08       		.byte	0x8
+ 249 00a0 BD000000 		.4byte	.LASF14
+ 250 00a4 02       		.uleb128 0x2
+ 251 00a5 04       		.byte	0x4
+ 252 00a6 07       		.byte	0x7
+ 253 00a7 EB010000 		.4byte	.LASF15
+ 254 00ab 05       		.uleb128 0x5
+ 255 00ac 15000000 		.4byte	.LASF21
+ 256 00b0 01       		.byte	0x1
+ 257 00b1 22       		.byte	0x22
+ 258 00b2 00000000 		.4byte	.LFB34
+ 259 00b6 10000000 		.4byte	.LFE34-.LFB34
+ 260 00ba 01       		.uleb128 0x1
+ 261 00bb 9C       		.byte	0x9c
+ 262 00bc 06       		.uleb128 0x6
+ 263 00bd D5010000 		.4byte	.LASF22
+ 264 00c1 01       		.byte	0x1
+ 265 00c2 39       		.byte	0x39
+ 266 00c3 77000000 		.4byte	0x77
+ 267 00c7 00000000 		.4byte	.LFB35
+ 268 00cb 64000000 		.4byte	.LFE35-.LFB35
+ 269 00cf 01       		.uleb128 0x1
+ 270 00d0 9C       		.byte	0x9c
+ 271 00d1 EE000000 		.4byte	0xee
+ 272 00d5 07       		.uleb128 0x7
+ 273 00d6 40000000 		.4byte	.LBB2
+ 274 00da 0C000000 		.4byte	.LBE2-.LBB2
+ 275 00de 08       		.uleb128 0x8
+ 276 00df C2000000 		.4byte	.LASF23
+ 277 00e3 01       		.byte	0x1
+ 278 00e4 4B       		.byte	0x4b
+ 279 00e5 77000000 		.4byte	0x77
+ 280 00e9 02       		.uleb128 0x2
+ 281 00ea 91       		.byte	0x91
+ 282 00eb 74       		.sleb128 -12
+ 283 00ec 00       		.byte	0
+ 284 00ed 00       		.byte	0
+ 285 00ee 09       		.uleb128 0x9
+ 286 00ef 64010000 		.4byte	.LASF24
+ 287 00f3 01       		.byte	0x1
+ 288 00f4 61       		.byte	0x61
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 8
+
+
+ 289 00f5 83000000 		.4byte	0x83
+ 290 00f9 00000000 		.4byte	.LFB36
+ 291 00fd 20000000 		.4byte	.LFE36-.LFB36
+ 292 0101 01       		.uleb128 0x1
+ 293 0102 9C       		.byte	0x9c
+ 294 0103 0A       		.uleb128 0xa
+ 295 0104 8D000000 		.4byte	.LASF16
+ 296 0108 01       		.byte	0x1
+ 297 0109 10       		.byte	0x10
+ 298 010a 6B000000 		.4byte	0x6b
+ 299 010e 05       		.uleb128 0x5
+ 300 010f 03       		.byte	0x3
+ 301 0110 00000000 		.4byte	curPos
+ 302 0114 0A       		.uleb128 0xa
+ 303 0115 86000000 		.4byte	.LASF17
+ 304 0119 01       		.byte	0x1
+ 305 011a 10       		.byte	0x10
+ 306 011b 6B000000 		.4byte	0x6b
+ 307 011f 05       		.uleb128 0x5
+ 308 0120 03       		.byte	0x3
+ 309 0121 00000000 		.4byte	oldPos
+ 310 0125 00       		.byte	0
+ 311              		.section	.debug_abbrev,"",%progbits
+ 312              	.Ldebug_abbrev0:
+ 313 0000 01       		.uleb128 0x1
+ 314 0001 11       		.uleb128 0x11
+ 315 0002 01       		.byte	0x1
+ 316 0003 25       		.uleb128 0x25
+ 317 0004 0E       		.uleb128 0xe
+ 318 0005 13       		.uleb128 0x13
+ 319 0006 0B       		.uleb128 0xb
+ 320 0007 03       		.uleb128 0x3
+ 321 0008 0E       		.uleb128 0xe
+ 322 0009 1B       		.uleb128 0x1b
+ 323 000a 0E       		.uleb128 0xe
+ 324 000b 55       		.uleb128 0x55
+ 325 000c 17       		.uleb128 0x17
+ 326 000d 11       		.uleb128 0x11
+ 327 000e 01       		.uleb128 0x1
+ 328 000f 10       		.uleb128 0x10
+ 329 0010 17       		.uleb128 0x17
+ 330 0011 00       		.byte	0
+ 331 0012 00       		.byte	0
+ 332 0013 02       		.uleb128 0x2
+ 333 0014 24       		.uleb128 0x24
+ 334 0015 00       		.byte	0
+ 335 0016 0B       		.uleb128 0xb
+ 336 0017 0B       		.uleb128 0xb
+ 337 0018 3E       		.uleb128 0x3e
+ 338 0019 0B       		.uleb128 0xb
+ 339 001a 03       		.uleb128 0x3
+ 340 001b 0E       		.uleb128 0xe
+ 341 001c 00       		.byte	0
+ 342 001d 00       		.byte	0
+ 343 001e 03       		.uleb128 0x3
+ 344 001f 24       		.uleb128 0x24
+ 345 0020 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 9
+
+
+ 346 0021 0B       		.uleb128 0xb
+ 347 0022 0B       		.uleb128 0xb
+ 348 0023 3E       		.uleb128 0x3e
+ 349 0024 0B       		.uleb128 0xb
+ 350 0025 03       		.uleb128 0x3
+ 351 0026 08       		.uleb128 0x8
+ 352 0027 00       		.byte	0
+ 353 0028 00       		.byte	0
+ 354 0029 04       		.uleb128 0x4
+ 355 002a 16       		.uleb128 0x16
+ 356 002b 00       		.byte	0
+ 357 002c 03       		.uleb128 0x3
+ 358 002d 0E       		.uleb128 0xe
+ 359 002e 3A       		.uleb128 0x3a
+ 360 002f 0B       		.uleb128 0xb
+ 361 0030 3B       		.uleb128 0x3b
+ 362 0031 05       		.uleb128 0x5
+ 363 0032 49       		.uleb128 0x49
+ 364 0033 13       		.uleb128 0x13
+ 365 0034 00       		.byte	0
+ 366 0035 00       		.byte	0
+ 367 0036 05       		.uleb128 0x5
+ 368 0037 2E       		.uleb128 0x2e
+ 369 0038 00       		.byte	0
+ 370 0039 3F       		.uleb128 0x3f
+ 371 003a 19       		.uleb128 0x19
+ 372 003b 03       		.uleb128 0x3
+ 373 003c 0E       		.uleb128 0xe
+ 374 003d 3A       		.uleb128 0x3a
+ 375 003e 0B       		.uleb128 0xb
+ 376 003f 3B       		.uleb128 0x3b
+ 377 0040 0B       		.uleb128 0xb
+ 378 0041 27       		.uleb128 0x27
+ 379 0042 19       		.uleb128 0x19
+ 380 0043 11       		.uleb128 0x11
+ 381 0044 01       		.uleb128 0x1
+ 382 0045 12       		.uleb128 0x12
+ 383 0046 06       		.uleb128 0x6
+ 384 0047 40       		.uleb128 0x40
+ 385 0048 18       		.uleb128 0x18
+ 386 0049 9642     		.uleb128 0x2116
+ 387 004b 19       		.uleb128 0x19
+ 388 004c 00       		.byte	0
+ 389 004d 00       		.byte	0
+ 390 004e 06       		.uleb128 0x6
+ 391 004f 2E       		.uleb128 0x2e
+ 392 0050 01       		.byte	0x1
+ 393 0051 3F       		.uleb128 0x3f
+ 394 0052 19       		.uleb128 0x19
+ 395 0053 03       		.uleb128 0x3
+ 396 0054 0E       		.uleb128 0xe
+ 397 0055 3A       		.uleb128 0x3a
+ 398 0056 0B       		.uleb128 0xb
+ 399 0057 3B       		.uleb128 0x3b
+ 400 0058 0B       		.uleb128 0xb
+ 401 0059 27       		.uleb128 0x27
+ 402 005a 19       		.uleb128 0x19
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 10
+
+
+ 403 005b 49       		.uleb128 0x49
+ 404 005c 13       		.uleb128 0x13
+ 405 005d 11       		.uleb128 0x11
+ 406 005e 01       		.uleb128 0x1
+ 407 005f 12       		.uleb128 0x12
+ 408 0060 06       		.uleb128 0x6
+ 409 0061 40       		.uleb128 0x40
+ 410 0062 18       		.uleb128 0x18
+ 411 0063 9642     		.uleb128 0x2116
+ 412 0065 19       		.uleb128 0x19
+ 413 0066 01       		.uleb128 0x1
+ 414 0067 13       		.uleb128 0x13
+ 415 0068 00       		.byte	0
+ 416 0069 00       		.byte	0
+ 417 006a 07       		.uleb128 0x7
+ 418 006b 0B       		.uleb128 0xb
+ 419 006c 01       		.byte	0x1
+ 420 006d 11       		.uleb128 0x11
+ 421 006e 01       		.uleb128 0x1
+ 422 006f 12       		.uleb128 0x12
+ 423 0070 06       		.uleb128 0x6
+ 424 0071 00       		.byte	0
+ 425 0072 00       		.byte	0
+ 426 0073 08       		.uleb128 0x8
+ 427 0074 34       		.uleb128 0x34
+ 428 0075 00       		.byte	0
+ 429 0076 03       		.uleb128 0x3
+ 430 0077 0E       		.uleb128 0xe
+ 431 0078 3A       		.uleb128 0x3a
+ 432 0079 0B       		.uleb128 0xb
+ 433 007a 3B       		.uleb128 0x3b
+ 434 007b 0B       		.uleb128 0xb
+ 435 007c 49       		.uleb128 0x49
+ 436 007d 13       		.uleb128 0x13
+ 437 007e 02       		.uleb128 0x2
+ 438 007f 18       		.uleb128 0x18
+ 439 0080 00       		.byte	0
+ 440 0081 00       		.byte	0
+ 441 0082 09       		.uleb128 0x9
+ 442 0083 2E       		.uleb128 0x2e
+ 443 0084 00       		.byte	0
+ 444 0085 3F       		.uleb128 0x3f
+ 445 0086 19       		.uleb128 0x19
+ 446 0087 03       		.uleb128 0x3
+ 447 0088 0E       		.uleb128 0xe
+ 448 0089 3A       		.uleb128 0x3a
+ 449 008a 0B       		.uleb128 0xb
+ 450 008b 3B       		.uleb128 0x3b
+ 451 008c 0B       		.uleb128 0xb
+ 452 008d 27       		.uleb128 0x27
+ 453 008e 19       		.uleb128 0x19
+ 454 008f 49       		.uleb128 0x49
+ 455 0090 13       		.uleb128 0x13
+ 456 0091 11       		.uleb128 0x11
+ 457 0092 01       		.uleb128 0x1
+ 458 0093 12       		.uleb128 0x12
+ 459 0094 06       		.uleb128 0x6
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 11
+
+
+ 460 0095 40       		.uleb128 0x40
+ 461 0096 18       		.uleb128 0x18
+ 462 0097 9642     		.uleb128 0x2116
+ 463 0099 19       		.uleb128 0x19
+ 464 009a 00       		.byte	0
+ 465 009b 00       		.byte	0
+ 466 009c 0A       		.uleb128 0xa
+ 467 009d 34       		.uleb128 0x34
+ 468 009e 00       		.byte	0
+ 469 009f 03       		.uleb128 0x3
+ 470 00a0 0E       		.uleb128 0xe
+ 471 00a1 3A       		.uleb128 0x3a
+ 472 00a2 0B       		.uleb128 0xb
+ 473 00a3 3B       		.uleb128 0x3b
+ 474 00a4 0B       		.uleb128 0xb
+ 475 00a5 49       		.uleb128 0x49
+ 476 00a6 13       		.uleb128 0x13
+ 477 00a7 3F       		.uleb128 0x3f
+ 478 00a8 19       		.uleb128 0x19
+ 479 00a9 02       		.uleb128 0x2
+ 480 00aa 18       		.uleb128 0x18
+ 481 00ab 00       		.byte	0
+ 482 00ac 00       		.byte	0
+ 483 00ad 00       		.byte	0
+ 484              		.section	.debug_aranges,"",%progbits
+ 485 0000 2C000000 		.4byte	0x2c
+ 486 0004 0200     		.2byte	0x2
+ 487 0006 00000000 		.4byte	.Ldebug_info0
+ 488 000a 04       		.byte	0x4
+ 489 000b 00       		.byte	0
+ 490 000c 0000     		.2byte	0
+ 491 000e 0000     		.2byte	0
+ 492 0010 00000000 		.4byte	.LFB34
+ 493 0014 10000000 		.4byte	.LFE34-.LFB34
+ 494 0018 00000000 		.4byte	.LFB35
+ 495 001c 64000000 		.4byte	.LFE35-.LFB35
+ 496 0020 00000000 		.4byte	.LFB36
+ 497 0024 20000000 		.4byte	.LFE36-.LFB36
+ 498 0028 00000000 		.4byte	0
+ 499 002c 00000000 		.4byte	0
+ 500              		.section	.debug_ranges,"",%progbits
+ 501              	.Ldebug_ranges0:
+ 502 0000 00000000 		.4byte	.LFB34
+ 503 0004 10000000 		.4byte	.LFE34
+ 504 0008 00000000 		.4byte	.LFB35
+ 505 000c 64000000 		.4byte	.LFE35
+ 506 0010 00000000 		.4byte	.LFB36
+ 507 0014 20000000 		.4byte	.LFE36
+ 508 0018 00000000 		.4byte	0
+ 509 001c 00000000 		.4byte	0
+ 510              		.section	.debug_line,"",%progbits
+ 511              	.Ldebug_line0:
+ 512 0000 8D000000 		.section	.debug_str,"MS",%progbits,1
+ 512      02004700 
+ 512      00000201 
+ 512      FB0E0D00 
+ 512      01010101 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 12
+
+
+ 513              	.LASF6:
+ 514 0000 6C6F6E67 		.ascii	"long long int\000"
+ 514      206C6F6E 
+ 514      6720696E 
+ 514      7400
+ 515              	.LASF10:
+ 516 000e 75696E74 		.ascii	"uint32\000"
+ 516      333200
+ 517              	.LASF21:
+ 518 0015 43617053 		.ascii	"CapSenseInit\000"
+ 518      656E7365 
+ 518      496E6974 
+ 518      00
+ 519              	.LASF20:
+ 520 0022 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Google Drive\\Virtuell"
+ 520      73657273 
+ 520      5C4C756B 
+ 520      61732043 
+ 520      72657574 
+ 521 0051 65205265 		.ascii	"e Realitaeten\\PSoCWorkspace\\VRProject\\CapSense.c"
+ 521      616C6974 
+ 521      61657465 
+ 521      6E5C5053 
+ 521      6F43576F 
+ 522 0081 7964736E 		.ascii	"ydsn\000"
+ 522      00
+ 523              	.LASF17:
+ 524 0086 6F6C6450 		.ascii	"oldPos\000"
+ 524      6F7300
+ 525              	.LASF16:
+ 526 008d 63757250 		.ascii	"curPos\000"
+ 526      6F7300
+ 527              	.LASF5:
+ 528 0094 6C6F6E67 		.ascii	"long unsigned int\000"
+ 528      20756E73 
+ 528      69676E65 
+ 528      6420696E 
+ 528      7400
+ 529              	.LASF7:
+ 530 00a6 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 530      206C6F6E 
+ 530      6720756E 
+ 530      7369676E 
+ 530      65642069 
+ 531              	.LASF14:
+ 532 00bd 63686172 		.ascii	"char\000"
+ 532      00
+ 533              	.LASF23:
+ 534 00c2 6D79496E 		.ascii	"myInt\000"
+ 534      7400
+ 535              	.LASF18:
+ 536 00c8 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 536      4320342E 
+ 536      392E3320 
+ 536      32303135 
+ 536      30333033 
+ 537 00fb 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 13
+
+
+ 537      20726576 
+ 537      6973696F 
+ 537      6E203232 
+ 537      31323230 
+ 538 012e 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 538      66756E63 
+ 538      74696F6E 
+ 538      2D736563 
+ 538      74696F6E 
+ 539              	.LASF1:
+ 540 0156 756E7369 		.ascii	"unsigned char\000"
+ 540      676E6564 
+ 540      20636861 
+ 540      7200
+ 541              	.LASF24:
+ 542 0164 43617053 		.ascii	"CapSense_Refresh\000"
+ 542      656E7365 
+ 542      5F526566 
+ 542      72657368 
+ 542      00
+ 543              	.LASF4:
+ 544 0175 6C6F6E67 		.ascii	"long int\000"
+ 544      20696E74 
+ 544      00
+ 545              	.LASF13:
+ 546 017e 646F7562 		.ascii	"double\000"
+ 546      6C6500
+ 547              	.LASF3:
+ 548 0185 73686F72 		.ascii	"short unsigned int\000"
+ 548      7420756E 
+ 548      7369676E 
+ 548      65642069 
+ 548      6E7400
+ 549              	.LASF0:
+ 550 0198 7369676E 		.ascii	"signed char\000"
+ 550      65642063 
+ 550      68617200 
+ 551              	.LASF8:
+ 552 01a4 756E7369 		.ascii	"unsigned int\000"
+ 552      676E6564 
+ 552      20696E74 
+ 552      00
+ 553              	.LASF12:
+ 554 01b1 666C6F61 		.ascii	"float\000"
+ 554      7400
+ 555              	.LASF19:
+ 556 01b7 2E5C6361 		.ascii	".\\capsense.c\000"
+ 556      7073656E 
+ 556      73652E63 
+ 556      00
+ 557              	.LASF2:
+ 558 01c4 73686F72 		.ascii	"short int\000"
+ 558      7420696E 
+ 558      7400
+ 559              	.LASF9:
+ 560 01ce 75696E74 		.ascii	"uint16\000"
+ 560      313600
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cctWYf7b.s 			page 14
+
+
+ 561              	.LASF22:
+ 562 01d5 43617053 		.ascii	"CapSense_DisplayState\000"
+ 562      656E7365 
+ 562      5F446973 
+ 562      706C6179 
+ 562      53746174 
+ 563              	.LASF15:
+ 564 01eb 73697A65 		.ascii	"sizetype\000"
+ 564      74797065 
+ 564      00
+ 565              	.LASF11:
+ 566 01f4 696E7433 		.ascii	"int32\000"
+ 566      3200
+ 567              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
