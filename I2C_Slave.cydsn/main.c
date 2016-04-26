@@ -51,8 +51,6 @@ int main()
 {
     uint8 status = STS_CMD_FAIL;
 
-    RGB_LED_OFF;
-
     /* Start I2C slave (SCB mode) */
     I2CS_I2CSlaveInitReadBuf (i2cReadBuffer,  BUFFER_SIZE);
     I2CS_I2CSlaveInitWriteBuf(i2cWriteBuffer, BUFFER_SIZE);
@@ -108,11 +106,6 @@ int main()
 *  If the command is unknown, the LED color is not changed.
 *
 * Parameters:
-*  cmd: command to execute. Available commands:
-*   - CMD_SET_RED:   set red color of the LED.
-*   - CMD_SET_GREEN: set green color of the LED.
-*   - CMD_SET_BLUE:  set blue color of the LED.
-*   - CMD_SET_OFF:   turn off the LED.
 *
 * Return:
 *  Returns status of command execution. There are two statuses
@@ -125,31 +118,31 @@ uint8 ExecuteCommand(uint32 cmd)
     uint8 status;
 
     status = STS_CMD_DONE;
-    UART_1_UartPutString("Executed: ");
+    UART_1_UartPutString("Received: ");
     UART_SendNumber(cmd);
-    /* Execute received command */
-    switch (cmd)
-    {
-        case CMD_SET_RED:
-            RGB_LED_ON_RED;
-            break;
-
-        case CMD_SET_GREEN:
-            RGB_LED_ON_GREEN;
-            break;
-
-        case CMD_SET_BLUE:
-            RGB_LED_ON_BLUE;
-            break;
-
-        case CMD_SET_OFF:
-            RGB_LED_OFF;
-            break;
-
-        default:
-            status = STS_CMD_FAIL;
-            break;
-    }
+//    /* Execute received command */
+//    switch (cmd)
+//    {
+//        case CMD_SET_RED:
+//            RGB_LED_ON_RED;
+//            break;
+//
+//        case CMD_SET_GREEN:
+//            RGB_LED_ON_GREEN;
+//            break;
+//
+//        case CMD_SET_BLUE:
+//            RGB_LED_ON_BLUE;
+//            break;
+//
+//        case CMD_SET_OFF:
+//            RGB_LED_OFF;
+//            break;
+//
+//        default:
+//            status = STS_CMD_FAIL;
+//            break;
+//    }
 
     return (status);
 }

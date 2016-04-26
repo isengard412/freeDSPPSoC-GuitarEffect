@@ -36,7 +36,8 @@ int main()
     /* Enable global interrupts */
     CyGlobalIntEnable;
     
-    uint8 command = CMD_SET_RED;
+    uint8 command = CMD_SET_OFF;
+    int32 pos = 30000;
     
     UARTInit();
     CapSenseInit();
@@ -44,13 +45,6 @@ int main()
 
     while(1u)
     {
-        int32 pos = CapSense_Refresh();
-        if(pos!=-1){
-            UART_SendNumber(pos);
-        }
-        
-        
-        //uint8 command=(0xAu);
         /* Send packet with command to the slave */
         if (0u == I2CWriteCommandPacket(command))
         {
@@ -58,20 +52,18 @@ int main()
             if (0u == I2CReadStatusPacket())
             {
                 /* Next command to be written */
-                command++;
-                if (command > CMD_SET_BLUE)
-                {
-                    command = CMD_SET_OFF;
+                pos = CapSense_Refresh();
+                if(pos!=-1){
+                    UART_SendNumber((uint8)(((uint32)pos) >> 8));
+                    command = (uint8)(((uint32)pos) >> 8);
                 }
-
-                /* Turn off status LED */
-                //RGB_LED_OFF;
+                
             }
             
         }
 
         LED_1_Write(!LED_1_Read());
-        CyDelay(CMD_TO_CMD_DELAY); /* Delay between commands */
+        //CyDelay(CMD_TO_CMD_DELAY); /* Delay between commands */
     }
 }
 

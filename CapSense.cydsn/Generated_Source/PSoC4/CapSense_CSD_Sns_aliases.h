@@ -110,14 +110,7 @@
 #define CapSense_CSD_Sns_11_SHIFT	(CapSense_CSD_Sns__11__SHIFT)
 #define CapSense_CSD_Sns_11_INTR	((uint16)((uint16)0x0003u << (CapSense_CSD_Sns__11__SHIFT*2u)))
 
-#define CapSense_CSD_Sns_12			(CapSense_CSD_Sns__12__PC)
-#define CapSense_CSD_Sns_12_PS		(CapSense_CSD_Sns__12__PS)
-#define CapSense_CSD_Sns_12_PC		(CapSense_CSD_Sns__12__PC)
-#define CapSense_CSD_Sns_12_DR		(CapSense_CSD_Sns__12__DR)
-#define CapSense_CSD_Sns_12_SHIFT	(CapSense_CSD_Sns__12__SHIFT)
-#define CapSense_CSD_Sns_12_INTR	((uint16)((uint16)0x0003u << (CapSense_CSD_Sns__12__SHIFT*2u)))
-
-#define CapSense_CSD_Sns_INTR_ALL	 ((uint16)(CapSense_CSD_Sns_0_INTR| CapSense_CSD_Sns_1_INTR| CapSense_CSD_Sns_2_INTR| CapSense_CSD_Sns_3_INTR| CapSense_CSD_Sns_4_INTR| CapSense_CSD_Sns_5_INTR| CapSense_CSD_Sns_6_INTR| CapSense_CSD_Sns_7_INTR| CapSense_CSD_Sns_8_INTR| CapSense_CSD_Sns_9_INTR| CapSense_CSD_Sns_10_INTR| CapSense_CSD_Sns_11_INTR| CapSense_CSD_Sns_12_INTR))
+#define CapSense_CSD_Sns_INTR_ALL	 ((uint16)(CapSense_CSD_Sns_0_INTR| CapSense_CSD_Sns_1_INTR| CapSense_CSD_Sns_2_INTR| CapSense_CSD_Sns_3_INTR| CapSense_CSD_Sns_4_INTR| CapSense_CSD_Sns_5_INTR| CapSense_CSD_Sns_6_INTR| CapSense_CSD_Sns_7_INTR| CapSense_CSD_Sns_8_INTR| CapSense_CSD_Sns_9_INTR| CapSense_CSD_Sns_10_INTR| CapSense_CSD_Sns_11_INTR))
 #define CapSense_CSD_Sns_LinearSlider0_e0__LS			(CapSense_CSD_Sns__LinearSlider0_e0__LS__PC)
 #define CapSense_CSD_Sns_LinearSlider0_e0__LS_PS		(CapSense_CSD_Sns__LinearSlider0_e0__LS__PS)
 #define CapSense_CSD_Sns_LinearSlider0_e0__LS_PC		(CapSense_CSD_Sns__LinearSlider0_e0__LS__PC)
@@ -201,13 +194,6 @@
 #define CapSense_CSD_Sns_LinearSlider0_e11__LS_DR		(CapSense_CSD_Sns__LinearSlider0_e11__LS__DR)
 #define CapSense_CSD_Sns_LinearSlider0_e11__LS_SHIFT	(CapSense_CSD_Sns__LinearSlider0_e11__LS__SHIFT)
 #define CapSense_CSD_Sns_LinearSlider0_e11__LS_INTR	((uint16)((uint16)0x0003u << (CapSense_CSD_Sns__11__SHIFT*2u)))
-
-#define CapSense_CSD_Sns_GuardSensor__GRD			(CapSense_CSD_Sns__GuardSensor__GRD__PC)
-#define CapSense_CSD_Sns_GuardSensor__GRD_PS		(CapSense_CSD_Sns__GuardSensor__GRD__PS)
-#define CapSense_CSD_Sns_GuardSensor__GRD_PC		(CapSense_CSD_Sns__GuardSensor__GRD__PC)
-#define CapSense_CSD_Sns_GuardSensor__GRD_DR		(CapSense_CSD_Sns__GuardSensor__GRD__DR)
-#define CapSense_CSD_Sns_GuardSensor__GRD_SHIFT	(CapSense_CSD_Sns__GuardSensor__GRD__SHIFT)
-#define CapSense_CSD_Sns_GuardSensor__GRD_INTR	((uint16)((uint16)0x0003u << (CapSense_CSD_Sns__12__SHIFT*2u)))
 
 
 #endif /* End Pins CapSense_CSD_Sns_ALIASES_H */

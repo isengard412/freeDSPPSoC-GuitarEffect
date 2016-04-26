@@ -85,7 +85,7 @@ uint16 CapSense_CSD_previousSampleTbl[CapSense_CSD_TOTAL_SENSOR_COUNT];
 uint8 CapSense_CSD_kValueTbl[CapSense_CSD_TOTAL_SENSOR_COUNT];
 
 uint8 CapSense_CSD_sensorSensitivity[] = {
-    4u, 4u, 4u, 4u, 4u, 2u, 2u, 2u, 2u, 2u, 2u, 2u, 2u, 
+    4u, 4u, 4u, 4u, 4u, 2u, 2u, 2u, 2u, 2u, 2u, 2u, 
 };
 
 CapSense_CSD_CONFIG_TYPE_P4_v2_40 CapSense_CSD_config;

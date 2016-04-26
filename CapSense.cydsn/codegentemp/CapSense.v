@@ -1,6 +1,6 @@
 // ======================================================================
 // CapSense.v generated from TopDesign.cysch
-// 04/21/2016 at 14:12
+// 04/26/2016 at 10:50
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -166,7 +166,7 @@ endmodule
 `include "C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\or_v1_0\or_v1_0.v"
 `endif
 
-// CapSense_CSD_P4_v2_40(AdvCrossCouplingThreshold=5, AdvPenultimateThreshold=100, AdvVirtualSensorThreshold=100, AnalogSwitchDivider=12, AvgSamplesNumber=1, BallisticMultiplierEnabled=false, CalibrationResolution=7, CmodPrecharge=1, ConnectInactiveSensors=2, CshTankPrecharge=1, CurrentSource=0, CustomEzI2CInstanceName=SCB, DbPwmMode=0, DbPwmPeriod=0, DfbEnable=false, DynamicButtonNumber=5, EmcSensorNumber=10, EnableAutoCalibration=true, EnableBIST=false, EnableTuneHelper=false, Gestures_ActiveEdgeSwipeThreshold=10, Gestures_BottomAngleThreshold=45, Gestures_ClicksEnabled=true, Gestures_ClickXRadiusPixels=30, Gestures_ClickYRadiusPixels=30, Gestures_DebounceTwoFingerScrollToZoomCount=5, Gestures_DebounceZoomCount=3, Gestures_DoubleClickMaxRadius=20, Gestures_DoubleClickMaxTimeout=1000, Gestures_DoubleClickMinTimeout=10, Gestures_EdgeSwipeCompleteTimeout=2000, Gestures_EdgeSwipesEnabled=true, Gestures_EdgeSwipeTime=100, Gestures_FlickActiveDistanceThresholdX=30, Gestures_FlickActiveDistanceThresholdY=30, Gestures_FlickSampleTime=3, Gestures_FlicksEnabled=false, Gestures_OneFingerInertialScrollActiveDistanceThresholdX=5, Gestures_OneFingerInertialScrollActiveDistanceThresholdY=5, Gestures_OneFingerInertialScrollCountLevel=0, Gestures_OneFingerScrollDebounceCount=3, Gestures_OneFingerScrollsEnabled=true, Gestures_OneFingerScrollStep1=1, Gestures_OneFingerScrollStep2=3, Gestures_OneFingerScrollStep3=5, Gestures_OneFingerScrollStep4=7, Gestures_OneFingerScrollThreshold1X=5, Gestures_OneFingerScrollThreshold1Y=5, Gestures_OneFingerScrollThreshold2X=7, Gestures_OneFingerScrollThreshold2Y=7, Gestures_OneFingerScrollThreshold3X=8, Gestures_OneFingerScrollThreshold3Y=9, Gestures_OneFingerScrollThreshold4X=11, Gestures_OneFingerScrollThreshold4Y=11, Gestures_RotateActiveAngleThreshold=90, Gestures_RotateDebounceLimit=20, Gestures_RotateEnabled=false, Gestures_SingleClickMaxTimeout=1000, Gestures_SingleClickMinTimeout=20, Gestures_TopAngleThreshold=45, Gestures_TwoFingerClickMaxTimeout=1000, Gestures_TwoFingerClickMinTimeout=100, Gestures_TwoFingerInertialScrollActiveDistanceThresholdX=5, Gestures_TwoFingerInertialScrollActiveDistanceThresholdY=5, Gestures_TwoFingerInertialScrollCountLevel=0, Gestures_TwoFingerScrollDebounceCount=3, Gestures_TwoFingerScrollsEnabled=true, Gestures_TwoFingerScrollStep1=1, Gestures_TwoFingerScrollStep2=3, Gestures_TwoFingerScrollStep3=5, Gestures_TwoFingerScrollStep4=7, Gestures_TwoFingerScrollThreshold1X=5, Gestures_TwoFingerScrollThreshold1Y=5, Gestures_TwoFingerScrollThreshold2X=7, Gestures_TwoFingerScrollThreshold2Y=7, Gestures_TwoFingerScrollThreshold3X=8, Gestures_TwoFingerScrollThreshold3Y=9, Gestures_TwoFingerScrollThreshold4X=11, Gestures_TwoFingerScrollThreshold4Y=11, Gestures_TwoFingerSettlingCount=3, Gestures_WidthOfDisambiguationRegion=5, Gestures_ZoomActiveDistanceThresholdX=8, Gestures_ZoomActiveDistanceThresholdY=8, Gestures_ZoomEnabled=true, GlitchEliminateTimeout=0, GuardSensorEnable=true, I2cCommunication=0, IDACRange=0, IDACsCount=2, ImmunityLevel=1, InputClkFreq=3, IsStreetFighter=false, IsTrackpadSupported=false, KValueScalingFactor=8, LowBaselineReset=5, M0S8CSD_BLOCK_NUM=1, M0S8CSD_BLOCK_VER=0, M0S8GPIO2_BLOCK_NUM=1, M0S8GPIO2_BLOCK_VER=0, M0S8HSIOM4A_BLOCK_NUM=1, M0S8HSIOM4A_BLOCK_VER=0, M0S8IOSS_BLOCK_NUM=0, M0S8IOSS_BLOCK_VER=-1, M0S8PCLK_BLOCK_NUM=1, M0S8PCLK_BLOCK_VER=0, M0S8PERI_BLOCK_NUM=0, M0S8PERI_BLOCK_VER=-1, ModulatorClkDivider=12, NegativeNoiseThreshold=20, OversamplingEn=false, PrechargeClkDivider=12, PrechargeClkFreq=3, PrsOptions=2, PrtRegNameReplacementString=CYREG, RawDataFilterType=8, SensorAutoReset=false, SensorNumber=13, SensorsFreqSettingsInd=true, ShieldDelay=0, ShieldEnable=true, ShieldTankEnable=false, SizeReplacementString=uint8, SliderThresholdsUpdateManual=false, SnsAlias=LinearSlider0_e0__LS, LinearSlider0_e1__LS, LinearSlider0_e2__LS, LinearSlider0_e3__LS, LinearSlider0_e4__LS, LinearSlider0_e5__LS, LinearSlider0_e6__LS, LinearSlider0_e7__LS, LinearSlider0_e8__LS, LinearSlider0_e9__LS, LinearSlider0_e10__LS, LinearSlider0_e11__LS, GuardSensor__GRD, SymbolTitlePostfix=CSD, SymbolTitlePrefix=CapSense, ThresholdMode=false, TrackpadApiResolutionCol=100, TrackpadApiResolutionRow=100, TrackpadExists=false, TunerIntfAddress=8, TunerIntfDataRate=400, TunerProperties=, TuningMethod=2, WaterProofingEnabled=true, WidgetResolution=8, WidgetsData=<?xml version="1.0" encoding="utf-16"?> <CyWidgetsList xmlns:Version="2_40">   <ListMainTerminal>     <CyTerminal NameIndex="0" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="1" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="2" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="3" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="4" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="5" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="6" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="7" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="8" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="9" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="10" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="11" WidgetName="LinearSlider0__LS" />   </ListMainTerminal>   <ListButtons />   <ListMatrixButtons />   <ListTouchPads />   <ListSliders>     <CySlider Name="LinearSlider0" Type="SliderLinear" Count="12" Angle="0" Fliped="false" Fliped2D="false" ScaleFactor="1" Diplexing="false" Resolution="127" FilterPropertiesPos="Jitter">       <Location>         <X>2147483647</X>         <Y>2147483647</Y>       </Location>       <Properties>         <Hysteresis>0</Hysteresis>         <Debounce>1</Debounce>         <FingerThreshold>100</FingerThreshold>         <NoiseThreshold>20</NoiseThreshold>         <ScanResolution>_10</ScanResolution>         <ApiResolution>100</ApiResolution>       </Properties>     </CySlider>   </ListSliders>   <GuardSensor Name="GuardSensor" Type="Button" Count="1" Angle="0" Fliped="false" Fliped2D="false" ScaleFactor="1">     <Location>       <X>2147483647</X>       <Y>2147483647</Y>     </Location>     <Properties>       <Hysteresis>10</Hysteresis>       <Debounce>5</Debounce>       <FingerThreshold>100</FingerThreshold>       <NoiseThreshold>20</NoiseThreshold>       <ScanResolution>_12</ScanResolution>       <ApiResolution>100</ApiResolution>     </Properties>   </GuardSensor>   <GuardSensorTerminal NameIndex="0" WidgetName="GuardSensor__GRD" />   <CyScanSlotsList>     <ListScanSlots>       <CyScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="4" AnalogSwitchDivider="4" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e0__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="4" AnalogSwitchDivider="4" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e1__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="4" AnalogSwitchDivider="4" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e2__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="4" AnalogSwitchDivider="4" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e3__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="4" AnalogSwitchDivider="4" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e4__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e5__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e6__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e7__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e8__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e9__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e10__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e11__LS</string>         </ListTerminalsNames>       </CyScanSlot>     </ListScanSlots>     <GuardSensorScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="GuardSensor__GRD">       <ListTerminalsNames>         <string>GuardSensor__GRD</string>       </ListTerminalsNames>     </GuardSensorScanSlot>   </CyScanSlotsList> </CyWidgetsList>, CY_API_CALLBACK_HEADER_INCLUDE=#include "cyapicallbacks.h", CY_COMPONENT_NAME=CapSense_CSD_P4_v2_40, CY_CONTROL_FILE=<:default:>, CY_DATASHEET_FILE=CapSense_CSD_P4_v2_40.pdf, CY_FITTER_NAME=CapSense_CSD, CY_INSTANCE_SHORT_NAME=CapSense_CSD, CY_MAJOR_VERSION=2, CY_MINOR_VERSION=40, CY_REMOVE=false, CY_SUPPRESS_API_GEN=false, CY_VERSION=PSoC Creator  3.3 SP1, INSTANCE_NAME=CapSense_CSD, )
+// CapSense_CSD_P4_v2_40(AdvCrossCouplingThreshold=5, AdvPenultimateThreshold=100, AdvVirtualSensorThreshold=100, AnalogSwitchDivider=12, AvgSamplesNumber=1, BallisticMultiplierEnabled=false, CalibrationResolution=7, CmodPrecharge=1, ConnectInactiveSensors=0, CshTankPrecharge=1, CurrentSource=0, CustomEzI2CInstanceName=SCB, DbPwmMode=0, DbPwmPeriod=0, DfbEnable=false, DynamicButtonNumber=5, EmcSensorNumber=10, EnableAutoCalibration=true, EnableBIST=false, EnableTuneHelper=false, Gestures_ActiveEdgeSwipeThreshold=10, Gestures_BottomAngleThreshold=45, Gestures_ClicksEnabled=true, Gestures_ClickXRadiusPixels=30, Gestures_ClickYRadiusPixels=30, Gestures_DebounceTwoFingerScrollToZoomCount=5, Gestures_DebounceZoomCount=3, Gestures_DoubleClickMaxRadius=20, Gestures_DoubleClickMaxTimeout=1000, Gestures_DoubleClickMinTimeout=10, Gestures_EdgeSwipeCompleteTimeout=2000, Gestures_EdgeSwipesEnabled=true, Gestures_EdgeSwipeTime=100, Gestures_FlickActiveDistanceThresholdX=30, Gestures_FlickActiveDistanceThresholdY=30, Gestures_FlickSampleTime=3, Gestures_FlicksEnabled=false, Gestures_OneFingerInertialScrollActiveDistanceThresholdX=5, Gestures_OneFingerInertialScrollActiveDistanceThresholdY=5, Gestures_OneFingerInertialScrollCountLevel=0, Gestures_OneFingerScrollDebounceCount=3, Gestures_OneFingerScrollsEnabled=true, Gestures_OneFingerScrollStep1=1, Gestures_OneFingerScrollStep2=3, Gestures_OneFingerScrollStep3=5, Gestures_OneFingerScrollStep4=7, Gestures_OneFingerScrollThreshold1X=5, Gestures_OneFingerScrollThreshold1Y=5, Gestures_OneFingerScrollThreshold2X=7, Gestures_OneFingerScrollThreshold2Y=7, Gestures_OneFingerScrollThreshold3X=8, Gestures_OneFingerScrollThreshold3Y=9, Gestures_OneFingerScrollThreshold4X=11, Gestures_OneFingerScrollThreshold4Y=11, Gestures_RotateActiveAngleThreshold=90, Gestures_RotateDebounceLimit=20, Gestures_RotateEnabled=false, Gestures_SingleClickMaxTimeout=1000, Gestures_SingleClickMinTimeout=20, Gestures_TopAngleThreshold=45, Gestures_TwoFingerClickMaxTimeout=1000, Gestures_TwoFingerClickMinTimeout=100, Gestures_TwoFingerInertialScrollActiveDistanceThresholdX=5, Gestures_TwoFingerInertialScrollActiveDistanceThresholdY=5, Gestures_TwoFingerInertialScrollCountLevel=0, Gestures_TwoFingerScrollDebounceCount=3, Gestures_TwoFingerScrollsEnabled=true, Gestures_TwoFingerScrollStep1=1, Gestures_TwoFingerScrollStep2=3, Gestures_TwoFingerScrollStep3=5, Gestures_TwoFingerScrollStep4=7, Gestures_TwoFingerScrollThreshold1X=5, Gestures_TwoFingerScrollThreshold1Y=5, Gestures_TwoFingerScrollThreshold2X=7, Gestures_TwoFingerScrollThreshold2Y=7, Gestures_TwoFingerScrollThreshold3X=8, Gestures_TwoFingerScrollThreshold3Y=9, Gestures_TwoFingerScrollThreshold4X=11, Gestures_TwoFingerScrollThreshold4Y=11, Gestures_TwoFingerSettlingCount=3, Gestures_WidthOfDisambiguationRegion=5, Gestures_ZoomActiveDistanceThresholdX=8, Gestures_ZoomActiveDistanceThresholdY=8, Gestures_ZoomEnabled=true, GlitchEliminateTimeout=0, GuardSensorEnable=false, I2cCommunication=0, IDACRange=0, IDACsCount=2, ImmunityLevel=1, InputClkFreq=3, IsStreetFighter=false, IsTrackpadSupported=false, KValueScalingFactor=8, LowBaselineReset=5, M0S8CSD_BLOCK_NUM=1, M0S8CSD_BLOCK_VER=0, M0S8GPIO2_BLOCK_NUM=1, M0S8GPIO2_BLOCK_VER=0, M0S8HSIOM4A_BLOCK_NUM=1, M0S8HSIOM4A_BLOCK_VER=0, M0S8IOSS_BLOCK_NUM=0, M0S8IOSS_BLOCK_VER=-1, M0S8PCLK_BLOCK_NUM=1, M0S8PCLK_BLOCK_VER=0, M0S8PERI_BLOCK_NUM=0, M0S8PERI_BLOCK_VER=-1, ModulatorClkDivider=12, NegativeNoiseThreshold=20, OversamplingEn=false, PrechargeClkDivider=12, PrechargeClkFreq=3, PrsOptions=2, PrtRegNameReplacementString=CYREG, RawDataFilterType=8, SensorAutoReset=false, SensorNumber=12, SensorsFreqSettingsInd=true, ShieldDelay=0, ShieldEnable=false, ShieldTankEnable=false, SizeReplacementString=uint8, SliderThresholdsUpdateManual=false, SnsAlias=LinearSlider0_e0__LS, LinearSlider0_e1__LS, LinearSlider0_e2__LS, LinearSlider0_e3__LS, LinearSlider0_e4__LS, LinearSlider0_e5__LS, LinearSlider0_e6__LS, LinearSlider0_e7__LS, LinearSlider0_e8__LS, LinearSlider0_e9__LS, LinearSlider0_e10__LS, LinearSlider0_e11__LS, SymbolTitlePostfix=CSD, SymbolTitlePrefix=CapSense, ThresholdMode=false, TrackpadApiResolutionCol=100, TrackpadApiResolutionRow=100, TrackpadExists=false, TunerIntfAddress=8, TunerIntfDataRate=400, TunerProperties=, TuningMethod=2, WaterProofingEnabled=true, WidgetResolution=8, WidgetsData=<?xml version="1.0" encoding="utf-16"?> <CyWidgetsList xmlns:Version="2_40">   <ListMainTerminal>     <CyTerminal NameIndex="0" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="1" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="2" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="3" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="4" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="5" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="6" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="7" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="8" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="9" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="10" WidgetName="LinearSlider0__LS" />     <CyTerminal NameIndex="11" WidgetName="LinearSlider0__LS" />   </ListMainTerminal>   <ListButtons />   <ListMatrixButtons />   <ListTouchPads />   <ListSliders>     <CySlider Name="LinearSlider0" Type="SliderLinear" Count="12" Angle="0" Fliped="false" Fliped2D="false" ScaleFactor="1" Diplexing="false" Resolution="127" FilterPropertiesPos="Jitter">       <Location>         <X>2147483647</X>         <Y>2147483647</Y>       </Location>       <Properties>         <Hysteresis>0</Hysteresis>         <Debounce>1</Debounce>         <FingerThreshold>100</FingerThreshold>         <NoiseThreshold>20</NoiseThreshold>         <ScanResolution>_10</ScanResolution>         <ApiResolution>100</ApiResolution>       </Properties>     </CySlider>   </ListSliders>   <GuardSensor Name="GuardSensor" Type="Button" Count="1" Angle="0" Fliped="false" Fliped2D="false" ScaleFactor="1">     <Location>       <X>2147483647</X>       <Y>2147483647</Y>     </Location>     <Properties>       <Hysteresis>10</Hysteresis>       <Debounce>5</Debounce>       <FingerThreshold>100</FingerThreshold>       <NoiseThreshold>20</NoiseThreshold>       <ScanResolution>_12</ScanResolution>       <ApiResolution>100</ApiResolution>     </Properties>   </GuardSensor>   <GuardSensorTerminal NameIndex="0" WidgetName="GuardSensor__GRD" />   <CyScanSlotsList>     <ListScanSlots>       <CyScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="4" AnalogSwitchDivider="4" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e0__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="4" AnalogSwitchDivider="4" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e1__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="4" AnalogSwitchDivider="4" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e2__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="4" AnalogSwitchDivider="4" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e3__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="4" AnalogSwitchDivider="4" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e4__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e5__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e6__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e7__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e8__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e9__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e10__LS</string>         </ListTerminalsNames>       </CyScanSlot>       <CyScanSlot IDAC1Settings="80" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="LinearSlider0__LS">         <ListTerminalsNames>           <string>LinearSlider0_e11__LS</string>         </ListTerminalsNames>       </CyScanSlot>     </ListScanSlots>     <GuardSensorScanSlot IDAC1Settings="200" IDAC2Settings="80" Sensitivity="2" AnalogSwitchDivider="2" ModulatorDivider="2" WidgetName="GuardSensor__GRD">       <ListTerminalsNames>         <string>GuardSensor__GRD</string>       </ListTerminalsNames>     </GuardSensorScanSlot>   </CyScanSlotsList> </CyWidgetsList>, CY_API_CALLBACK_HEADER_INCLUDE=#include "cyapicallbacks.h", CY_COMPONENT_NAME=CapSense_CSD_P4_v2_40, CY_CONTROL_FILE=<:default:>, CY_DATASHEET_FILE=CapSense_CSD_P4_v2_40.pdf, CY_FITTER_NAME=CapSense_CSD, CY_INSTANCE_SHORT_NAME=CapSense_CSD, CY_MAJOR_VERSION=2, CY_MINOR_VERSION=40, CY_REMOVE=false, CY_SUPPRESS_API_GEN=false, CY_VERSION=PSoC Creator  3.3 SP1, INSTANCE_NAME=CapSense_CSD, )
 module CapSense_CSD_P4_v2_40_2 ;
 
 
@@ -184,11 +184,11 @@ module CapSense_CSD_P4_v2_40_2 ;
           wire  Net_429;
     electrical  Net_241;
           wire  Net_420;
-    electrical [12:0] Net_245;
+    electrical [11:0] Net_245;
     electrical  Net_270;
 
     cy_psoc4_csd_v1_0 CSD_FFB (
-        .source(Net_245[12:0]),
+        .source(Net_245[11:0]),
         .csh(Net_246),
         .shield(Net_241),
         .cmod(Net_398),
@@ -201,7 +201,7 @@ module CapSense_CSD_P4_v2_40_2 ;
         .sense_out(Net_329),
         .amuxa(Net_270));
     defparam CSD_FFB.is_capsense = 1;
-    defparam CSD_FFB.sensors_count = 13;
+    defparam CSD_FFB.sensors_count = 12;
     defparam CSD_FFB.shield_count = 1;
 
 
@@ -302,71 +302,71 @@ module CapSense_CSD_P4_v2_40_2 ;
     IDAC_P4_v1_10_0 IDAC2 (
         .Iout(Net_270));
 
-	wire [12:0] tmpOE__Sns_net;
-	wire [12:0] tmpFB_12__Sns_net;
-	wire [12:0] tmpIO_12__Sns_net;
+	wire [11:0] tmpOE__Sns_net;
+	wire [11:0] tmpFB_11__Sns_net;
+	wire [11:0] tmpIO_11__Sns_net;
 	wire [0:0] tmpINTERRUPT_0__Sns_net;
 	electrical [0:0] tmpSIOVREF__Sns_net;
 
 	cy_psoc3_pins_v1_10
 		#(.id("f11cf583-f169-4b4e-8b05-530256f64bff/73b612cd-240c-4d8e-8340-ea28aabf4b11"),
-		  .drive_mode(39'b000_000_000_000_000_000_000_000_000_000_000_000_000),
-		  .ibuf_enabled(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
-		  .init_dr_st(13'b1_1_1_1_1_1_1_1_1_1_1_1_1),
+		  .drive_mode(36'b000_000_000_000_000_000_000_000_000_000_000_000),
+		  .ibuf_enabled(12'b0_0_0_0_0_0_0_0_0_0_0_0),
+		  .init_dr_st(12'b1_1_1_1_1_1_1_1_1_1_1_1),
 		  .input_clk_en(0),
-		  .input_sync(13'b1_1_1_1_1_1_1_1_1_1_1_1_1),
-		  .input_sync_mode(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
-		  .intr_mode(26'b00_00_00_00_00_00_00_00_00_00_00_00_00),
+		  .input_sync(12'b1_1_1_1_1_1_1_1_1_1_1_1),
+		  .input_sync_mode(12'b0_0_0_0_0_0_0_0_0_0_0_0),
+		  .intr_mode(24'b00_00_00_00_00_00_00_00_00_00_00_00),
 		  .invert_in_clock(0),
 		  .invert_in_clock_en(0),
 		  .invert_in_reset(0),
 		  .invert_out_clock(0),
 		  .invert_out_clock_en(0),
 		  .invert_out_reset(0),
-		  .io_voltage(",,,,,,,,,,,,"),
+		  .io_voltage(",,,,,,,,,,,"),
 		  .layout_mode("NONCONTIGUOUS"),
-		  .oe_conn(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
+		  .oe_conn(12'b0_0_0_0_0_0_0_0_0_0_0_0),
 		  .oe_reset(0),
-		  .oe_sync(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
+		  .oe_sync(12'b0_0_0_0_0_0_0_0_0_0_0_0),
 		  .output_clk_en(0),
-		  .output_clock_mode(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
-		  .output_conn(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
-		  .output_mode(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
+		  .output_clock_mode(12'b0_0_0_0_0_0_0_0_0_0_0_0),
+		  .output_conn(12'b0_0_0_0_0_0_0_0_0_0_0_0),
+		  .output_mode(12'b0_0_0_0_0_0_0_0_0_0_0_0),
 		  .output_reset(0),
-		  .output_sync(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
+		  .output_sync(12'b0_0_0_0_0_0_0_0_0_0_0_0),
 		  .pa_in_clock(-1),
 		  .pa_in_clock_en(-1),
 		  .pa_in_reset(-1),
 		  .pa_out_clock(-1),
 		  .pa_out_clock_en(-1),
 		  .pa_out_reset(-1),
-		  .pin_aliases("LinearSlider0_e0__LS,LinearSlider0_e1__LS,LinearSlider0_e2__LS,LinearSlider0_e3__LS,LinearSlider0_e4__LS,LinearSlider0_e5__LS,LinearSlider0_e6__LS,LinearSlider0_e7__LS,LinearSlider0_e8__LS,LinearSlider0_e9__LS,LinearSlider0_e10__LS,LinearSlider0_e11__LS,GuardSensor__GRD"),
-		  .pin_mode("AAAAAAAAAAAAA"),
+		  .pin_aliases("LinearSlider0_e0__LS,LinearSlider0_e1__LS,LinearSlider0_e2__LS,LinearSlider0_e3__LS,LinearSlider0_e4__LS,LinearSlider0_e5__LS,LinearSlider0_e6__LS,LinearSlider0_e7__LS,LinearSlider0_e8__LS,LinearSlider0_e9__LS,LinearSlider0_e10__LS,LinearSlider0_e11__LS"),
+		  .pin_mode("AAAAAAAAAAAA"),
 		  .por_state(4),
 		  .sio_group_cnt(0),
-		  .sio_hyst(13'b1_1_1_1_1_1_1_1_1_1_1_1_1),
+		  .sio_hyst(12'b1_1_1_1_1_1_1_1_1_1_1_1),
 		  .sio_ibuf(""),
-		  .sio_info(26'b00_00_00_00_00_00_00_00_00_00_00_00_00),
+		  .sio_info(24'b00_00_00_00_00_00_00_00_00_00_00_00),
 		  .sio_obuf(""),
 		  .sio_refsel(""),
 		  .sio_vtrip(""),
 		  .sio_hifreq(""),
 		  .sio_vohsel(""),
-		  .slew_rate(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
+		  .slew_rate(12'b0_0_0_0_0_0_0_0_0_0_0_0),
 		  .spanning(1),
-		  .use_annotation(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
-		  .vtrip(26'b10_10_10_10_10_10_10_10_10_10_10_10_10),
-		  .width(13),
-		  .ovt_hyst_trim(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
-		  .ovt_needed(13'b0_0_0_0_0_0_0_0_0_0_0_0_0),
-		  .ovt_slew_control(26'b00_00_00_00_00_00_00_00_00_00_00_00_00),
-		  .input_buffer_sel(26'b00_00_00_00_00_00_00_00_00_00_00_00_00))
+		  .use_annotation(12'b0_0_0_0_0_0_0_0_0_0_0_0),
+		  .vtrip(24'b10_10_10_10_10_10_10_10_10_10_10_10),
+		  .width(12),
+		  .ovt_hyst_trim(12'b0_0_0_0_0_0_0_0_0_0_0_0),
+		  .ovt_needed(12'b0_0_0_0_0_0_0_0_0_0_0_0),
+		  .ovt_slew_control(24'b00_00_00_00_00_00_00_00_00_00_00_00),
+		  .input_buffer_sel(24'b00_00_00_00_00_00_00_00_00_00_00_00))
 		Sns
 		 (.oe(tmpOE__Sns_net),
-		  .y({13'b0}),
-		  .fb({tmpFB_12__Sns_net[12:0]}),
-		  .analog({Net_245[12:0]}),
-		  .io({tmpIO_12__Sns_net[12:0]}),
+		  .y({12'b0}),
+		  .fb({tmpFB_11__Sns_net[11:0]}),
+		  .analog({Net_245[11:0]}),
+		  .io({tmpIO_11__Sns_net[11:0]}),
 		  .siovref(tmpSIOVREF__Sns_net),
 		  .interrupt({tmpINTERRUPT_0__Sns_net[0:0]}),
 		  .in_clock({1'b0}),
@@ -376,83 +376,7 @@ module CapSense_CSD_P4_v2_40_2 ;
 		  .out_clock_en({1'b1}),
 		  .out_reset({1'b0}));
 
-	assign tmpOE__Sns_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{13'b1111111111111} : {13'b1111111111111};
-
-	wire [0:0] tmpOE__Shield_net;
-	wire [0:0] tmpFB_0__Shield_net;
-	wire [0:0] tmpIO_0__Shield_net;
-	wire [0:0] tmpINTERRUPT_0__Shield_net;
-	electrical [0:0] tmpSIOVREF__Shield_net;
-
-	cy_psoc3_pins_v1_10
-		#(.id("f11cf583-f169-4b4e-8b05-530256f64bff/3d66d0f1-2f2e-44d3-9bb1-527d9165a5f3"),
-		  .drive_mode(3'b110),
-		  .ibuf_enabled(1'b0),
-		  .init_dr_st(1'b1),
-		  .input_clk_en(0),
-		  .input_sync(1'b1),
-		  .input_sync_mode(1'b0),
-		  .intr_mode(2'b00),
-		  .invert_in_clock(0),
-		  .invert_in_clock_en(0),
-		  .invert_in_reset(0),
-		  .invert_out_clock(0),
-		  .invert_out_clock_en(0),
-		  .invert_out_reset(0),
-		  .io_voltage(""),
-		  .layout_mode("CONTIGUOUS"),
-		  .oe_conn(1'b0),
-		  .oe_reset(0),
-		  .oe_sync(1'b0),
-		  .output_clk_en(0),
-		  .output_clock_mode(1'b0),
-		  .output_conn(1'b0),
-		  .output_mode(1'b0),
-		  .output_reset(0),
-		  .output_sync(1'b0),
-		  .pa_in_clock(-1),
-		  .pa_in_clock_en(-1),
-		  .pa_in_reset(-1),
-		  .pa_out_clock(-1),
-		  .pa_out_clock_en(-1),
-		  .pa_out_reset(-1),
-		  .pin_aliases("Shield"),
-		  .pin_mode("A"),
-		  .por_state(4),
-		  .sio_group_cnt(0),
-		  .sio_hyst(1'b1),
-		  .sio_ibuf(""),
-		  .sio_info(2'b00),
-		  .sio_obuf(""),
-		  .sio_refsel(""),
-		  .sio_vtrip(""),
-		  .sio_hifreq(""),
-		  .sio_vohsel(""),
-		  .slew_rate(1'b0),
-		  .spanning(0),
-		  .use_annotation(1'b0),
-		  .vtrip(2'b10),
-		  .width(1),
-		  .ovt_hyst_trim(1'b0),
-		  .ovt_needed(1'b0),
-		  .ovt_slew_control(2'b00),
-		  .input_buffer_sel(2'b00))
-		Shield
-		 (.oe(tmpOE__Shield_net),
-		  .y({1'b0}),
-		  .fb({tmpFB_0__Shield_net[0:0]}),
-		  .analog({Net_241}),
-		  .io({tmpIO_0__Shield_net[0:0]}),
-		  .siovref(tmpSIOVREF__Shield_net),
-		  .interrupt({tmpINTERRUPT_0__Shield_net[0:0]}),
-		  .in_clock({1'b0}),
-		  .in_clock_en({1'b1}),
-		  .in_reset({1'b0}),
-		  .out_clock({1'b0}),
-		  .out_clock_en({1'b1}),
-		  .out_reset({1'b0}));
-
-	assign tmpOE__Shield_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+	assign tmpOE__Sns_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{12'b111111111111} : {12'b111111111111};
 
     IDAC_P4_v1_10_1 IDAC1 (
         .Iout(Net_270));

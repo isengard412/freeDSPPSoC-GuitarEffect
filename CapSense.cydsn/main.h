@@ -22,19 +22,23 @@
 #define CY_MAIN_H
 
 #include <project.h>
-#include "uart.h"
-
 
 /***************************************
 *         Function Prototypes
 ****************************************/
 
-uint8 ExecuteCommand(uint32 cmd);
+/* Function prototypes */
+uint32 CheckSwitchState(void);
+uint32 WriteCommandPacket(uint8 cmd);
+uint32 ReadStatusPacket(void);
 
 
 /***************************************
 *            Constants
 ****************************************/
+
+/* I2C slave address to communicate with */
+#define I2C_SLAVE_ADDR  (0x08u)
 
 /* Buffer and packet size */
 #define BUFFER_SIZE     (3u)
@@ -54,11 +58,21 @@ uint8 ExecuteCommand(uint32 cmd);
 #define STS_CMD_DONE    (0x00u)
 #define STS_CMD_FAIL    (0xFFu)
 
+/* Command valid status */
+#define TRANSFER_CMPLT    (0x00u)
+#define TRANSFER_ERROR    (0xFFu)
+
 /* Commands set */
 #define CMD_SET_OFF     (0u)
-#define CMD_SET_RED     (1u)
-#define CMD_SET_GREEN   (2u)
-#define CMD_SET_BLUE    (3u)
+#define CMD_SET_ERROR   (1u)
+#define CMD_SET_MODE1   (2u)
+#define CMD_SET_MODE2   (3u)
+#define CMD_SET_MODE3   (4u)
+#define CMD_SET_MODE4   (5u)
+#define CMD_SET_MODE5   (6u)
+
+/* Delay between commands in milliseconds */
+#define CMD_TO_CMD_DELAY  (5u)
 
 
 /***************************************
@@ -70,31 +84,6 @@ uint8 ExecuteCommand(uint32 cmd);
                 do{     \
                     LED_RED_Write  (0u); \
                     LED_GREEN_Write(1u); \
-                    LED_BLUE_Write (1u); \
-                }while(0)
-
-/* Set LED GREEN color */
-#define RGB_LED_ON_GREEN \
-                do{      \
-                    LED_RED_Write  (1u); \
-                    LED_GREEN_Write(0u); \
-                    LED_BLUE_Write (1u); \
-                }while(0)
-
-/* Set LED BLUE color */
-#define RGB_LED_ON_BLUE \
-                do{     \
-                    LED_RED_Write  (1u); \
-                    LED_GREEN_Write(1u); \
-                    LED_BLUE_Write (0u); \
-                }while(0)
-
-/* Set LED TURN OFF */
-#define RGB_LED_OFF \
-                do{ \
-                    LED_RED_Write  (1u); \
-                    LED_GREEN_Write(1u); \
-                    LED_BLUE_Write (1u); \
                 }while(0)
 
 #endif /* (CY_MAIN_H) */

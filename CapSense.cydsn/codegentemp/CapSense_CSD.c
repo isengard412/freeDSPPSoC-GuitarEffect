@@ -63,7 +63,7 @@ uint8 CapSense_CSD_sensorEnableMaskBackup[(((CapSense_CSD_TOTAL_SENSOR_COUNT - 1
 
 /* Configured constants and arrays by Customizer */
 uint8 CapSense_CSD_sensorEnableMask[(((CapSense_CSD_TOTAL_SENSOR_COUNT - 1u) / 8u) + 1u)] = {
-0xFFu, 0x1Fu, };
+0xFFu, 0xFu, };
 
 reg32 * CapSense_CSD_pcTable[] = {
     (reg32 *)CapSense_CSD_Sns__LinearSlider0_e0__LS__PC, 
@@ -78,7 +78,6 @@ reg32 * CapSense_CSD_pcTable[] = {
     (reg32 *)CapSense_CSD_Sns__LinearSlider0_e9__LS__PC, 
     (reg32 *)CapSense_CSD_Sns__LinearSlider0_e10__LS__PC, 
     (reg32 *)CapSense_CSD_Sns__LinearSlider0_e11__LS__PC, 
-    (reg32 *)CapSense_CSD_Sns__GuardSensor__GRD__PC, 
 };
 
 const uint8 CapSense_CSD_portTable[] = {
@@ -94,7 +93,6 @@ const uint8 CapSense_CSD_portTable[] = {
     CapSense_CSD_Sns__LinearSlider0_e9__LS__PORT, 
     CapSense_CSD_Sns__LinearSlider0_e10__LS__PORT, 
     CapSense_CSD_Sns__LinearSlider0_e11__LS__PORT, 
-    CapSense_CSD_Sns__GuardSensor__GRD__PORT, 
 };
 
 const uint32 CapSense_CSD_maskTable[] = {
@@ -110,7 +108,6 @@ const uint32 CapSense_CSD_maskTable[] = {
     CapSense_CSD_Sns__LinearSlider0_e9__LS__MASK, 
     CapSense_CSD_Sns__LinearSlider0_e10__LS__MASK, 
     CapSense_CSD_Sns__LinearSlider0_e11__LS__MASK, 
-    CapSense_CSD_Sns__GuardSensor__GRD__MASK, 
 };
 
 const uint8 CapSense_CSD_pinShiftTbl[] = {
@@ -126,14 +123,12 @@ const uint8 CapSense_CSD_pinShiftTbl[] = {
     (uint8) CapSense_CSD_Sns__LinearSlider0_e9__LS__SHIFT, 
     (uint8) CapSense_CSD_Sns__LinearSlider0_e10__LS__SHIFT, 
     (uint8) CapSense_CSD_Sns__LinearSlider0_e11__LS__SHIFT, 
-    (uint8) CapSense_CSD_Sns__GuardSensor__GRD__SHIFT, 
 };
 
 uint8 CapSense_CSD_modulationIDAC[CapSense_CSD_TOTAL_SENSOR_COUNT];
 uint8 CapSense_CSD_compensationIDAC[CapSense_CSD_TOTAL_SENSOR_COUNT];
 
 uint32 CapSense_CSD_widgetResolution[CapSense_CSD_RESOLUTIONS_TBL_SIZE] = {
-    CapSense_CSD_RESOLUTION_12_BITS,
     CapSense_CSD_RESOLUTION_12_BITS,
 };
 
@@ -142,7 +137,6 @@ uint8 CapSense_CSD_sampleClkDividerVal[CapSense_CSD_TOTAL_SCANSLOT_COUNT];
 
 const uint8 CapSense_CSD_widgetNumber[CapSense_CSD_TOTAL_SENSOR_COUNT] = {
     0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, /* LinearSlider0__LS */
-    1u, /* GuardSensor__GRD */
 };
 
 reg32* const CapSense_CSD_prtSelTbl[CapSense_CSD_CFG_REG_TBL_SIZE] = {

@@ -28,8 +28,8 @@
 #include "CapSense_CSD_SampleClk.h"
 
 /* Constants set by Customizer */
-#define CapSense_CSD_TOTAL_SENSOR_COUNT            (13u)
-#define CapSense_CSD_TOTAL_SCANSLOT_COUNT          (13u)
+#define CapSense_CSD_TOTAL_SENSOR_COUNT            (12u)
+#define CapSense_CSD_TOTAL_SCANSLOT_COUNT          (12u)
 #define CapSense_CSD_INDEX_TABLE_SIZE              (0u)
 
 /* Define Sensors */
@@ -45,7 +45,6 @@
 #define CapSense_CSD_SENSOR_LINEARSLIDER0_E9__LS    (9u)
 #define CapSense_CSD_SENSOR_LINEARSLIDER0_E10__LS    (10u)
 #define CapSense_CSD_SENSOR_LINEARSLIDER0_E11__LS    (11u)
-#define CapSense_CSD_SENSOR_GUARDSENSOR__GRD    (12u)
 
 #define CapSense_CSD_TOTAL_SENSOR_MASK (((CapSense_CSD_TOTAL_SENSOR_COUNT - 1u) / 8u) + 1u)
 
@@ -60,11 +59,11 @@ CY_ISR_PROTO(CapSense_CSD_ISR);
 *   Condition compilation parameters
 ***************************************/
 
-#define CapSense_CSD_CONNECT_INACTIVE_SNS       (2u)
+#define CapSense_CSD_CONNECT_INACTIVE_SNS       (0u)
 #define CapSense_CSD_IS_COMPLEX_SCANSLOTS       (0u)
 #define CapSense_CSD_COMPLEX_SCANSLOTS_NUM      (0u)
 #define CapSense_CSD_DEDICATED_SENSORS_NUM      (0u)
-#define CapSense_CSD_PORT_PIN_CONFIG_TBL_ZISE   (13u)
+#define CapSense_CSD_PORT_PIN_CONFIG_TBL_ZISE   (12u)
 
 #define CapSense_CSD_IDAC_CNT                   (2u)
 #define CapSense_CSD_IDAC1_POLARITY             (0u)
@@ -84,7 +83,7 @@ CY_ISR_PROTO(CapSense_CSD_ISR);
 
 #define CapSense_CSD_CMOD_PREGARGE_OPTION       (1u)
 #define CapSense_CSD_CSH_TANK_PREGARGE_OPTION   (1u)
-#define CapSense_CSD_IS_SHIELD_ENABLE           (1u)
+#define CapSense_CSD_IS_SHIELD_ENABLE           (0u)
 #define CapSense_CSD_CSH_TANK_ENABLE            (0u)
 
 #define CapSense_CSD_SHIELD_DELAY               (0u)
@@ -228,7 +227,7 @@ void CapSense_CSD_NormalizeWidgets(uint32 widgetsNum, uint8 dataPtr[]);
 
 #define CapSense_CSD_RESOLUTION_OFFSET          (16u)
 #define CapSense_CSD_MSB_RESOLUTION_OFFSET      (22u)
-#define CapSense_CSD_RESOLUTIONS_TBL_SIZE       (2u)
+#define CapSense_CSD_RESOLUTIONS_TBL_SIZE       (1u)
 
 /* Software Status Register Bit Masks */
 #define CapSense_CSD_SW_STS_BUSY                (0x01u)
