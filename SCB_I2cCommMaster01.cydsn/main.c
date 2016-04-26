@@ -59,8 +59,6 @@ int main()
     ***************************************************************************/
     for(;;)
     {
-        UART_1_UartPutString("Test\r\n");
-        //UART_SendNumber(command);
         /* Send packet with command to the slave */
         if (0u == WriteCommandPacket(command))
         {

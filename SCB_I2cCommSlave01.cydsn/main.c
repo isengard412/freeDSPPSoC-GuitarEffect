@@ -72,12 +72,10 @@ int main()
             /* Check packet length */
             if (PACKET_SIZE == I2CS_I2CSlaveGetWriteBufSize())
             {
-                UART_1_UartPutString("Packet");
                 /* Check start and end of packet markers */
                 if ((i2cWriteBuffer[PACKET_SOP_POS] == PACKET_SOP) &&
                     (i2cWriteBuffer[PACKET_EOP_POS] == PACKET_EOP))
                 {
-                    UART_1_UartPutString("Buffer");
                     status = ExecuteCommand(i2cWriteBuffer[PACKET_CMD_POS]);
                 }
             }
@@ -127,7 +125,8 @@ uint8 ExecuteCommand(uint32 cmd)
     uint8 status;
 
     status = STS_CMD_DONE;
-    UART_1_UartPutString("Executed");
+    UART_1_UartPutString("Executed: ");
+    UART_SendNumber(cmd);
     /* Execute received command */
     switch (cmd)
     {
