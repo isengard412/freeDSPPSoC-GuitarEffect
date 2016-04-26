@@ -54,7 +54,6 @@
 
 /* Widgets constants definition */
 #define CapSense_CSD_LINEARSLIDER0__LS        (0u)
-#define CapSense_CSD_GUARDSENSOR__GRD        (1u)
 
 #define CapSense_CSD_TOTAL_DIPLEXED_SLIDERS_COUNT        (0u)
 #define CapSense_CSD_TOTAL_LINEAR_SLIDERS_COUNT          (1u)
@@ -62,7 +61,7 @@
 #define CapSense_CSD_TOTAL_TOUCH_PADS_COUNT              (0u)
 #define CapSense_CSD_TOTAL_TOUCH_PADS_BASIC_COUNT        (0u)
 #define CapSense_CSD_TOTAL_TRACKPAD_GESTURES_COUNT       (0u)
-#define CapSense_CSD_TOTAL_BUTTONS_COUNT                 (1u)
+#define CapSense_CSD_TOTAL_BUTTONS_COUNT                 (0u)
 #define CapSense_CSD_TOTAL_MATRIX_BUTTONS_COUNT          (0u)
 #define CapSense_CSD_TOTAL_GENERICS_COUNT                (0u)
 
@@ -72,15 +71,15 @@
 #define CapSense_CSD_TOUCH_PADS_POS_FILTERS_MASK         (0x0u)
 #define CapSense_CSD_TRACKPAD_GEST_POS_FILTERS_MASK      (0x0u)
 
-#define CapSense_CSD_UNUSED_DEBOUNCE_COUNTER_INDEX       (1u)
+#define CapSense_CSD_UNUSED_DEBOUNCE_COUNTER_INDEX       (0u)
 
 #define CapSense_CSD_TOTAL_PROX_SENSORS_COUNT            (0u)
 
 #define CapSense_CSD_END_OF_SLIDERS_INDEX                (0u)
 #define CapSense_CSD_END_OF_TOUCH_PAD_INDEX              (0u)
-#define CapSense_CSD_END_OF_BUTTONS_INDEX                (1u)
-#define CapSense_CSD_END_OF_MATRIX_BUTTONS_INDEX         (1u)
-#define CapSense_CSD_END_OF_WIDGETS_INDEX                (2u)
+#define CapSense_CSD_END_OF_BUTTONS_INDEX                (0u)
+#define CapSense_CSD_END_OF_MATRIX_BUTTONS_INDEX         (0u)
+#define CapSense_CSD_END_OF_WIDGETS_INDEX                (1u)
 
 
 

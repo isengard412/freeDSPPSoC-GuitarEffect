@@ -56,7 +56,7 @@ uint8 CapSense_CSD_sensorOnMask[CapSense_CSD_TOTAL_SENSOR_MASK] = {0u};
 
 uint8 CapSense_CSD_lowBaselineResetCnt[CapSense_CSD_TOTAL_SENSOR_COUNT];
 uint8 CapSense_CSD_lowBaselineReset[CapSense_CSD_TOTAL_SENSOR_COUNT] = {
-    30u, 30u, 30u, 30u, 30u, 30u, 30u, 30u, 30u, 30u, 30u, 30u, 30u, 
+    30u, 30u, 30u, 30u, 30u, 30u, 30u, 30u, 30u, 30u, 30u, 30u, 
 };
 
 
@@ -79,21 +79,15 @@ uint8 CapSense_CSD_negativeNoiseThreshold[CapSense_CSD_THRESHOLD_TBL_SIZE];
 uint8 CapSense_CSD_hysteresis[CapSense_CSD_WIDGET_PARAM_TBL_SIZE];
 
 uint8 CapSense_CSD_debounce[] = {
-    1u, 5u, 
-};
-
-static uint8 CapSense_CSD_debounceCounter[] = {
-    0u, 0u, 
+    1u, 
 };
 
 const uint8 CapSense_CSD_rawDataIndex[] = {
     0u, /* LinearSlider0__LS */
-    12u, /* GuardSensor__GRD */
 };
 
 const uint8 CapSense_CSD_numberOfSensors[] = {
     12u, /* LinearSlider0__LS */
-    1u, /* GuardSensor__GRD */
 };
 
 static const uint16 CapSense_CSD_centroidMult[] = {
@@ -167,10 +161,6 @@ void CapSense_CSD_BaseInit(uint32 sensor)
     CapSense_CSD_sensorBaselineLow[sensor] = 0u;
     CapSense_CSD_sensorSignal[sensor] = 0u;
 
-    if(widget > CapSense_CSD_END_OF_TOUCH_PAD_INDEX)
-    {
-        CapSense_CSD_debounceCounter[widget - (CapSense_CSD_END_OF_TOUCH_PAD_INDEX + 1u)] =  CapSense_CSD_debounce[widget];
-    }
 
 
     #if ((0u != (CapSense_CSD_RAW_FILTER_MASK & CapSense_CSD_MEDIAN_FILTER)) ||\
@@ -1120,7 +1110,11 @@ uint32 CapSense_CSD_CheckIsSensorActive(uint32 sensor)
 
     uint8 fingerThreshold;
     uint8 hysteresis;
-    
+    static uint8 CapSense_CSD_debounceCounter[] = {
+    0u, 
+};
+
+
 
     /* Prepare to find debounce counter index */
     widget = CapSense_CSD_widgetNumber[sensor];
@@ -1129,15 +1123,8 @@ uint32 CapSense_CSD_CheckIsSensorActive(uint32 sensor)
     hysteresis = CapSense_CSD_hysteresis[widget];
     debounce = CapSense_CSD_debounce[widget];
 
-        if (widget < CapSense_CSD_TOTAL_CENTROIDS_COUNT)
-    {
         debounceIndex = CapSense_CSD_UNUSED_DEBOUNCE_COUNTER_INDEX;
-        CapSense_CSD_debounceCounter[debounceIndex] = 1u;
-    }
-    else
-    {
-        debounceIndex = widget - (CapSense_CSD_END_OF_TOUCH_PAD_INDEX + 1u);
-    }
+    CapSense_CSD_debounceCounter[debounceIndex] = 1u;
 
 
     /* Was on */
