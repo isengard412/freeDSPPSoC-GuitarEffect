@@ -179,8 +179,8 @@ CY_ISR_PROTO(CapSense_CSD_IsrCH0_ISR);
 *           API Constants
 ***************************************/
 
-#define CapSense_CSD_TOTAL_SENSOR_COUNT            (12u)
-#define CapSense_CSD_TOTAL_SCANSLOT_COUNT            (12u)
+#define CapSense_CSD_TOTAL_SENSOR_COUNT            (8u)
+#define CapSense_CSD_TOTAL_SCANSLOT_COUNT            (8u)
 #define CapSense_CSD_TOTAL_RB_NUMBER            (1u)
 #define CapSense_CSD_TOTAL_RB_NUMBER__CH0            (1u)
 
@@ -193,14 +193,10 @@ CY_ISR_PROTO(CapSense_CSD_IsrCH0_ISR);
 #define CapSense_CSD_SENSOR_LINEARSLIDER0_E5__LS    (5u)
 #define CapSense_CSD_SENSOR_LINEARSLIDER0_E6__LS    (6u)
 #define CapSense_CSD_SENSOR_LINEARSLIDER0_E7__LS    (7u)
-#define CapSense_CSD_SENSOR_LINEARSLIDER0_E8__LS    (8u)
-#define CapSense_CSD_SENSOR_LINEARSLIDER0_E9__LS    (9u)
-#define CapSense_CSD_SENSOR_LINEARSLIDER0_E10__LS    (10u)
-#define CapSense_CSD_SENSOR_LINEARSLIDER0_E11__LS    (11u)
 /* AMux Cmod, Comparator and Idac Channels definitions */
-#define CapSense_CSD_AMuxCH0_CMOD_CHANNEL          (12u)
-#define CapSense_CSD_AMuxCH0_CMP_VP_CHANNEL        (13u)
-#define CapSense_CSD_AMuxCH0_IDAC_CHANNEL          (14u)
+#define CapSense_CSD_AMuxCH0_CMOD_CHANNEL          (8u)
+#define CapSense_CSD_AMuxCH0_CMP_VP_CHANNEL        (9u)
+#define CapSense_CSD_AMuxCH0_IDAC_CHANNEL          (10u)
 
 
 

@@ -43,10 +43,6 @@ void CapSense_CSD_SetAllSensorsDriveMode(uint8 mode)
     CyPins_SetPinDriveMode(CapSense_CSD_PortCH0__LinearSlider0_e5__LS, mode);
     CyPins_SetPinDriveMode(CapSense_CSD_PortCH0__LinearSlider0_e6__LS, mode);
     CyPins_SetPinDriveMode(CapSense_CSD_PortCH0__LinearSlider0_e7__LS, mode);
-    CyPins_SetPinDriveMode(CapSense_CSD_PortCH0__LinearSlider0_e8__LS, mode);
-    CyPins_SetPinDriveMode(CapSense_CSD_PortCH0__LinearSlider0_e9__LS, mode);
-    CyPins_SetPinDriveMode(CapSense_CSD_PortCH0__LinearSlider0_e10__LS, mode);
-    CyPins_SetPinDriveMode(CapSense_CSD_PortCH0__LinearSlider0_e11__LS, mode);
 
 }
 

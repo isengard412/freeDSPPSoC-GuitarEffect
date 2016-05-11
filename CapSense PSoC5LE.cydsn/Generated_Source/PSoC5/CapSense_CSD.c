@@ -41,7 +41,7 @@ volatile uint8 CapSense_CSD_sensorIndex;    /* Index of scannig sensor */
 uint16 CapSense_CSD_sensorRaw[CapSense_CSD_TOTAL_SENSOR_COUNT]; 
 
 uint8 CapSense_CSD_sensorEnableMask[(((CapSense_CSD_TOTAL_SENSOR_COUNT - 1u) / 8u) + 1u)] = {
-0xFFu, 0xFu, };
+0xFFu, };
 
 uint8 CYXDATA * const CYCODE CapSense_CSD_pcTable[] = {
     (uint8 CYXDATA *)CapSense_CSD_PortCH0__LinearSlider0_e0__LS__PC, 
@@ -52,10 +52,6 @@ uint8 CYXDATA * const CYCODE CapSense_CSD_pcTable[] = {
     (uint8 CYXDATA *)CapSense_CSD_PortCH0__LinearSlider0_e5__LS__PC, 
     (uint8 CYXDATA *)CapSense_CSD_PortCH0__LinearSlider0_e6__LS__PC, 
     (uint8 CYXDATA *)CapSense_CSD_PortCH0__LinearSlider0_e7__LS__PC, 
-    (uint8 CYXDATA *)CapSense_CSD_PortCH0__LinearSlider0_e8__LS__PC, 
-    (uint8 CYXDATA *)CapSense_CSD_PortCH0__LinearSlider0_e9__LS__PC, 
-    (uint8 CYXDATA *)CapSense_CSD_PortCH0__LinearSlider0_e10__LS__PC, 
-    (uint8 CYXDATA *)CapSense_CSD_PortCH0__LinearSlider0_e11__LS__PC, 
 };
 
 const uint8 CYCODE CapSense_CSD_portTable[] = {
@@ -67,10 +63,6 @@ const uint8 CYCODE CapSense_CSD_portTable[] = {
     CapSense_CSD_PortCH0__LinearSlider0_e5__LS__PORT, 
     CapSense_CSD_PortCH0__LinearSlider0_e6__LS__PORT, 
     CapSense_CSD_PortCH0__LinearSlider0_e7__LS__PORT, 
-    CapSense_CSD_PortCH0__LinearSlider0_e8__LS__PORT, 
-    CapSense_CSD_PortCH0__LinearSlider0_e9__LS__PORT, 
-    CapSense_CSD_PortCH0__LinearSlider0_e10__LS__PORT, 
-    CapSense_CSD_PortCH0__LinearSlider0_e11__LS__PORT, 
 };
 
 const uint8 CYCODE CapSense_CSD_maskTable[] = {
@@ -82,10 +74,6 @@ const uint8 CYCODE CapSense_CSD_maskTable[] = {
     CapSense_CSD_PortCH0__LinearSlider0_e5__LS__MASK,
     CapSense_CSD_PortCH0__LinearSlider0_e6__LS__MASK,
     CapSense_CSD_PortCH0__LinearSlider0_e7__LS__MASK,
-    CapSense_CSD_PortCH0__LinearSlider0_e8__LS__MASK,
-    CapSense_CSD_PortCH0__LinearSlider0_e9__LS__MASK,
-    CapSense_CSD_PortCH0__LinearSlider0_e10__LS__MASK,
-    CapSense_CSD_PortCH0__LinearSlider0_e11__LS__MASK,
 };
 
 uint8 CYXDATA * const CYCODE CapSense_CSD_csTable[] = {
@@ -95,7 +83,7 @@ uint8 CYXDATA * const CYCODE CapSense_CSD_csTable[] = {
 };
 
 uint8 CapSense_CSD_idacSettings[] = {
-    200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,
+    200u,200u,200u,200u,200u,200u,200u,200u,
 };
 
 uint8 CapSense_CSD_widgetResolution[] = {
@@ -104,7 +92,7 @@ uint8 CapSense_CSD_widgetResolution[] = {
 
 uint8 CapSense_CSD_analogSwitchDivider[CapSense_CSD_TOTAL_SCANSLOT_COUNT];
 const uint8 CYCODE CapSense_CSD_widgetNumber[] = {
-    0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, /* LinearSlider0__LS */
+    0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, /* LinearSlider0__LS */
     
 };
 

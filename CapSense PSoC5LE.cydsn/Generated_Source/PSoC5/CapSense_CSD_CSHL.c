@@ -71,12 +71,12 @@ const uint8 CYCODE CapSense_CSD_rawDataIndex[] = {
 };
 
 const uint8 CYCODE CapSense_CSD_numberOfSensors[] = {
-    12u, /* LinearSlider0__LS */
+    8u, /* LinearSlider0__LS */
 
 };
 
 const uint16 CYCODE CapSense_CSD_centroidMult[] = {
-    2955u, 
+    4644u, 
 };
 
 const uint8 CYCODE CapSense_CSD_posFiltersMask[] = {

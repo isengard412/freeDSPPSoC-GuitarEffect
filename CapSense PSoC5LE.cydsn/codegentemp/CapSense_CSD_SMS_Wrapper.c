@@ -51,7 +51,7 @@ uint16 * SMS_LIB_SensorRaw = CapSense_CSD_sensorRaw;
 uint16 * SMS_LIB_SensorBaseline = CapSense_CSD_sensorBaseline;
 
 const uint8 CYCODE SMS_LIB_SensorSensitivity[] = {
-    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+    2, 2, 2, 2, 2, 2, 2, 2, 
 };
 
 

@@ -2,7 +2,7 @@
 --	Conversion of CapSense PSoC5LE.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Tue May 10 11:56:35 2016
+--	Wed May 11 14:36:46 2016
 --
 
 USE cypress.cypress.all;
@@ -49,10 +49,6 @@ SIGNAL \CapSense_CSD:tmpIO_0__CmodCH0_net_0\ : bit;
 TERMINAL \CapSense_CSD:tmpSIOVREF__CmodCH0_net_0\ : bit;
 SIGNAL \CapSense_CSD:tmpINTERRUPT_0__CmodCH0_net_0\ : bit;
 SIGNAL \CapSense_CSD:tmpOE__PortCH0_net_0\ : bit;
-TERMINAL \CapSense_CSD:Net_1410_11\ : bit;
-TERMINAL \CapSense_CSD:Net_1410_10\ : bit;
-TERMINAL \CapSense_CSD:Net_1410_9\ : bit;
-TERMINAL \CapSense_CSD:Net_1410_8\ : bit;
 TERMINAL \CapSense_CSD:Net_1410_7\ : bit;
 TERMINAL \CapSense_CSD:Net_1410_6\ : bit;
 TERMINAL \CapSense_CSD:Net_1410_5\ : bit;
@@ -853,22 +849,22 @@ SCL_1:cy_psoc3_pins_v1_10
 		out_reset=>zero,
 		interrupt=>\CapSense_CSD:tmpINTERRUPT_0__CmodCH0_net_0\);
 \CapSense_CSD:PortCH0\:cy_psoc3_port_v1_0
-	GENERIC MAP(width=>12,
-		siorefwidth=>6,
-		pin_aliases=>"LinearSlider0_e0__LS,LinearSlider0_e1__LS,LinearSlider0_e2__LS,LinearSlider0_e3__LS,LinearSlider0_e4__LS,LinearSlider0_e5__LS,LinearSlider0_e6__LS,LinearSlider0_e7__LS,LinearSlider0_e8__LS,LinearSlider0_e9__LS,LinearSlider0_e10__LS,LinearSlider0_e11__LS",
+	GENERIC MAP(width=>8,
+		siorefwidth=>4,
+		pin_aliases=>"LinearSlider0_e0__LS,LinearSlider0_e1__LS,LinearSlider0_e2__LS,LinearSlider0_e3__LS,LinearSlider0_e4__LS,LinearSlider0_e5__LS,LinearSlider0_e6__LS,LinearSlider0_e7__LS",
 		id=>"a10acbf9-64ab-4f78-bb2a-4233acf5b8d3/dd9c1af8-be5a-4b9e-b10c-b2d9f11dc9fc",
 		access_mode=>"HW_ONLY",
 		layout_mode=>"NONCONTIGUOUS",
 		port_mode=>"ANALOG",
 		vtrip=>'0',
 		slew_rate=>"",
-		intr_mode=>"000000000000000000000000",
-		drive_mode=>"100100100100100100100100100100100100",
+		intr_mode=>"0000000000000000",
+		drive_mode=>"100100100100100100100100",
 		lcd_sw_drive=>'0',
 		lcd_com_seg=>"",
 		por_state=>0,
 		emif_mode=>"",
-		enable_shielding=>"000000000000",
+		enable_shielding=>"00000000",
 		cs_mode=>"11",
 		sio_obuf=>"",
 		sio_ibuf=>"",
@@ -880,17 +876,13 @@ SCL_1:cy_psoc3_pins_v1_10
 		port_alias_group=>"")
 	PORT MAP(oe=>zero,
 		y=>(zero, zero, zero, zero,
-			zero, zero, zero, zero,
 			zero, zero, zero, zero),
 		fb=>open,
-		analog=>(\CapSense_CSD:Net_1410_11\, \CapSense_CSD:Net_1410_10\, \CapSense_CSD:Net_1410_9\, \CapSense_CSD:Net_1410_8\,
-			\CapSense_CSD:Net_1410_7\, \CapSense_CSD:Net_1410_6\, \CapSense_CSD:Net_1410_5\, \CapSense_CSD:Net_1410_4\,
+		analog=>(\CapSense_CSD:Net_1410_7\, \CapSense_CSD:Net_1410_6\, \CapSense_CSD:Net_1410_5\, \CapSense_CSD:Net_1410_4\,
 			\CapSense_CSD:Net_1410_3\, \CapSense_CSD:Net_1410_2\, \CapSense_CSD:Net_1410_1\, \CapSense_CSD:Net_1410_0\),
 		io=>(open, open, open, open,
-			open, open, open, open,
 			open, open, open, open),
-		siovref=>(open, open, open, open,
-			open, open),
+		siovref=>(open, open, open, open),
 		interrupt=>open,
 		precharge=>\CapSense_CSD:PreChargeClk\);
 \CapSense_CSD:VrefRefCH0\:cy_vref_v1_0
@@ -901,14 +893,13 @@ SCL_1:cy_psoc3_pins_v1_10
 	PORT MAP(vout=>\CapSense_CSD:Net_2038\);
 \CapSense_CSD:AMuxCH0\:cy_psoc3_amux_v1_0
 	GENERIC MAP(cy_registers=>"",
-		muxin_width=>15,
+		muxin_width=>11,
 		hw_control=>'0',
 		one_active=>'0',
-		init_mux_sel=>"000000000000000",
+		init_mux_sel=>"00000000000",
 		api_type=>0,
 		connect_mode=>1)
-	PORT MAP(muxin=>(\CapSense_CSD:Net_1425\, \CapSense_CSD:Net_282\, \CapSense_CSD:Net_1917\, \CapSense_CSD:Net_1410_11\,
-			\CapSense_CSD:Net_1410_10\, \CapSense_CSD:Net_1410_9\, \CapSense_CSD:Net_1410_8\, \CapSense_CSD:Net_1410_7\,
+	PORT MAP(muxin=>(\CapSense_CSD:Net_1425\, \CapSense_CSD:Net_282\, \CapSense_CSD:Net_1917\, \CapSense_CSD:Net_1410_7\,
 			\CapSense_CSD:Net_1410_6\, \CapSense_CSD:Net_1410_5\, \CapSense_CSD:Net_1410_4\, \CapSense_CSD:Net_1410_3\,
 			\CapSense_CSD:Net_1410_2\, \CapSense_CSD:Net_1410_1\, \CapSense_CSD:Net_1410_0\),
 		hw_ctrl_en=>(others => zero),

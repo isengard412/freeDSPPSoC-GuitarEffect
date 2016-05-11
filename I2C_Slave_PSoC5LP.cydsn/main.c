@@ -52,8 +52,8 @@ int main()
     uint8 status = STS_CMD_FAIL;
 
     /* Start I2C slave (SCB mode) */
-    I2CS_I2CSlaveInitReadBuf (i2cReadBuffer,  BUFFER_SIZE);
-    I2CS_I2CSlaveInitWriteBuf(i2cWriteBuffer, BUFFER_SIZE);
+    I2CS_SlaveInitReadBuf (i2cReadBuffer,  BUFFER_SIZE);
+    I2CS_SlaveInitWriteBuf(i2cWriteBuffer, BUFFER_SIZE);
     I2CS_Start();
     UARTInit();
 
