@@ -1,0 +1,805 @@
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"SDA_1.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.section	.text.SDA_1_Write,"ax",%progbits
+  19              		.align	2
+  20              		.global	SDA_1_Write
+  21              		.thumb
+  22              		.thumb_func
+  23              		.type	SDA_1_Write, %function
+  24              	SDA_1_Write:
+  25              	.LFB0:
+  26              		.file 1 ".\\Generated_Source\\PSoC5\\SDA_1.c"
+   1:.\Generated_Source\PSoC5/SDA_1.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC5/SDA_1.c **** * File Name: SDA_1.c  
+   3:.\Generated_Source\PSoC5/SDA_1.c **** * Version 2.20
+   4:.\Generated_Source\PSoC5/SDA_1.c **** *
+   5:.\Generated_Source\PSoC5/SDA_1.c **** * Description:
+   6:.\Generated_Source\PSoC5/SDA_1.c **** *  This file contains API to enable firmware control of a Pins component.
+   7:.\Generated_Source\PSoC5/SDA_1.c **** *
+   8:.\Generated_Source\PSoC5/SDA_1.c **** * Note:
+   9:.\Generated_Source\PSoC5/SDA_1.c **** *
+  10:.\Generated_Source\PSoC5/SDA_1.c **** ********************************************************************************
+  11:.\Generated_Source\PSoC5/SDA_1.c **** * Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  12:.\Generated_Source\PSoC5/SDA_1.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  13:.\Generated_Source\PSoC5/SDA_1.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  14:.\Generated_Source\PSoC5/SDA_1.c **** * the software package with which this file was provided.
+  15:.\Generated_Source\PSoC5/SDA_1.c **** *******************************************************************************/
+  16:.\Generated_Source\PSoC5/SDA_1.c **** 
+  17:.\Generated_Source\PSoC5/SDA_1.c **** #include "cytypes.h"
+  18:.\Generated_Source\PSoC5/SDA_1.c **** #include "SDA_1.h"
+  19:.\Generated_Source\PSoC5/SDA_1.c **** 
+  20:.\Generated_Source\PSoC5/SDA_1.c **** /* APIs are not generated for P15[7:6] on PSoC 5 */
+  21:.\Generated_Source\PSoC5/SDA_1.c **** #if !(CY_PSOC5A &&\
+  22:.\Generated_Source\PSoC5/SDA_1.c **** 	 SDA_1__PORT == 15 && ((SDA_1__MASK & 0xC0) != 0))
+  23:.\Generated_Source\PSoC5/SDA_1.c **** 
+  24:.\Generated_Source\PSoC5/SDA_1.c **** 
+  25:.\Generated_Source\PSoC5/SDA_1.c **** /*******************************************************************************
+  26:.\Generated_Source\PSoC5/SDA_1.c **** * Function Name: SDA_1_Write
+  27:.\Generated_Source\PSoC5/SDA_1.c **** ****************************************************************************//**
+  28:.\Generated_Source\PSoC5/SDA_1.c **** *
+  29:.\Generated_Source\PSoC5/SDA_1.c **** * \brief Writes the value to the physical port (data output register), masking
+  30:.\Generated_Source\PSoC5/SDA_1.c **** *  and shifting the bits appropriately. 
+  31:.\Generated_Source\PSoC5/SDA_1.c **** *
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 2
+
+
+  32:.\Generated_Source\PSoC5/SDA_1.c **** * The data output register controls the signal applied to the physical pin in 
+  33:.\Generated_Source\PSoC5/SDA_1.c **** * conjunction with the drive mode parameter. This function avoids changing 
+  34:.\Generated_Source\PSoC5/SDA_1.c **** * other bits in the port by using the appropriate method (read-modify-write or
+  35:.\Generated_Source\PSoC5/SDA_1.c **** * bit banding).
+  36:.\Generated_Source\PSoC5/SDA_1.c **** *
+  37:.\Generated_Source\PSoC5/SDA_1.c **** * <b>Note</b> This function should not be used on a hardware digital output pin 
+  38:.\Generated_Source\PSoC5/SDA_1.c **** * as it is driven by the hardware signal attached to it.
+  39:.\Generated_Source\PSoC5/SDA_1.c **** *
+  40:.\Generated_Source\PSoC5/SDA_1.c **** * \param value
+  41:.\Generated_Source\PSoC5/SDA_1.c **** *  Value to write to the component instance.
+  42:.\Generated_Source\PSoC5/SDA_1.c **** *
+  43:.\Generated_Source\PSoC5/SDA_1.c **** * \return 
+  44:.\Generated_Source\PSoC5/SDA_1.c **** *  None 
+  45:.\Generated_Source\PSoC5/SDA_1.c **** *
+  46:.\Generated_Source\PSoC5/SDA_1.c **** * \sideeffect
+  47:.\Generated_Source\PSoC5/SDA_1.c **** *  If you use read-modify-write operations that are not atomic; the Interrupt 
+  48:.\Generated_Source\PSoC5/SDA_1.c **** *  Service Routines (ISR) can cause corruption of this function. An ISR that 
+  49:.\Generated_Source\PSoC5/SDA_1.c **** *  interrupts this function and performs writes to the Pins component data 
+  50:.\Generated_Source\PSoC5/SDA_1.c **** *  register can cause corrupted port data. To avoid this issue, you should 
+  51:.\Generated_Source\PSoC5/SDA_1.c **** *  either use the Per-Pin APIs (primary method) or disable interrupts around 
+  52:.\Generated_Source\PSoC5/SDA_1.c **** *  this function.
+  53:.\Generated_Source\PSoC5/SDA_1.c **** *
+  54:.\Generated_Source\PSoC5/SDA_1.c **** * \funcusage
+  55:.\Generated_Source\PSoC5/SDA_1.c **** *  \snippet SDA_1_SUT.c usage_SDA_1_Write
+  56:.\Generated_Source\PSoC5/SDA_1.c **** *******************************************************************************/
+  57:.\Generated_Source\PSoC5/SDA_1.c **** void SDA_1_Write(uint8 value)
+  58:.\Generated_Source\PSoC5/SDA_1.c **** {
+  27              		.loc 1 58 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32              	.LVL0:
+  59:.\Generated_Source\PSoC5/SDA_1.c ****     uint8 staticBits = (SDA_1_DR & (uint8)(~SDA_1_MASK));
+  33              		.loc 1 59 0
+  34 0000 044A     		ldr	r2, .L2
+  35 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  36 0004 03F0FE03 		and	r3, r3, #254
+  37              	.LVL1:
+  60:.\Generated_Source\PSoC5/SDA_1.c ****     SDA_1_DR = staticBits | ((uint8)(value << SDA_1_SHIFT) & SDA_1_MASK);
+  38              		.loc 1 60 0
+  39 0008 00F00100 		and	r0, r0, #1
+  40              	.LVL2:
+  41 000c 1843     		orrs	r0, r0, r3
+  42 000e 1070     		strb	r0, [r2]
+  43 0010 7047     		bx	lr
+  44              	.L3:
+  45 0012 00BF     		.align	2
+  46              	.L2:
+  47 0014 00510040 		.word	1073762560
+  48              		.cfi_endproc
+  49              	.LFE0:
+  50              		.size	SDA_1_Write, .-SDA_1_Write
+  51              		.section	.text.SDA_1_SetDriveMode,"ax",%progbits
+  52              		.align	2
+  53              		.global	SDA_1_SetDriveMode
+  54              		.thumb
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 3
+
+
+  55              		.thumb_func
+  56              		.type	SDA_1_SetDriveMode, %function
+  57              	SDA_1_SetDriveMode:
+  58              	.LFB1:
+  61:.\Generated_Source\PSoC5/SDA_1.c **** }
+  62:.\Generated_Source\PSoC5/SDA_1.c **** 
+  63:.\Generated_Source\PSoC5/SDA_1.c **** 
+  64:.\Generated_Source\PSoC5/SDA_1.c **** /*******************************************************************************
+  65:.\Generated_Source\PSoC5/SDA_1.c **** * Function Name: SDA_1_SetDriveMode
+  66:.\Generated_Source\PSoC5/SDA_1.c **** ****************************************************************************//**
+  67:.\Generated_Source\PSoC5/SDA_1.c **** *
+  68:.\Generated_Source\PSoC5/SDA_1.c **** * \brief Sets the drive mode for each of the Pins component's pins.
+  69:.\Generated_Source\PSoC5/SDA_1.c **** * 
+  70:.\Generated_Source\PSoC5/SDA_1.c **** * <b>Note</b> This affects all pins in the Pins component instance. Use the
+  71:.\Generated_Source\PSoC5/SDA_1.c **** * Per-Pin APIs if you wish to control individual pin's drive modes.
+  72:.\Generated_Source\PSoC5/SDA_1.c **** *
+  73:.\Generated_Source\PSoC5/SDA_1.c **** * \param mode
+  74:.\Generated_Source\PSoC5/SDA_1.c **** *  Mode for the selected signals. Valid options are documented in 
+  75:.\Generated_Source\PSoC5/SDA_1.c **** *  \ref driveMode.
+  76:.\Generated_Source\PSoC5/SDA_1.c **** *
+  77:.\Generated_Source\PSoC5/SDA_1.c **** * \return
+  78:.\Generated_Source\PSoC5/SDA_1.c **** *  None
+  79:.\Generated_Source\PSoC5/SDA_1.c **** *
+  80:.\Generated_Source\PSoC5/SDA_1.c **** * \sideeffect
+  81:.\Generated_Source\PSoC5/SDA_1.c **** *  If you use read-modify-write operations that are not atomic, the ISR can
+  82:.\Generated_Source\PSoC5/SDA_1.c **** *  cause corruption of this function. An ISR that interrupts this function 
+  83:.\Generated_Source\PSoC5/SDA_1.c **** *  and performs writes to the Pins component Drive Mode registers can cause 
+  84:.\Generated_Source\PSoC5/SDA_1.c **** *  corrupted port data. To avoid this issue, you should either use the Per-Pin
+  85:.\Generated_Source\PSoC5/SDA_1.c **** *  APIs (primary method) or disable interrupts around this function.
+  86:.\Generated_Source\PSoC5/SDA_1.c **** *
+  87:.\Generated_Source\PSoC5/SDA_1.c **** * \funcusage
+  88:.\Generated_Source\PSoC5/SDA_1.c **** *  \snippet SDA_1_SUT.c usage_SDA_1_SetDriveMode
+  89:.\Generated_Source\PSoC5/SDA_1.c **** *******************************************************************************/
+  90:.\Generated_Source\PSoC5/SDA_1.c **** void SDA_1_SetDriveMode(uint8 mode)
+  91:.\Generated_Source\PSoC5/SDA_1.c **** {
+  59              		.loc 1 91 0
+  60              		.cfi_startproc
+  61              		@ args = 0, pretend = 0, frame = 0
+  62              		@ frame_needed = 0, uses_anonymous_args = 0
+  63              		@ link register save eliminated.
+  64              	.LVL3:
+  92:.\Generated_Source\PSoC5/SDA_1.c **** 	CyPins_SetPinDriveMode(SDA_1_0, mode);
+  65              		.loc 1 92 0
+  66 0000 044A     		ldr	r2, .L5
+  67 0002 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+  68 0004 03F0F103 		and	r3, r3, #241
+  69 0008 00F00E00 		and	r0, r0, #14
+  70              	.LVL4:
+  71 000c 1843     		orrs	r0, r0, r3
+  72 000e 1070     		strb	r0, [r2]
+  73 0010 7047     		bx	lr
+  74              	.L6:
+  75 0012 00BF     		.align	2
+  76              	.L5:
+  77 0014 00500040 		.word	1073762304
+  78              		.cfi_endproc
+  79              	.LFE1:
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 4
+
+
+  80              		.size	SDA_1_SetDriveMode, .-SDA_1_SetDriveMode
+  81              		.section	.text.SDA_1_Read,"ax",%progbits
+  82              		.align	2
+  83              		.global	SDA_1_Read
+  84              		.thumb
+  85              		.thumb_func
+  86              		.type	SDA_1_Read, %function
+  87              	SDA_1_Read:
+  88              	.LFB2:
+  93:.\Generated_Source\PSoC5/SDA_1.c **** }
+  94:.\Generated_Source\PSoC5/SDA_1.c **** 
+  95:.\Generated_Source\PSoC5/SDA_1.c **** 
+  96:.\Generated_Source\PSoC5/SDA_1.c **** /*******************************************************************************
+  97:.\Generated_Source\PSoC5/SDA_1.c **** * Function Name: SDA_1_Read
+  98:.\Generated_Source\PSoC5/SDA_1.c **** ****************************************************************************//**
+  99:.\Generated_Source\PSoC5/SDA_1.c **** *
+ 100:.\Generated_Source\PSoC5/SDA_1.c **** * \brief Reads the associated physical port (pin status register) and masks 
+ 101:.\Generated_Source\PSoC5/SDA_1.c **** *  the required bits according to the width and bit position of the component
+ 102:.\Generated_Source\PSoC5/SDA_1.c **** *  instance. 
+ 103:.\Generated_Source\PSoC5/SDA_1.c **** *
+ 104:.\Generated_Source\PSoC5/SDA_1.c **** * The pin's status register returns the current logic level present on the 
+ 105:.\Generated_Source\PSoC5/SDA_1.c **** * physical pin.
+ 106:.\Generated_Source\PSoC5/SDA_1.c **** *
+ 107:.\Generated_Source\PSoC5/SDA_1.c **** * \return 
+ 108:.\Generated_Source\PSoC5/SDA_1.c **** *  The current value for the pins in the component as a right justified number.
+ 109:.\Generated_Source\PSoC5/SDA_1.c **** *
+ 110:.\Generated_Source\PSoC5/SDA_1.c **** * \funcusage
+ 111:.\Generated_Source\PSoC5/SDA_1.c **** *  \snippet SDA_1_SUT.c usage_SDA_1_Read  
+ 112:.\Generated_Source\PSoC5/SDA_1.c **** *******************************************************************************/
+ 113:.\Generated_Source\PSoC5/SDA_1.c **** uint8 SDA_1_Read(void)
+ 114:.\Generated_Source\PSoC5/SDA_1.c **** {
+  89              		.loc 1 114 0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93              		@ link register save eliminated.
+ 115:.\Generated_Source\PSoC5/SDA_1.c ****     return (SDA_1_PS & SDA_1_MASK) >> SDA_1_SHIFT;
+  94              		.loc 1 115 0
+  95 0000 024B     		ldr	r3, .L8
+  96 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 116:.\Generated_Source\PSoC5/SDA_1.c **** }
+  97              		.loc 1 116 0
+  98 0004 00F00100 		and	r0, r0, #1
+  99 0008 7047     		bx	lr
+ 100              	.L9:
+ 101 000a 00BF     		.align	2
+ 102              	.L8:
+ 103 000c 01510040 		.word	1073762561
+ 104              		.cfi_endproc
+ 105              	.LFE2:
+ 106              		.size	SDA_1_Read, .-SDA_1_Read
+ 107              		.section	.text.SDA_1_ReadDataReg,"ax",%progbits
+ 108              		.align	2
+ 109              		.global	SDA_1_ReadDataReg
+ 110              		.thumb
+ 111              		.thumb_func
+ 112              		.type	SDA_1_ReadDataReg, %function
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 5
+
+
+ 113              	SDA_1_ReadDataReg:
+ 114              	.LFB3:
+ 117:.\Generated_Source\PSoC5/SDA_1.c **** 
+ 118:.\Generated_Source\PSoC5/SDA_1.c **** 
+ 119:.\Generated_Source\PSoC5/SDA_1.c **** /*******************************************************************************
+ 120:.\Generated_Source\PSoC5/SDA_1.c **** * Function Name: SDA_1_ReadDataReg
+ 121:.\Generated_Source\PSoC5/SDA_1.c **** ****************************************************************************//**
+ 122:.\Generated_Source\PSoC5/SDA_1.c **** *
+ 123:.\Generated_Source\PSoC5/SDA_1.c **** * \brief Reads the associated physical port's data output register and masks 
+ 124:.\Generated_Source\PSoC5/SDA_1.c **** *  the correct bits according to the width and bit position of the component 
+ 125:.\Generated_Source\PSoC5/SDA_1.c **** *  instance. 
+ 126:.\Generated_Source\PSoC5/SDA_1.c **** *
+ 127:.\Generated_Source\PSoC5/SDA_1.c **** * The data output register controls the signal applied to the physical pin in 
+ 128:.\Generated_Source\PSoC5/SDA_1.c **** * conjunction with the drive mode parameter. This is not the same as the 
+ 129:.\Generated_Source\PSoC5/SDA_1.c **** * preferred SDA_1_Read() API because the 
+ 130:.\Generated_Source\PSoC5/SDA_1.c **** * SDA_1_ReadDataReg() reads the data register instead of the status 
+ 131:.\Generated_Source\PSoC5/SDA_1.c **** * register. For output pins this is a useful function to determine the value 
+ 132:.\Generated_Source\PSoC5/SDA_1.c **** * just written to the pin.
+ 133:.\Generated_Source\PSoC5/SDA_1.c **** *
+ 134:.\Generated_Source\PSoC5/SDA_1.c **** * \return 
+ 135:.\Generated_Source\PSoC5/SDA_1.c **** *  The current value of the data register masked and shifted into a right 
+ 136:.\Generated_Source\PSoC5/SDA_1.c **** *  justified number for the component instance.
+ 137:.\Generated_Source\PSoC5/SDA_1.c **** *
+ 138:.\Generated_Source\PSoC5/SDA_1.c **** * \funcusage
+ 139:.\Generated_Source\PSoC5/SDA_1.c **** *  \snippet SDA_1_SUT.c usage_SDA_1_ReadDataReg 
+ 140:.\Generated_Source\PSoC5/SDA_1.c **** *******************************************************************************/
+ 141:.\Generated_Source\PSoC5/SDA_1.c **** uint8 SDA_1_ReadDataReg(void)
+ 142:.\Generated_Source\PSoC5/SDA_1.c **** {
+ 115              		.loc 1 142 0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              		@ link register save eliminated.
+ 143:.\Generated_Source\PSoC5/SDA_1.c ****     return (SDA_1_DR & SDA_1_MASK) >> SDA_1_SHIFT;
+ 120              		.loc 1 143 0
+ 121 0000 024B     		ldr	r3, .L11
+ 122 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 144:.\Generated_Source\PSoC5/SDA_1.c **** }
+ 123              		.loc 1 144 0
+ 124 0004 00F00100 		and	r0, r0, #1
+ 125 0008 7047     		bx	lr
+ 126              	.L12:
+ 127 000a 00BF     		.align	2
+ 128              	.L11:
+ 129 000c 00510040 		.word	1073762560
+ 130              		.cfi_endproc
+ 131              	.LFE3:
+ 132              		.size	SDA_1_ReadDataReg, .-SDA_1_ReadDataReg
+ 133              		.text
+ 134              	.Letext0:
+ 135              		.file 2 ".\\Generated_Source\\PSoC5\\cytypes.h"
+ 136              		.section	.debug_info,"",%progbits
+ 137              	.Ldebug_info0:
+ 138 0000 1A010000 		.4byte	0x11a
+ 139 0004 0400     		.2byte	0x4
+ 140 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 141 000a 04       		.byte	0x4
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 6
+
+
+ 142 000b 01       		.uleb128 0x1
+ 143 000c A7000000 		.4byte	.LASF20
+ 144 0010 01       		.byte	0x1
+ 145 0011 74000000 		.4byte	.LASF21
+ 146 0015 7D010000 		.4byte	.LASF22
+ 147 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 148 001d 00000000 		.4byte	0
+ 149 0021 00000000 		.4byte	.Ldebug_line0
+ 150 0025 02       		.uleb128 0x2
+ 151 0026 01       		.byte	0x1
+ 152 0027 06       		.byte	0x6
+ 153 0028 E1010000 		.4byte	.LASF0
+ 154 002c 02       		.uleb128 0x2
+ 155 002d 01       		.byte	0x1
+ 156 002e 08       		.byte	0x8
+ 157 002f 3C000000 		.4byte	.LASF1
+ 158 0033 02       		.uleb128 0x2
+ 159 0034 02       		.byte	0x2
+ 160 0035 05       		.byte	0x5
+ 161 0036 C8010000 		.4byte	.LASF2
+ 162 003a 02       		.uleb128 0x2
+ 163 003b 02       		.byte	0x2
+ 164 003c 07       		.byte	0x7
+ 165 003d 61000000 		.4byte	.LASF3
+ 166 0041 02       		.uleb128 0x2
+ 167 0042 04       		.byte	0x4
+ 168 0043 05       		.byte	0x5
+ 169 0044 D8010000 		.4byte	.LASF4
+ 170 0048 02       		.uleb128 0x2
+ 171 0049 04       		.byte	0x4
+ 172 004a 07       		.byte	0x7
+ 173 004b 4F000000 		.4byte	.LASF5
+ 174 004f 02       		.uleb128 0x2
+ 175 0050 08       		.byte	0x8
+ 176 0051 05       		.byte	0x5
+ 177 0052 5E010000 		.4byte	.LASF6
+ 178 0056 02       		.uleb128 0x2
+ 179 0057 08       		.byte	0x8
+ 180 0058 07       		.byte	0x7
+ 181 0059 42010000 		.4byte	.LASF7
+ 182 005d 03       		.uleb128 0x3
+ 183 005e 04       		.byte	0x4
+ 184 005f 05       		.byte	0x5
+ 185 0060 696E7400 		.ascii	"int\000"
+ 186 0064 02       		.uleb128 0x2
+ 187 0065 04       		.byte	0x4
+ 188 0066 07       		.byte	0x7
+ 189 0067 35010000 		.4byte	.LASF8
+ 190 006b 04       		.uleb128 0x4
+ 191 006c D2010000 		.4byte	.LASF12
+ 192 0070 02       		.byte	0x2
+ 193 0071 C2       		.byte	0xc2
+ 194 0072 2C000000 		.4byte	0x2c
+ 195 0076 02       		.uleb128 0x2
+ 196 0077 04       		.byte	0x4
+ 197 0078 04       		.byte	0x4
+ 198 0079 36000000 		.4byte	.LASF9
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 7
+
+
+ 199 007d 02       		.uleb128 0x2
+ 200 007e 08       		.byte	0x8
+ 201 007f 04       		.byte	0x4
+ 202 0080 95000000 		.4byte	.LASF10
+ 203 0084 02       		.uleb128 0x2
+ 204 0085 01       		.byte	0x1
+ 205 0086 08       		.byte	0x8
+ 206 0087 6C010000 		.4byte	.LASF11
+ 207 008b 05       		.uleb128 0x5
+ 208 008c 4A000000 		.4byte	.LASF13
+ 209 0090 02       		.byte	0x2
+ 210 0091 6C01     		.2byte	0x16c
+ 211 0093 97000000 		.4byte	0x97
+ 212 0097 06       		.uleb128 0x6
+ 213 0098 6B000000 		.4byte	0x6b
+ 214 009c 07       		.uleb128 0x7
+ 215 009d 71010000 		.4byte	.LASF14
+ 216 00a1 01       		.byte	0x1
+ 217 00a2 39       		.byte	0x39
+ 218 00a3 00000000 		.4byte	.LFB0
+ 219 00a7 18000000 		.4byte	.LFE0-.LFB0
+ 220 00ab 01       		.uleb128 0x1
+ 221 00ac 9C       		.byte	0x9c
+ 222 00ad CE000000 		.4byte	0xce
+ 223 00b1 08       		.uleb128 0x8
+ 224 00b2 00000000 		.4byte	.LASF16
+ 225 00b6 01       		.byte	0x1
+ 226 00b7 39       		.byte	0x39
+ 227 00b8 6B000000 		.4byte	0x6b
+ 228 00bc 00000000 		.4byte	.LLST0
+ 229 00c0 09       		.uleb128 0x9
+ 230 00c1 06000000 		.4byte	.LASF23
+ 231 00c5 01       		.byte	0x1
+ 232 00c6 3B       		.byte	0x3b
+ 233 00c7 6B000000 		.4byte	0x6b
+ 234 00cb 01       		.uleb128 0x1
+ 235 00cc 53       		.byte	0x53
+ 236 00cd 00       		.byte	0
+ 237 00ce 07       		.uleb128 0x7
+ 238 00cf 23000000 		.4byte	.LASF15
+ 239 00d3 01       		.byte	0x1
+ 240 00d4 5A       		.byte	0x5a
+ 241 00d5 00000000 		.4byte	.LFB1
+ 242 00d9 18000000 		.4byte	.LFE1-.LFB1
+ 243 00dd 01       		.uleb128 0x1
+ 244 00de 9C       		.byte	0x9c
+ 245 00df F3000000 		.4byte	0xf3
+ 246 00e3 08       		.uleb128 0x8
+ 247 00e4 59010000 		.4byte	.LASF17
+ 248 00e8 01       		.byte	0x1
+ 249 00e9 5A       		.byte	0x5a
+ 250 00ea 6B000000 		.4byte	0x6b
+ 251 00ee 21000000 		.4byte	.LLST1
+ 252 00f2 00       		.byte	0
+ 253 00f3 0A       		.uleb128 0xa
+ 254 00f4 9C000000 		.4byte	.LASF18
+ 255 00f8 01       		.byte	0x1
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 8
+
+
+ 256 00f9 71       		.byte	0x71
+ 257 00fa 6B000000 		.4byte	0x6b
+ 258 00fe 00000000 		.4byte	.LFB2
+ 259 0102 10000000 		.4byte	.LFE2-.LFB2
+ 260 0106 01       		.uleb128 0x1
+ 261 0107 9C       		.byte	0x9c
+ 262 0108 0A       		.uleb128 0xa
+ 263 0109 11000000 		.4byte	.LASF19
+ 264 010d 01       		.byte	0x1
+ 265 010e 8D       		.byte	0x8d
+ 266 010f 6B000000 		.4byte	0x6b
+ 267 0113 00000000 		.4byte	.LFB3
+ 268 0117 10000000 		.4byte	.LFE3-.LFB3
+ 269 011b 01       		.uleb128 0x1
+ 270 011c 9C       		.byte	0x9c
+ 271 011d 00       		.byte	0
+ 272              		.section	.debug_abbrev,"",%progbits
+ 273              	.Ldebug_abbrev0:
+ 274 0000 01       		.uleb128 0x1
+ 275 0001 11       		.uleb128 0x11
+ 276 0002 01       		.byte	0x1
+ 277 0003 25       		.uleb128 0x25
+ 278 0004 0E       		.uleb128 0xe
+ 279 0005 13       		.uleb128 0x13
+ 280 0006 0B       		.uleb128 0xb
+ 281 0007 03       		.uleb128 0x3
+ 282 0008 0E       		.uleb128 0xe
+ 283 0009 1B       		.uleb128 0x1b
+ 284 000a 0E       		.uleb128 0xe
+ 285 000b 55       		.uleb128 0x55
+ 286 000c 17       		.uleb128 0x17
+ 287 000d 11       		.uleb128 0x11
+ 288 000e 01       		.uleb128 0x1
+ 289 000f 10       		.uleb128 0x10
+ 290 0010 17       		.uleb128 0x17
+ 291 0011 00       		.byte	0
+ 292 0012 00       		.byte	0
+ 293 0013 02       		.uleb128 0x2
+ 294 0014 24       		.uleb128 0x24
+ 295 0015 00       		.byte	0
+ 296 0016 0B       		.uleb128 0xb
+ 297 0017 0B       		.uleb128 0xb
+ 298 0018 3E       		.uleb128 0x3e
+ 299 0019 0B       		.uleb128 0xb
+ 300 001a 03       		.uleb128 0x3
+ 301 001b 0E       		.uleb128 0xe
+ 302 001c 00       		.byte	0
+ 303 001d 00       		.byte	0
+ 304 001e 03       		.uleb128 0x3
+ 305 001f 24       		.uleb128 0x24
+ 306 0020 00       		.byte	0
+ 307 0021 0B       		.uleb128 0xb
+ 308 0022 0B       		.uleb128 0xb
+ 309 0023 3E       		.uleb128 0x3e
+ 310 0024 0B       		.uleb128 0xb
+ 311 0025 03       		.uleb128 0x3
+ 312 0026 08       		.uleb128 0x8
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 9
+
+
+ 313 0027 00       		.byte	0
+ 314 0028 00       		.byte	0
+ 315 0029 04       		.uleb128 0x4
+ 316 002a 16       		.uleb128 0x16
+ 317 002b 00       		.byte	0
+ 318 002c 03       		.uleb128 0x3
+ 319 002d 0E       		.uleb128 0xe
+ 320 002e 3A       		.uleb128 0x3a
+ 321 002f 0B       		.uleb128 0xb
+ 322 0030 3B       		.uleb128 0x3b
+ 323 0031 0B       		.uleb128 0xb
+ 324 0032 49       		.uleb128 0x49
+ 325 0033 13       		.uleb128 0x13
+ 326 0034 00       		.byte	0
+ 327 0035 00       		.byte	0
+ 328 0036 05       		.uleb128 0x5
+ 329 0037 16       		.uleb128 0x16
+ 330 0038 00       		.byte	0
+ 331 0039 03       		.uleb128 0x3
+ 332 003a 0E       		.uleb128 0xe
+ 333 003b 3A       		.uleb128 0x3a
+ 334 003c 0B       		.uleb128 0xb
+ 335 003d 3B       		.uleb128 0x3b
+ 336 003e 05       		.uleb128 0x5
+ 337 003f 49       		.uleb128 0x49
+ 338 0040 13       		.uleb128 0x13
+ 339 0041 00       		.byte	0
+ 340 0042 00       		.byte	0
+ 341 0043 06       		.uleb128 0x6
+ 342 0044 35       		.uleb128 0x35
+ 343 0045 00       		.byte	0
+ 344 0046 49       		.uleb128 0x49
+ 345 0047 13       		.uleb128 0x13
+ 346 0048 00       		.byte	0
+ 347 0049 00       		.byte	0
+ 348 004a 07       		.uleb128 0x7
+ 349 004b 2E       		.uleb128 0x2e
+ 350 004c 01       		.byte	0x1
+ 351 004d 3F       		.uleb128 0x3f
+ 352 004e 19       		.uleb128 0x19
+ 353 004f 03       		.uleb128 0x3
+ 354 0050 0E       		.uleb128 0xe
+ 355 0051 3A       		.uleb128 0x3a
+ 356 0052 0B       		.uleb128 0xb
+ 357 0053 3B       		.uleb128 0x3b
+ 358 0054 0B       		.uleb128 0xb
+ 359 0055 27       		.uleb128 0x27
+ 360 0056 19       		.uleb128 0x19
+ 361 0057 11       		.uleb128 0x11
+ 362 0058 01       		.uleb128 0x1
+ 363 0059 12       		.uleb128 0x12
+ 364 005a 06       		.uleb128 0x6
+ 365 005b 40       		.uleb128 0x40
+ 366 005c 18       		.uleb128 0x18
+ 367 005d 9742     		.uleb128 0x2117
+ 368 005f 19       		.uleb128 0x19
+ 369 0060 01       		.uleb128 0x1
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 10
+
+
+ 370 0061 13       		.uleb128 0x13
+ 371 0062 00       		.byte	0
+ 372 0063 00       		.byte	0
+ 373 0064 08       		.uleb128 0x8
+ 374 0065 05       		.uleb128 0x5
+ 375 0066 00       		.byte	0
+ 376 0067 03       		.uleb128 0x3
+ 377 0068 0E       		.uleb128 0xe
+ 378 0069 3A       		.uleb128 0x3a
+ 379 006a 0B       		.uleb128 0xb
+ 380 006b 3B       		.uleb128 0x3b
+ 381 006c 0B       		.uleb128 0xb
+ 382 006d 49       		.uleb128 0x49
+ 383 006e 13       		.uleb128 0x13
+ 384 006f 02       		.uleb128 0x2
+ 385 0070 17       		.uleb128 0x17
+ 386 0071 00       		.byte	0
+ 387 0072 00       		.byte	0
+ 388 0073 09       		.uleb128 0x9
+ 389 0074 34       		.uleb128 0x34
+ 390 0075 00       		.byte	0
+ 391 0076 03       		.uleb128 0x3
+ 392 0077 0E       		.uleb128 0xe
+ 393 0078 3A       		.uleb128 0x3a
+ 394 0079 0B       		.uleb128 0xb
+ 395 007a 3B       		.uleb128 0x3b
+ 396 007b 0B       		.uleb128 0xb
+ 397 007c 49       		.uleb128 0x49
+ 398 007d 13       		.uleb128 0x13
+ 399 007e 02       		.uleb128 0x2
+ 400 007f 18       		.uleb128 0x18
+ 401 0080 00       		.byte	0
+ 402 0081 00       		.byte	0
+ 403 0082 0A       		.uleb128 0xa
+ 404 0083 2E       		.uleb128 0x2e
+ 405 0084 00       		.byte	0
+ 406 0085 3F       		.uleb128 0x3f
+ 407 0086 19       		.uleb128 0x19
+ 408 0087 03       		.uleb128 0x3
+ 409 0088 0E       		.uleb128 0xe
+ 410 0089 3A       		.uleb128 0x3a
+ 411 008a 0B       		.uleb128 0xb
+ 412 008b 3B       		.uleb128 0x3b
+ 413 008c 0B       		.uleb128 0xb
+ 414 008d 27       		.uleb128 0x27
+ 415 008e 19       		.uleb128 0x19
+ 416 008f 49       		.uleb128 0x49
+ 417 0090 13       		.uleb128 0x13
+ 418 0091 11       		.uleb128 0x11
+ 419 0092 01       		.uleb128 0x1
+ 420 0093 12       		.uleb128 0x12
+ 421 0094 06       		.uleb128 0x6
+ 422 0095 40       		.uleb128 0x40
+ 423 0096 18       		.uleb128 0x18
+ 424 0097 9742     		.uleb128 0x2117
+ 425 0099 19       		.uleb128 0x19
+ 426 009a 00       		.byte	0
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 11
+
+
+ 427 009b 00       		.byte	0
+ 428 009c 00       		.byte	0
+ 429              		.section	.debug_loc,"",%progbits
+ 430              	.Ldebug_loc0:
+ 431              	.LLST0:
+ 432 0000 00000000 		.4byte	.LVL0
+ 433 0004 0C000000 		.4byte	.LVL2
+ 434 0008 0100     		.2byte	0x1
+ 435 000a 50       		.byte	0x50
+ 436 000b 0C000000 		.4byte	.LVL2
+ 437 000f 18000000 		.4byte	.LFE0
+ 438 0013 0400     		.2byte	0x4
+ 439 0015 F3       		.byte	0xf3
+ 440 0016 01       		.uleb128 0x1
+ 441 0017 50       		.byte	0x50
+ 442 0018 9F       		.byte	0x9f
+ 443 0019 00000000 		.4byte	0
+ 444 001d 00000000 		.4byte	0
+ 445              	.LLST1:
+ 446 0021 00000000 		.4byte	.LVL3
+ 447 0025 0C000000 		.4byte	.LVL4
+ 448 0029 0100     		.2byte	0x1
+ 449 002b 50       		.byte	0x50
+ 450 002c 0C000000 		.4byte	.LVL4
+ 451 0030 18000000 		.4byte	.LFE1
+ 452 0034 0400     		.2byte	0x4
+ 453 0036 F3       		.byte	0xf3
+ 454 0037 01       		.uleb128 0x1
+ 455 0038 50       		.byte	0x50
+ 456 0039 9F       		.byte	0x9f
+ 457 003a 00000000 		.4byte	0
+ 458 003e 00000000 		.4byte	0
+ 459              		.section	.debug_aranges,"",%progbits
+ 460 0000 34000000 		.4byte	0x34
+ 461 0004 0200     		.2byte	0x2
+ 462 0006 00000000 		.4byte	.Ldebug_info0
+ 463 000a 04       		.byte	0x4
+ 464 000b 00       		.byte	0
+ 465 000c 0000     		.2byte	0
+ 466 000e 0000     		.2byte	0
+ 467 0010 00000000 		.4byte	.LFB0
+ 468 0014 18000000 		.4byte	.LFE0-.LFB0
+ 469 0018 00000000 		.4byte	.LFB1
+ 470 001c 18000000 		.4byte	.LFE1-.LFB1
+ 471 0020 00000000 		.4byte	.LFB2
+ 472 0024 10000000 		.4byte	.LFE2-.LFB2
+ 473 0028 00000000 		.4byte	.LFB3
+ 474 002c 10000000 		.4byte	.LFE3-.LFB3
+ 475 0030 00000000 		.4byte	0
+ 476 0034 00000000 		.4byte	0
+ 477              		.section	.debug_ranges,"",%progbits
+ 478              	.Ldebug_ranges0:
+ 479 0000 00000000 		.4byte	.LFB0
+ 480 0004 18000000 		.4byte	.LFE0
+ 481 0008 00000000 		.4byte	.LFB1
+ 482 000c 18000000 		.4byte	.LFE1
+ 483 0010 00000000 		.4byte	.LFB2
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 12
+
+
+ 484 0014 10000000 		.4byte	.LFE2
+ 485 0018 00000000 		.4byte	.LFB3
+ 486 001c 10000000 		.4byte	.LFE3
+ 487 0020 00000000 		.4byte	0
+ 488 0024 00000000 		.4byte	0
+ 489              		.section	.debug_line,"",%progbits
+ 490              	.Ldebug_line0:
+ 491 0000 90000000 		.section	.debug_str,"MS",%progbits,1
+ 491      02004400 
+ 491      00000201 
+ 491      FB0E0D00 
+ 491      01010101 
+ 492              	.LASF16:
+ 493 0000 76616C75 		.ascii	"value\000"
+ 493      6500
+ 494              	.LASF23:
+ 495 0006 73746174 		.ascii	"staticBits\000"
+ 495      69634269 
+ 495      747300
+ 496              	.LASF19:
+ 497 0011 5344415F 		.ascii	"SDA_1_ReadDataReg\000"
+ 497      315F5265 
+ 497      61644461 
+ 497      74615265 
+ 497      6700
+ 498              	.LASF15:
+ 499 0023 5344415F 		.ascii	"SDA_1_SetDriveMode\000"
+ 499      315F5365 
+ 499      74447269 
+ 499      76654D6F 
+ 499      646500
+ 500              	.LASF9:
+ 501 0036 666C6F61 		.ascii	"float\000"
+ 501      7400
+ 502              	.LASF1:
+ 503 003c 756E7369 		.ascii	"unsigned char\000"
+ 503      676E6564 
+ 503      20636861 
+ 503      7200
+ 504              	.LASF13:
+ 505 004a 72656738 		.ascii	"reg8\000"
+ 505      00
+ 506              	.LASF5:
+ 507 004f 6C6F6E67 		.ascii	"long unsigned int\000"
+ 507      20756E73 
+ 507      69676E65 
+ 507      6420696E 
+ 507      7400
+ 508              	.LASF3:
+ 509 0061 73686F72 		.ascii	"short unsigned int\000"
+ 509      7420756E 
+ 509      7369676E 
+ 509      65642069 
+ 509      6E7400
+ 510              	.LASF21:
+ 511 0074 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\SDA_1.c\000"
+ 511      6E657261 
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 13
+
+
+ 511      7465645F 
+ 511      536F7572 
+ 511      63655C50 
+ 512              	.LASF10:
+ 513 0095 646F7562 		.ascii	"double\000"
+ 513      6C6500
+ 514              	.LASF18:
+ 515 009c 5344415F 		.ascii	"SDA_1_Read\000"
+ 515      315F5265 
+ 515      616400
+ 516              	.LASF20:
+ 517 00a7 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 517      4320342E 
+ 517      392E3320 
+ 517      32303135 
+ 517      30333033 
+ 518 00da 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 518      20726576 
+ 518      6973696F 
+ 518      6E203232 
+ 518      31323230 
+ 519 010d 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 519      66756E63 
+ 519      74696F6E 
+ 519      2D736563 
+ 519      74696F6E 
+ 520              	.LASF8:
+ 521 0135 756E7369 		.ascii	"unsigned int\000"
+ 521      676E6564 
+ 521      20696E74 
+ 521      00
+ 522              	.LASF7:
+ 523 0142 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 523      206C6F6E 
+ 523      6720756E 
+ 523      7369676E 
+ 523      65642069 
+ 524              	.LASF17:
+ 525 0159 6D6F6465 		.ascii	"mode\000"
+ 525      00
+ 526              	.LASF6:
+ 527 015e 6C6F6E67 		.ascii	"long long int\000"
+ 527      206C6F6E 
+ 527      6720696E 
+ 527      7400
+ 528              	.LASF11:
+ 529 016c 63686172 		.ascii	"char\000"
+ 529      00
+ 530              	.LASF14:
+ 531 0171 5344415F 		.ascii	"SDA_1_Write\000"
+ 531      315F5772 
+ 531      69746500 
+ 532              	.LASF22:
+ 533 017d 433A5C55 		.ascii	"C:\\Users\\Andreas\\Documents\\VR Projekt\\freeDSPP"
+ 533      73657273 
+ 533      5C416E64 
+ 533      72656173 
+ARM GAS  C:\Users\Andreas\AppData\Local\Temp\ccqRjM7V.s 			page 14
+
+
+ 533      5C446F63 
+ 534 01ab 536F432D 		.ascii	"SoC-I2C\\I2C - PSoC-DSP.cydsn\000"
+ 534      4932435C 
+ 534      49324320 
+ 534      2D205053 
+ 534      6F432D44 
+ 535              	.LASF2:
+ 536 01c8 73686F72 		.ascii	"short int\000"
+ 536      7420696E 
+ 536      7400
+ 537              	.LASF12:
+ 538 01d2 75696E74 		.ascii	"uint8\000"
+ 538      3800
+ 539              	.LASF4:
+ 540 01d8 6C6F6E67 		.ascii	"long int\000"
+ 540      20696E74 
+ 540      00
+ 541              	.LASF0:
+ 542 01e1 7369676E 		.ascii	"signed char\000"
+ 542      65642063 
+ 542      68617200 
+ 543              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
