@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: cyPm.c
-* Version 5.30
+* Version 4.20
 *
 *  Description:
 *   Provides an API for the power management.
@@ -10,7 +10,7 @@
 *   System Reference Guide provided with PSoC Creator.
 *
 ********************************************************************************
-* Copyright 2011-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* Copyright 2011-2014, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -89,9 +89,9 @@ void CySysPmDeepSleep(void)
         CY_PM_PWR_CONTROL_REG &= (uint32) (~CY_PM_PWR_CONTROL_HIBERNATE);
     #endif /* (CY_IP_SRSSV2) */
 
-    #if (CY_IP_CPUSS && CY_IP_SRSSV2)
+    #if (CY_PSOC4_4100 || CY_PSOC4_4200)
         CY_PM_CPUSS_CONFIG_REG |= CY_PM_CPUSS_CONFIG_FLSH_ACC_BYPASS;
-    #endif /* (CY_IP_CPUSS && CY_IP_SRSSV2) */
+    #endif /* (CY_PSOC4_4100 || CY_PSOC4_4200) */
 
     /* Adjust delay to wait for references to settle on wakeup from Deep Sleep */
     CY_PM_PWR_KEY_DELAY_REG = CY_SFLASH_DPSLP_KEY_DELAY_REG;
@@ -115,9 +115,9 @@ void CySysPmDeepSleep(void)
         CY_SYS_CLK_SELECT_REG = clkSelectReg;
     #endif /* (CY_IP_SRSSV2) */
 
-    #if (CY_IP_CPUSS && CY_IP_SRSSV2)
+    #if (CY_PSOC4_4100 || CY_PSOC4_4200)
         CY_PM_CPUSS_CONFIG_REG &= (uint32) (~CY_PM_CPUSS_CONFIG_FLSH_ACC_BYPASS);
-    #endif /* (CY_IP_CPUSS && CY_IP_SRSSV2) */
+    #endif /* (CY_PSOC4_4100 || CY_PSOC4_4200) */
 
     CyExitCriticalSection(interruptState);
 }
@@ -162,11 +162,6 @@ void CySysPmDeepSleep(void)
         uint8 interruptState;
 
         interruptState = CyEnterCriticalSection();
-
-        #if (CY_IP_HOBTO_DEVICE)
-            /* Disable input buffers for all ports */
-            CySysPmHibPinsDisableInputBuf();
-        #endif /* (CY_IP_HOBTO_DEVICE) */
 
         /* Device enters Hibernate mode when CPU asserts SLEEPDEEP signal */
         CY_PM_PWR_CONTROL_REG |= CY_PM_PWR_CONTROL_HIBERNATE;
@@ -396,13 +391,6 @@ void CySysPmDeepSleep(void)
     *  the firmware unfreezes them after booting. The call of this function
     *  unfreezes IO-Cells explicitly.
     *
-    *  If the firmware intent is to retain the data value on the port, then the
-    *  value must be read and re-written to the data register before calling this
-    *  API. Furthermore, the drive mode must be re-programmed.  If this is not done,
-    *  the pin state will change to default state the moment the freeze is removed.
-    *
-    *  This API is not available for PSoC 4000 family of devices.
-    *
     * Parameters:
     *  None
     *
@@ -467,5 +455,6 @@ void CySysPmDeepSleep(void)
     }
 
 #endif /* (CY_IP_SRSSV2) */
+
 
 /* [] END OF FILE */

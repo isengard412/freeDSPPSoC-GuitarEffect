@@ -1,12 +1,12 @@
 /*******************************************************************************
 * File Name: Cm0Start.c
-* Version 5.30
+* Version 4.20
 *
 *  Description:
 *  Startup code for the ARM CM0.
 *
 ********************************************************************************
-* Copyright 2010-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* Copyright 2010-2014, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -18,7 +18,6 @@
 #include "cyfitter_cfg.h"
 #include "CyLib.h"
 #include "cyfitter.h"
-#include "cyapicallbacks.h"
 
 #define CY_NUM_VECTORS              (CY_INT_IRQ_BASE + CY_NUM_INTERRUPTS)
 #define CY_CPUSS_CONFIG_VECT_IN_RAM (( uint32 ) 0x01)
@@ -34,24 +33,18 @@
     #define CY_NUM_ROM_VECTORS      (4u)
 #endif  /* defined (__ICCARM__) */
 
+#if defined(__ARMCC_VERSION)
+    #define INITIAL_STACK_POINTER ((cyisraddress)(uint32)&Image$$ARM_LIB_STACK$$ZI$$Limit)
+#elif defined (__GNUC__)
+    #define INITIAL_STACK_POINTER (&__cy_stack)
+#elif defined (__ICCARM__)
+    #pragma language=extended
+    #pragma segment="CSTACK"
+    #define INITIAL_STACK_POINTER  { .__ptr = __sfe( "CSTACK" ) }
 
-#ifndef CY_SYS_INITIAL_STACK_POINTER
-
-    #if defined(__ARMCC_VERSION)
-        #define CY_SYS_INITIAL_STACK_POINTER ((cyisraddress)(uint32)&Image$$ARM_LIB_STACK$$ZI$$Limit)
-    #elif defined (__GNUC__)
-        #define CY_SYS_INITIAL_STACK_POINTER (&__cy_stack)
-    #elif defined (__ICCARM__)
-        #pragma language=extended
-        #pragma segment="CSTACK"
-        #define CY_SYS_INITIAL_STACK_POINTER  { .__ptr = __sfe( "CSTACK" ) }
-
-        extern void __iar_program_start( void );
-        extern void __iar_data_init3 (void);
-    #endif  /* (__ARMCC_VERSION) */
-
-#endif /* CY_SYS_INITIAL_STACK_POINTER */
-
+    extern void __iar_program_start( void );
+    extern void __iar_data_init3 (void);
+#endif  /* (__ARMCC_VERSION) */
 
 #if defined(__GNUC__)
     #include <errno.h>
@@ -114,11 +107,6 @@ CY_ISR(IntDefaultHandler)
     * We must not get here. If we do, a serious problem occurs, so go into
     * an infinite loop.
     ***************************************************************************/
-
-    #ifdef CY_BOOT_INT_DEFAULT_HANDLER_EXCEPTION_ENTRY_CALLBACK
-        CyBoot_IntDefaultHandler_Exception_EntryCallback();
-    #endif /* CY_BOOT_INT_DEFAULT_HANDLER_EXCEPTION_ENTRY_CALLBACK */
-
     while(1)
     {
 
@@ -157,7 +145,7 @@ extern int __main(void);
 *******************************************************************************/
 void Reset(void)
 {
-    #if (CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLE || CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLEANDBOOTLOADER)
+    #if (CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLE)
         /* The bootloadable application image is started at Reset() handler
         * as a result of a branch instruction execution from the bootloader.
         * So, the stack pointer needs to be reset to be sure that
@@ -165,15 +153,15 @@ void Reset(void)
         */
         register uint32_t msp __asm("msp");
         msp = (uint32_t)&Image$$ARM_LIB_STACK$$ZI$$Limit;
-    #endif /*(CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLE || CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLEANDBOOTLOADER)*/
+    #endif /* CYDEV_PROJ_TYPE_LOADABLE */
 
     #if(CY_IP_SRSSLT)
         CySysWdtDisable();
     #endif  /* (CY_IP_SRSSLT) */
 
-    #if ((CYDEV_BOOTLOADER_ENABLE) && (CYDEV_PROJ_TYPE != CYDEV_PROJ_TYPE_LOADABLEANDBOOTLOADER))
+    #if (CYDEV_BOOTLOADER_ENABLE)
         CyBtldr_CheckLaunch();
-    #endif /* ((CYDEV_BOOTLOADER_ENABLE) && (CYDEV_PROJ_TYPE != CYDEV_PROJ_TYPE_LOADABLEANDBOOTLOADER)) */
+    #endif /* CYDEV_BOOTLOADER_ENABLE */
 
     __main();
 }
@@ -192,7 +180,7 @@ void Reset(void)
 *  None
 *
 *******************************************************************************/
-__attribute__ ((noreturn, __noinline__))
+__attribute__ ((noreturn))
 void $Sub$$main(void)
 {
     initialize_psoc();
@@ -256,7 +244,9 @@ extern const char __cy_region_num __attribute__((weak));
 __attribute__((weak))
 void _exit(int status)
 {
-    CyHalt((uint8) status);
+    /* Cause divide by 0 exception */
+    int x = status / (int) INT_MAX;
+    x = 4 / x;
 
     while(1)
     {
@@ -324,49 +314,44 @@ void * _sbrk (int nbytes)
 *  None
 *
 *******************************************************************************/
-void Start_c(void)  __attribute__ ((noreturn, noinline));
+void Start_c(void)  __attribute__ ((noreturn));
 void Start_c(void)
 {
-    #ifdef CY_BOOT_START_C_CALLBACK
-        CyBoot_Start_c_Callback();
-    #else
-        unsigned regions = __cy_region_num;
-        const struct __cy_region *rptr = __cy_regions;
+    unsigned regions = __cy_region_num;
+    const struct __cy_region *rptr = __cy_regions;
 
-        /* Initialize memory */
-        for (regions = __cy_region_num; regions != 0u; regions--)
+    /* Initialize memory */
+    for (regions = __cy_region_num; regions != 0u; regions--)
+    {
+        uint32 *src = (uint32 *)rptr->init;
+        uint32 *dst = (uint32 *)rptr->data;
+        unsigned limit = rptr->init_size;
+        unsigned count;
+
+        for (count = 0u; count != limit; count += sizeof (uint32))
         {
-            uint32 *src = (uint32 *)rptr->init;
-            uint32 *dst = (uint32 *)rptr->data;
-            unsigned limit = rptr->init_size;
-            unsigned count;
-
-            for (count = 0u; count != limit; count += sizeof (uint32))
-            {
-                *dst = *src;
-                dst++;
-                src++;
-            }
-            limit = rptr->zero_size;
-            for (count = 0u; count != limit; count += sizeof (uint32))
-            {
-                *dst = 0u;
-                dst++;
-            }
-
-            rptr++;
+            *dst = *src;
+            dst++;
+            src++;
+        }
+        limit = rptr->zero_size;
+        for (count = 0u; count != limit; count += sizeof (uint32))
+        {
+            *dst = 0u;
+            dst++;
         }
 
-        /* Invoke static objects constructors */
-        __libc_init_array();
-        (void) main();
+        rptr++;
+    }
 
-        while (1)
-        {
-            /* If main returns, make sure we don't return. */
-        }
+    /* Invoke static objects constructors */
+    __libc_init_array();
+    (void) main();
 
-    #endif /* CY_BOOT_START_C_CALLBACK */
+    while (1)
+    {
+        /* If main returns, make sure we don't return. */
+    }
 }
 
 
@@ -387,8 +372,7 @@ void Start_c(void)
 *******************************************************************************/
 void Reset(void)
 {
-    #if (CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLE || CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLEANDBOOTLOADER)
-
+    #if (CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLE)
         /* The bootloadable application image is started at Reset() handler
         * as a result of a branch instruction execution from the bootloader.
         * So, the stack pointer needs to be reset to be sure that
@@ -401,9 +385,9 @@ void Reset(void)
         CySysWdtDisable();
     #endif  /* (CY_IP_SRSSLT) */
 
-    #if ((CYDEV_BOOTLOADER_ENABLE) && (CYDEV_PROJ_TYPE != CYDEV_PROJ_TYPE_LOADABLEANDBOOTLOADER))
+    #if (CYDEV_BOOTLOADER_ENABLE)
         CyBtldr_CheckLaunch();
-    #endif /* ((CYDEV_BOOTLOADER_ENABLE) && (CYDEV_PROJ_TYPE != CYDEV_PROJ_TYPE_LOADABLEANDBOOTLOADER)) */
+    #endif /* CYDEV_BOOTLOADER_ENABLE */
     Start_c();
 }
 
@@ -429,16 +413,15 @@ void Reset(void)
 *    1 - initialize data sections;
 *
 *******************************************************************************/
-#pragma inline = never
 int __low_level_init(void)
 {
     #if(CY_IP_SRSSLT)
         CySysWdtDisable();
     #endif  /* (CY_IP_SRSSLT) */
 
-#if ((CYDEV_BOOTLOADER_ENABLE) && (CYDEV_PROJ_TYPE != CYDEV_PROJ_TYPE_LOADABLEANDBOOTLOADER))
+#if (CYDEV_BOOTLOADER_ENABLE)
     CyBtldr_CheckLaunch();
-#endif /* ((CYDEV_BOOTLOADER_ENABLE) && (CYDEV_PROJ_TYPE != CYDEV_PROJ_TYPE_LOADABLEANDBOOTLOADER)) */
+#endif /* CYDEV_BOOTLOADER_ENABLE */
 
     /* Initialize data sections */
     __iar_data_init3();
@@ -458,10 +441,7 @@ int __low_level_init(void)
 #if defined (__ICCARM__)
     #pragma location=".ramvectors"
 #else
-    #ifndef CY_SYS_RAM_VECTOR_SECTION
-        #define CY_SYS_RAM_VECTOR_SECTION CY_SECTION(".ramvectors")
-    #endif /* CY_SYS_RAM_VECTOR_SECTION */
-    CY_SYS_RAM_VECTOR_SECTION
+    CY_SECTION(".ramvectors")
 #endif  /* defined (__ICCARM__) */
 cyisraddress CyRamVectors[CY_NUM_VECTORS];
 
@@ -479,14 +459,11 @@ cyisraddress CyRamVectors[CY_NUM_VECTORS];
     #pragma location=".romvectors"
     const intvec_elem __vector_table[CY_NUM_ROM_VECTORS] =
 #else
-    #ifndef CY_SYS_ROM_VECTOR_SECTION
-        #define CY_SYS_ROM_VECTOR_SECTION CY_SECTION(".romvectors")
-    #endif /* CY_SYS_ROM_VECTOR_SECTION */
-    CY_SYS_ROM_VECTOR_SECTION
+    CY_SECTION(".romvectors")
     const cyisraddress RomVectors[CY_NUM_ROM_VECTORS] =
 #endif  /* defined (__ICCARM__) */
 {
-    CY_SYS_INITIAL_STACK_POINTER,   /* The initial stack pointer  0 */
+    INITIAL_STACK_POINTER,   /* The initial stack pointer  0 */
     #if defined (__ICCARM__) /* The reset handler          1 */
         __iar_program_start,
     #else

@@ -1,12 +1,12 @@
 /*******************************************************************************
 * FILENAME: cyutils.c
-* Version 5.30
+* Version 4.20
 *
 *  Description:
 *   CyUtils provides a function to handle 24-bit value writes.
 *
 ********************************************************************************
-* Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* Copyright 2008-2014, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.

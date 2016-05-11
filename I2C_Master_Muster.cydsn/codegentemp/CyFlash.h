@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CyFlash.h
-* Version 5.30
+* Version 4.20
 *
 *  Description:
 *   Provides the function definitions for the FLASH.
@@ -10,7 +10,7 @@
 *   System Reference Guide provided with PSoC Creator.
 *
 ********************************************************************************
-* Copyright 2010-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* Copyright 2010-2014, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -26,9 +26,6 @@
 *     Function Prototypes
 *******************************************************************************/
 uint32 CySysFlashWriteRow       (uint32 rowNum, const uint8 rowData[]);
-#if (CY_SFLASH_XTRA_ROWS)
-    uint32 CySysSFlashWriteUserRow  (uint32 rowNum, const uint8 rowData[]);
-#endif /* (CY_SFLASH_XTRA_ROWS) */
 void   CySysFlashSetWaitCycles  (uint32 freq);
 
 
@@ -44,36 +41,25 @@ void   CySysFlashSetWaitCycles  (uint32 freq);
 #define CY_FLASH_NUMBER_ROWS            (CYDEV_FLASH_SIZE / CYDEV_FLS_ROW_SIZE)
 #define CY_FLASH_SIZEOF_ROW             (CYDEV_FLS_ROW_SIZE)
 
-#if (CY_SFLASH_XTRA_ROWS)
-    /* SFlash API macros */
-    #define CY_SFLASH_USERBASE              (CYREG_SFLASH_MACRO_0_FREE_SFLASH0)
-    #define CY_SFLASH_SIZE                  (CYDEV_SFLASH_SIZE)
-    #define CY_SFLASH_SIZEOF_USERROW        (CYDEV_FLS_ROW_SIZE)
-    #define CY_SFLASH_NUMBER_USERROWS       (4u)
-#endif /* (CY_SFLASH_XTRA_ROWS) */
 
 /* CySysFlashWriteRow() - return codes */
 #define CY_SYS_FLASH_SUCCESS            (0x00u)
 #define CY_SYS_FLASH_INVALID_ADDR       (0x04u)
 #define CY_SYS_FLASH_PROTECTED          (0x05u)
 
-/* CySysSFlashWriteRow() - return codes */
-#define CY_SYS_SFLASH_SUCCESS            (CY_SYS_FLASH_SUCCESS)
-#define CY_SYS_SFLASH_INVALID_ADDR       (CY_SYS_FLASH_INVALID_ADDR)
-#define CY_SYS_SFLASH_PROTECTED          (CY_SYS_FLASH_PROTECTED)
 
 /* CySysFlashSetWaitCycles() - implementation definitions */
 #define CY_FLASH_WAIT_STATE_EN          (( uint32 )(( uint32 )0x01u << 18u))
 #define CY_FLASH_SYSCLK_BOUNDARY_MHZ    (24u)
 #if (CY_IP_CPUSSV2)
     /* CySysFlashSetWaitCycles() */
-    #if(CY_IP_FM || CY_IP_FS)
+    #if(CY_IP_FM)
         #define CY_FLASH_CTL_WS_0_FREQ_MIN      (0u)
         #define CY_FLASH_CTL_WS_0_FREQ_MAX      (24u)
 
         #define CY_FLASH_CTL_WS_1_FREQ_MIN      (24u)
         #define CY_FLASH_CTL_WS_1_FREQ_MAX      (48u)
-    #else /* (CY_IP_FMLT || CY_IP_FSLT) */
+    #else
         #define CY_FLASH_CTL_WS_0_FREQ_MIN      (0u)
         #define CY_FLASH_CTL_WS_0_FREQ_MAX      (16u)
 
@@ -82,14 +68,14 @@ void   CySysFlashSetWaitCycles  (uint32 freq);
 
         #define CY_FLASH_CTL_WS_2_FREQ_MIN      (32u)
         #define CY_FLASH_CTL_WS_2_FREQ_MAX      (48u)
-    #endif  /* (CY_IP_FM || CY_IP_FS) */
+    #endif  /* (CY_IP_FM) */
 
     #define CY_FLASH_CTL_WS_MASK        ((uint32) 0x03u)
     #define CY_FLASH_CTL_WS_0_VALUE     (0x00u)
     #define CY_FLASH_CTL_WS_1_VALUE     (0x01u)
-    #if(CY_IP_FMLT || CY_IP_FSLT)
+    #if(CY_IP_FMLT)
         #define CY_FLASH_CTL_WS_2_VALUE (0x02u)
-    #endif  /* (CY_IP_FMLT || CY_IP_FSLT) */
+    #endif  /* (CY_IP_FMLT) */
 #endif  /* (CY_IP_CPUSSV2) */
 
 
@@ -104,8 +90,7 @@ void   CySysFlashSetWaitCycles  (uint32 freq);
 #define CY_FLASH_API_OPCODE_LOAD        (0x04u)
 #define CY_FLASH_API_OPCODE_WRITE_ROW   (0x05u)
 
-#define CY_FLASH_API_OPCODE_PROGRAM_ROW         (0x06u)
-#define CY_FLASH_API_OPCODE_WRITE_SFLASH_ROW    (0x18u)
+#define CY_FLASH_API_OPCODE_PROGRAM_ROW (0x06u)
 
 #define CY_FLASH_API_OPCODE_CLK_CONFIG  (0x15u)
 #define CY_FLASH_API_OPCODE_CLK_BACKUP  (0x16u)
@@ -116,13 +101,13 @@ void   CySysFlashSetWaitCycles  (uint32 freq);
 #define CY_FLASH_PARAM_ADDR_OFFSET      (16u)
 #define CY_FLASH_PARAM_MACRO_SEL_OFFSET (24u)
 
-#if (CY_IP_FLASH_MACROS == 2u)
+#if (CY_PSOC4_4200BL || CY_PSOC4_4100BL)
     /*  Macro #0: rows 0x00-0x1ff, Macro #1: rows 0x200-0x3ff */
     #define CY_FLASH_GET_MACRO_FROM_ROW(row)         ((uint32)(((row) > 0x1ffu) ? 1u : 0u))
 #else
     /* Only macro # 0 is available */
     #define CY_FLASH_GET_MACRO_FROM_ROW(row)         ((uint32)(((row) != 0u)    ? 0u : 0u))
-#endif  /* (CY_IP_FLASH_MACROS == 2u) */
+#endif  /* (CY_PSOC4_4200BL || CY_PSOC4_4100BL) */
 
 #if(CY_IP_FMLT)
     /* SROM size greater than 4k */
@@ -147,15 +132,10 @@ typedef struct cySysFlashClockBackupStruct
         uint32 clkImoEna;
         uint32 clkImoFreq;
     #else
-
         #if(CY_IP_SRSSV2)
             uint32 clkImoPump;
         #endif /* (CY_IP_SRSSV2) */
-
-        #if (CY_IP_SPCIF_SYNCHRONOUS)
-            uint32 clockSettings[CY_FLASH_CLOCK_BACKUP_SIZE];       /* FM-Lite Clock Backup */
-        #endif /* (CY_IP_SPCIF_SYNCHRONOUS) */
-
+        uint32 clockSettings[CY_FLASH_CLOCK_BACKUP_SIZE];       /* FM-Lite Clock Backup */
     #endif  /* (CY_PSOC4_4000) */
 
 #endif  /* (CY_IP_FM) */
