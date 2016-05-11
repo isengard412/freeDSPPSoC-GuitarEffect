@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: cypins.h
-* Version 4.20
+* Version 5.30
 *
 *  Description:
 *   This file contains the function prototypes and constants used for port/pin
@@ -11,7 +11,7 @@
 *   System Reference Guide provided with PSoC Creator.
 *
 ********************************************************************************
-* Copyright 2008-2014, Cypress Semiconductor Corporation.  All rights reserved.
+* Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -52,27 +52,7 @@
 *        Compatibility Macros
 **************************************/
 
-#if(CY_PSOC4A)
-    #define CYREG_GPIO_PRT0_DR                (CYREG_PRT0_DR)
-    #define CYREG_GPIO_PRT0_PS                (CYREG_PRT0_PS)
-    #define CYREG_GPIO_PRT0_PC                (CYREG_PRT0_PC)
-
-    #define CYREG_GPIO_PRT1_DR                (CYREG_PRT1_DR)
-    #define CYREG_GPIO_PRT1_PS                (CYREG_PRT1_PS)
-    #define CYREG_GPIO_PRT1_PC                (CYREG_PRT1_PC)
-
-    #define CYREG_GPIO_PRT2_DR                (CYREG_PRT2_DR)
-    #define CYREG_GPIO_PRT2_PS                (CYREG_PRT2_PS)
-    #define CYREG_GPIO_PRT2_PC                (CYREG_PRT2_PC)
-
-    #define CYREG_GPIO_PRT3_DR                (CYREG_PRT3_DR)
-    #define CYREG_GPIO_PRT3_PS                (CYREG_PRT3_PS)
-    #define CYREG_GPIO_PRT3_PC                (CYREG_PRT3_PC)
-
-    #define CYREG_GPIO_PRT4_DR                (CYREG_PRT4_DR)
-    #define CYREG_GPIO_PRT4_PS                (CYREG_PRT4_PS)
-    #define CYREG_GPIO_PRT4_PC                (CYREG_PRT4_PC)
-#else
+#if(CY_IP_HOBTO_DEVICE)
     #define CYREG_PRT0_DR                     (CYREG_GPIO_PRT0_DR)
     #define CYREG_PRT0_PS                     (CYREG_GPIO_PRT0_PS)
     #define CYREG_PRT0_PC                     (CYREG_GPIO_PRT0_PC)
@@ -136,7 +116,29 @@
     #define CYREG_PRT15_DR                    (CYREG_GPIO_PRT15_DR)
     #define CYREG_PRT15_PS                    (CYREG_GPIO_PRT15_PS)
     #define CYREG_PRT15_PC                    (CYREG_GPIO_PRT15_PC)
-#endif
+
+#else
+
+    #define CYREG_GPIO_PRT0_DR                (CYREG_PRT0_DR)
+    #define CYREG_GPIO_PRT0_PS                (CYREG_PRT0_PS)
+    #define CYREG_GPIO_PRT0_PC                (CYREG_PRT0_PC)
+
+    #define CYREG_GPIO_PRT1_DR                (CYREG_PRT1_DR)
+    #define CYREG_GPIO_PRT1_PS                (CYREG_PRT1_PS)
+    #define CYREG_GPIO_PRT1_PC                (CYREG_PRT1_PC)
+
+    #define CYREG_GPIO_PRT2_DR                (CYREG_PRT2_DR)
+    #define CYREG_GPIO_PRT2_PS                (CYREG_PRT2_PS)
+    #define CYREG_GPIO_PRT2_PC                (CYREG_PRT2_PC)
+
+    #define CYREG_GPIO_PRT3_DR                (CYREG_PRT3_DR)
+    #define CYREG_GPIO_PRT3_PS                (CYREG_PRT3_PS)
+    #define CYREG_GPIO_PRT3_PC                (CYREG_PRT3_PC)
+
+    #define CYREG_GPIO_PRT4_DR                (CYREG_PRT4_DR)
+    #define CYREG_GPIO_PRT4_PS                (CYREG_PRT4_PS)
+    #define CYREG_GPIO_PRT4_PC                (CYREG_PRT4_PC)
+#endif /* (CY_IP_HOBTO_DEVICE) */
 
 
 /**************************************

@@ -470,7 +470,7 @@
 #define LED_GREEN__SHIFT 2
 
 /* Miscellaneous */
-#define CY_PROJECT_NAME "I2C_Master_Muster"
+#define CY_PROJECT_NAME "SCB_I2cCommMaster01"
 #define CY_VERSION "PSoC Creator  3.3 SP1"
 #define CYDEV_BCLK__HFCLK__HZ 24000000U
 #define CYDEV_BCLK__HFCLK__KHZ 24000U

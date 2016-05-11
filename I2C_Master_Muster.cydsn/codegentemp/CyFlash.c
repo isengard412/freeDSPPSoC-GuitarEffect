@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CyFlash.c
-* Version 4.20
+* Version 5.30
 *
 *  Description:
 *   Provides an API for the FLASH.
@@ -13,7 +13,7 @@
 *   System Reference Guide provided with PSoC Creator.
 *
 ********************************************************************************
-* Copyright 2010-2014, Cypress Semiconductor Corporation.  All rights reserved.
+* Copyright 2010-2015, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -21,13 +21,25 @@
 
 #include "CyFlash.h"
 
-static CY_SYS_FLASH_CLOCK_BACKUP_STRUCT cySysFlashBackup;
+
+/*******************************************************************************
+* Cypress identified a defect with the Flash write functionality of the
+* PSoC 4000, PSoC 4100, and PSoC 4200 devices. The CySysFlashWriteRow() function
+* now checks the data to be written and, if necessary, modifies it to have a
+* non-zero checksum. After writing to Flash, the modified data is replaced
+* (Flash program) with the correct (original) data.
+*******************************************************************************/
+#define CY_FLASH_CHECKSUM_WORKAROUND    (CY_PSOC4_4000 || CY_PSOC4_4100 || CY_PSOC4_4200)
+
+#if (CY_IP_FM || ((!CY_PSOC4_4000) && CY_IP_SPCIF_SYNCHRONOUS) || (!CY_IP_FM) && CY_PSOC4_4000)
+    static CY_SYS_FLASH_CLOCK_BACKUP_STRUCT cySysFlashBackup;
+#endif /* (CY_IP_FM || ((!CY_PSOC4_4000) && CY_IP_SPCIF_SYNCHRONOUS) || (!CY_IP_FM) && CY_PSOC4_4000) */
 
 static cystatus CySysFlashClockBackup(void);
 static cystatus CySysFlashClockRestore(void);
-#if(CY_IP_FMLT)
+#if(CY_IP_SPCIF_SYNCHRONOUS)
     static cystatus CySysFlashClockConfig(void);
-#endif  /* (CY_IP_FMLT) */
+#endif  /* (CY_IP_SPCIF_SYNCHRONOUS) */
 
 
 /*******************************************************************************
@@ -61,6 +73,13 @@ static cystatus CySysFlashClockRestore(void);
 *   The IMO must be enabled before calling this function. The operation of the
 *   flash writing hardware is dependent on the IMO.
 *
+*   For PSoC 4000, PSoC 4100 BLE and PSoC 4200 BLE devices (PSoC 4100 BLE and
+*   PSoC 4200 BLE devices with 256K of Flash memory are not affected), this API
+*   will automatically modify the clock settings for the device. Writing to
+*   flash requires that changes be made to the IMO and HFCLK settings. The
+*   configuration is restored before returning. This will impact the operation
+*   of most of the hardware in the device.
+*
 *   For PSoC 4000 devices this API will automatically modify the clock settings
 *   for the device. Writing to flash requires that changes be made to the IMO
 *   and HFCLK settings. The configuration is restored before returning. HFCLK
@@ -74,29 +93,28 @@ uint32 CySysFlashWriteRow(uint32 rowNum, const uint8 rowData[])
 {
     volatile uint32 retValue = CY_SYS_FLASH_SUCCESS;
     volatile uint32 clkCnfRetValue = CY_SYS_FLASH_SUCCESS;
-    volatile uint32   parameters[(CY_FLASH_SIZEOF_ROW + CY_FLASH_SRAM_ROM_DATA)/4u];
+    volatile uint32 parameters[(CY_FLASH_SIZEOF_ROW + CY_FLASH_SRAM_ROM_DATA) / sizeof(uint32)];
     uint8  interruptState;
 
-    #if (CY_PSOC4_4000 || CY_PSOC4_4100 || CY_PSOC4_4200)
-        uint32 rowDataTmp[CY_FLASH_SIZEOF_ROW / sizeof(uint32)];
-
+    #if (CY_FLASH_CHECKSUM_WORKAROUND)
         uint32 needChecksumWorkaround = 0u;
         uint32 savedIndex = 0u;
         uint32 savedValue = 0u;
         uint32 checksum = 0u;
         uint32 bits = 0u;
         uint32 i;
-    #endif  /* (CY_PSOC4_4000 || CY_PSOC4_4100 || CY_PSOC4_4200) */
+    #endif  /* (CY_FLASH_CHECKSUM_WORKAROUND) */
 
     if ((rowNum < CY_FLASH_NUMBER_ROWS) && (rowData != 0u))
     {
-        #if (CY_PSOC4_4000 || CY_PSOC4_4100 || CY_PSOC4_4200)
+        /* Copy data to be written into internal variable */
+        (void)memcpy((void *)&parameters[2u], rowData, CY_FLASH_SIZEOF_ROW);
 
-            (void) memcpy((void *)rowDataTmp, rowData, CY_FLASH_SIZEOF_ROW);
+        #if (CY_FLASH_CHECKSUM_WORKAROUND)
 
-            for (i = 0u; i < (CY_FLASH_SIZEOF_ROW / sizeof(uint32)); i++)
+            for (i = 2u; i < ((CY_FLASH_SIZEOF_ROW / sizeof(uint32)) + 2u); i++)
             {
-                uint32 tmp = rowDataTmp[i];
+                uint32 tmp = parameters[i];
                 if (tmp != 0u)
                 {
                     checksum += tmp;
@@ -108,10 +126,10 @@ uint32 CySysFlashWriteRow(uint32 rowNum, const uint8 rowData[])
             needChecksumWorkaround = ((checksum == 0u) && (bits != 0u)) ? 1u : 0u;
             if (needChecksumWorkaround != 0u)
             {
-                savedValue = rowDataTmp[savedIndex];
-                rowDataTmp[savedIndex] = 0u;
+                savedValue = parameters[savedIndex];
+                parameters[savedIndex] = 0u;
             }
-        #endif  /* (CY_PSOC4_4000 || CY_PSOC4_4100 || CY_PSOC4_4200) */
+        #endif  /* (CY_FLASH_CHECKSUM_WORKAROUND) */
 
         /* Load Flash Bytes */
         parameters[0u] = (uint32) (CY_FLASH_GET_MACRO_FROM_ROW(rowNum)        << CY_FLASH_PARAM_MACRO_SEL_OFFSET) |
@@ -119,11 +137,7 @@ uint32 CySysFlashWriteRow(uint32 rowNum, const uint8 rowData[])
                          (uint32) (CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_LOAD) << CY_FLASH_PARAM_KEY_TWO_OFFSET  ) |
                          CY_FLASH_KEY_ONE;
         parameters[1u] = CY_FLASH_SIZEOF_ROW - 1u;
-    #if (CY_PSOC4_4000 || CY_PSOC4_4100 || CY_PSOC4_4200)
-        (void)memcpy((void *)&parameters[2u], rowDataTmp, CY_FLASH_SIZEOF_ROW);
-    #else
-        (void)memcpy((void *)&parameters[2u], rowData, CY_FLASH_SIZEOF_ROW);
-    #endif /* (CY_PSOC4_4000 || CY_PSOC4_4100 || CY_PSOC4_4200) */
+
         CY_FLASH_CPUSS_SYSARG_REG = (uint32) &parameters[0u];
         CY_FLASH_CPUSS_SYSREQ_REG = CY_FLASH_CPUSS_REQ_START | CY_FLASH_API_OPCODE_LOAD;
         retValue = CY_FLASH_API_RETURN;
@@ -140,12 +154,12 @@ uint32 CySysFlashWriteRow(uint32 rowNum, const uint8 rowData[])
 
             clkCnfRetValue = CySysFlashClockBackup();
 
-        #if(CY_IP_FMLT)
+        #if(CY_IP_SPCIF_SYNCHRONOUS)
             if(clkCnfRetValue == CY_SYS_FLASH_SUCCESS)
             {
                 retValue = CySysFlashClockConfig();
             }
-        #endif  /* (CY_IP_FMLT) */
+        #endif  /* (CY_IP_SPCIF_SYNCHRONOUS) */
 
             if(retValue == CY_SYS_FLASH_SUCCESS)
             {
@@ -158,12 +172,12 @@ uint32 CySysFlashWriteRow(uint32 rowNum, const uint8 rowData[])
                 retValue = CY_FLASH_API_RETURN;
             }
 
-            #if (CY_PSOC4_4000 || CY_PSOC4_4100 || CY_PSOC4_4200)
+            #if (CY_FLASH_CHECKSUM_WORKAROUND)
 
                 if ((retValue == CYRET_SUCCESS) && (needChecksumWorkaround != 0u))
                 {
-                    (void)memset((void *)rowDataTmp, 0, CY_FLASH_SIZEOF_ROW);
-                    rowDataTmp[savedIndex] = savedValue;
+                    (void)memset((void *)&parameters[2u], 0, CY_FLASH_SIZEOF_ROW);
+                    parameters[savedIndex] = savedValue;
 
                     /* Load Flash Bytes */
                     parameters[0u] = (uint32) (CY_FLASH_GET_MACRO_FROM_ROW(rowNum)        << CY_FLASH_PARAM_MACRO_SEL_OFFSET) |
@@ -171,7 +185,7 @@ uint32 CySysFlashWriteRow(uint32 rowNum, const uint8 rowData[])
                                      (uint32) (CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_LOAD) << CY_FLASH_PARAM_KEY_TWO_OFFSET  ) |
                                      CY_FLASH_KEY_ONE;
                     parameters[1u] = CY_FLASH_SIZEOF_ROW - 1u;
-                    (void)memcpy((void *)&parameters[2u], rowDataTmp, CY_FLASH_SIZEOF_ROW);
+
                     CY_FLASH_CPUSS_SYSARG_REG = (uint32) &parameters[0u];
                     CY_FLASH_CPUSS_SYSREQ_REG = CY_FLASH_CPUSS_REQ_START | CY_FLASH_API_OPCODE_LOAD;
                     retValue = CY_FLASH_API_RETURN;
@@ -180,7 +194,9 @@ uint32 CySysFlashWriteRow(uint32 rowNum, const uint8 rowData[])
                     if(retValue == CY_SYS_FLASH_SUCCESS)
                     {
                         /* Program Row */
-                        parameters[0u]  = (uint32) (((uint32) CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_PROGRAM_ROW) <<  CY_FLASH_PARAM_KEY_TWO_OFFSET) | CY_FLASH_KEY_ONE);
+                        parameters[0u]  =
+                            (uint32) (((uint32) CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_PROGRAM_ROW) <<
+                                                    CY_FLASH_PARAM_KEY_TWO_OFFSET) | CY_FLASH_KEY_ONE);
                         parameters[0u] |= (uint32)(rowNum << 16u);
 
                         CY_FLASH_CPUSS_SYSARG_REG = (uint32) &parameters[0u];
@@ -188,7 +204,7 @@ uint32 CySysFlashWriteRow(uint32 rowNum, const uint8 rowData[])
                         retValue = CY_FLASH_API_RETURN;
                     }
                 }
-            #endif  /* (CY_PSOC4_4000 || CY_PSOC4_4100 || CY_PSOC4_4200) */
+            #endif  /* (CY_FLASH_CHECKSUM_WORKAROUND) */
 
             if(clkCnfRetValue == CY_SYS_FLASH_SUCCESS)
             {
@@ -205,9 +221,6 @@ uint32 CySysFlashWriteRow(uint32 rowNum, const uint8 rowData[])
 
     return (retValue);
 }
-
-
-
 
 
 /*******************************************************************************
@@ -233,9 +246,9 @@ void CySysFlashSetWaitCycles(uint32 freq)
 {
     uint8  interruptState;
 
-    #if (CY_IP_CPUSS)
+    interruptState = CyEnterCriticalSection();
 
-        interruptState = CyEnterCriticalSection();
+    #if (CY_IP_CPUSS)
 
         if ( freq <= CY_FLASH_SYSCLK_BOUNDARY_MHZ )
         {
@@ -245,12 +258,9 @@ void CySysFlashSetWaitCycles(uint32 freq)
         {
             CY_SYS_CLK_SELECT_REG |= CY_FLASH_WAIT_STATE_EN;
         }
+    #else /* CY_IP_CPUSSV2 */
 
-        CyExitCriticalSection(interruptState);
-
-    #else
-        interruptState = CyEnterCriticalSection();
-
+        /* CY_IP_FM and CY_IP_FS */
         if (freq <= CY_FLASH_CTL_WS_0_FREQ_MAX)
         {
             CY_FLASH_CTL_REG = (CY_FLASH_CTL_REG & ~CY_FLASH_CTL_WS_MASK) | CY_FLASH_CTL_WS_0_VALUE;
@@ -259,22 +269,121 @@ void CySysFlashSetWaitCycles(uint32 freq)
         {
             CY_FLASH_CTL_REG = (CY_FLASH_CTL_REG & ~CY_FLASH_CTL_WS_MASK) | CY_FLASH_CTL_WS_1_VALUE;
         } else
-    #if (CY_IP_FMLT)
+    #if (CY_IP_FMLT || CY_IP_FSLT)
         if (freq <= CY_FLASH_CTL_WS_2_FREQ_MAX)
         {
             CY_FLASH_CTL_REG = (CY_FLASH_CTL_REG & ~CY_FLASH_CTL_WS_MASK) | CY_FLASH_CTL_WS_2_VALUE;
         }
-    #endif  /* (CY_IP_FMLT) */
         else
+    #endif  /* (CY_IP_FMLT || CY_IP_FSLT) */
         {
             /* Halt CPU in debug mode if frequency is invalid */
             CYASSERT(0u != 0u);
         }
 
-        CyExitCriticalSection(interruptState);
-
     #endif  /* (CY_IP_CPUSS) */
+
+    CyExitCriticalSection(interruptState);
 }
+
+#if (CY_SFLASH_XTRA_ROWS)
+/*******************************************************************************
+* Function Name: CySysSFlashWriteUserRow
+********************************************************************************
+*
+* Summary:
+*  Writes data to a row of SFlash user configurable area.
+*
+*  This API is applicable for PSoC 4100 BLE, PSoC 4200 BLE, PSoC 4100M,
+*  PSoC 4200M, and PSoC 4200L family of devices.
+*
+* Parameters:
+*  uint16 rowNum:
+*   The flash row number. The flash row number. The number of the flash rows is
+*   defined by the CY_SFLASH_NUMBER_USERROWS macro for the selected device.
+*   Valid range is 0-3. Refer to the device TRM for details.
+*
+*  uint8* rowData:
+*   Array of bytes to write. The size of the array must be equal to the flash
+*   row size. The flash row size for the selected device is defined by the
+*   CY_SFLASH_SIZEOF_USERROW macro. Refer to the device TRM for the details.
+*
+* Return:
+*  Status
+*     Value                     Description
+*    CY_SYS_SFLASH_SUCCESS          Successful
+*    CY_SYS_SFLASH_INVALID_ADDR     Specified flash row address is invalid
+*    CY_SYS_SFLASH_PROTECTED        Specified flash row is protected
+*    Other non-zero                 Failure
+*
+*******************************************************************************/
+uint32 CySysSFlashWriteUserRow(uint32 rowNum, const uint8 rowData[])
+{
+    volatile uint32 retValue = CY_SYS_FLASH_SUCCESS;
+    volatile uint32 clkCnfRetValue = CY_SYS_FLASH_SUCCESS;
+    volatile uint32 parameters[(CY_FLASH_SIZEOF_ROW + CY_FLASH_SRAM_ROM_DATA)/4u];
+    uint8  interruptState;
+
+
+    if ((rowNum < CY_SFLASH_NUMBER_USERROWS) && (rowData != 0u))
+    {
+        /* Load Flash Bytes */
+        parameters[0u] = (uint32) (CY_FLASH_GET_MACRO_FROM_ROW(rowNum)        << CY_FLASH_PARAM_MACRO_SEL_OFFSET) |
+                         (uint32) (CY_FLASH_PAGE_LATCH_START_ADDR             << CY_FLASH_PARAM_ADDR_OFFSET     ) |
+                         (uint32) (CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_LOAD) << CY_FLASH_PARAM_KEY_TWO_OFFSET  ) |
+                         CY_FLASH_KEY_ONE;
+        parameters[1u] = CY_FLASH_SIZEOF_ROW - 1u;
+
+        (void)memcpy((void *)&parameters[2u], rowData, CY_FLASH_SIZEOF_ROW);
+        CY_FLASH_CPUSS_SYSARG_REG = (uint32) &parameters[0u];
+        CY_FLASH_CPUSS_SYSREQ_REG = CY_FLASH_CPUSS_REQ_START | CY_FLASH_API_OPCODE_LOAD;
+        retValue = CY_FLASH_API_RETURN;
+
+        if(retValue == CY_SYS_FLASH_SUCCESS)
+        {
+            /***************************************************************
+            * Mask all the exceptions to guarantee that Flash write will
+            * occur in the atomic way. It will not affect system call
+            * execution (flash row write) since it is executed in the NMI
+            * context.
+            ***************************************************************/
+            interruptState = CyEnterCriticalSection();
+
+            clkCnfRetValue = CySysFlashClockBackup();
+
+        #if(CY_IP_SPCIF_SYNCHRONOUS)
+            if(clkCnfRetValue == CY_SYS_FLASH_SUCCESS)
+            {
+                retValue = CySysFlashClockConfig();
+            }
+        #endif  /* (CY_IP_SPCIF_SYNCHRONOUS) */
+
+            if(retValue == CY_SYS_FLASH_SUCCESS)
+            {
+                /* Write User Sflash Row */
+                parameters[0u]  = (uint32) (((uint32) CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_WRITE_SFLASH_ROW) <<  CY_FLASH_PARAM_KEY_TWO_OFFSET) | CY_FLASH_KEY_ONE);
+                parameters[1u] = (uint32) rowNum;
+
+                CY_FLASH_CPUSS_SYSARG_REG = (uint32) &parameters[0u];
+                CY_FLASH_CPUSS_SYSREQ_REG = CY_FLASH_CPUSS_REQ_START | CY_FLASH_API_OPCODE_WRITE_SFLASH_ROW;
+                retValue = CY_FLASH_API_RETURN;
+            }
+
+            if(clkCnfRetValue == CY_SYS_FLASH_SUCCESS)
+            {
+                clkCnfRetValue = CySysFlashClockRestore();
+            }
+            CyExitCriticalSection(interruptState);
+        }
+    }
+    else
+    {
+        retValue = CY_SYS_FLASH_INVALID_ADDR;
+    }
+
+    return (retValue);
+}
+#endif /* (CY_SFLASH_XTRA_ROWS) */
 
 
 /*******************************************************************************
@@ -296,7 +405,9 @@ static cystatus CySysFlashClockBackup(void)
     cystatus retValue = CY_SYS_FLASH_SUCCESS;
 #if(!CY_IP_FM)
     #if !(CY_PSOC4_4000)
-        volatile uint32   parameters[2u];
+        #if (CY_IP_SPCIF_SYNCHRONOUS)
+            volatile uint32   parameters[2u];
+        #endif /* (CY_IP_SPCIF_SYNCHRONOUS) */
     #endif  /* !(CY_PSOC4_4000) */
 #endif  /* (!CY_IP_FM) */
 
@@ -343,12 +454,16 @@ static cystatus CySysFlashClockBackup(void)
 
     #else
 
-        /* FM-Lite Clock Backup System Call */
-        parameters[0u] = (uint32) ((CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_CLK_BACKUP) <<  CY_FLASH_PARAM_KEY_TWO_OFFSET) | CY_FLASH_KEY_ONE);
-        parameters[1u] = (uint32) &cySysFlashBackup.clockSettings[0u];
-        CY_FLASH_CPUSS_SYSARG_REG = (uint32) &parameters[0u];
-        CY_FLASH_CPUSS_SYSREQ_REG = CY_FLASH_CPUSS_REQ_START | CY_FLASH_API_OPCODE_CLK_BACKUP;
-        retValue = CY_FLASH_API_RETURN;
+        #if (CY_IP_SPCIF_SYNCHRONOUS)
+            /* FM-Lite Clock Backup System Call */
+            parameters[0u] =
+                (uint32) ((CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_CLK_BACKUP) <<  CY_FLASH_PARAM_KEY_TWO_OFFSET) |
+                            CY_FLASH_KEY_ONE);
+            parameters[1u] = (uint32) &cySysFlashBackup.clockSettings[0u];
+            CY_FLASH_CPUSS_SYSARG_REG = (uint32) &parameters[0u];
+            CY_FLASH_CPUSS_SYSREQ_REG = CY_FLASH_CPUSS_REQ_START | CY_FLASH_API_OPCODE_CLK_BACKUP;
+            retValue = CY_FLASH_API_RETURN;
+        #endif /* (CY_IP_SPCIF_SYNCHRONOUS) */
 
     #endif  /* (CY_PSOC4_4000) */
 
@@ -358,7 +473,7 @@ static cystatus CySysFlashClockBackup(void)
 }
 
 
-#if(CY_IP_FMLT)
+#if(CY_IP_SPCIF_SYNCHRONOUS)
 /*******************************************************************************
 * Function Name: CySysFlashClockConfig
 ********************************************************************************
@@ -424,7 +539,9 @@ static cystatus CySysFlashClockConfig(void)
 #else
 
     /* FM-Lite Clock Configuration */
-    CY_FLASH_CPUSS_SYSARG_REG = (uint32) ((CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_CLK_CONFIG) <<  CY_FLASH_PARAM_KEY_TWO_OFFSET) | CY_FLASH_KEY_ONE);
+    CY_FLASH_CPUSS_SYSARG_REG =
+        (uint32) ((CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_CLK_CONFIG) <<  CY_FLASH_PARAM_KEY_TWO_OFFSET) |
+                    CY_FLASH_KEY_ONE);
     CY_FLASH_CPUSS_SYSREQ_REG = CY_FLASH_CPUSS_REQ_START | CY_FLASH_API_OPCODE_CLK_CONFIG;
     retValue = CY_FLASH_API_RETURN;
 
@@ -432,7 +549,7 @@ static cystatus CySysFlashClockConfig(void)
 
     return (retValue);
 }
-#endif  /* (CY_IP_FMLT) */
+#endif  /* (CY_IP_SPCIF_SYNCHRONOUS) */
 
 
 /*******************************************************************************
@@ -454,7 +571,9 @@ static cystatus CySysFlashClockRestore(void)
     cystatus retValue = CY_SYS_FLASH_SUCCESS;
 #if(!CY_IP_FM)
     #if !(CY_PSOC4_4000)
-        volatile uint32   parameters[2u];
+        #if (CY_IP_SPCIF_SYNCHRONOUS)
+            volatile uint32   parameters[2u];
+        #endif /* (CY_IP_SPCIF_SYNCHRONOUS) */
     #endif  /* !(CY_PSOC4_4000) */
 #endif  /* (!CY_IP_FM) */
 
@@ -502,12 +621,16 @@ static cystatus CySysFlashClockRestore(void)
 
     #else
 
-        /* FM-Lite Clock Restore */
-        parameters[0u] = (uint32) ((CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_CLK_RESTORE) <<  CY_FLASH_PARAM_KEY_TWO_OFFSET) | CY_FLASH_KEY_ONE);
-        parameters[1u] = (uint32) &cySysFlashBackup.clockSettings[0u];
-        CY_FLASH_CPUSS_SYSARG_REG = (uint32) &parameters[0u];
-        CY_FLASH_CPUSS_SYSREQ_REG = CY_FLASH_CPUSS_REQ_START | CY_FLASH_API_OPCODE_CLK_RESTORE;
-        retValue = CY_FLASH_API_RETURN;
+        #if (CY_IP_SPCIF_SYNCHRONOUS)
+            /* FM-Lite Clock Restore */
+            parameters[0u] =
+                (uint32) ((CY_FLASH_KEY_TWO(CY_FLASH_API_OPCODE_CLK_RESTORE) <<  CY_FLASH_PARAM_KEY_TWO_OFFSET) |
+                            CY_FLASH_KEY_ONE);
+            parameters[1u] = (uint32) &cySysFlashBackup.clockSettings[0u];
+            CY_FLASH_CPUSS_SYSARG_REG = (uint32) &parameters[0u];
+            CY_FLASH_CPUSS_SYSREQ_REG = CY_FLASH_CPUSS_REQ_START | CY_FLASH_API_OPCODE_CLK_RESTORE;
+            retValue = CY_FLASH_API_RETURN;
+        #endif /* (CY_IP_SPCIF_SYNCHRONOUS) */
 
     #endif  /* (CY_PSOC4_4000) */
 

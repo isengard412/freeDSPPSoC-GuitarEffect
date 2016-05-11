@@ -1,12 +1,12 @@
 ;-------------------------------------------------------------------------------
 ; FILENAME: CyBootAsmIar.s
-; Version 4.20
+; Version 5.30
 ;
 ;  DESCRIPTION:
 ;    Assembly routines for IAR Embedded Workbench IDE.
 ;
 ;-------------------------------------------------------------------------------
-; Copyright 2013-2014, Cypress Semiconductor Corporation.  All rights reserved.
+; Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
 ; You may use this file only in accordance with the license, terms, conditions,
 ; disclaimers, and limitations in the end user license agreement accompanying
 ; the software package with which this file was provided.
@@ -41,11 +41,11 @@
 ;-------------------------------------------------------------------------------
 ; void CyDelayCycles(uint32 cycles)
 
-CyDelayCycles: 
+CyDelayCycles:
     ADDS r0, r0, #2
     LSRS r0, r0, #2
     BEQ CyDelayCycles_done
-    #if ((CYIPBLOCK_m0s8cpussv2_VERSION == 1)&&(CYIPBLOCK_m0s8srssv2_VERSION == 1))
+    #if ((CYIPBLOCK_m0s8cpussv2_VERSION == 1) && ((CYIPBLOCK_m0s8srssv2_VERSION == 1) || (CYIPBLOCK_m0s8srssv2_VERSION == 2)))
         ; If device is using CPUSSv2 and SRSSv2 leave loop unaligned
     #else
         NOP
@@ -68,8 +68,8 @@ CyDelayCycles_done:
 ;
 ;  Note Implementation of CyEnterCriticalSection manipulates the IRQ enable bit
 ;  with interrupts still enabled. The test and set of the interrupt bits is not
-;  atomic. Therefore, to avoid corrupting processor state, it must be the policy 
-;  that all interrupt routines restore the interrupt enable bits as they were 
+;  atomic. Therefore, to avoid corrupting processor state, it must be the policy
+;  that all interrupt routines restore the interrupt enable bits as they were
 ;  found on entry.
 ;
 ; Parameters:
