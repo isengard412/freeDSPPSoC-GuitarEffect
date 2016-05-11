@@ -22,6 +22,8 @@
 #define CY_MAIN_H
 
 #include <project.h>
+    
+
 
 /***************************************
 *         Function Prototypes
@@ -73,6 +75,22 @@ uint32 ReadStatusPacket(void);
 
 /* Delay between commands in milliseconds */
 #define CMD_TO_CMD_DELAY  (5u)
+
+// DSP Constants
+
+#define DSP_SDA         9
+#define DSP_SCL         10
+#define DSP_WP          11
+#define DSP_RES         12
+#define DSP_ADDRESS     0
+
+#define VOLUME0_ADDR    0x0027
+
+//Defines for serial communication
+
+#define COM_BAUD        9600
+#define COM_BUFFSIZE    25
+
 
 
 /***************************************

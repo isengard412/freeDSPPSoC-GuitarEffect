@@ -12,6 +12,11 @@
 #include "project.h"
 #include "i2cmaster.h"
 
+// DSP Libraries
+#include "i2clib/EEPROM24.h"
+#include "i2clib/I2CMASTER.h"
+#include "i2clib/SoftI2C_mod.h"
+#include "i2clib/ADAU1701.h"
 
 /*******************************************************************************
 * Function Name: main
@@ -31,6 +36,12 @@
 *******************************************************************************/
 int main()
 {
+    // Initialise DSP Libraries
+    SoftI2C     mI2C    (DSP_SDA, DSP_SCL);
+    EEPROM24    mEprom  (mI2C, EEPROM_24LC256);
+    ADAU1701    mDSP    (mI2C, DSP_ADDRESS);
+    
+    
     /* Enable global interrupts */
     CyGlobalIntEnable;
     
