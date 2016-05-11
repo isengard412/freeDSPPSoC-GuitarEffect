@@ -1,0 +1,921 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"ADC_DelSig_PM.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.data
+  19              		.align	2
+  20              		.type	ADC_DelSig_backup, %object
+  21              		.size	ADC_DelSig_backup, 2
+  22              	ADC_DelSig_backup:
+  23 0000 00       		.byte	0
+  24 0001 34       		.byte	52
+  25 0002 0000     		.section	.text.ADC_DelSig_SaveConfig,"ax",%progbits
+  26              		.align	2
+  27              		.global	ADC_DelSig_SaveConfig
+  28              		.thumb
+  29              		.thumb_func
+  30              		.type	ADC_DelSig_SaveConfig, %function
+  31              	ADC_DelSig_SaveConfig:
+  32              	.LFB0:
+  33              		.file 1 ".\\Generated_Source\\PSoC5\\ADC_DelSig_PM.c"
+   1:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * File Name: ADC_DelSig_PM.c
+   3:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Version 3.20
+   4:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+   5:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Description:
+   6:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  This file provides the power manager source code to the API for the
+   7:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  Delta-Sigma ADC Component.
+   8:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+   9:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Note:
+  10:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  11:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** ********************************************************************************
+  12:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  13:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * You may use this file only in accordance with the license, terms, conditions,
+  14:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  15:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * the software package with which this file was provided.
+  16:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *******************************************************************************/
+  17:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+  18:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** #include "ADC_DelSig.h"
+  19:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+  20:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** static ADC_DelSig_BACKUP_STRUCT ADC_DelSig_backup =
+  21:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** {
+  22:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     ADC_DelSig_DISABLED,
+  23:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     ADC_DelSig_CFG1_DEC_CR
+  24:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** };
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 2
+
+
+  25:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+  26:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+  27:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** /*******************************************************************************
+  28:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Function Name: ADC_DelSig_SaveConfig
+  29:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** ********************************************************************************
+  30:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  31:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Summary:
+  32:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  Save the register configuration which are not retention.
+  33:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  34:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Parameters:
+  35:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  None
+  36:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  37:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Return:
+  38:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  None
+  39:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  40:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Global variables:
+  41:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  ADC_DelSig_backup:  This global structure variable is used to store
+  42:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  configuration registers which are non retention whenever user wants to go
+  43:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  sleep mode by calling Sleep() API.
+  44:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  45:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *******************************************************************************/
+  46:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** void ADC_DelSig_SaveConfig(void) 
+  47:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** {
+  34              		.loc 1 47 0
+  35              		.cfi_startproc
+  36              		@ args = 0, pretend = 0, frame = 0
+  37              		@ frame_needed = 1, uses_anonymous_args = 0
+  38              		@ link register save eliminated.
+  39 0000 80B4     		push	{r7}
+  40              		.cfi_def_cfa_offset 4
+  41              		.cfi_offset 7, -4
+  42 0002 00AF     		add	r7, sp, #0
+  43              		.cfi_def_cfa_register 7
+  48:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     ADC_DelSig_backup.deccr = ADC_DelSig_DEC_CR_REG;
+  44              		.loc 1 48 0
+  45 0004 044B     		ldr	r3, .L2
+  46 0006 1B78     		ldrb	r3, [r3]
+  47 0008 DAB2     		uxtb	r2, r3
+  48 000a 044B     		ldr	r3, .L2+4
+  49 000c 5A70     		strb	r2, [r3, #1]
+  49:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** }
+  50              		.loc 1 49 0
+  51 000e BD46     		mov	sp, r7
+  52              		.cfi_def_cfa_register 13
+  53              		@ sp needed
+  54 0010 5DF8047B 		ldr	r7, [sp], #4
+  55              		.cfi_restore 7
+  56              		.cfi_def_cfa_offset 0
+  57 0014 7047     		bx	lr
+  58              	.L3:
+  59 0016 00BF     		.align	2
+  60              	.L2:
+  61 0018 004E0040 		.word	1073761792
+  62 001c 00000000 		.word	ADC_DelSig_backup
+  63              		.cfi_endproc
+  64              	.LFE0:
+  65              		.size	ADC_DelSig_SaveConfig, .-ADC_DelSig_SaveConfig
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 3
+
+
+  66              		.section	.text.ADC_DelSig_RestoreConfig,"ax",%progbits
+  67              		.align	2
+  68              		.global	ADC_DelSig_RestoreConfig
+  69              		.thumb
+  70              		.thumb_func
+  71              		.type	ADC_DelSig_RestoreConfig, %function
+  72              	ADC_DelSig_RestoreConfig:
+  73              	.LFB1:
+  50:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+  51:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+  52:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** /*******************************************************************************
+  53:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Function Name: ADC_DelSig_RestoreConfig
+  54:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** ********************************************************************************
+  55:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  56:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Summary:
+  57:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  Restore the register configurations which are not retention.
+  58:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  59:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Parameters:
+  60:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  None
+  61:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  62:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Return:
+  63:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  None
+  64:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  65:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Global variables:
+  66:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  ADC_DelSig_backup:  This global structure variable is used to restore
+  67:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  configuration registers which are non retention whenever user wants to switch
+  68:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  to active power mode by calling Wakeup() API.
+  69:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  70:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *******************************************************************************/
+  71:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** void ADC_DelSig_RestoreConfig(void) 
+  72:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** {
+  74              		.loc 1 72 0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 1, uses_anonymous_args = 0
+  78              		@ link register save eliminated.
+  79 0000 80B4     		push	{r7}
+  80              		.cfi_def_cfa_offset 4
+  81              		.cfi_offset 7, -4
+  82 0002 00AF     		add	r7, sp, #0
+  83              		.cfi_def_cfa_register 7
+  73:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     ADC_DelSig_DEC_CR_REG = ADC_DelSig_backup.deccr;
+  84              		.loc 1 73 0
+  85 0004 034B     		ldr	r3, .L5
+  86 0006 044A     		ldr	r2, .L5+4
+  87 0008 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+  88 000a 1A70     		strb	r2, [r3]
+  74:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** }
+  89              		.loc 1 74 0
+  90 000c BD46     		mov	sp, r7
+  91              		.cfi_def_cfa_register 13
+  92              		@ sp needed
+  93 000e 5DF8047B 		ldr	r7, [sp], #4
+  94              		.cfi_restore 7
+  95              		.cfi_def_cfa_offset 0
+  96 0012 7047     		bx	lr
+  97              	.L6:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 4
+
+
+  98              		.align	2
+  99              	.L5:
+ 100 0014 004E0040 		.word	1073761792
+ 101 0018 00000000 		.word	ADC_DelSig_backup
+ 102              		.cfi_endproc
+ 103              	.LFE1:
+ 104              		.size	ADC_DelSig_RestoreConfig, .-ADC_DelSig_RestoreConfig
+ 105              		.section	.text.ADC_DelSig_Sleep,"ax",%progbits
+ 106              		.align	2
+ 107              		.global	ADC_DelSig_Sleep
+ 108              		.thumb
+ 109              		.thumb_func
+ 110              		.type	ADC_DelSig_Sleep, %function
+ 111              	ADC_DelSig_Sleep:
+ 112              	.LFB2:
+  75:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+  76:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+  77:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** /*******************************************************************************
+  78:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Function Name: ADC_DelSig_Sleep
+  79:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** ********************************************************************************
+  80:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  81:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Summary:
+  82:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  Stops the operation of the block and saves the user configuration.
+  83:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  84:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Parameters:
+  85:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  None
+  86:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  87:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Return:
+  88:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  None
+  89:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  90:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Global variables:
+  91:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  ADC_DelSig_backup:  The structure field 'enableState' is modified
+  92:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  depending on the enable state of the block before entering to sleep mode.
+  93:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+  94:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *******************************************************************************/
+  95:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** void ADC_DelSig_Sleep(void) 
+  96:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** {
+ 113              		.loc 1 96 0
+ 114              		.cfi_startproc
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 1, uses_anonymous_args = 0
+ 117 0000 80B5     		push	{r7, lr}
+ 118              		.cfi_def_cfa_offset 8
+ 119              		.cfi_offset 7, -8
+ 120              		.cfi_offset 14, -4
+ 121 0002 00AF     		add	r7, sp, #0
+ 122              		.cfi_def_cfa_register 7
+  97:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     /* Save ADC enable state */
+  98:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     if((ADC_DelSig_ACT_PWR_DEC_EN == (ADC_DelSig_PWRMGR_DEC_REG & ADC_DelSig_ACT_PWR_DEC_EN)) &&
+ 123              		.loc 1 98 0
+ 124 0004 134B     		ldr	r3, .L11
+ 125 0006 1B78     		ldrb	r3, [r3]
+ 126 0008 DBB2     		uxtb	r3, r3
+ 127 000a 03F00103 		and	r3, r3, #1
+ 128 000e 002B     		cmp	r3, #0
+ 129 0010 1AD0     		beq	.L8
+  99:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****        (ADC_DelSig_ACT_PWR_DSM_EN == (ADC_DelSig_PWRMGR_DSM_REG & ADC_DelSig_ACT_PWR_DSM_EN)))
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 5
+
+
+ 130              		.loc 1 99 0 discriminator 1
+ 131 0012 104B     		ldr	r3, .L11
+ 132 0014 1B78     		ldrb	r3, [r3]
+ 133 0016 DBB2     		uxtb	r3, r3
+ 134 0018 03F01003 		and	r3, r3, #16
+  98:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****        (ADC_DelSig_ACT_PWR_DSM_EN == (ADC_DelSig_PWRMGR_DSM_REG & ADC_DelSig_ACT_PWR_DSM_EN)))
+ 135              		.loc 1 98 0 discriminator 1
+ 136 001c 002B     		cmp	r3, #0
+ 137 001e 13D0     		beq	.L8
+ 100:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     {
+ 101:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         /* Component is enabled */
+ 102:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         ADC_DelSig_backup.enableState = ADC_DelSig_ENABLED;
+ 138              		.loc 1 102 0
+ 139 0020 0D4B     		ldr	r3, .L11+4
+ 140 0022 0122     		movs	r2, #1
+ 141 0024 1A70     		strb	r2, [r3]
+ 103:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         if((ADC_DelSig_DEC_CR_REG & ADC_DelSig_DEC_START_CONV) != 0u)
+ 142              		.loc 1 103 0
+ 143 0026 0D4B     		ldr	r3, .L11+8
+ 144 0028 1B78     		ldrb	r3, [r3]
+ 145 002a DBB2     		uxtb	r3, r3
+ 146 002c 03F00103 		and	r3, r3, #1
+ 147 0030 002B     		cmp	r3, #0
+ 148 0032 06D0     		beq	.L9
+ 104:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         {   
+ 105:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****             /* Conversion is started */
+ 106:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****             ADC_DelSig_backup.enableState |= ADC_DelSig_STARTED;
+ 149              		.loc 1 106 0
+ 150 0034 084B     		ldr	r3, .L11+4
+ 151 0036 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 152 0038 43F00203 		orr	r3, r3, #2
+ 153 003c DAB2     		uxtb	r2, r3
+ 154 003e 064B     		ldr	r3, .L11+4
+ 155 0040 1A70     		strb	r2, [r3]
+ 156              	.L9:
+ 107:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         }
+ 108:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 		
+ 109:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         /* Stop the configuration */
+ 110:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         ADC_DelSig_Stop();
+ 157              		.loc 1 110 0
+ 158 0042 FFF7FEFF 		bl	ADC_DelSig_Stop
+ 159 0046 02E0     		b	.L10
+ 160              	.L8:
+ 111:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     }
+ 112:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     else
+ 113:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     {
+ 114:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         /* Component is disabled */
+ 115:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         ADC_DelSig_backup.enableState = ADC_DelSig_DISABLED;
+ 161              		.loc 1 115 0
+ 162 0048 034B     		ldr	r3, .L11+4
+ 163 004a 0022     		movs	r2, #0
+ 164 004c 1A70     		strb	r2, [r3]
+ 165              	.L10:
+ 116:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     }
+ 117:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+ 118:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     /* Save the user configuration */
+ 119:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     ADC_DelSig_SaveConfig();
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 6
+
+
+ 166              		.loc 1 119 0
+ 167 004e FFF7FEFF 		bl	ADC_DelSig_SaveConfig
+ 120:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** }
+ 168              		.loc 1 120 0
+ 169 0052 80BD     		pop	{r7, pc}
+ 170              	.L12:
+ 171              		.align	2
+ 172              	.L11:
+ 173 0054 AA430040 		.word	1073759146
+ 174 0058 00000000 		.word	ADC_DelSig_backup
+ 175 005c 004E0040 		.word	1073761792
+ 176              		.cfi_endproc
+ 177              	.LFE2:
+ 178              		.size	ADC_DelSig_Sleep, .-ADC_DelSig_Sleep
+ 179              		.section	.text.ADC_DelSig_Wakeup,"ax",%progbits
+ 180              		.align	2
+ 181              		.global	ADC_DelSig_Wakeup
+ 182              		.thumb
+ 183              		.thumb_func
+ 184              		.type	ADC_DelSig_Wakeup, %function
+ 185              	ADC_DelSig_Wakeup:
+ 186              	.LFB3:
+ 121:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+ 122:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+ 123:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** /*******************************************************************************
+ 124:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Function Name: ADC_DelSig_Wakeup
+ 125:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** ********************************************************************************
+ 126:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+ 127:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Summary:
+ 128:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  Restores the user configuration and enables the power to the block.
+ 129:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+ 130:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Parameters:
+ 131:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  None
+ 132:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+ 133:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Return:
+ 134:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  None
+ 135:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+ 136:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** * Global variables:
+ 137:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  ADC_DelSig_backup:  The structure field 'enableState' is used to
+ 138:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *  restore the enable state of block after wakeup from sleep mode.
+ 139:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *
+ 140:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** *******************************************************************************/
+ 141:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** void ADC_DelSig_Wakeup(void) 
+ 142:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** {
+ 187              		.loc 1 142 0
+ 188              		.cfi_startproc
+ 189              		@ args = 0, pretend = 0, frame = 0
+ 190              		@ frame_needed = 1, uses_anonymous_args = 0
+ 191 0000 80B5     		push	{r7, lr}
+ 192              		.cfi_def_cfa_offset 8
+ 193              		.cfi_offset 7, -8
+ 194              		.cfi_offset 14, -4
+ 195 0002 00AF     		add	r7, sp, #0
+ 196              		.cfi_def_cfa_register 7
+ 143:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     /* Restore the configuration */
+ 144:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     ADC_DelSig_RestoreConfig();
+ 197              		.loc 1 144 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 7
+
+
+ 198 0004 FFF7FEFF 		bl	ADC_DelSig_RestoreConfig
+ 145:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** 
+ 146:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     /* Enables the component operation */
+ 147:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     if(ADC_DelSig_backup.enableState != ADC_DelSig_DISABLED)
+ 199              		.loc 1 147 0
+ 200 0008 074B     		ldr	r3, .L15
+ 201 000a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 202 000c 002B     		cmp	r3, #0
+ 203 000e 09D0     		beq	.L13
+ 148:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     {
+ 149:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         ADC_DelSig_Enable();
+ 204              		.loc 1 149 0
+ 205 0010 FFF7FEFF 		bl	ADC_DelSig_Enable
+ 150:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         if((ADC_DelSig_backup.enableState & ADC_DelSig_STARTED) != 0u)
+ 206              		.loc 1 150 0
+ 207 0014 044B     		ldr	r3, .L15
+ 208 0016 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 209 0018 03F00203 		and	r3, r3, #2
+ 210 001c 002B     		cmp	r3, #0
+ 211 001e 01D0     		beq	.L13
+ 151:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         {
+ 152:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****             ADC_DelSig_StartConvert();
+ 212              		.loc 1 152 0
+ 213 0020 FFF7FEFF 		bl	ADC_DelSig_StartConvert
+ 214              	.L13:
+ 153:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****         }
+ 154:.\Generated_Source\PSoC5/ADC_DelSig_PM.c ****     } /* Do nothing if component was disable before */
+ 155:.\Generated_Source\PSoC5/ADC_DelSig_PM.c **** }
+ 215              		.loc 1 155 0
+ 216 0024 80BD     		pop	{r7, pc}
+ 217              	.L16:
+ 218 0026 00BF     		.align	2
+ 219              	.L15:
+ 220 0028 00000000 		.word	ADC_DelSig_backup
+ 221              		.cfi_endproc
+ 222              	.LFE3:
+ 223              		.size	ADC_DelSig_Wakeup, .-ADC_DelSig_Wakeup
+ 224              		.text
+ 225              	.Letext0:
+ 226              		.file 2 ".\\Generated_Source\\PSoC5\\cytypes.h"
+ 227              		.file 3 ".\\Generated_Source\\PSoC5\\ADC_DelSig.h"
+ 228              		.section	.debug_info,"",%progbits
+ 229              	.Ldebug_info0:
+ 230 0000 22010000 		.4byte	0x122
+ 231 0004 0400     		.2byte	0x4
+ 232 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 233 000a 04       		.byte	0x4
+ 234 000b 01       		.uleb128 0x1
+ 235 000c 36010000 		.4byte	.LASF22
+ 236 0010 01       		.byte	0x1
+ 237 0011 C2000000 		.4byte	.LASF23
+ 238 0015 40000000 		.4byte	.LASF24
+ 239 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 240 001d 00000000 		.4byte	0
+ 241 0021 00000000 		.4byte	.Ldebug_line0
+ 242 0025 02       		.uleb128 0x2
+ 243 0026 01       		.byte	0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 8
+
+
+ 244 0027 06       		.byte	0x6
+ 245 0028 F4010000 		.4byte	.LASF0
+ 246 002c 02       		.uleb128 0x2
+ 247 002d 01       		.byte	0x1
+ 248 002e 08       		.byte	0x8
+ 249 002f 1A010000 		.4byte	.LASF1
+ 250 0033 02       		.uleb128 0x2
+ 251 0034 02       		.byte	0x2
+ 252 0035 05       		.byte	0x5
+ 253 0036 1E020000 		.4byte	.LASF2
+ 254 003a 02       		.uleb128 0x2
+ 255 003b 02       		.byte	0x2
+ 256 003c 07       		.byte	0x7
+ 257 003d E1010000 		.4byte	.LASF3
+ 258 0041 02       		.uleb128 0x2
+ 259 0042 04       		.byte	0x4
+ 260 0043 05       		.byte	0x5
+ 261 0044 2D010000 		.4byte	.LASF4
+ 262 0048 02       		.uleb128 0x2
+ 263 0049 04       		.byte	0x4
+ 264 004a 07       		.byte	0x7
+ 265 004b F1000000 		.4byte	.LASF5
+ 266 004f 02       		.uleb128 0x2
+ 267 0050 08       		.byte	0x8
+ 268 0051 05       		.byte	0x5
+ 269 0052 00000000 		.4byte	.LASF6
+ 270 0056 02       		.uleb128 0x2
+ 271 0057 08       		.byte	0x8
+ 272 0058 07       		.byte	0x7
+ 273 0059 03010000 		.4byte	.LASF7
+ 274 005d 03       		.uleb128 0x3
+ 275 005e 04       		.byte	0x4
+ 276 005f 05       		.byte	0x5
+ 277 0060 696E7400 		.ascii	"int\000"
+ 278 0064 02       		.uleb128 0x2
+ 279 0065 04       		.byte	0x4
+ 280 0066 07       		.byte	0x7
+ 281 0067 1A000000 		.4byte	.LASF8
+ 282 006b 04       		.uleb128 0x4
+ 283 006c EB000000 		.4byte	.LASF12
+ 284 0070 02       		.byte	0x2
+ 285 0071 3801     		.2byte	0x138
+ 286 0073 2C000000 		.4byte	0x2c
+ 287 0077 02       		.uleb128 0x2
+ 288 0078 04       		.byte	0x4
+ 289 0079 04       		.byte	0x4
+ 290 007a 18020000 		.4byte	.LASF9
+ 291 007e 02       		.uleb128 0x2
+ 292 007f 08       		.byte	0x8
+ 293 0080 04       		.byte	0x4
+ 294 0081 DA010000 		.4byte	.LASF10
+ 295 0085 02       		.uleb128 0x2
+ 296 0086 01       		.byte	0x1
+ 297 0087 08       		.byte	0x8
+ 298 0088 28010000 		.4byte	.LASF11
+ 299 008c 04       		.uleb128 0x4
+ 300 008d 28020000 		.4byte	.LASF13
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 9
+
+
+ 301 0091 02       		.byte	0x2
+ 302 0092 E201     		.2byte	0x1e2
+ 303 0094 98000000 		.4byte	0x98
+ 304 0098 05       		.uleb128 0x5
+ 305 0099 6B000000 		.4byte	0x6b
+ 306 009d 02       		.uleb128 0x2
+ 307 009e 04       		.byte	0x4
+ 308 009f 07       		.byte	0x7
+ 309 00a0 2D020000 		.4byte	.LASF14
+ 310 00a4 06       		.uleb128 0x6
+ 311 00a5 02       		.byte	0x2
+ 312 00a6 03       		.byte	0x3
+ 313 00a7 28       		.byte	0x28
+ 314 00a8 C5000000 		.4byte	0xc5
+ 315 00ac 07       		.uleb128 0x7
+ 316 00ad 0E000000 		.4byte	.LASF15
+ 317 00b1 03       		.byte	0x3
+ 318 00b2 2A       		.byte	0x2a
+ 319 00b3 6B000000 		.4byte	0x6b
+ 320 00b7 00       		.byte	0
+ 321 00b8 07       		.uleb128 0x7
+ 322 00b9 12020000 		.4byte	.LASF16
+ 323 00bd 03       		.byte	0x3
+ 324 00be 2B       		.byte	0x2b
+ 325 00bf 6B000000 		.4byte	0x6b
+ 326 00c3 01       		.byte	0x1
+ 327 00c4 00       		.byte	0
+ 328 00c5 08       		.uleb128 0x8
+ 329 00c6 A9000000 		.4byte	.LASF17
+ 330 00ca 03       		.byte	0x3
+ 331 00cb 2C       		.byte	0x2c
+ 332 00cc A4000000 		.4byte	0xa4
+ 333 00d0 09       		.uleb128 0x9
+ 334 00d1 C4010000 		.4byte	.LASF18
+ 335 00d5 01       		.byte	0x1
+ 336 00d6 2E       		.byte	0x2e
+ 337 00d7 00000000 		.4byte	.LFB0
+ 338 00db 20000000 		.4byte	.LFE0-.LFB0
+ 339 00df 01       		.uleb128 0x1
+ 340 00e0 9C       		.byte	0x9c
+ 341 00e1 09       		.uleb128 0x9
+ 342 00e2 27000000 		.4byte	.LASF19
+ 343 00e6 01       		.byte	0x1
+ 344 00e7 47       		.byte	0x47
+ 345 00e8 00000000 		.4byte	.LFB1
+ 346 00ec 1C000000 		.4byte	.LFE1-.LFB1
+ 347 00f0 01       		.uleb128 0x1
+ 348 00f1 9C       		.byte	0x9c
+ 349 00f2 0A       		.uleb128 0xa
+ 350 00f3 36020000 		.4byte	.LASF20
+ 351 00f7 01       		.byte	0x1
+ 352 00f8 5F       		.byte	0x5f
+ 353 00f9 00000000 		.4byte	.LFB2
+ 354 00fd 60000000 		.4byte	.LFE2-.LFB2
+ 355 0101 01       		.uleb128 0x1
+ 356 0102 9C       		.byte	0x9c
+ 357 0103 0A       		.uleb128 0xa
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 10
+
+
+ 358 0104 97000000 		.4byte	.LASF21
+ 359 0108 01       		.byte	0x1
+ 360 0109 8D       		.byte	0x8d
+ 361 010a 00000000 		.4byte	.LFB3
+ 362 010e 2C000000 		.4byte	.LFE3-.LFB3
+ 363 0112 01       		.uleb128 0x1
+ 364 0113 9C       		.byte	0x9c
+ 365 0114 0B       		.uleb128 0xb
+ 366 0115 00020000 		.4byte	.LASF25
+ 367 0119 01       		.byte	0x1
+ 368 011a 14       		.byte	0x14
+ 369 011b C5000000 		.4byte	0xc5
+ 370 011f 05       		.uleb128 0x5
+ 371 0120 03       		.byte	0x3
+ 372 0121 00000000 		.4byte	ADC_DelSig_backup
+ 373 0125 00       		.byte	0
+ 374              		.section	.debug_abbrev,"",%progbits
+ 375              	.Ldebug_abbrev0:
+ 376 0000 01       		.uleb128 0x1
+ 377 0001 11       		.uleb128 0x11
+ 378 0002 01       		.byte	0x1
+ 379 0003 25       		.uleb128 0x25
+ 380 0004 0E       		.uleb128 0xe
+ 381 0005 13       		.uleb128 0x13
+ 382 0006 0B       		.uleb128 0xb
+ 383 0007 03       		.uleb128 0x3
+ 384 0008 0E       		.uleb128 0xe
+ 385 0009 1B       		.uleb128 0x1b
+ 386 000a 0E       		.uleb128 0xe
+ 387 000b 55       		.uleb128 0x55
+ 388 000c 17       		.uleb128 0x17
+ 389 000d 11       		.uleb128 0x11
+ 390 000e 01       		.uleb128 0x1
+ 391 000f 10       		.uleb128 0x10
+ 392 0010 17       		.uleb128 0x17
+ 393 0011 00       		.byte	0
+ 394 0012 00       		.byte	0
+ 395 0013 02       		.uleb128 0x2
+ 396 0014 24       		.uleb128 0x24
+ 397 0015 00       		.byte	0
+ 398 0016 0B       		.uleb128 0xb
+ 399 0017 0B       		.uleb128 0xb
+ 400 0018 3E       		.uleb128 0x3e
+ 401 0019 0B       		.uleb128 0xb
+ 402 001a 03       		.uleb128 0x3
+ 403 001b 0E       		.uleb128 0xe
+ 404 001c 00       		.byte	0
+ 405 001d 00       		.byte	0
+ 406 001e 03       		.uleb128 0x3
+ 407 001f 24       		.uleb128 0x24
+ 408 0020 00       		.byte	0
+ 409 0021 0B       		.uleb128 0xb
+ 410 0022 0B       		.uleb128 0xb
+ 411 0023 3E       		.uleb128 0x3e
+ 412 0024 0B       		.uleb128 0xb
+ 413 0025 03       		.uleb128 0x3
+ 414 0026 08       		.uleb128 0x8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 11
+
+
+ 415 0027 00       		.byte	0
+ 416 0028 00       		.byte	0
+ 417 0029 04       		.uleb128 0x4
+ 418 002a 16       		.uleb128 0x16
+ 419 002b 00       		.byte	0
+ 420 002c 03       		.uleb128 0x3
+ 421 002d 0E       		.uleb128 0xe
+ 422 002e 3A       		.uleb128 0x3a
+ 423 002f 0B       		.uleb128 0xb
+ 424 0030 3B       		.uleb128 0x3b
+ 425 0031 05       		.uleb128 0x5
+ 426 0032 49       		.uleb128 0x49
+ 427 0033 13       		.uleb128 0x13
+ 428 0034 00       		.byte	0
+ 429 0035 00       		.byte	0
+ 430 0036 05       		.uleb128 0x5
+ 431 0037 35       		.uleb128 0x35
+ 432 0038 00       		.byte	0
+ 433 0039 49       		.uleb128 0x49
+ 434 003a 13       		.uleb128 0x13
+ 435 003b 00       		.byte	0
+ 436 003c 00       		.byte	0
+ 437 003d 06       		.uleb128 0x6
+ 438 003e 13       		.uleb128 0x13
+ 439 003f 01       		.byte	0x1
+ 440 0040 0B       		.uleb128 0xb
+ 441 0041 0B       		.uleb128 0xb
+ 442 0042 3A       		.uleb128 0x3a
+ 443 0043 0B       		.uleb128 0xb
+ 444 0044 3B       		.uleb128 0x3b
+ 445 0045 0B       		.uleb128 0xb
+ 446 0046 01       		.uleb128 0x1
+ 447 0047 13       		.uleb128 0x13
+ 448 0048 00       		.byte	0
+ 449 0049 00       		.byte	0
+ 450 004a 07       		.uleb128 0x7
+ 451 004b 0D       		.uleb128 0xd
+ 452 004c 00       		.byte	0
+ 453 004d 03       		.uleb128 0x3
+ 454 004e 0E       		.uleb128 0xe
+ 455 004f 3A       		.uleb128 0x3a
+ 456 0050 0B       		.uleb128 0xb
+ 457 0051 3B       		.uleb128 0x3b
+ 458 0052 0B       		.uleb128 0xb
+ 459 0053 49       		.uleb128 0x49
+ 460 0054 13       		.uleb128 0x13
+ 461 0055 38       		.uleb128 0x38
+ 462 0056 0B       		.uleb128 0xb
+ 463 0057 00       		.byte	0
+ 464 0058 00       		.byte	0
+ 465 0059 08       		.uleb128 0x8
+ 466 005a 16       		.uleb128 0x16
+ 467 005b 00       		.byte	0
+ 468 005c 03       		.uleb128 0x3
+ 469 005d 0E       		.uleb128 0xe
+ 470 005e 3A       		.uleb128 0x3a
+ 471 005f 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 12
+
+
+ 472 0060 3B       		.uleb128 0x3b
+ 473 0061 0B       		.uleb128 0xb
+ 474 0062 49       		.uleb128 0x49
+ 475 0063 13       		.uleb128 0x13
+ 476 0064 00       		.byte	0
+ 477 0065 00       		.byte	0
+ 478 0066 09       		.uleb128 0x9
+ 479 0067 2E       		.uleb128 0x2e
+ 480 0068 00       		.byte	0
+ 481 0069 3F       		.uleb128 0x3f
+ 482 006a 19       		.uleb128 0x19
+ 483 006b 03       		.uleb128 0x3
+ 484 006c 0E       		.uleb128 0xe
+ 485 006d 3A       		.uleb128 0x3a
+ 486 006e 0B       		.uleb128 0xb
+ 487 006f 3B       		.uleb128 0x3b
+ 488 0070 0B       		.uleb128 0xb
+ 489 0071 27       		.uleb128 0x27
+ 490 0072 19       		.uleb128 0x19
+ 491 0073 11       		.uleb128 0x11
+ 492 0074 01       		.uleb128 0x1
+ 493 0075 12       		.uleb128 0x12
+ 494 0076 06       		.uleb128 0x6
+ 495 0077 40       		.uleb128 0x40
+ 496 0078 18       		.uleb128 0x18
+ 497 0079 9742     		.uleb128 0x2117
+ 498 007b 19       		.uleb128 0x19
+ 499 007c 00       		.byte	0
+ 500 007d 00       		.byte	0
+ 501 007e 0A       		.uleb128 0xa
+ 502 007f 2E       		.uleb128 0x2e
+ 503 0080 00       		.byte	0
+ 504 0081 3F       		.uleb128 0x3f
+ 505 0082 19       		.uleb128 0x19
+ 506 0083 03       		.uleb128 0x3
+ 507 0084 0E       		.uleb128 0xe
+ 508 0085 3A       		.uleb128 0x3a
+ 509 0086 0B       		.uleb128 0xb
+ 510 0087 3B       		.uleb128 0x3b
+ 511 0088 0B       		.uleb128 0xb
+ 512 0089 27       		.uleb128 0x27
+ 513 008a 19       		.uleb128 0x19
+ 514 008b 11       		.uleb128 0x11
+ 515 008c 01       		.uleb128 0x1
+ 516 008d 12       		.uleb128 0x12
+ 517 008e 06       		.uleb128 0x6
+ 518 008f 40       		.uleb128 0x40
+ 519 0090 18       		.uleb128 0x18
+ 520 0091 9642     		.uleb128 0x2116
+ 521 0093 19       		.uleb128 0x19
+ 522 0094 00       		.byte	0
+ 523 0095 00       		.byte	0
+ 524 0096 0B       		.uleb128 0xb
+ 525 0097 34       		.uleb128 0x34
+ 526 0098 00       		.byte	0
+ 527 0099 03       		.uleb128 0x3
+ 528 009a 0E       		.uleb128 0xe
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 13
+
+
+ 529 009b 3A       		.uleb128 0x3a
+ 530 009c 0B       		.uleb128 0xb
+ 531 009d 3B       		.uleb128 0x3b
+ 532 009e 0B       		.uleb128 0xb
+ 533 009f 49       		.uleb128 0x49
+ 534 00a0 13       		.uleb128 0x13
+ 535 00a1 02       		.uleb128 0x2
+ 536 00a2 18       		.uleb128 0x18
+ 537 00a3 00       		.byte	0
+ 538 00a4 00       		.byte	0
+ 539 00a5 00       		.byte	0
+ 540              		.section	.debug_aranges,"",%progbits
+ 541 0000 34000000 		.4byte	0x34
+ 542 0004 0200     		.2byte	0x2
+ 543 0006 00000000 		.4byte	.Ldebug_info0
+ 544 000a 04       		.byte	0x4
+ 545 000b 00       		.byte	0
+ 546 000c 0000     		.2byte	0
+ 547 000e 0000     		.2byte	0
+ 548 0010 00000000 		.4byte	.LFB0
+ 549 0014 20000000 		.4byte	.LFE0-.LFB0
+ 550 0018 00000000 		.4byte	.LFB1
+ 551 001c 1C000000 		.4byte	.LFE1-.LFB1
+ 552 0020 00000000 		.4byte	.LFB2
+ 553 0024 60000000 		.4byte	.LFE2-.LFB2
+ 554 0028 00000000 		.4byte	.LFB3
+ 555 002c 2C000000 		.4byte	.LFE3-.LFB3
+ 556 0030 00000000 		.4byte	0
+ 557 0034 00000000 		.4byte	0
+ 558              		.section	.debug_ranges,"",%progbits
+ 559              	.Ldebug_ranges0:
+ 560 0000 00000000 		.4byte	.LFB0
+ 561 0004 20000000 		.4byte	.LFE0
+ 562 0008 00000000 		.4byte	.LFB1
+ 563 000c 1C000000 		.4byte	.LFE1
+ 564 0010 00000000 		.4byte	.LFB2
+ 565 0014 60000000 		.4byte	.LFE2
+ 566 0018 00000000 		.4byte	.LFB3
+ 567 001c 2C000000 		.4byte	.LFE3
+ 568 0020 00000000 		.4byte	0
+ 569 0024 00000000 		.4byte	0
+ 570              		.section	.debug_line,"",%progbits
+ 571              	.Ldebug_line0:
+ 572 0000 BD000000 		.section	.debug_str,"MS",%progbits,1
+ 572      02005C00 
+ 572      00000201 
+ 572      FB0E0D00 
+ 572      01010101 
+ 573              	.LASF6:
+ 574 0000 6C6F6E67 		.ascii	"long long int\000"
+ 574      206C6F6E 
+ 574      6720696E 
+ 574      7400
+ 575              	.LASF15:
+ 576 000e 656E6162 		.ascii	"enableState\000"
+ 576      6C655374 
+ 576      61746500 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 14
+
+
+ 577              	.LASF8:
+ 578 001a 756E7369 		.ascii	"unsigned int\000"
+ 578      676E6564 
+ 578      20696E74 
+ 578      00
+ 579              	.LASF19:
+ 580 0027 4144435F 		.ascii	"ADC_DelSig_RestoreConfig\000"
+ 580      44656C53 
+ 580      69675F52 
+ 580      6573746F 
+ 580      7265436F 
+ 581              	.LASF24:
+ 582 0040 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 582      73657273 
+ 582      5C4C756B 
+ 582      61732043 
+ 582      72657574 
+ 583 006e 65445350 		.ascii	"eDSPPSoC-I2C\\DelSig_I2CS01_Example.cydsn\000"
+ 583      50536F43 
+ 583      2D493243 
+ 583      5C44656C 
+ 583      5369675F 
+ 584              	.LASF21:
+ 585 0097 4144435F 		.ascii	"ADC_DelSig_Wakeup\000"
+ 585      44656C53 
+ 585      69675F57 
+ 585      616B6575 
+ 585      7000
+ 586              	.LASF17:
+ 587 00a9 4144435F 		.ascii	"ADC_DelSig_BACKUP_STRUCT\000"
+ 587      44656C53 
+ 587      69675F42 
+ 587      41434B55 
+ 587      505F5354 
+ 588              	.LASF23:
+ 589 00c2 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\ADC_DelSig_PM.c\000"
+ 589      6E657261 
+ 589      7465645F 
+ 589      536F7572 
+ 589      63655C50 
+ 590              	.LASF12:
+ 591 00eb 75696E74 		.ascii	"uint8\000"
+ 591      3800
+ 592              	.LASF5:
+ 593 00f1 6C6F6E67 		.ascii	"long unsigned int\000"
+ 593      20756E73 
+ 593      69676E65 
+ 593      6420696E 
+ 593      7400
+ 594              	.LASF7:
+ 595 0103 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 595      206C6F6E 
+ 595      6720756E 
+ 595      7369676E 
+ 595      65642069 
+ 596              	.LASF1:
+ 597 011a 756E7369 		.ascii	"unsigned char\000"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 15
+
+
+ 597      676E6564 
+ 597      20636861 
+ 597      7200
+ 598              	.LASF11:
+ 599 0128 63686172 		.ascii	"char\000"
+ 599      00
+ 600              	.LASF4:
+ 601 012d 6C6F6E67 		.ascii	"long int\000"
+ 601      20696E74 
+ 601      00
+ 602              	.LASF22:
+ 603 0136 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 603      4320342E 
+ 603      392E3320 
+ 603      32303135 
+ 603      30333033 
+ 604 0169 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 604      20726576 
+ 604      6973696F 
+ 604      6E203232 
+ 604      31323230 
+ 605 019c 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 605      66756E63 
+ 605      74696F6E 
+ 605      2D736563 
+ 605      74696F6E 
+ 606              	.LASF18:
+ 607 01c4 4144435F 		.ascii	"ADC_DelSig_SaveConfig\000"
+ 607      44656C53 
+ 607      69675F53 
+ 607      61766543 
+ 607      6F6E6669 
+ 608              	.LASF10:
+ 609 01da 646F7562 		.ascii	"double\000"
+ 609      6C6500
+ 610              	.LASF3:
+ 611 01e1 73686F72 		.ascii	"short unsigned int\000"
+ 611      7420756E 
+ 611      7369676E 
+ 611      65642069 
+ 611      6E7400
+ 612              	.LASF0:
+ 613 01f4 7369676E 		.ascii	"signed char\000"
+ 613      65642063 
+ 613      68617200 
+ 614              	.LASF25:
+ 615 0200 4144435F 		.ascii	"ADC_DelSig_backup\000"
+ 615      44656C53 
+ 615      69675F62 
+ 615      61636B75 
+ 615      7000
+ 616              	.LASF16:
+ 617 0212 64656363 		.ascii	"deccr\000"
+ 617      7200
+ 618              	.LASF9:
+ 619 0218 666C6F61 		.ascii	"float\000"
+ 619      7400
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc26X3wa.s 			page 16
+
+
+ 620              	.LASF2:
+ 621 021e 73686F72 		.ascii	"short int\000"
+ 621      7420696E 
+ 621      7400
+ 622              	.LASF13:
+ 623 0228 72656738 		.ascii	"reg8\000"
+ 623      00
+ 624              	.LASF14:
+ 625 022d 73697A65 		.ascii	"sizetype\000"
+ 625      74797065 
+ 625      00
+ 626              	.LASF20:
+ 627 0236 4144435F 		.ascii	"ADC_DelSig_Sleep\000"
+ 627      44656C53 
+ 627      69675F53 
+ 627      6C656570 
+ 627      00
+ 628              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

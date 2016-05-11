@@ -45,6 +45,7 @@ int main()
 
     while(1u)
     {
+        
         /* Send packet with command to the slave */
         if (0u == I2CWriteCommandPacket(command))
         {

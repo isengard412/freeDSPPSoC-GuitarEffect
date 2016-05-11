@@ -1,0 +1,1110 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"main.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global _printf_float
+  19              		.thumb
+  20              		.global	parity
+  21              		.section	.rodata
+  22              		.align	2
+  23              	.LC0:
+  24 0000 4E6F6E65 		.ascii	"None\000"
+  24      00
+  25 0005 000000   		.align	2
+  26              	.LC1:
+  27 0008 4F646400 		.ascii	"Odd\000"
+  28              		.align	2
+  29              	.LC2:
+  30 000c 4576656E 		.ascii	"Even\000"
+  30      00
+  31 0011 000000   		.align	2
+  32              	.LC3:
+  33 0014 4D61726B 		.ascii	"Mark\000"
+  33      00
+  34 0019 000000   		.align	2
+  35              	.LC4:
+  36 001c 53706163 		.ascii	"Space\000"
+  36      6500
+  37              		.data
+  38              		.align	2
+  39              		.type	parity, %object
+  40              		.size	parity, 20
+  41              	parity:
+  42 0000 00000000 		.word	.LC0
+  43 0004 08000000 		.word	.LC1
+  44 0008 0C000000 		.word	.LC2
+  45 000c 14000000 		.word	.LC3
+  46 0010 1C000000 		.word	.LC4
+  47              		.global	stop
+  48              		.section	.rodata
+  49 0022 0000     		.align	2
+  50              	.LC5:
+  51 0024 3100     		.ascii	"1\000"
+  52 0026 0000     		.align	2
+  53              	.LC6:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 2
+
+
+  54 0028 312E3500 		.ascii	"1.5\000"
+  55              		.align	2
+  56              	.LC7:
+  57 002c 3200     		.ascii	"2\000"
+  58              		.data
+  59              		.align	2
+  60              		.type	stop, %object
+  61              		.size	stop, 12
+  62              	stop:
+  63 0014 24000000 		.word	.LC5
+  64 0018 28000000 		.word	.LC6
+  65 001c 2C000000 		.word	.LC7
+  66              		.global	i2cReadBuffer
+  67              		.align	2
+  68              		.type	i2cReadBuffer, %object
+  69              		.size	i2cReadBuffer, 3
+  70              	i2cReadBuffer:
+  71 0020 01       		.byte	1
+  72 0021 FF       		.byte	-1
+  73 0022 17       		.byte	23
+  74              		.comm	i2cWriteBuffer,3,4
+  75 0023 00       		.section	.text.main,"ax",%progbits
+  76              		.align	2
+  77              		.global	main
+  78              		.thumb
+  79              		.thumb_func
+  80              		.type	main, %function
+  81              	main:
+  82              	.LFB63:
+  83              		.file 1 ".\\main.c"
+   1:.\main.c      **** /*******************************************************************************
+   2:.\main.c      **** * File Name: main.c
+   3:.\main.c      **** *
+   4:.\main.c      **** * Version: 2.0
+   5:.\main.c      **** *
+   6:.\main.c      **** * Description:
+   7:.\main.c      **** *   The component is enumerated as a Virtual Com port. Receives data from the 
+   8:.\main.c      **** *   hyper terminal, then sends back the received data.
+   9:.\main.c      **** *   For PSoC3/PSoC5LP, the LCD shows the line settings.
+  10:.\main.c      **** *
+  11:.\main.c      **** * Related Document:
+  12:.\main.c      **** *  Universal Serial Bus Specification Revision 2.0
+  13:.\main.c      **** *  Universal Serial Bus Class Definitions for Communications Devices
+  14:.\main.c      **** *  Revision 1.2
+  15:.\main.c      **** *
+  16:.\main.c      **** ********************************************************************************
+  17:.\main.c      **** * Copyright 2015, Cypress Semiconductor Corporation. All rights reserved.
+  18:.\main.c      **** * This software is owned by Cypress Semiconductor Corporation and is protected
+  19:.\main.c      **** * by and subject to worldwide patent and copyright laws and treaties.
+  20:.\main.c      **** * Therefore, you may use this software only as provided in the license agreement
+  21:.\main.c      **** * accompanying the software package from which you obtained this software.
+  22:.\main.c      **** * CYPRESS AND ITS SUPPLIERS MAKE NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  23:.\main.c      **** * WITH REGARD TO THIS SOFTWARE, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT,
+  24:.\main.c      **** * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  25:.\main.c      **** *******************************************************************************/
+  26:.\main.c      **** 
+  27:.\main.c      **** #include "main.h"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 3
+
+
+  28:.\main.c      **** 
+  29:.\main.c      **** #if defined (__GNUC__)
+  30:.\main.c      ****     /* Add an explicit reference to the floating point printf library */
+  31:.\main.c      ****     /* to allow usage of the floating point conversion specifiers. */
+  32:.\main.c      ****     /* This is not linked in by default with the newlib-nano library. */
+  33:.\main.c      ****     asm (".global _printf_float");
+  34:.\main.c      **** #endif
+  35:.\main.c      **** 
+  36:.\main.c      **** #define USBFS_DEVICE    (0u)
+  37:.\main.c      **** 
+  38:.\main.c      **** /* The buffer size is equal to the maximum packet size of the IN and OUT bulk
+  39:.\main.c      **** * endpoints.
+  40:.\main.c      **** */
+  41:.\main.c      **** #define USBUART_BUFFER_SIZE (64u)
+  42:.\main.c      **** #define LINE_STR_LENGTH     (20u)
+  43:.\main.c      **** 
+  44:.\main.c      **** char8* parity[] = {"None", "Odd", "Even", "Mark", "Space"};
+  45:.\main.c      **** char8* stop[]   = {"1", "1.5", "2"};
+  46:.\main.c      **** 
+  47:.\main.c      **** /* I2C slave read and write buffers */
+  48:.\main.c      **** uint8 i2cReadBuffer [BUFFER_SIZE] = {PACKET_SOP, STS_CMD_FAIL, PACKET_EOP};
+  49:.\main.c      **** uint8 i2cWriteBuffer[BUFFER_SIZE];
+  50:.\main.c      **** 
+  51:.\main.c      **** 
+  52:.\main.c      **** /*******************************************************************************
+  53:.\main.c      **** * Function Name: main
+  54:.\main.c      **** ********************************************************************************
+  55:.\main.c      **** *
+  56:.\main.c      **** * Summary:
+  57:.\main.c      **** *  The main function performs the following actions:
+  58:.\main.c      **** *   1. Waits until VBUS becomes valid and starts the USBFS component which is
+  59:.\main.c      **** *      enumerated as virtual Com port.
+  60:.\main.c      **** *   2. Waits until the device is enumerated by the host.
+  61:.\main.c      **** *   3. Waits for data coming from the hyper terminal and sends it back.
+  62:.\main.c      **** *   4. PSoC3/PSoC5LP: the LCD shows the line settings.
+  63:.\main.c      **** *
+  64:.\main.c      **** * Parameters:
+  65:.\main.c      **** *  None.
+  66:.\main.c      **** *
+  67:.\main.c      **** * Return:
+  68:.\main.c      **** *  None.
+  69:.\main.c      **** *
+  70:.\main.c      **** *******************************************************************************/
+  71:.\main.c      **** int main()
+  72:.\main.c      **** {
+  84              		.loc 1 72 0
+  85              		.cfi_startproc
+  86              		@ args = 0, pretend = 0, frame = 24
+  87              		@ frame_needed = 1, uses_anonymous_args = 0
+  88 0000 80B5     		push	{r7, lr}
+  89              		.cfi_def_cfa_offset 8
+  90              		.cfi_offset 7, -8
+  91              		.cfi_offset 14, -4
+  92 0002 86B0     		sub	sp, sp, #24
+  93              		.cfi_def_cfa_offset 32
+  94 0004 00AF     		add	r7, sp, #0
+  95              		.cfi_def_cfa_register 7
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 4
+
+
+  73:.\main.c      ****     //I2C target
+  74:.\main.c      ****     uint8 status = STS_CMD_FAIL;
+  96              		.loc 1 74 0
+  97 0006 FF23     		movs	r3, #255
+  98 0008 FB75     		strb	r3, [r7, #23]
+  75:.\main.c      ****     
+  76:.\main.c      **** #if (CY_PSOC3 || CY_PSOC5LP)
+  77:.\main.c      ****     uint8 state;
+  78:.\main.c      ****     char8 lineStr[LINE_STR_LENGTH];
+  79:.\main.c      ****     
+  80:.\main.c      ****     I2CS_Start();
+  99              		.loc 1 80 0
+ 100 000a FFF7FEFF 		bl	I2CS_Start
+  81:.\main.c      **** #endif /* (CY_PSOC3 || CY_PSOC5LP) */
+  82:.\main.c      ****     
+  83:.\main.c      ****     CyGlobalIntEnable;
+ 101              		.loc 1 83 0
+ 102              	@ 83 ".\main.c" 1
+ 103 000e 62B6     		CPSIE   i
+ 104              	@ 0 "" 2
+  84:.\main.c      **** 
+  85:.\main.c      ****     /* Start USBFS operation with 5-V operation. */
+  86:.\main.c      ****     USBUART_Start(USBFS_DEVICE, USBUART_5V_OPERATION);
+ 105              		.loc 1 86 0
+ 106              		.thumb
+ 107 0010 0020     		movs	r0, #0
+ 108 0012 0121     		movs	r1, #1
+ 109 0014 FFF7FEFF 		bl	USBUART_Start
+ 110              	.L5:
+  87:.\main.c      ****     
+  88:.\main.c      ****     for(;;)
+  89:.\main.c      ****     {
+  90:.\main.c      ****         
+  91:.\main.c      ****         /* Write complete: parse command packet */
+  92:.\main.c      ****         if (0u != (I2CS_SlaveStatus() & I2CS_SSTAT_WR_CMPLT))
+ 111              		.loc 1 92 0
+ 112 0018 FFF7FEFF 		bl	I2CS_SlaveStatus
+ 113 001c 0346     		mov	r3, r0
+ 114 001e 03F01003 		and	r3, r3, #16
+ 115 0022 002B     		cmp	r3, #0
+ 116 0024 1CD0     		beq	.L2
+  93:.\main.c      ****         {
+  94:.\main.c      ****             /* Check packet length */
+  95:.\main.c      ****             if (PACKET_SIZE == I2CS_SlaveGetWriteBufSize())
+ 117              		.loc 1 95 0
+ 118 0026 FFF7FEFF 		bl	I2CS_SlaveGetWriteBufSize
+ 119 002a 0346     		mov	r3, r0
+ 120 002c 032B     		cmp	r3, #3
+ 121 002e 0ED1     		bne	.L3
+  96:.\main.c      ****             {
+  97:.\main.c      ****                 /* Check start and end of packet markers */
+  98:.\main.c      ****                 if ((i2cWriteBuffer[PACKET_SOP_POS] == PACKET_SOP) &&
+ 122              		.loc 1 98 0
+ 123 0030 114B     		ldr	r3, .L6
+ 124 0032 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 125 0034 012B     		cmp	r3, #1
+ 126 0036 0AD1     		bne	.L3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 5
+
+
+  99:.\main.c      ****                     (i2cWriteBuffer[PACKET_EOP_POS] == PACKET_EOP))
+ 127              		.loc 1 99 0 discriminator 1
+ 128 0038 0F4B     		ldr	r3, .L6
+ 129 003a 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+  98:.\main.c      ****                     (i2cWriteBuffer[PACKET_EOP_POS] == PACKET_EOP))
+ 130              		.loc 1 98 0 discriminator 1
+ 131 003c 172B     		cmp	r3, #23
+ 132 003e 06D1     		bne	.L3
+ 100:.\main.c      ****                 {
+ 101:.\main.c      ****                     status = ExecuteCommand(i2cWriteBuffer[PACKET_CMD_POS]);
+ 133              		.loc 1 101 0
+ 134 0040 0D4B     		ldr	r3, .L6
+ 135 0042 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 136 0044 1846     		mov	r0, r3
+ 137 0046 FFF7FEFF 		bl	ExecuteCommand
+ 138 004a 0346     		mov	r3, r0
+ 139 004c FB75     		strb	r3, [r7, #23]
+ 140              	.L3:
+ 102:.\main.c      ****                 }
+ 103:.\main.c      ****             }
+ 104:.\main.c      **** 
+ 105:.\main.c      ****             /* Clear slave write buffer and status */
+ 106:.\main.c      ****             I2CS_SlaveClearWriteBuf();
+ 141              		.loc 1 106 0
+ 142 004e FFF7FEFF 		bl	I2CS_SlaveClearWriteBuf
+ 107:.\main.c      ****             (void) I2CS_SlaveClearWriteStatus();
+ 143              		.loc 1 107 0
+ 144 0052 FFF7FEFF 		bl	I2CS_SlaveClearWriteStatus
+ 108:.\main.c      **** 
+ 109:.\main.c      ****             /* Update read buffer */
+ 110:.\main.c      ****             i2cReadBuffer[PACKET_STS_POS] = status;
+ 145              		.loc 1 110 0
+ 146 0056 094A     		ldr	r2, .L6+4
+ 147 0058 FB7D     		ldrb	r3, [r7, #23]
+ 148 005a 5370     		strb	r3, [r2, #1]
+ 111:.\main.c      ****             status = STS_CMD_FAIL;
+ 149              		.loc 1 111 0
+ 150 005c FF23     		movs	r3, #255
+ 151 005e FB75     		strb	r3, [r7, #23]
+ 152              	.L2:
+ 112:.\main.c      ****         }
+ 113:.\main.c      **** 
+ 114:.\main.c      ****         /* Read complete: expose buffer to master */
+ 115:.\main.c      ****         if (0u != (I2CS_SlaveStatus() & I2CS_SSTAT_RD_CMPLT))
+ 153              		.loc 1 115 0
+ 154 0060 FFF7FEFF 		bl	I2CS_SlaveStatus
+ 155 0064 0346     		mov	r3, r0
+ 156 0066 03F00103 		and	r3, r3, #1
+ 157 006a 002B     		cmp	r3, #0
+ 158 006c 03D0     		beq	.L4
+ 116:.\main.c      ****         {
+ 117:.\main.c      ****             /* Clear slave read buffer and status */
+ 118:.\main.c      ****             I2CS_SlaveClearReadBuf();
+ 159              		.loc 1 118 0
+ 160 006e FFF7FEFF 		bl	I2CS_SlaveClearReadBuf
+ 119:.\main.c      ****             (void) I2CS_SlaveClearReadStatus();
+ 161              		.loc 1 119 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 6
+
+
+ 162 0072 FFF7FEFF 		bl	I2CS_SlaveClearReadStatus
+ 163              	.L4:
+ 120:.\main.c      ****         }
+ 121:.\main.c      ****         
+ 122:.\main.c      ****         
+ 123:.\main.c      ****     }
+ 164              		.loc 1 123 0
+ 165 0076 CFE7     		b	.L5
+ 166              	.L7:
+ 167              		.align	2
+ 168              	.L6:
+ 169 0078 00000000 		.word	i2cWriteBuffer
+ 170 007c 00000000 		.word	i2cReadBuffer
+ 171              		.cfi_endproc
+ 172              	.LFE63:
+ 173              		.size	main, .-main
+ 174              		.section	.rodata
+ 175 002e 0000     		.align	2
+ 176              	.LC8:
+ 177 0030 426C6162 		.ascii	"Blabla\012\000"
+ 177      6C610A00 
+ 178              		.section	.text.ExecuteCommand,"ax",%progbits
+ 179              		.align	2
+ 180              		.global	ExecuteCommand
+ 181              		.thumb
+ 182              		.thumb_func
+ 183              		.type	ExecuteCommand, %function
+ 184              	ExecuteCommand:
+ 185              	.LFB64:
+ 124:.\main.c      **** }
+ 125:.\main.c      **** 
+ 126:.\main.c      **** uint8 ExecuteCommand(uint32 cmd)
+ 127:.\main.c      **** {
+ 186              		.loc 1 127 0
+ 187              		.cfi_startproc
+ 188              		@ args = 0, pretend = 0, frame = 16
+ 189              		@ frame_needed = 1, uses_anonymous_args = 0
+ 190 0000 80B5     		push	{r7, lr}
+ 191              		.cfi_def_cfa_offset 8
+ 192              		.cfi_offset 7, -8
+ 193              		.cfi_offset 14, -4
+ 194 0002 84B0     		sub	sp, sp, #16
+ 195              		.cfi_def_cfa_offset 24
+ 196 0004 00AF     		add	r7, sp, #0
+ 197              		.cfi_def_cfa_register 7
+ 198 0006 7860     		str	r0, [r7, #4]
+ 128:.\main.c      ****     uint8 status;
+ 129:.\main.c      **** 
+ 130:.\main.c      ****     status = STS_CMD_DONE;
+ 199              		.loc 1 130 0
+ 200 0008 0023     		movs	r3, #0
+ 201 000a FB73     		strb	r3, [r7, #15]
+ 131:.\main.c      ****     /* Host can send double SET_INTERFACE request. */
+ 132:.\main.c      ****     if (0u != USBUART_IsConfigurationChanged())
+ 202              		.loc 1 132 0
+ 203 000c FFF7FEFF 		bl	USBUART_IsConfigurationChanged
+ 204 0010 0346     		mov	r3, r0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 7
+
+
+ 205 0012 002B     		cmp	r3, #0
+ 206 0014 06D0     		beq	.L9
+ 133:.\main.c      ****     {
+ 134:.\main.c      ****         /* Initialize IN endpoints when device is configured. */
+ 135:.\main.c      ****         if (0u != USBUART_GetConfiguration())
+ 207              		.loc 1 135 0
+ 208 0016 FFF7FEFF 		bl	USBUART_GetConfiguration
+ 209 001a 0346     		mov	r3, r0
+ 210 001c 002B     		cmp	r3, #0
+ 211 001e 01D0     		beq	.L9
+ 136:.\main.c      ****         {
+ 137:.\main.c      ****             /* Enumeration is done, enable OUT endpoint to receive data 
+ 138:.\main.c      ****              * from host. */
+ 139:.\main.c      ****             USBUART_CDC_Init();
+ 212              		.loc 1 139 0
+ 213 0020 FFF7FEFF 		bl	USBUART_CDC_Init
+ 214              	.L9:
+ 140:.\main.c      ****         }
+ 141:.\main.c      ****     }
+ 142:.\main.c      **** 
+ 143:.\main.c      ****     /* Service USB CDC when device is configured. */
+ 144:.\main.c      ****     if (0u != USBUART_GetConfiguration())
+ 215              		.loc 1 144 0
+ 216 0024 FFF7FEFF 		bl	USBUART_GetConfiguration
+ 217 0028 0346     		mov	r3, r0
+ 218 002a 002B     		cmp	r3, #0
+ 219 002c 0CD0     		beq	.L10
+ 145:.\main.c      ****     {
+ 146:.\main.c      ****         /* Wait until component is ready to send data to host. */
+ 147:.\main.c      ****         while (0u == USBUART_CDCIsReady())
+ 220              		.loc 1 147 0
+ 221 002e 00BF     		nop
+ 222              	.L11:
+ 223              		.loc 1 147 0 is_stmt 0 discriminator 1
+ 224 0030 FFF7FEFF 		bl	USBUART_CDCIsReady
+ 225 0034 0346     		mov	r3, r0
+ 226 0036 002B     		cmp	r3, #0
+ 227 0038 FAD0     		beq	.L11
+ 148:.\main.c      ****         {
+ 149:.\main.c      ****         }
+ 150:.\main.c      **** 
+ 151:.\main.c      ****         /* Send data back to host. */
+ 152:.\main.c      ****         //USBUART_PutData(buffer, count);
+ 153:.\main.c      ****         USBUART_PutString("Blabla\n");
+ 228              		.loc 1 153 0 is_stmt 1
+ 229 003a 0648     		ldr	r0, .L13
+ 230 003c FFF7FEFF 		bl	USBUART_PutString
+ 154:.\main.c      ****         
+ 155:.\main.c      ****         CyDelay(500);
+ 231              		.loc 1 155 0
+ 232 0040 4FF4FA70 		mov	r0, #500
+ 233 0044 FFF7FEFF 		bl	CyDelay
+ 234              	.L10:
+ 156:.\main.c      ****     }
+ 157:.\main.c      **** 
+ 158:.\main.c      ****     return (status);
+ 235              		.loc 1 158 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 8
+
+
+ 236 0048 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 159:.\main.c      **** }
+ 237              		.loc 1 159 0
+ 238 004a 1846     		mov	r0, r3
+ 239 004c 1037     		adds	r7, r7, #16
+ 240              		.cfi_def_cfa_offset 8
+ 241 004e BD46     		mov	sp, r7
+ 242              		.cfi_def_cfa_register 13
+ 243              		@ sp needed
+ 244 0050 80BD     		pop	{r7, pc}
+ 245              	.L14:
+ 246 0052 00BF     		.align	2
+ 247              	.L13:
+ 248 0054 30000000 		.word	.LC8
+ 249              		.cfi_endproc
+ 250              	.LFE64:
+ 251              		.size	ExecuteCommand, .-ExecuteCommand
+ 252              		.text
+ 253              	.Letext0:
+ 254              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 255              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 256              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 257              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 258              		.section	.debug_info,"",%progbits
+ 259              	.Ldebug_info0:
+ 260 0000 D0010000 		.4byte	0x1d0
+ 261 0004 0400     		.2byte	0x4
+ 262 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 263 000a 04       		.byte	0x4
+ 264 000b 01       		.uleb128 0x1
+ 265 000c 10000000 		.4byte	.LASF25
+ 266 0010 01       		.byte	0x1
+ 267 0011 A5000000 		.4byte	.LASF26
+ 268 0015 2F010000 		.4byte	.LASF27
+ 269 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 270 001d 00000000 		.4byte	0
+ 271 0021 00000000 		.4byte	.Ldebug_line0
+ 272 0025 02       		.uleb128 0x2
+ 273 0026 01       		.byte	0x1
+ 274 0027 06       		.byte	0x6
+ 275 0028 F5010000 		.4byte	.LASF0
+ 276 002c 02       		.uleb128 0x2
+ 277 002d 01       		.byte	0x1
+ 278 002e 08       		.byte	0x8
+ 279 002f B4000000 		.4byte	.LASF1
+ 280 0033 02       		.uleb128 0x2
+ 281 0034 02       		.byte	0x2
+ 282 0035 05       		.byte	0x5
+ 283 0036 DC010000 		.4byte	.LASF2
+ 284 003a 02       		.uleb128 0x2
+ 285 003b 02       		.byte	0x2
+ 286 003c 07       		.byte	0x7
+ 287 003d F7000000 		.4byte	.LASF3
+ 288 0041 03       		.uleb128 0x3
+ 289 0042 06000000 		.4byte	.LASF9
+ 290 0046 02       		.byte	0x2
+ 291 0047 3F       		.byte	0x3f
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 9
+
+
+ 292 0048 4C000000 		.4byte	0x4c
+ 293 004c 02       		.uleb128 0x2
+ 294 004d 04       		.byte	0x4
+ 295 004e 05       		.byte	0x5
+ 296 004f EC010000 		.4byte	.LASF4
+ 297 0053 02       		.uleb128 0x2
+ 298 0054 04       		.byte	0x4
+ 299 0055 07       		.byte	0x7
+ 300 0056 E5000000 		.4byte	.LASF5
+ 301 005a 02       		.uleb128 0x2
+ 302 005b 08       		.byte	0x8
+ 303 005c 05       		.byte	0x5
+ 304 005d C9010000 		.4byte	.LASF6
+ 305 0061 02       		.uleb128 0x2
+ 306 0062 08       		.byte	0x8
+ 307 0063 07       		.byte	0x7
+ 308 0064 92010000 		.4byte	.LASF7
+ 309 0068 04       		.uleb128 0x4
+ 310 0069 04       		.byte	0x4
+ 311 006a 05       		.byte	0x5
+ 312 006b 696E7400 		.ascii	"int\000"
+ 313 006f 02       		.uleb128 0x2
+ 314 0070 04       		.byte	0x4
+ 315 0071 07       		.byte	0x7
+ 316 0072 85010000 		.4byte	.LASF8
+ 317 0076 03       		.uleb128 0x3
+ 318 0077 B8010000 		.4byte	.LASF10
+ 319 007b 03       		.byte	0x3
+ 320 007c 2C       		.byte	0x2c
+ 321 007d 41000000 		.4byte	0x41
+ 322 0081 05       		.uleb128 0x5
+ 323 0082 E6010000 		.4byte	.LASF11
+ 324 0086 04       		.byte	0x4
+ 325 0087 3801     		.2byte	0x138
+ 326 0089 2C000000 		.4byte	0x2c
+ 327 008d 05       		.uleb128 0x5
+ 328 008e 28010000 		.4byte	.LASF12
+ 329 0092 04       		.byte	0x4
+ 330 0093 3A01     		.2byte	0x13a
+ 331 0095 53000000 		.4byte	0x53
+ 332 0099 02       		.uleb128 0x2
+ 333 009a 04       		.byte	0x4
+ 334 009b 04       		.byte	0x4
+ 335 009c AE000000 		.4byte	.LASF13
+ 336 00a0 02       		.uleb128 0x2
+ 337 00a1 08       		.byte	0x8
+ 338 00a2 04       		.byte	0x4
+ 339 00a3 1C010000 		.4byte	.LASF14
+ 340 00a7 05       		.uleb128 0x5
+ 341 00a8 DF000000 		.4byte	.LASF15
+ 342 00ac 04       		.byte	0x4
+ 343 00ad 4901     		.2byte	0x149
+ 344 00af B3000000 		.4byte	0xb3
+ 345 00b3 02       		.uleb128 0x2
+ 346 00b4 01       		.byte	0x1
+ 347 00b5 08       		.byte	0x8
+ 348 00b6 D7010000 		.4byte	.LASF16
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 10
+
+
+ 349 00ba 02       		.uleb128 0x2
+ 350 00bb 04       		.byte	0x4
+ 351 00bc 07       		.byte	0x7
+ 352 00bd C0010000 		.4byte	.LASF17
+ 353 00c1 06       		.uleb128 0x6
+ 354 00c2 23010000 		.4byte	.LASF28
+ 355 00c6 01       		.byte	0x1
+ 356 00c7 47       		.byte	0x47
+ 357 00c8 68000000 		.4byte	0x68
+ 358 00cc 00000000 		.4byte	.LFB63
+ 359 00d0 80000000 		.4byte	.LFE63-.LFB63
+ 360 00d4 01       		.uleb128 0x1
+ 361 00d5 9C       		.byte	0x9c
+ 362 00d6 02010000 		.4byte	0x102
+ 363 00da 07       		.uleb128 0x7
+ 364 00db 9E000000 		.4byte	.LASF18
+ 365 00df 01       		.byte	0x1
+ 366 00e0 4A       		.byte	0x4a
+ 367 00e1 81000000 		.4byte	0x81
+ 368 00e5 02       		.uleb128 0x2
+ 369 00e6 91       		.byte	0x91
+ 370 00e7 77       		.sleb128 -9
+ 371 00e8 08       		.uleb128 0x8
+ 372 00e9 00000000 		.4byte	.LASF29
+ 373 00ed 01       		.byte	0x1
+ 374 00ee 4D       		.byte	0x4d
+ 375 00ef 81000000 		.4byte	0x81
+ 376 00f3 07       		.uleb128 0x7
+ 377 00f4 08020000 		.4byte	.LASF19
+ 378 00f8 01       		.byte	0x1
+ 379 00f9 4E       		.byte	0x4e
+ 380 00fa 02010000 		.4byte	0x102
+ 381 00fe 02       		.uleb128 0x2
+ 382 00ff 91       		.byte	0x91
+ 383 0100 60       		.sleb128 -32
+ 384 0101 00       		.byte	0
+ 385 0102 09       		.uleb128 0x9
+ 386 0103 A7000000 		.4byte	0xa7
+ 387 0107 12010000 		.4byte	0x112
+ 388 010b 0A       		.uleb128 0xa
+ 389 010c BA000000 		.4byte	0xba
+ 390 0110 13       		.byte	0x13
+ 391 0111 00       		.byte	0
+ 392 0112 0B       		.uleb128 0xb
+ 393 0113 C2000000 		.4byte	.LASF30
+ 394 0117 01       		.byte	0x1
+ 395 0118 7E       		.byte	0x7e
+ 396 0119 81000000 		.4byte	0x81
+ 397 011d 00000000 		.4byte	.LFB64
+ 398 0121 58000000 		.4byte	.LFE64-.LFB64
+ 399 0125 01       		.uleb128 0x1
+ 400 0126 9C       		.byte	0x9c
+ 401 0127 48010000 		.4byte	0x148
+ 402 012b 0C       		.uleb128 0xc
+ 403 012c 636D6400 		.ascii	"cmd\000"
+ 404 0130 01       		.byte	0x1
+ 405 0131 7E       		.byte	0x7e
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 11
+
+
+ 406 0132 8D000000 		.4byte	0x8d
+ 407 0136 02       		.uleb128 0x2
+ 408 0137 91       		.byte	0x91
+ 409 0138 6C       		.sleb128 -20
+ 410 0139 07       		.uleb128 0x7
+ 411 013a 9E000000 		.4byte	.LASF18
+ 412 013e 01       		.byte	0x1
+ 413 013f 80       		.byte	0x80
+ 414 0140 81000000 		.4byte	0x81
+ 415 0144 02       		.uleb128 0x2
+ 416 0145 91       		.byte	0x91
+ 417 0146 77       		.sleb128 -9
+ 418 0147 00       		.byte	0
+ 419 0148 0D       		.uleb128 0xd
+ 420 0149 0F010000 		.4byte	.LASF20
+ 421 014d 05       		.byte	0x5
+ 422 014e 5506     		.2byte	0x655
+ 423 0150 54010000 		.4byte	0x154
+ 424 0154 0E       		.uleb128 0xe
+ 425 0155 76000000 		.4byte	0x76
+ 426 0159 09       		.uleb128 0x9
+ 427 015a 69010000 		.4byte	0x169
+ 428 015e 69010000 		.4byte	0x169
+ 429 0162 0A       		.uleb128 0xa
+ 430 0163 BA000000 		.4byte	0xba
+ 431 0167 04       		.byte	0x4
+ 432 0168 00       		.byte	0
+ 433 0169 0F       		.uleb128 0xf
+ 434 016a 04       		.byte	0x4
+ 435 016b A7000000 		.4byte	0xa7
+ 436 016f 10       		.uleb128 0x10
+ 437 0170 01020000 		.4byte	.LASF21
+ 438 0174 01       		.byte	0x1
+ 439 0175 2C       		.byte	0x2c
+ 440 0176 59010000 		.4byte	0x159
+ 441 017a 05       		.uleb128 0x5
+ 442 017b 03       		.byte	0x3
+ 443 017c 00000000 		.4byte	parity
+ 444 0180 09       		.uleb128 0x9
+ 445 0181 69010000 		.4byte	0x169
+ 446 0185 90010000 		.4byte	0x190
+ 447 0189 0A       		.uleb128 0xa
+ 448 018a BA000000 		.4byte	0xba
+ 449 018e 02       		.byte	0x2
+ 450 018f 00       		.byte	0
+ 451 0190 10       		.uleb128 0x10
+ 452 0191 0A010000 		.4byte	.LASF22
+ 453 0195 01       		.byte	0x1
+ 454 0196 2D       		.byte	0x2d
+ 455 0197 80010000 		.4byte	0x180
+ 456 019b 05       		.uleb128 0x5
+ 457 019c 03       		.byte	0x3
+ 458 019d 00000000 		.4byte	stop
+ 459 01a1 09       		.uleb128 0x9
+ 460 01a2 81000000 		.4byte	0x81
+ 461 01a6 B1010000 		.4byte	0x1b1
+ 462 01aa 0A       		.uleb128 0xa
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 12
+
+
+ 463 01ab BA000000 		.4byte	0xba
+ 464 01af 02       		.byte	0x2
+ 465 01b0 00       		.byte	0
+ 466 01b1 10       		.uleb128 0x10
+ 467 01b2 D1000000 		.4byte	.LASF23
+ 468 01b6 01       		.byte	0x1
+ 469 01b7 30       		.byte	0x30
+ 470 01b8 A1010000 		.4byte	0x1a1
+ 471 01bc 05       		.uleb128 0x5
+ 472 01bd 03       		.byte	0x3
+ 473 01be 00000000 		.4byte	i2cReadBuffer
+ 474 01c2 10       		.uleb128 0x10
+ 475 01c3 A9010000 		.4byte	.LASF24
+ 476 01c7 01       		.byte	0x1
+ 477 01c8 31       		.byte	0x31
+ 478 01c9 A1010000 		.4byte	0x1a1
+ 479 01cd 05       		.uleb128 0x5
+ 480 01ce 03       		.byte	0x3
+ 481 01cf 00000000 		.4byte	i2cWriteBuffer
+ 482 01d3 00       		.byte	0
+ 483              		.section	.debug_abbrev,"",%progbits
+ 484              	.Ldebug_abbrev0:
+ 485 0000 01       		.uleb128 0x1
+ 486 0001 11       		.uleb128 0x11
+ 487 0002 01       		.byte	0x1
+ 488 0003 25       		.uleb128 0x25
+ 489 0004 0E       		.uleb128 0xe
+ 490 0005 13       		.uleb128 0x13
+ 491 0006 0B       		.uleb128 0xb
+ 492 0007 03       		.uleb128 0x3
+ 493 0008 0E       		.uleb128 0xe
+ 494 0009 1B       		.uleb128 0x1b
+ 495 000a 0E       		.uleb128 0xe
+ 496 000b 55       		.uleb128 0x55
+ 497 000c 17       		.uleb128 0x17
+ 498 000d 11       		.uleb128 0x11
+ 499 000e 01       		.uleb128 0x1
+ 500 000f 10       		.uleb128 0x10
+ 501 0010 17       		.uleb128 0x17
+ 502 0011 00       		.byte	0
+ 503 0012 00       		.byte	0
+ 504 0013 02       		.uleb128 0x2
+ 505 0014 24       		.uleb128 0x24
+ 506 0015 00       		.byte	0
+ 507 0016 0B       		.uleb128 0xb
+ 508 0017 0B       		.uleb128 0xb
+ 509 0018 3E       		.uleb128 0x3e
+ 510 0019 0B       		.uleb128 0xb
+ 511 001a 03       		.uleb128 0x3
+ 512 001b 0E       		.uleb128 0xe
+ 513 001c 00       		.byte	0
+ 514 001d 00       		.byte	0
+ 515 001e 03       		.uleb128 0x3
+ 516 001f 16       		.uleb128 0x16
+ 517 0020 00       		.byte	0
+ 518 0021 03       		.uleb128 0x3
+ 519 0022 0E       		.uleb128 0xe
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 13
+
+
+ 520 0023 3A       		.uleb128 0x3a
+ 521 0024 0B       		.uleb128 0xb
+ 522 0025 3B       		.uleb128 0x3b
+ 523 0026 0B       		.uleb128 0xb
+ 524 0027 49       		.uleb128 0x49
+ 525 0028 13       		.uleb128 0x13
+ 526 0029 00       		.byte	0
+ 527 002a 00       		.byte	0
+ 528 002b 04       		.uleb128 0x4
+ 529 002c 24       		.uleb128 0x24
+ 530 002d 00       		.byte	0
+ 531 002e 0B       		.uleb128 0xb
+ 532 002f 0B       		.uleb128 0xb
+ 533 0030 3E       		.uleb128 0x3e
+ 534 0031 0B       		.uleb128 0xb
+ 535 0032 03       		.uleb128 0x3
+ 536 0033 08       		.uleb128 0x8
+ 537 0034 00       		.byte	0
+ 538 0035 00       		.byte	0
+ 539 0036 05       		.uleb128 0x5
+ 540 0037 16       		.uleb128 0x16
+ 541 0038 00       		.byte	0
+ 542 0039 03       		.uleb128 0x3
+ 543 003a 0E       		.uleb128 0xe
+ 544 003b 3A       		.uleb128 0x3a
+ 545 003c 0B       		.uleb128 0xb
+ 546 003d 3B       		.uleb128 0x3b
+ 547 003e 05       		.uleb128 0x5
+ 548 003f 49       		.uleb128 0x49
+ 549 0040 13       		.uleb128 0x13
+ 550 0041 00       		.byte	0
+ 551 0042 00       		.byte	0
+ 552 0043 06       		.uleb128 0x6
+ 553 0044 2E       		.uleb128 0x2e
+ 554 0045 01       		.byte	0x1
+ 555 0046 3F       		.uleb128 0x3f
+ 556 0047 19       		.uleb128 0x19
+ 557 0048 03       		.uleb128 0x3
+ 558 0049 0E       		.uleb128 0xe
+ 559 004a 3A       		.uleb128 0x3a
+ 560 004b 0B       		.uleb128 0xb
+ 561 004c 3B       		.uleb128 0x3b
+ 562 004d 0B       		.uleb128 0xb
+ 563 004e 49       		.uleb128 0x49
+ 564 004f 13       		.uleb128 0x13
+ 565 0050 11       		.uleb128 0x11
+ 566 0051 01       		.uleb128 0x1
+ 567 0052 12       		.uleb128 0x12
+ 568 0053 06       		.uleb128 0x6
+ 569 0054 40       		.uleb128 0x40
+ 570 0055 18       		.uleb128 0x18
+ 571 0056 9642     		.uleb128 0x2116
+ 572 0058 19       		.uleb128 0x19
+ 573 0059 01       		.uleb128 0x1
+ 574 005a 13       		.uleb128 0x13
+ 575 005b 00       		.byte	0
+ 576 005c 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 14
+
+
+ 577 005d 07       		.uleb128 0x7
+ 578 005e 34       		.uleb128 0x34
+ 579 005f 00       		.byte	0
+ 580 0060 03       		.uleb128 0x3
+ 581 0061 0E       		.uleb128 0xe
+ 582 0062 3A       		.uleb128 0x3a
+ 583 0063 0B       		.uleb128 0xb
+ 584 0064 3B       		.uleb128 0x3b
+ 585 0065 0B       		.uleb128 0xb
+ 586 0066 49       		.uleb128 0x49
+ 587 0067 13       		.uleb128 0x13
+ 588 0068 02       		.uleb128 0x2
+ 589 0069 18       		.uleb128 0x18
+ 590 006a 00       		.byte	0
+ 591 006b 00       		.byte	0
+ 592 006c 08       		.uleb128 0x8
+ 593 006d 34       		.uleb128 0x34
+ 594 006e 00       		.byte	0
+ 595 006f 03       		.uleb128 0x3
+ 596 0070 0E       		.uleb128 0xe
+ 597 0071 3A       		.uleb128 0x3a
+ 598 0072 0B       		.uleb128 0xb
+ 599 0073 3B       		.uleb128 0x3b
+ 600 0074 0B       		.uleb128 0xb
+ 601 0075 49       		.uleb128 0x49
+ 602 0076 13       		.uleb128 0x13
+ 603 0077 00       		.byte	0
+ 604 0078 00       		.byte	0
+ 605 0079 09       		.uleb128 0x9
+ 606 007a 01       		.uleb128 0x1
+ 607 007b 01       		.byte	0x1
+ 608 007c 49       		.uleb128 0x49
+ 609 007d 13       		.uleb128 0x13
+ 610 007e 01       		.uleb128 0x1
+ 611 007f 13       		.uleb128 0x13
+ 612 0080 00       		.byte	0
+ 613 0081 00       		.byte	0
+ 614 0082 0A       		.uleb128 0xa
+ 615 0083 21       		.uleb128 0x21
+ 616 0084 00       		.byte	0
+ 617 0085 49       		.uleb128 0x49
+ 618 0086 13       		.uleb128 0x13
+ 619 0087 2F       		.uleb128 0x2f
+ 620 0088 0B       		.uleb128 0xb
+ 621 0089 00       		.byte	0
+ 622 008a 00       		.byte	0
+ 623 008b 0B       		.uleb128 0xb
+ 624 008c 2E       		.uleb128 0x2e
+ 625 008d 01       		.byte	0x1
+ 626 008e 3F       		.uleb128 0x3f
+ 627 008f 19       		.uleb128 0x19
+ 628 0090 03       		.uleb128 0x3
+ 629 0091 0E       		.uleb128 0xe
+ 630 0092 3A       		.uleb128 0x3a
+ 631 0093 0B       		.uleb128 0xb
+ 632 0094 3B       		.uleb128 0x3b
+ 633 0095 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 15
+
+
+ 634 0096 27       		.uleb128 0x27
+ 635 0097 19       		.uleb128 0x19
+ 636 0098 49       		.uleb128 0x49
+ 637 0099 13       		.uleb128 0x13
+ 638 009a 11       		.uleb128 0x11
+ 639 009b 01       		.uleb128 0x1
+ 640 009c 12       		.uleb128 0x12
+ 641 009d 06       		.uleb128 0x6
+ 642 009e 40       		.uleb128 0x40
+ 643 009f 18       		.uleb128 0x18
+ 644 00a0 9642     		.uleb128 0x2116
+ 645 00a2 19       		.uleb128 0x19
+ 646 00a3 01       		.uleb128 0x1
+ 647 00a4 13       		.uleb128 0x13
+ 648 00a5 00       		.byte	0
+ 649 00a6 00       		.byte	0
+ 650 00a7 0C       		.uleb128 0xc
+ 651 00a8 05       		.uleb128 0x5
+ 652 00a9 00       		.byte	0
+ 653 00aa 03       		.uleb128 0x3
+ 654 00ab 08       		.uleb128 0x8
+ 655 00ac 3A       		.uleb128 0x3a
+ 656 00ad 0B       		.uleb128 0xb
+ 657 00ae 3B       		.uleb128 0x3b
+ 658 00af 0B       		.uleb128 0xb
+ 659 00b0 49       		.uleb128 0x49
+ 660 00b1 13       		.uleb128 0x13
+ 661 00b2 02       		.uleb128 0x2
+ 662 00b3 18       		.uleb128 0x18
+ 663 00b4 00       		.byte	0
+ 664 00b5 00       		.byte	0
+ 665 00b6 0D       		.uleb128 0xd
+ 666 00b7 34       		.uleb128 0x34
+ 667 00b8 00       		.byte	0
+ 668 00b9 03       		.uleb128 0x3
+ 669 00ba 0E       		.uleb128 0xe
+ 670 00bb 3A       		.uleb128 0x3a
+ 671 00bc 0B       		.uleb128 0xb
+ 672 00bd 3B       		.uleb128 0x3b
+ 673 00be 05       		.uleb128 0x5
+ 674 00bf 49       		.uleb128 0x49
+ 675 00c0 13       		.uleb128 0x13
+ 676 00c1 3F       		.uleb128 0x3f
+ 677 00c2 19       		.uleb128 0x19
+ 678 00c3 3C       		.uleb128 0x3c
+ 679 00c4 19       		.uleb128 0x19
+ 680 00c5 00       		.byte	0
+ 681 00c6 00       		.byte	0
+ 682 00c7 0E       		.uleb128 0xe
+ 683 00c8 35       		.uleb128 0x35
+ 684 00c9 00       		.byte	0
+ 685 00ca 49       		.uleb128 0x49
+ 686 00cb 13       		.uleb128 0x13
+ 687 00cc 00       		.byte	0
+ 688 00cd 00       		.byte	0
+ 689 00ce 0F       		.uleb128 0xf
+ 690 00cf 0F       		.uleb128 0xf
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 16
+
+
+ 691 00d0 00       		.byte	0
+ 692 00d1 0B       		.uleb128 0xb
+ 693 00d2 0B       		.uleb128 0xb
+ 694 00d3 49       		.uleb128 0x49
+ 695 00d4 13       		.uleb128 0x13
+ 696 00d5 00       		.byte	0
+ 697 00d6 00       		.byte	0
+ 698 00d7 10       		.uleb128 0x10
+ 699 00d8 34       		.uleb128 0x34
+ 700 00d9 00       		.byte	0
+ 701 00da 03       		.uleb128 0x3
+ 702 00db 0E       		.uleb128 0xe
+ 703 00dc 3A       		.uleb128 0x3a
+ 704 00dd 0B       		.uleb128 0xb
+ 705 00de 3B       		.uleb128 0x3b
+ 706 00df 0B       		.uleb128 0xb
+ 707 00e0 49       		.uleb128 0x49
+ 708 00e1 13       		.uleb128 0x13
+ 709 00e2 3F       		.uleb128 0x3f
+ 710 00e3 19       		.uleb128 0x19
+ 711 00e4 02       		.uleb128 0x2
+ 712 00e5 18       		.uleb128 0x18
+ 713 00e6 00       		.byte	0
+ 714 00e7 00       		.byte	0
+ 715 00e8 00       		.byte	0
+ 716              		.section	.debug_aranges,"",%progbits
+ 717 0000 24000000 		.4byte	0x24
+ 718 0004 0200     		.2byte	0x2
+ 719 0006 00000000 		.4byte	.Ldebug_info0
+ 720 000a 04       		.byte	0x4
+ 721 000b 00       		.byte	0
+ 722 000c 0000     		.2byte	0
+ 723 000e 0000     		.2byte	0
+ 724 0010 00000000 		.4byte	.LFB63
+ 725 0014 80000000 		.4byte	.LFE63-.LFB63
+ 726 0018 00000000 		.4byte	.LFB64
+ 727 001c 58000000 		.4byte	.LFE64-.LFB64
+ 728 0020 00000000 		.4byte	0
+ 729 0024 00000000 		.4byte	0
+ 730              		.section	.debug_ranges,"",%progbits
+ 731              	.Ldebug_ranges0:
+ 732 0000 00000000 		.4byte	.LFB63
+ 733 0004 80000000 		.4byte	.LFE63
+ 734 0008 00000000 		.4byte	.LFB64
+ 735 000c 58000000 		.4byte	.LFE64
+ 736 0010 00000000 		.4byte	0
+ 737 0014 00000000 		.4byte	0
+ 738              		.section	.debug_line,"",%progbits
+ 739              	.Ldebug_line0:
+ 740 0000 9A010000 		.section	.debug_str,"MS",%progbits,1
+ 740      02004901 
+ 740      00000201 
+ 740      FB0E0D00 
+ 740      01010101 
+ 741              	.LASF29:
+ 742 0000 73746174 		.ascii	"state\000"
+ 742      6500
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 17
+
+
+ 743              	.LASF9:
+ 744 0006 5F5F696E 		.ascii	"__int32_t\000"
+ 744      7433325F 
+ 744      7400
+ 745              	.LASF25:
+ 746 0010 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 746      4320342E 
+ 746      392E3320 
+ 746      32303135 
+ 746      30333033 
+ 747 0043 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 747      20726576 
+ 747      6973696F 
+ 747      6E203232 
+ 747      31323230 
+ 748 0076 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 748      66756E63 
+ 748      74696F6E 
+ 748      2D736563 
+ 748      74696F6E 
+ 749              	.LASF18:
+ 750 009e 73746174 		.ascii	"status\000"
+ 750      757300
+ 751              	.LASF26:
+ 752 00a5 2E5C6D61 		.ascii	".\\main.c\000"
+ 752      696E2E63 
+ 752      00
+ 753              	.LASF13:
+ 754 00ae 666C6F61 		.ascii	"float\000"
+ 754      7400
+ 755              	.LASF1:
+ 756 00b4 756E7369 		.ascii	"unsigned char\000"
+ 756      676E6564 
+ 756      20636861 
+ 756      7200
+ 757              	.LASF30:
+ 758 00c2 45786563 		.ascii	"ExecuteCommand\000"
+ 758      75746543 
+ 758      6F6D6D61 
+ 758      6E6400
+ 759              	.LASF23:
+ 760 00d1 69326352 		.ascii	"i2cReadBuffer\000"
+ 760      65616442 
+ 760      75666665 
+ 760      7200
+ 761              	.LASF15:
+ 762 00df 63686172 		.ascii	"char8\000"
+ 762      3800
+ 763              	.LASF5:
+ 764 00e5 6C6F6E67 		.ascii	"long unsigned int\000"
+ 764      20756E73 
+ 764      69676E65 
+ 764      6420696E 
+ 764      7400
+ 765              	.LASF3:
+ 766 00f7 73686F72 		.ascii	"short unsigned int\000"
+ 766      7420756E 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 18
+
+
+ 766      7369676E 
+ 766      65642069 
+ 766      6E7400
+ 767              	.LASF22:
+ 768 010a 73746F70 		.ascii	"stop\000"
+ 768      00
+ 769              	.LASF20:
+ 770 010f 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 770      52784275 
+ 770      66666572 
+ 770      00
+ 771              	.LASF14:
+ 772 011c 646F7562 		.ascii	"double\000"
+ 772      6C6500
+ 773              	.LASF28:
+ 774 0123 6D61696E 		.ascii	"main\000"
+ 774      00
+ 775              	.LASF12:
+ 776 0128 75696E74 		.ascii	"uint32\000"
+ 776      333200
+ 777              	.LASF27:
+ 778 012f 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 778      73657273 
+ 778      5C4C756B 
+ 778      61732043 
+ 778      72657574 
+ 779 015d 65445350 		.ascii	"eDSPPSoC-I2C\\USBFS_UART01_Example.cydsn\000"
+ 779      50536F43 
+ 779      2D493243 
+ 779      5C555342 
+ 779      46535F55 
+ 780              	.LASF8:
+ 781 0185 756E7369 		.ascii	"unsigned int\000"
+ 781      676E6564 
+ 781      20696E74 
+ 781      00
+ 782              	.LASF7:
+ 783 0192 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 783      206C6F6E 
+ 783      6720756E 
+ 783      7369676E 
+ 783      65642069 
+ 784              	.LASF24:
+ 785 01a9 69326357 		.ascii	"i2cWriteBuffer\000"
+ 785      72697465 
+ 785      42756666 
+ 785      657200
+ 786              	.LASF10:
+ 787 01b8 696E7433 		.ascii	"int32_t\000"
+ 787      325F7400 
+ 788              	.LASF17:
+ 789 01c0 73697A65 		.ascii	"sizetype\000"
+ 789      74797065 
+ 789      00
+ 790              	.LASF6:
+ 791 01c9 6C6F6E67 		.ascii	"long long int\000"
+ 791      206C6F6E 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cct5VnaP.s 			page 19
+
+
+ 791      6720696E 
+ 791      7400
+ 792              	.LASF16:
+ 793 01d7 63686172 		.ascii	"char\000"
+ 793      00
+ 794              	.LASF2:
+ 795 01dc 73686F72 		.ascii	"short int\000"
+ 795      7420696E 
+ 795      7400
+ 796              	.LASF11:
+ 797 01e6 75696E74 		.ascii	"uint8\000"
+ 797      3800
+ 798              	.LASF4:
+ 799 01ec 6C6F6E67 		.ascii	"long int\000"
+ 799      20696E74 
+ 799      00
+ 800              	.LASF0:
+ 801 01f5 7369676E 		.ascii	"signed char\000"
+ 801      65642063 
+ 801      68617200 
+ 802              	.LASF21:
+ 803 0201 70617269 		.ascii	"parity\000"
+ 803      747900
+ 804              	.LASF19:
+ 805 0208 6C696E65 		.ascii	"lineStr\000"
+ 805      53747200 
+ 806              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

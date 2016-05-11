@@ -33,6 +33,8 @@
 #include "UART_1_pvt.h"
 #include "UART_1_cydmac.h"
 #include "UART_1_msc.h"
+#include "Pin_1_aliases.h"
+#include "Pin_1.h"
 #include "UART_1_Dm_aliases.h"
 #include "UART_1_Dm.h"
 #include "UART_1_Dp_aliases.h"

@@ -51,6 +51,12 @@ int main()
 {
     uint8 status = STS_CMD_FAIL;
 
+    for(;;){
+        Pin_1_Write(!Pin_1_Read());
+        CyDelay(1000);
+        
+    }
+    
     /* Start I2C slave (SCB mode) */
     I2CS_SlaveInitReadBuf (i2cReadBuffer,  BUFFER_SIZE);
     I2CS_SlaveInitWriteBuf(i2cWriteBuffer, BUFFER_SIZE);
@@ -59,6 +65,7 @@ int main()
 
     CyGlobalIntEnable;
 
+    Pin_1_Write(!Pin_1_Read());
     /***************************************************************************
     * Main polling loop
     ***************************************************************************/
@@ -94,6 +101,8 @@ int main()
             I2CS_SlaveClearReadBuf();
             (void) I2CS_SlaveClearReadStatus();
         }
+        
+        Pin_1_Write(!Pin_1_Read());
     }
 }
 
