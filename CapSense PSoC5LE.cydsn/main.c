@@ -58,6 +58,9 @@ int main()
                     UART_SendNumber((uint8)(((uint32)pos) >> 8));
                     command = (uint8)(((uint32)pos) >> 8);
                 }
+                else{
+                    command = (100u);
+                }
                 
             }
             
