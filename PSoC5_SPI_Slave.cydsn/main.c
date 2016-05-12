@@ -81,6 +81,7 @@ uint8 rxBuffer [BUFFER_SIZE];
 int main()
 {
     uint8 i;
+    CyGlobalIntEnable;
     
     DmaTxConfiguration();
     DmaRxConfiguration();
@@ -91,29 +92,20 @@ int main()
     CyDmaChEnable(rxChannel, STORE_TD_CFG_ONCMPLT);
     CyDmaChEnable(txChannel, STORE_TD_CFG_ONCMPLT);   
     
-    //LCD_Start();
-    UARTinit();
-    //LCD_Position(0u,0u);
-    //LCD_PrintString("SPI Slave");
-    UARTsendString("SPI Slave\n");
-    //LCD_Position(1u,0u);
-    //LCD_PrintString("example");
-    UARTsendString("example\n");
+    //UARTinit();
+    CyDelay(2000);
+    //UARTsendString("SPI Slave\n");
+    //UARTsendString("example\n");
     
     while(0u == (SPIS_ReadTxStatus() & SPIS_STS_SPI_DONE))
     {
     }
     
-    //LCD_ClearDisplay();
-    //LCD_Position(0u,0u);
-    //LCD_PrintString("Slave Rx data:");
-    //LCD_Position(1u,0u);
-    UARTsendString("Slave Rx data:\n");
+    //UARTsendString("Slave Rx data:\n");
            
     for(i=0u; i<BUFFER_SIZE; i++)
     {
-        //LCD_PrintHexUint8(rxBuffer[i]);
-        UARTsendNumber(rxBuffer[i]);
+        //UARTsendNumber(rxBuffer[i]);
     }        
     
     for(;;)

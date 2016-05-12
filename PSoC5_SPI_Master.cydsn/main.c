@@ -82,16 +82,6 @@ int main()
 {
     uint8 i;
     
-    UARTinit();
-    //LCD_Start();
-    //LCD_Position(0u,0u);
-    //LCD_PrintString("SPI Master");
-    UARTsendString("SPI Master\n");
-    //LCD_Position(1u,0u);
-    //LCD_PrintString("example");
-    UARTsendString("example\n");
-    CyDelay(2000u);
-    
     DmaTxConfiguration();
     DmaRxConfiguration();
     
@@ -99,6 +89,18 @@ int main()
     
     CyDmaChEnable(rxChannel, STORE_TD_CFG_ONCMPLT);
     CyDmaChEnable(txChannel, STORE_TD_CFG_ONCMPLT);
+    
+    CyGlobalIntEnable;
+    
+    UARTinit();
+    CyDelay(2000);
+    //LCD_Start();
+    //LCD_Position(0u,0u);
+    //LCD_PrintString("SPI Master");
+    UARTsendString("SPI Master\n");
+    //LCD_Position(1u,0u);
+    //LCD_PrintString("example");
+    UARTsendString("example\n");
 
     while (0u == (SPIM_ReadTxStatus() & SPIM_STS_SPI_DONE))
     {
@@ -106,7 +108,7 @@ int main()
     
     //LCD_ClearDisplay();
     //LCD_PrintString("Master Rx data:");
-    UARTsendString("Master Rx data:");
+    UARTsendString("Master Rx data:\n");
     //LCD_Position(1u,0u);
     
     for(i=0u; i<BUFFER_SIZE; i++)
@@ -114,6 +116,7 @@ int main()
         //LCD_PrintHexUint8(rxBuffer[i]);
         UARTsendNumber(rxBuffer[i]);
     }
+
 
     for(;;)
     {

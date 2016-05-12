@@ -1,8 +1,8 @@
--- Project:   C:\Users\Lukas Creutzburg\Documents\GitHub\freeDSPPSoC-I2C\SPIS_Example01.cydsn\SPIS_Example01.cyprj
--- Generated: 05/12/2016 11:49:06
+-- Project:   PSoC5_SPI_Slave
+-- Generated: 05/12/2016 15:21:09
 -- PSoC Creator  3.3 SP1
 
-ENTITY SPIS_Example01 IS
+ENTITY PSoC5_SPI_Slave IS
     PORT(
         mosi(0)_PAD : IN std_ulogic;
         sclk(0)_PAD : IN std_ulogic;
@@ -23,9 +23,9 @@ ENTITY SPIS_Example01 IS
     ATTRIBUTE voltage_VDDIO1 OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDIO2 OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDIO3 OF __DEFAULT__ : ENTITY IS 5e0;
-END SPIS_Example01;
+END PSoC5_SPI_Slave;
 
-ARCHITECTURE __DEFAULT__ OF SPIS_Example01 IS
+ARCHITECTURE __DEFAULT__ OF PSoC5_SPI_Slave IS
     SIGNAL ClockBlock_100k : bit;
     SIGNAL ClockBlock_1k : bit;
     SIGNAL ClockBlock_32k : bit;
@@ -49,7 +49,7 @@ ARCHITECTURE __DEFAULT__ OF SPIS_Example01 IS
     SIGNAL Net_17_local : bit;
     SIGNAL Net_194 : bit;
     SIGNAL Net_37 : bit;
-    ATTRIBUTE placement_force OF Net_37 : SIGNAL IS "U(1,3,B)2";
+    ATTRIBUTE placement_force OF Net_37 : SIGNAL IS "U(3,4,A)1";
     SIGNAL Net_71 : bit;
     SIGNAL Net_76 : bit;
     SIGNAL Net_80 : bit;
@@ -61,7 +61,7 @@ ARCHITECTURE __DEFAULT__ OF SPIS_Example01 IS
     SIGNAL \\\LCD:LCDPort(5)\\__PA\ : bit;
     SIGNAL \\\LCD:LCDPort(6)\\__PA\ : bit;
     SIGNAL \SPIS:BSPIS:byte_complete\ : bit;
-    ATTRIBUTE placement_force OF \SPIS:BSPIS:byte_complete\ : SIGNAL IS "U(1,4,B)2";
+    ATTRIBUTE placement_force OF \SPIS:BSPIS:byte_complete\ : SIGNAL IS "U(2,3,B)2";
     SIGNAL \SPIS:BSPIS:count_0\ : bit;
     SIGNAL \SPIS:BSPIS:count_1\ : bit;
     SIGNAL \SPIS:BSPIS:count_2\ : bit;
@@ -75,28 +75,28 @@ ARCHITECTURE __DEFAULT__ OF SPIS_Example01 IS
     SIGNAL \SPIS:BSPIS:dpMOSI_fifo_not_empty\ : bit;
     SIGNAL \SPIS:BSPIS:dpcounter_one_fin\ : bit;
     SIGNAL \SPIS:BSPIS:dpcounter_one_reg\ : bit;
-    ATTRIBUTE placement_force OF \SPIS:BSPIS:dpcounter_one_reg\ : SIGNAL IS "U(0,3,B)1";
+    ATTRIBUTE placement_force OF \SPIS:BSPIS:dpcounter_one_reg\ : SIGNAL IS "U(2,3,A)3";
     SIGNAL \SPIS:BSPIS:inv_ss\ : bit;
-    ATTRIBUTE placement_force OF \SPIS:BSPIS:inv_ss\ : SIGNAL IS "U(1,3,A)3";
+    ATTRIBUTE placement_force OF \SPIS:BSPIS:inv_ss\ : SIGNAL IS "U(3,4,B)0";
     SIGNAL \SPIS:BSPIS:miso_from_dp\ : bit;
     SIGNAL \SPIS:BSPIS:miso_tx_empty_reg_fin\ : bit;
     SIGNAL \SPIS:BSPIS:mosi_buf_overrun\ : bit;
-    ATTRIBUTE placement_force OF \SPIS:BSPIS:mosi_buf_overrun\ : SIGNAL IS "U(1,3,A)0";
+    ATTRIBUTE placement_force OF \SPIS:BSPIS:mosi_buf_overrun\ : SIGNAL IS "U(3,4,A)3";
     SIGNAL \SPIS:BSPIS:mosi_buf_overrun_fin\ : bit;
-    ATTRIBUTE placement_force OF \SPIS:BSPIS:mosi_buf_overrun_fin\ : SIGNAL IS "U(0,4,B)1";
+    ATTRIBUTE placement_force OF \SPIS:BSPIS:mosi_buf_overrun_fin\ : SIGNAL IS "U(2,3,A)1";
     SIGNAL \SPIS:BSPIS:mosi_buf_overrun_reg\ : bit;
     SIGNAL \SPIS:BSPIS:mosi_tmp\ : bit;
-    ATTRIBUTE placement_force OF \SPIS:BSPIS:mosi_tmp\ : SIGNAL IS "U(1,4,B)1";
+    ATTRIBUTE placement_force OF \SPIS:BSPIS:mosi_tmp\ : SIGNAL IS "U(3,4,B)3";
     SIGNAL \SPIS:BSPIS:mosi_to_dp\ : bit;
-    ATTRIBUTE placement_force OF \SPIS:BSPIS:mosi_to_dp\ : SIGNAL IS "U(1,4,B)0";
+    ATTRIBUTE placement_force OF \SPIS:BSPIS:mosi_to_dp\ : SIGNAL IS "U(3,4,A)0";
     SIGNAL \SPIS:BSPIS:rx_buf_overrun\ : bit;
-    ATTRIBUTE placement_force OF \SPIS:BSPIS:rx_buf_overrun\ : SIGNAL IS "U(0,4,A)2";
+    ATTRIBUTE placement_force OF \SPIS:BSPIS:rx_buf_overrun\ : SIGNAL IS "U(2,3,A)0";
     SIGNAL \SPIS:BSPIS:rx_status_4\ : bit;
-    ATTRIBUTE placement_force OF \SPIS:BSPIS:rx_status_4\ : SIGNAL IS "U(0,3,A)0";
+    ATTRIBUTE placement_force OF \SPIS:BSPIS:rx_status_4\ : SIGNAL IS "U(2,4,B)1";
     SIGNAL \SPIS:BSPIS:tx_load\ : bit;
-    ATTRIBUTE placement_force OF \SPIS:BSPIS:tx_load\ : SIGNAL IS "U(1,4,A)2";
+    ATTRIBUTE placement_force OF \SPIS:BSPIS:tx_load\ : SIGNAL IS "U(3,4,A)2";
     SIGNAL \SPIS:BSPIS:tx_status_0\ : bit;
-    ATTRIBUTE placement_force OF \SPIS:BSPIS:tx_status_0\ : SIGNAL IS "U(1,4,A)0";
+    ATTRIBUTE placement_force OF \SPIS:BSPIS:tx_status_0\ : SIGNAL IS "U(2,3,B)0";
     SIGNAL \SPIS:BSPIS:tx_status_1\ : bit;
     SIGNAL \\\USBUART:Dm(0)\\__PA\ : bit;
     SIGNAL \\\USBUART:Dp(0)\\__PA\ : bit;
@@ -163,36 +163,36 @@ ARCHITECTURE __DEFAULT__ OF SPIS_Example01 IS
     ATTRIBUTE lib_model OF \USBUART:Dp(0)\ : LABEL IS "iocell13";
     ATTRIBUTE Location OF \USBUART:Dp(0)\ : LABEL IS "P15[6]";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:inv_ss\ : LABEL IS "macrocell1";
-    ATTRIBUTE Location OF \SPIS:BSPIS:inv_ss\ : LABEL IS "U(1,3)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:inv_ss\ : LABEL IS "U(3,4)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:tx_load\ : LABEL IS "macrocell2";
-    ATTRIBUTE Location OF \SPIS:BSPIS:tx_load\ : LABEL IS "U(1,4)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:tx_load\ : LABEL IS "U(3,4)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:byte_complete\ : LABEL IS "macrocell3";
-    ATTRIBUTE Location OF \SPIS:BSPIS:byte_complete\ : LABEL IS "U(1,4)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:byte_complete\ : LABEL IS "U(2,3)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:rx_buf_overrun\ : LABEL IS "macrocell4";
-    ATTRIBUTE Location OF \SPIS:BSPIS:rx_buf_overrun\ : LABEL IS "U(0,4)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:rx_buf_overrun\ : LABEL IS "U(2,3)";
     ATTRIBUTE lib_model OF Net_37 : LABEL IS "macrocell5";
-    ATTRIBUTE Location OF Net_37 : LABEL IS "U(1,3)";
+    ATTRIBUTE Location OF Net_37 : LABEL IS "U(3,4)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:mosi_buf_overrun\ : LABEL IS "macrocell6";
-    ATTRIBUTE Location OF \SPIS:BSPIS:mosi_buf_overrun\ : LABEL IS "U(1,3)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:mosi_buf_overrun\ : LABEL IS "U(3,4)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:tx_status_0\ : LABEL IS "macrocell7";
-    ATTRIBUTE Location OF \SPIS:BSPIS:tx_status_0\ : LABEL IS "U(1,4)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:tx_status_0\ : LABEL IS "U(2,3)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:rx_status_4\ : LABEL IS "macrocell8";
-    ATTRIBUTE Location OF \SPIS:BSPIS:rx_status_4\ : LABEL IS "U(0,3)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:rx_status_4\ : LABEL IS "U(2,4)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:mosi_to_dp\ : LABEL IS "macrocell9";
-    ATTRIBUTE Location OF \SPIS:BSPIS:mosi_to_dp\ : LABEL IS "U(1,4)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:mosi_to_dp\ : LABEL IS "U(3,4)";
     ATTRIBUTE lib_model OF DMA_RX : LABEL IS "drqcell1";
     ATTRIBUTE Location OF DMA_RX : LABEL IS "[DrqContainer=(0)][DrqId=(0)]";
-    ATTRIBUTE Location OF \SPIS:BSPIS:sync_1\ : LABEL IS "U(0,4)";
-    ATTRIBUTE Location OF \SPIS:BSPIS:sync_2\ : LABEL IS "U(0,4)";
-    ATTRIBUTE Location OF \SPIS:BSPIS:sync_3\ : LABEL IS "U(0,4)";
-    ATTRIBUTE Location OF \SPIS:BSPIS:sync_4\ : LABEL IS "U(0,4)";
-    ATTRIBUTE Location OF \SPIS:BSPIS:BitCounter\ : LABEL IS "U(1,3)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:sync_1\ : LABEL IS "U(3,3)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:sync_2\ : LABEL IS "U(3,3)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:sync_3\ : LABEL IS "U(3,3)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:sync_4\ : LABEL IS "U(3,3)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:BitCounter\ : LABEL IS "U(3,4)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:TxStsReg\ : LABEL IS "statusicell1";
-    ATTRIBUTE Location OF \SPIS:BSPIS:TxStsReg\ : LABEL IS "U(1,4)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:TxStsReg\ : LABEL IS "U(2,3)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:RxStsReg\ : LABEL IS "statusicell2";
-    ATTRIBUTE Location OF \SPIS:BSPIS:RxStsReg\ : LABEL IS "U(0,3)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:RxStsReg\ : LABEL IS "U(2,4)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:sR8:Dp:u0\ : LABEL IS "datapathcell1";
-    ATTRIBUTE Location OF \SPIS:BSPIS:sR8:Dp:u0\ : LABEL IS "U(1,3)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:sR8:Dp:u0\ : LABEL IS "U(3,4)";
     ATTRIBUTE lib_model OF DMA_TX : LABEL IS "drqcell2";
     ATTRIBUTE Location OF DMA_TX : LABEL IS "[DrqContainer=(0)][DrqId=(1)]";
     ATTRIBUTE Location OF \USBUART:dp_int\ : LABEL IS "[IntrContainer=(0)][IntrId=(12)]";
@@ -205,11 +205,11 @@ ARCHITECTURE __DEFAULT__ OF SPIS_Example01 IS
     ATTRIBUTE Location OF \USBUART:arb_int\ : LABEL IS "[IntrContainer=(0)][IntrId=(22)]";
     ATTRIBUTE Location OF \USBUART:sof_int\ : LABEL IS "[IntrContainer=(0)][IntrId=(21)]";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:dpcounter_one_reg\ : LABEL IS "macrocell10";
-    ATTRIBUTE Location OF \SPIS:BSPIS:dpcounter_one_reg\ : LABEL IS "U(0,3)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:dpcounter_one_reg\ : LABEL IS "U(2,3)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:mosi_buf_overrun_fin\ : LABEL IS "macrocell11";
-    ATTRIBUTE Location OF \SPIS:BSPIS:mosi_buf_overrun_fin\ : LABEL IS "U(0,4)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:mosi_buf_overrun_fin\ : LABEL IS "U(2,3)";
     ATTRIBUTE lib_model OF \SPIS:BSPIS:mosi_tmp\ : LABEL IS "macrocell12";
-    ATTRIBUTE Location OF \SPIS:BSPIS:mosi_tmp\ : LABEL IS "U(1,4)";
+    ATTRIBUTE Location OF \SPIS:BSPIS:mosi_tmp\ : LABEL IS "U(3,4)";
     COMPONENT clockblockcell
         PORT (
             dclk_0 : OUT std_ulogic;
