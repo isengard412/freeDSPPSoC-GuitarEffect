@@ -1,5 +1,5 @@
 # SPIS_Example01
-# 2016-05-11 16:58:45Z
+# 2016-05-12 09:49:01Z
 
 # IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 0
@@ -8,10 +8,10 @@ dont_use_io iocell 1 1
 # IO_3@[IOP=(1)][IoId=(3)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 3
 set_location "ClockBlock" clockblockcell -1 -1 0
-set_io "mosi(0)" iocell 12 3
-set_io "sclk(0)" iocell 12 2
-set_io "ss(0)" iocell 15 0
-set_io "miso(0)" iocell 15 2
+set_io "mosi(0)" iocell 0 1
+set_io "sclk(0)" iocell 0 2
+set_io "ss(0)" iocell 0 4
+set_io "miso(0)" iocell 0 0
 set_io "\LCD:LCDPort(0)\" iocell 2 0
 set_io "\LCD:LCDPort(1)\" iocell 2 1
 set_io "\LCD:LCDPort(2)\" iocell 2 2
@@ -19,25 +19,37 @@ set_io "\LCD:LCDPort(3)\" iocell 2 3
 set_io "\LCD:LCDPort(4)\" iocell 2 4
 set_io "\LCD:LCDPort(5)\" iocell 2 5
 set_io "\LCD:LCDPort(6)\" iocell 2 6
-set_location "\SPIS:BSPIS:inv_ss\" 2 1 1 1
-set_location "\SPIS:BSPIS:tx_load\" 2 2 0 2
-set_location "\SPIS:BSPIS:byte_complete\" 2 2 1 2
-set_location "\SPIS:BSPIS:rx_buf_overrun\" 3 1 0 1
-set_location "Net_37" 3 1 0 0
-set_location "\SPIS:BSPIS:mosi_buf_overrun\" 2 2 0 3
-set_location "\SPIS:BSPIS:tx_status_0\" 2 2 1 0
-set_location "\SPIS:BSPIS:rx_status_4\" 3 1 0 3
-set_location "\SPIS:BSPIS:mosi_to_dp\" 2 2 0 0
+set_io "\USBUART:Dm(0)\" iocell 15 7
+set_location "\USBUART:Dp\" logicalport -1 -1 15
+set_io "\USBUART:Dp(0)\" iocell 15 6
+set_location "\SPIS:BSPIS:inv_ss\" 1 3 0 3
+set_location "\SPIS:BSPIS:tx_load\" 1 4 0 2
+set_location "\SPIS:BSPIS:byte_complete\" 1 4 1 2
+set_location "\SPIS:BSPIS:rx_buf_overrun\" 0 4 0 2
+set_location "Net_37" 1 3 1 2
+set_location "\SPIS:BSPIS:mosi_buf_overrun\" 1 3 0 0
+set_location "\SPIS:BSPIS:tx_status_0\" 1 4 0 0
+set_location "\SPIS:BSPIS:rx_status_4\" 0 3 0 0
+set_location "\SPIS:BSPIS:mosi_to_dp\" 1 4 1 0
 set_location "DMA_RX" drqcell -1 -1 0
-set_location "\SPIS:BSPIS:sync_1\" 2 1 5 3
-set_location "\SPIS:BSPIS:sync_2\" 2 1 5 0
-set_location "\SPIS:BSPIS:sync_3\" 2 1 5 2
-set_location "\SPIS:BSPIS:sync_4\" 2 1 5 1
-set_location "\SPIS:BSPIS:BitCounter\" 2 2 7
-set_location "\SPIS:BSPIS:TxStsReg\" 2 0 4
-set_location "\SPIS:BSPIS:RxStsReg\" 3 1 4
-set_location "\SPIS:BSPIS:sR8:Dp:u0\" 2 2 2
+set_location "\SPIS:BSPIS:sync_1\" 0 4 5 3
+set_location "\SPIS:BSPIS:sync_2\" 0 4 5 0
+set_location "\SPIS:BSPIS:sync_3\" 0 4 5 2
+set_location "\SPIS:BSPIS:sync_4\" 0 4 5 1
+set_location "\SPIS:BSPIS:BitCounter\" 1 3 7
+set_location "\SPIS:BSPIS:TxStsReg\" 1 4 4
+set_location "\SPIS:BSPIS:RxStsReg\" 0 3 4
+set_location "\SPIS:BSPIS:sR8:Dp:u0\" 1 3 2
 set_location "DMA_TX" drqcell -1 -1 1
-set_location "\SPIS:BSPIS:dpcounter_one_reg\" 2 1 1 0
-set_location "\SPIS:BSPIS:mosi_buf_overrun_fin\" 3 1 0 2
-set_location "\SPIS:BSPIS:mosi_tmp\" 2 2 0 1
+set_location "\USBUART:dp_int\" interrupt -1 -1 12
+set_location "\USBUART:USB\" usbcell -1 -1 0
+set_location "\USBUART:ep_3\" interrupt -1 -1 2
+set_location "\USBUART:ep_2\" interrupt -1 -1 1
+set_location "\USBUART:ep_1\" interrupt -1 -1 0
+set_location "\USBUART:ep_0\" interrupt -1 -1 24
+set_location "\USBUART:bus_reset\" interrupt -1 -1 23
+set_location "\USBUART:arb_int\" interrupt -1 -1 22
+set_location "\USBUART:sof_int\" interrupt -1 -1 21
+set_location "\SPIS:BSPIS:dpcounter_one_reg\" 0 3 1 1
+set_location "\SPIS:BSPIS:mosi_buf_overrun_fin\" 0 4 1 1
+set_location "\SPIS:BSPIS:mosi_tmp\" 1 4 1 1

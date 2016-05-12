@@ -30,6 +30,7 @@
 *******************************************************************************/
 
 #include <project.h>
+#include "uart.h"
 
 void DmaTxConfiguration(void);
 void DmaRxConfiguration(void);
@@ -90,24 +91,29 @@ int main()
     CyDmaChEnable(rxChannel, STORE_TD_CFG_ONCMPLT);
     CyDmaChEnable(txChannel, STORE_TD_CFG_ONCMPLT);   
     
-    LCD_Start();
-    LCD_Position(0u,0u);
-    LCD_PrintString("SPI Slave");
-    LCD_Position(1u,0u);
-    LCD_PrintString("example");
+    //LCD_Start();
+    UARTinit();
+    //LCD_Position(0u,0u);
+    //LCD_PrintString("SPI Slave");
+    UARTsendString("SPI Slave\n");
+    //LCD_Position(1u,0u);
+    //LCD_PrintString("example");
+    UARTsendString("example\n");
     
     while(0u == (SPIS_ReadTxStatus() & SPIS_STS_SPI_DONE))
     {
     }
     
-    LCD_ClearDisplay();
-    LCD_Position(0u,0u);
-    LCD_PrintString("Slave Rx data:");
-    LCD_Position(1u,0u);
+    //LCD_ClearDisplay();
+    //LCD_Position(0u,0u);
+    //LCD_PrintString("Slave Rx data:");
+    //LCD_Position(1u,0u);
+    UARTsendString("Slave Rx data:\n");
            
     for(i=0u; i<BUFFER_SIZE; i++)
     {
-        LCD_PrintHexUint8(rxBuffer[i]);
+        //LCD_PrintHexUint8(rxBuffer[i]);
+        UARTsendNumber(rxBuffer[i]);
     }        
     
     for(;;)
