@@ -98,25 +98,37 @@ uint8 e2prom_hex[E2PROM_HEX_SIZE] = { 0x01 , 0x00 , 0x05 , 0x00 , 0x08 , 0x1C , 
 *******************************************************************************/
 void DSPinit()
 {
+    
     /* SPI intialisieren */
     SPIinit();
-    
+    CyDelay(22); /* warte auf Start des DSPs*/
     /* Umschalten des DSP von I2C auf SPI (3 mal dummy senden) */
     SPIsendNumber((uint16)0x01);
     SPIsendNumber((uint16)0x01);
     SPIsendNumber((uint16)0x01);
-    CyDelay(10);
+    CyDelay(10);    /* Warte auf DSP SPI Initialisierung*/
     
     /* Schreiben des EEPROM zu Beginn */
     uint16 sendArray[2];
     uint16 address = 0;
     int i;
-    for(i=0;i<E2PROM_HEX_SIZE;i++)
+    for(i=0;i<E2PROM_HEX_SIZE;i++)  /* Schreibe Programm in E2PROM */
     {
         sendArray[0] = (CHIPADDRESS << 8) | (address >> 8);
-        //sendArray[1] = (address << 8) | ()
+        sendArray[1] = (address << 8) | (e2prom_hex[i]);
+        SPIsendArray(sendArray);
+        ++address;
     }
+    
+    /*Starte DSP neu*/
+    DSP_reset_Write(1u);
+    CyDelay(1000);
+    DSP_reset_Write(0u);
+    
+    CyDelay(22); /*Warte auf Start des DSPs*/
+
 }
+
 
 /*******************************************************************************
 * Function Name: writeDSP

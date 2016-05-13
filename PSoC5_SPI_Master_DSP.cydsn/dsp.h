@@ -26,6 +26,9 @@
 #define E2PROM_HEX_SIZE 544
 #define CHIPADDRESS 0x00
 
+#define VOLUME0_ADDR  0x0000 
+#define VOLUME1_ADDR  0x0001
+
 /*******************************************************************************
 * Function Name: DSPinit
 ********************************************************************************
