@@ -1,0 +1,698 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"spimaster.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global _printf_float
+  19              		.thumb
+  20              		.comm	wrBuffer,64,4
+  21              		.comm	temp,1,1
+  22              		.section	.text.SPIinit,"ax",%progbits
+  23              		.align	2
+  24              		.global	SPIinit
+  25              		.thumb
+  26              		.thumb_func
+  27              		.type	SPIinit, %function
+  28              	SPIinit:
+  29              	.LFB63:
+  30              		.file 1 ".\\spimaster.c"
+   1:.\spimaster.c **** /*******************************************************************************
+   2:.\spimaster.c **** * File Name: spimaster.c
+   3:.\spimaster.c **** *
+   4:.\spimaster.c **** * Version: 1.0
+   5:.\spimaster.c **** * Author: Lukas Creutzburg
+   6:.\spimaster.c **** *
+   7:.\spimaster.c **** * Description:
+   8:.\spimaster.c **** *   Component sends data via SPI as Master
+   9:.\spimaster.c **** *
+  10:.\spimaster.c **** *******************************************************************************/
+  11:.\spimaster.c **** 
+  12:.\spimaster.c **** #include "spimaster.h"
+  13:.\spimaster.c **** 
+  14:.\spimaster.c **** /*******************************************************************************
+  15:.\spimaster.c **** * Function Name: SPIinit
+  16:.\spimaster.c **** ********************************************************************************
+  17:.\spimaster.c **** *
+  18:.\spimaster.c **** * Summary:
+  19:.\spimaster.c **** *  Initialize communication
+  20:.\spimaster.c **** *
+  21:.\spimaster.c **** * Parameters:
+  22:.\spimaster.c **** *  None.
+  23:.\spimaster.c **** *
+  24:.\spimaster.c **** * Return:
+  25:.\spimaster.c **** *  None.
+  26:.\spimaster.c **** *
+  27:.\spimaster.c **** *******************************************************************************/
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 2
+
+
+  28:.\spimaster.c **** void SPIinit()
+  29:.\spimaster.c **** {
+  31              		.loc 1 29 0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 0
+  34              		@ frame_needed = 1, uses_anonymous_args = 0
+  35 0000 80B5     		push	{r7, lr}
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 7, -8
+  38              		.cfi_offset 14, -4
+  39 0002 00AF     		add	r7, sp, #0
+  40              		.cfi_def_cfa_register 7
+  30:.\spimaster.c ****     SPIM_Start();
+  41              		.loc 1 30 0
+  42 0004 FFF7FEFF 		bl	SPIM_Start
+  31:.\spimaster.c **** }
+  43              		.loc 1 31 0
+  44 0008 80BD     		pop	{r7, pc}
+  45              		.cfi_endproc
+  46              	.LFE63:
+  47              		.size	SPIinit, .-SPIinit
+  48 000a 00BF     		.section	.text.SPIsendNumber,"ax",%progbits
+  49              		.align	2
+  50              		.global	SPIsendNumber
+  51              		.thumb
+  52              		.thumb_func
+  53              		.type	SPIsendNumber, %function
+  54              	SPIsendNumber:
+  55              	.LFB64:
+  32:.\spimaster.c **** 
+  33:.\spimaster.c **** /*******************************************************************************
+  34:.\spimaster.c **** * Function Name: SPIsendNumber
+  35:.\spimaster.c **** ********************************************************************************
+  36:.\spimaster.c **** *
+  37:.\spimaster.c **** * Summary:
+  38:.\spimaster.c **** *  Sending a Number via SPI as Master
+  39:.\spimaster.c **** *
+  40:.\spimaster.c **** * Parameters:
+  41:.\spimaster.c **** *  uint16 number
+  42:.\spimaster.c **** *
+  43:.\spimaster.c **** * Return:
+  44:.\spimaster.c **** *  None.
+  45:.\spimaster.c **** *
+  46:.\spimaster.c **** *******************************************************************************/
+  47:.\spimaster.c **** void SPIsendNumber(uint16 number)
+  48:.\spimaster.c **** {
+  56              		.loc 1 48 0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 8
+  59              		@ frame_needed = 1, uses_anonymous_args = 0
+  60 0000 80B5     		push	{r7, lr}
+  61              		.cfi_def_cfa_offset 8
+  62              		.cfi_offset 7, -8
+  63              		.cfi_offset 14, -4
+  64 0002 82B0     		sub	sp, sp, #8
+  65              		.cfi_def_cfa_offset 16
+  66 0004 00AF     		add	r7, sp, #0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 3
+
+
+  67              		.cfi_def_cfa_register 7
+  68 0006 0346     		mov	r3, r0
+  69 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+  49:.\spimaster.c **** 
+  50:.\spimaster.c ****     /* Clear the transmit buffer before next reading (good practice) */
+  51:.\spimaster.c ****     SPIM_ClearTxBuffer();
+  70              		.loc 1 51 0
+  71 000a FFF7FEFF 		bl	SPIM_ClearTxBuffer
+  52:.\spimaster.c **** 
+  53:.\spimaster.c ****     temp = SPIM_ReadTxStatus();
+  72              		.loc 1 53 0
+  73 000e FFF7FEFF 		bl	SPIM_ReadTxStatus
+  74 0012 0346     		mov	r3, r0
+  75 0014 1A46     		mov	r2, r3
+  76 0016 074B     		ldr	r3, .L4
+  77 0018 1A70     		strb	r2, [r3]
+  54:.\spimaster.c **** 
+  55:.\spimaster.c ****     /* Ensure that previous SPI read is done, or SPI is idle before sending data */
+  56:.\spimaster.c ****     if((temp & (SPIM_STS_SPI_DONE | SPIM_STS_SPI_IDLE)))
+  78              		.loc 1 56 0
+  79 001a 064B     		ldr	r3, .L4
+  80 001c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  81 001e 03F01103 		and	r3, r3, #17
+  82 0022 002B     		cmp	r3, #0
+  83 0024 03D0     		beq	.L2
+  57:.\spimaster.c ****     {
+  58:.\spimaster.c ****         SPIM_WriteTxData(number);
+  84              		.loc 1 58 0
+  85 0026 FB88     		ldrh	r3, [r7, #6]
+  86 0028 1846     		mov	r0, r3
+  87 002a FFF7FEFF 		bl	SPIM_WriteTxData
+  88              	.L2:
+  59:.\spimaster.c ****     }
+  60:.\spimaster.c **** }
+  89              		.loc 1 60 0
+  90 002e 0837     		adds	r7, r7, #8
+  91              		.cfi_def_cfa_offset 8
+  92 0030 BD46     		mov	sp, r7
+  93              		.cfi_def_cfa_register 13
+  94              		@ sp needed
+  95 0032 80BD     		pop	{r7, pc}
+  96              	.L5:
+  97              		.align	2
+  98              	.L4:
+  99 0034 00000000 		.word	temp
+ 100              		.cfi_endproc
+ 101              	.LFE64:
+ 102              		.size	SPIsendNumber, .-SPIsendNumber
+ 103              		.text
+ 104              	.Letext0:
+ 105              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 106              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 107              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 108              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 109              		.file 6 ".\\spimaster.h"
+ 110              		.section	.debug_info,"",%progbits
+ 111              	.Ldebug_info0:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 4
+
+
+ 112 0000 2A010000 		.4byte	0x12a
+ 113 0004 0400     		.2byte	0x4
+ 114 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 115 000a 04       		.byte	0x4
+ 116 000b 01       		.uleb128 0x1
+ 117 000c 9C000000 		.4byte	.LASF20
+ 118 0010 01       		.byte	0x1
+ 119 0011 4A010000 		.4byte	.LASF21
+ 120 0015 70010000 		.4byte	.LASF22
+ 121 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 122 001d 00000000 		.4byte	0
+ 123 0021 00000000 		.4byte	.Ldebug_line0
+ 124 0025 02       		.uleb128 0x2
+ 125 0026 01       		.byte	0x1
+ 126 0027 06       		.byte	0x6
+ 127 0028 3E010000 		.4byte	.LASF0
+ 128 002c 02       		.uleb128 0x2
+ 129 002d 01       		.byte	0x1
+ 130 002e 08       		.byte	0x8
+ 131 002f 80000000 		.4byte	.LASF1
+ 132 0033 02       		.uleb128 0x2
+ 133 0034 02       		.byte	0x2
+ 134 0035 05       		.byte	0x5
+ 135 0036 C2010000 		.4byte	.LASF2
+ 136 003a 02       		.uleb128 0x2
+ 137 003b 02       		.byte	0x2
+ 138 003c 07       		.byte	0x7
+ 139 003d 0E000000 		.4byte	.LASF3
+ 140 0041 03       		.uleb128 0x3
+ 141 0042 66010000 		.4byte	.LASF9
+ 142 0046 02       		.byte	0x2
+ 143 0047 3F       		.byte	0x3f
+ 144 0048 4C000000 		.4byte	0x4c
+ 145 004c 02       		.uleb128 0x2
+ 146 004d 04       		.byte	0x4
+ 147 004e 05       		.byte	0x5
+ 148 004f 93000000 		.4byte	.LASF4
+ 149 0053 02       		.uleb128 0x2
+ 150 0054 04       		.byte	0x4
+ 151 0055 07       		.byte	0x7
+ 152 0056 4A000000 		.4byte	.LASF5
+ 153 005a 02       		.uleb128 0x2
+ 154 005b 08       		.byte	0x8
+ 155 005c 05       		.byte	0x5
+ 156 005d 00000000 		.4byte	.LASF6
+ 157 0061 02       		.uleb128 0x2
+ 158 0062 08       		.byte	0x8
+ 159 0063 07       		.byte	0x7
+ 160 0064 5C000000 		.4byte	.LASF7
+ 161 0068 04       		.uleb128 0x4
+ 162 0069 04       		.byte	0x4
+ 163 006a 05       		.byte	0x5
+ 164 006b 696E7400 		.ascii	"int\000"
+ 165 006f 02       		.uleb128 0x2
+ 166 0070 04       		.byte	0x4
+ 167 0071 07       		.byte	0x7
+ 168 0072 21000000 		.4byte	.LASF8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 5
+
+
+ 169 0076 03       		.uleb128 0x3
+ 170 0077 D3010000 		.4byte	.LASF10
+ 171 007b 03       		.byte	0x3
+ 172 007c 2C       		.byte	0x2c
+ 173 007d 41000000 		.4byte	0x41
+ 174 0081 05       		.uleb128 0x5
+ 175 0082 44000000 		.4byte	.LASF11
+ 176 0086 04       		.byte	0x4
+ 177 0087 3801     		.2byte	0x138
+ 178 0089 2C000000 		.4byte	0x2c
+ 179 008d 05       		.uleb128 0x5
+ 180 008e CC010000 		.4byte	.LASF12
+ 181 0092 04       		.byte	0x4
+ 182 0093 3901     		.2byte	0x139
+ 183 0095 3A000000 		.4byte	0x3a
+ 184 0099 02       		.uleb128 0x2
+ 185 009a 04       		.byte	0x4
+ 186 009b 04       		.byte	0x4
+ 187 009c 7A000000 		.4byte	.LASF13
+ 188 00a0 02       		.uleb128 0x2
+ 189 00a1 08       		.byte	0x8
+ 190 00a2 04       		.byte	0x4
+ 191 00a3 2A010000 		.4byte	.LASF14
+ 192 00a7 02       		.uleb128 0x2
+ 193 00a8 01       		.byte	0x1
+ 194 00a9 08       		.byte	0x8
+ 195 00aa 8E000000 		.4byte	.LASF15
+ 196 00ae 02       		.uleb128 0x2
+ 197 00af 04       		.byte	0x4
+ 198 00b0 07       		.byte	0x7
+ 199 00b1 DB010000 		.4byte	.LASF16
+ 200 00b5 06       		.uleb128 0x6
+ 201 00b6 2E000000 		.4byte	.LASF23
+ 202 00ba 01       		.byte	0x1
+ 203 00bb 1C       		.byte	0x1c
+ 204 00bc 00000000 		.4byte	.LFB63
+ 205 00c0 0A000000 		.4byte	.LFE63-.LFB63
+ 206 00c4 01       		.uleb128 0x1
+ 207 00c5 9C       		.byte	0x9c
+ 208 00c6 07       		.uleb128 0x7
+ 209 00c7 58010000 		.4byte	.LASF24
+ 210 00cb 01       		.byte	0x1
+ 211 00cc 2F       		.byte	0x2f
+ 212 00cd 00000000 		.4byte	.LFB64
+ 213 00d1 38000000 		.4byte	.LFE64-.LFB64
+ 214 00d5 01       		.uleb128 0x1
+ 215 00d6 9C       		.byte	0x9c
+ 216 00d7 EA000000 		.4byte	0xea
+ 217 00db 08       		.uleb128 0x8
+ 218 00dc 73000000 		.4byte	.LASF25
+ 219 00e0 01       		.byte	0x1
+ 220 00e1 2F       		.byte	0x2f
+ 221 00e2 8D000000 		.4byte	0x8d
+ 222 00e6 02       		.uleb128 0x2
+ 223 00e7 91       		.byte	0x91
+ 224 00e8 76       		.sleb128 -10
+ 225 00e9 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 6
+
+
+ 226 00ea 09       		.uleb128 0x9
+ 227 00eb 31010000 		.4byte	.LASF17
+ 228 00ef 05       		.byte	0x5
+ 229 00f0 5506     		.2byte	0x655
+ 230 00f2 F6000000 		.4byte	0xf6
+ 231 00f6 0A       		.uleb128 0xa
+ 232 00f7 76000000 		.4byte	0x76
+ 233 00fb 0B       		.uleb128 0xb
+ 234 00fc 81000000 		.4byte	0x81
+ 235 0100 0B010000 		.4byte	0x10b
+ 236 0104 0C       		.uleb128 0xc
+ 237 0105 AE000000 		.4byte	0xae
+ 238 0109 3F       		.byte	0x3f
+ 239 010a 00       		.byte	0
+ 240 010b 0D       		.uleb128 0xd
+ 241 010c 3B000000 		.4byte	.LASF18
+ 242 0110 06       		.byte	0x6
+ 243 0111 24       		.byte	0x24
+ 244 0112 FB000000 		.4byte	0xfb
+ 245 0116 05       		.uleb128 0x5
+ 246 0117 03       		.byte	0x3
+ 247 0118 00000000 		.4byte	wrBuffer
+ 248 011c 0D       		.uleb128 0xd
+ 249 011d 36000000 		.4byte	.LASF19
+ 250 0121 06       		.byte	0x6
+ 251 0122 25       		.byte	0x25
+ 252 0123 81000000 		.4byte	0x81
+ 253 0127 05       		.uleb128 0x5
+ 254 0128 03       		.byte	0x3
+ 255 0129 00000000 		.4byte	temp
+ 256 012d 00       		.byte	0
+ 257              		.section	.debug_abbrev,"",%progbits
+ 258              	.Ldebug_abbrev0:
+ 259 0000 01       		.uleb128 0x1
+ 260 0001 11       		.uleb128 0x11
+ 261 0002 01       		.byte	0x1
+ 262 0003 25       		.uleb128 0x25
+ 263 0004 0E       		.uleb128 0xe
+ 264 0005 13       		.uleb128 0x13
+ 265 0006 0B       		.uleb128 0xb
+ 266 0007 03       		.uleb128 0x3
+ 267 0008 0E       		.uleb128 0xe
+ 268 0009 1B       		.uleb128 0x1b
+ 269 000a 0E       		.uleb128 0xe
+ 270 000b 55       		.uleb128 0x55
+ 271 000c 17       		.uleb128 0x17
+ 272 000d 11       		.uleb128 0x11
+ 273 000e 01       		.uleb128 0x1
+ 274 000f 10       		.uleb128 0x10
+ 275 0010 17       		.uleb128 0x17
+ 276 0011 00       		.byte	0
+ 277 0012 00       		.byte	0
+ 278 0013 02       		.uleb128 0x2
+ 279 0014 24       		.uleb128 0x24
+ 280 0015 00       		.byte	0
+ 281 0016 0B       		.uleb128 0xb
+ 282 0017 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 7
+
+
+ 283 0018 3E       		.uleb128 0x3e
+ 284 0019 0B       		.uleb128 0xb
+ 285 001a 03       		.uleb128 0x3
+ 286 001b 0E       		.uleb128 0xe
+ 287 001c 00       		.byte	0
+ 288 001d 00       		.byte	0
+ 289 001e 03       		.uleb128 0x3
+ 290 001f 16       		.uleb128 0x16
+ 291 0020 00       		.byte	0
+ 292 0021 03       		.uleb128 0x3
+ 293 0022 0E       		.uleb128 0xe
+ 294 0023 3A       		.uleb128 0x3a
+ 295 0024 0B       		.uleb128 0xb
+ 296 0025 3B       		.uleb128 0x3b
+ 297 0026 0B       		.uleb128 0xb
+ 298 0027 49       		.uleb128 0x49
+ 299 0028 13       		.uleb128 0x13
+ 300 0029 00       		.byte	0
+ 301 002a 00       		.byte	0
+ 302 002b 04       		.uleb128 0x4
+ 303 002c 24       		.uleb128 0x24
+ 304 002d 00       		.byte	0
+ 305 002e 0B       		.uleb128 0xb
+ 306 002f 0B       		.uleb128 0xb
+ 307 0030 3E       		.uleb128 0x3e
+ 308 0031 0B       		.uleb128 0xb
+ 309 0032 03       		.uleb128 0x3
+ 310 0033 08       		.uleb128 0x8
+ 311 0034 00       		.byte	0
+ 312 0035 00       		.byte	0
+ 313 0036 05       		.uleb128 0x5
+ 314 0037 16       		.uleb128 0x16
+ 315 0038 00       		.byte	0
+ 316 0039 03       		.uleb128 0x3
+ 317 003a 0E       		.uleb128 0xe
+ 318 003b 3A       		.uleb128 0x3a
+ 319 003c 0B       		.uleb128 0xb
+ 320 003d 3B       		.uleb128 0x3b
+ 321 003e 05       		.uleb128 0x5
+ 322 003f 49       		.uleb128 0x49
+ 323 0040 13       		.uleb128 0x13
+ 324 0041 00       		.byte	0
+ 325 0042 00       		.byte	0
+ 326 0043 06       		.uleb128 0x6
+ 327 0044 2E       		.uleb128 0x2e
+ 328 0045 00       		.byte	0
+ 329 0046 3F       		.uleb128 0x3f
+ 330 0047 19       		.uleb128 0x19
+ 331 0048 03       		.uleb128 0x3
+ 332 0049 0E       		.uleb128 0xe
+ 333 004a 3A       		.uleb128 0x3a
+ 334 004b 0B       		.uleb128 0xb
+ 335 004c 3B       		.uleb128 0x3b
+ 336 004d 0B       		.uleb128 0xb
+ 337 004e 11       		.uleb128 0x11
+ 338 004f 01       		.uleb128 0x1
+ 339 0050 12       		.uleb128 0x12
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 8
+
+
+ 340 0051 06       		.uleb128 0x6
+ 341 0052 40       		.uleb128 0x40
+ 342 0053 18       		.uleb128 0x18
+ 343 0054 9642     		.uleb128 0x2116
+ 344 0056 19       		.uleb128 0x19
+ 345 0057 00       		.byte	0
+ 346 0058 00       		.byte	0
+ 347 0059 07       		.uleb128 0x7
+ 348 005a 2E       		.uleb128 0x2e
+ 349 005b 01       		.byte	0x1
+ 350 005c 3F       		.uleb128 0x3f
+ 351 005d 19       		.uleb128 0x19
+ 352 005e 03       		.uleb128 0x3
+ 353 005f 0E       		.uleb128 0xe
+ 354 0060 3A       		.uleb128 0x3a
+ 355 0061 0B       		.uleb128 0xb
+ 356 0062 3B       		.uleb128 0x3b
+ 357 0063 0B       		.uleb128 0xb
+ 358 0064 27       		.uleb128 0x27
+ 359 0065 19       		.uleb128 0x19
+ 360 0066 11       		.uleb128 0x11
+ 361 0067 01       		.uleb128 0x1
+ 362 0068 12       		.uleb128 0x12
+ 363 0069 06       		.uleb128 0x6
+ 364 006a 40       		.uleb128 0x40
+ 365 006b 18       		.uleb128 0x18
+ 366 006c 9642     		.uleb128 0x2116
+ 367 006e 19       		.uleb128 0x19
+ 368 006f 01       		.uleb128 0x1
+ 369 0070 13       		.uleb128 0x13
+ 370 0071 00       		.byte	0
+ 371 0072 00       		.byte	0
+ 372 0073 08       		.uleb128 0x8
+ 373 0074 05       		.uleb128 0x5
+ 374 0075 00       		.byte	0
+ 375 0076 03       		.uleb128 0x3
+ 376 0077 0E       		.uleb128 0xe
+ 377 0078 3A       		.uleb128 0x3a
+ 378 0079 0B       		.uleb128 0xb
+ 379 007a 3B       		.uleb128 0x3b
+ 380 007b 0B       		.uleb128 0xb
+ 381 007c 49       		.uleb128 0x49
+ 382 007d 13       		.uleb128 0x13
+ 383 007e 02       		.uleb128 0x2
+ 384 007f 18       		.uleb128 0x18
+ 385 0080 00       		.byte	0
+ 386 0081 00       		.byte	0
+ 387 0082 09       		.uleb128 0x9
+ 388 0083 34       		.uleb128 0x34
+ 389 0084 00       		.byte	0
+ 390 0085 03       		.uleb128 0x3
+ 391 0086 0E       		.uleb128 0xe
+ 392 0087 3A       		.uleb128 0x3a
+ 393 0088 0B       		.uleb128 0xb
+ 394 0089 3B       		.uleb128 0x3b
+ 395 008a 05       		.uleb128 0x5
+ 396 008b 49       		.uleb128 0x49
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 9
+
+
+ 397 008c 13       		.uleb128 0x13
+ 398 008d 3F       		.uleb128 0x3f
+ 399 008e 19       		.uleb128 0x19
+ 400 008f 3C       		.uleb128 0x3c
+ 401 0090 19       		.uleb128 0x19
+ 402 0091 00       		.byte	0
+ 403 0092 00       		.byte	0
+ 404 0093 0A       		.uleb128 0xa
+ 405 0094 35       		.uleb128 0x35
+ 406 0095 00       		.byte	0
+ 407 0096 49       		.uleb128 0x49
+ 408 0097 13       		.uleb128 0x13
+ 409 0098 00       		.byte	0
+ 410 0099 00       		.byte	0
+ 411 009a 0B       		.uleb128 0xb
+ 412 009b 01       		.uleb128 0x1
+ 413 009c 01       		.byte	0x1
+ 414 009d 49       		.uleb128 0x49
+ 415 009e 13       		.uleb128 0x13
+ 416 009f 01       		.uleb128 0x1
+ 417 00a0 13       		.uleb128 0x13
+ 418 00a1 00       		.byte	0
+ 419 00a2 00       		.byte	0
+ 420 00a3 0C       		.uleb128 0xc
+ 421 00a4 21       		.uleb128 0x21
+ 422 00a5 00       		.byte	0
+ 423 00a6 49       		.uleb128 0x49
+ 424 00a7 13       		.uleb128 0x13
+ 425 00a8 2F       		.uleb128 0x2f
+ 426 00a9 0B       		.uleb128 0xb
+ 427 00aa 00       		.byte	0
+ 428 00ab 00       		.byte	0
+ 429 00ac 0D       		.uleb128 0xd
+ 430 00ad 34       		.uleb128 0x34
+ 431 00ae 00       		.byte	0
+ 432 00af 03       		.uleb128 0x3
+ 433 00b0 0E       		.uleb128 0xe
+ 434 00b1 3A       		.uleb128 0x3a
+ 435 00b2 0B       		.uleb128 0xb
+ 436 00b3 3B       		.uleb128 0x3b
+ 437 00b4 0B       		.uleb128 0xb
+ 438 00b5 49       		.uleb128 0x49
+ 439 00b6 13       		.uleb128 0x13
+ 440 00b7 3F       		.uleb128 0x3f
+ 441 00b8 19       		.uleb128 0x19
+ 442 00b9 02       		.uleb128 0x2
+ 443 00ba 18       		.uleb128 0x18
+ 444 00bb 00       		.byte	0
+ 445 00bc 00       		.byte	0
+ 446 00bd 00       		.byte	0
+ 447              		.section	.debug_aranges,"",%progbits
+ 448 0000 24000000 		.4byte	0x24
+ 449 0004 0200     		.2byte	0x2
+ 450 0006 00000000 		.4byte	.Ldebug_info0
+ 451 000a 04       		.byte	0x4
+ 452 000b 00       		.byte	0
+ 453 000c 0000     		.2byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 10
+
+
+ 454 000e 0000     		.2byte	0
+ 455 0010 00000000 		.4byte	.LFB63
+ 456 0014 0A000000 		.4byte	.LFE63-.LFB63
+ 457 0018 00000000 		.4byte	.LFB64
+ 458 001c 38000000 		.4byte	.LFE64-.LFB64
+ 459 0020 00000000 		.4byte	0
+ 460 0024 00000000 		.4byte	0
+ 461              		.section	.debug_ranges,"",%progbits
+ 462              	.Ldebug_ranges0:
+ 463 0000 00000000 		.4byte	.LFB63
+ 464 0004 0A000000 		.4byte	.LFE63
+ 465 0008 00000000 		.4byte	.LFB64
+ 466 000c 38000000 		.4byte	.LFE64
+ 467 0010 00000000 		.4byte	0
+ 468 0014 00000000 		.4byte	0
+ 469              		.section	.debug_line,"",%progbits
+ 470              	.Ldebug_line0:
+ 471 0000 8A010000 		.section	.debug_str,"MS",%progbits,1
+ 471      02005F01 
+ 471      00000201 
+ 471      FB0E0D00 
+ 471      01010101 
+ 472              	.LASF6:
+ 473 0000 6C6F6E67 		.ascii	"long long int\000"
+ 473      206C6F6E 
+ 473      6720696E 
+ 473      7400
+ 474              	.LASF3:
+ 475 000e 73686F72 		.ascii	"short unsigned int\000"
+ 475      7420756E 
+ 475      7369676E 
+ 475      65642069 
+ 475      6E7400
+ 476              	.LASF8:
+ 477 0021 756E7369 		.ascii	"unsigned int\000"
+ 477      676E6564 
+ 477      20696E74 
+ 477      00
+ 478              	.LASF23:
+ 479 002e 53504969 		.ascii	"SPIinit\000"
+ 479      6E697400 
+ 480              	.LASF19:
+ 481 0036 74656D70 		.ascii	"temp\000"
+ 481      00
+ 482              	.LASF18:
+ 483 003b 77724275 		.ascii	"wrBuffer\000"
+ 483      66666572 
+ 483      00
+ 484              	.LASF11:
+ 485 0044 75696E74 		.ascii	"uint8\000"
+ 485      3800
+ 486              	.LASF5:
+ 487 004a 6C6F6E67 		.ascii	"long unsigned int\000"
+ 487      20756E73 
+ 487      69676E65 
+ 487      6420696E 
+ 487      7400
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 11
+
+
+ 488              	.LASF7:
+ 489 005c 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 489      206C6F6E 
+ 489      6720756E 
+ 489      7369676E 
+ 489      65642069 
+ 490              	.LASF25:
+ 491 0073 6E756D62 		.ascii	"number\000"
+ 491      657200
+ 492              	.LASF13:
+ 493 007a 666C6F61 		.ascii	"float\000"
+ 493      7400
+ 494              	.LASF1:
+ 495 0080 756E7369 		.ascii	"unsigned char\000"
+ 495      676E6564 
+ 495      20636861 
+ 495      7200
+ 496              	.LASF15:
+ 497 008e 63686172 		.ascii	"char\000"
+ 497      00
+ 498              	.LASF4:
+ 499 0093 6C6F6E67 		.ascii	"long int\000"
+ 499      20696E74 
+ 499      00
+ 500              	.LASF20:
+ 501 009c 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 501      4320342E 
+ 501      392E3320 
+ 501      32303135 
+ 501      30333033 
+ 502 00cf 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 502      20726576 
+ 502      6973696F 
+ 502      6E203232 
+ 502      31323230 
+ 503 0102 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 503      66756E63 
+ 503      74696F6E 
+ 503      2D736563 
+ 503      74696F6E 
+ 504              	.LASF14:
+ 505 012a 646F7562 		.ascii	"double\000"
+ 505      6C6500
+ 506              	.LASF17:
+ 507 0131 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 507      52784275 
+ 507      66666572 
+ 507      00
+ 508              	.LASF0:
+ 509 013e 7369676E 		.ascii	"signed char\000"
+ 509      65642063 
+ 509      68617200 
+ 510              	.LASF21:
+ 511 014a 2E5C7370 		.ascii	".\\spimaster.c\000"
+ 511      696D6173 
+ 511      7465722E 
+ 511      6300
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cclzjFP3.s 			page 12
+
+
+ 512              	.LASF24:
+ 513 0158 53504973 		.ascii	"SPIsendNumber\000"
+ 513      656E644E 
+ 513      756D6265 
+ 513      7200
+ 514              	.LASF9:
+ 515 0166 5F5F696E 		.ascii	"__int32_t\000"
+ 515      7433325F 
+ 515      7400
+ 516              	.LASF22:
+ 517 0170 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 517      73657273 
+ 517      5C4C756B 
+ 517      61732043 
+ 517      72657574 
+ 518 019e 65445350 		.ascii	"eDSPPSoC-I2C\\PSoC5_SPI_Master.cydsn\000"
+ 518      50536F43 
+ 518      2D493243 
+ 518      5C50536F 
+ 518      43355F53 
+ 519              	.LASF2:
+ 520 01c2 73686F72 		.ascii	"short int\000"
+ 520      7420696E 
+ 520      7400
+ 521              	.LASF12:
+ 522 01cc 75696E74 		.ascii	"uint16\000"
+ 522      313600
+ 523              	.LASF10:
+ 524 01d3 696E7433 		.ascii	"int32_t\000"
+ 524      325F7400 
+ 525              	.LASF16:
+ 526 01db 73697A65 		.ascii	"sizetype\000"
+ 526      74797065 
+ 526      00
+ 527              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
