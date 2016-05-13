@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: ss.h  
+* File Name: SS.h  
 * Version 2.20
 *
 * Description:
@@ -14,17 +14,17 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#if !defined(CY_PINS_ss_H) /* Pins ss_H */
-#define CY_PINS_ss_H
+#if !defined(CY_PINS_SS_H) /* Pins SS_H */
+#define CY_PINS_SS_H
 
 #include "cytypes.h"
 #include "cyfitter.h"
 #include "cypins.h"
-#include "ss_aliases.h"
+#include "SS_aliases.h"
 
 /* APIs are not generated for P15[7:6] */
 #if !(CY_PSOC5A &&\
-	 ss__PORT == 15 && ((ss__MASK & 0xC0) != 0))
+	 SS__PORT == 15 && ((SS__MASK & 0xC0) != 0))
 
 
 /***************************************
@@ -35,12 +35,12 @@
 * \addtogroup group_general
 * @{
 */
-void    ss_Write(uint8 value);
-void    ss_SetDriveMode(uint8 mode);
-uint8   ss_ReadDataReg(void);
-uint8   ss_Read(void);
-void    ss_SetInterruptMode(uint16 position, uint16 mode);
-uint8   ss_ClearInterrupt(void);
+void    SS_Write(uint8 value);
+void    SS_SetDriveMode(uint8 mode);
+uint8   SS_ReadDataReg(void);
+uint8   SS_Read(void);
+void    SS_SetInterruptMode(uint16 position, uint16 mode);
+uint8   SS_ClearInterrupt(void);
 /** @} general */
 
 /***************************************
@@ -51,44 +51,44 @@ uint8   ss_ClearInterrupt(void);
 * @{
 */
     /** \addtogroup driveMode Drive mode constants
-     * \brief Constants to be passed as "mode" parameter in the ss_SetDriveMode() function.
+     * \brief Constants to be passed as "mode" parameter in the SS_SetDriveMode() function.
      *  @{
      */
-        #define ss_DM_ALG_HIZ         PIN_DM_ALG_HIZ
-        #define ss_DM_DIG_HIZ         PIN_DM_DIG_HIZ
-        #define ss_DM_RES_UP          PIN_DM_RES_UP
-        #define ss_DM_RES_DWN         PIN_DM_RES_DWN
-        #define ss_DM_OD_LO           PIN_DM_OD_LO
-        #define ss_DM_OD_HI           PIN_DM_OD_HI
-        #define ss_DM_STRONG          PIN_DM_STRONG
-        #define ss_DM_RES_UPDWN       PIN_DM_RES_UPDWN
+        #define SS_DM_ALG_HIZ         PIN_DM_ALG_HIZ
+        #define SS_DM_DIG_HIZ         PIN_DM_DIG_HIZ
+        #define SS_DM_RES_UP          PIN_DM_RES_UP
+        #define SS_DM_RES_DWN         PIN_DM_RES_DWN
+        #define SS_DM_OD_LO           PIN_DM_OD_LO
+        #define SS_DM_OD_HI           PIN_DM_OD_HI
+        #define SS_DM_STRONG          PIN_DM_STRONG
+        #define SS_DM_RES_UPDWN       PIN_DM_RES_UPDWN
     /** @} driveMode */
 /** @} group_constants */
     
 /* Digital Port Constants */
-#define ss_MASK               ss__MASK
-#define ss_SHIFT              ss__SHIFT
-#define ss_WIDTH              1u
+#define SS_MASK               SS__MASK
+#define SS_SHIFT              SS__SHIFT
+#define SS_WIDTH              1u
 
 /* Interrupt constants */
-#if defined(ss__INTSTAT)
+#if defined(SS__INTSTAT)
 /**
 * \addtogroup group_constants
 * @{
 */
     /** \addtogroup intrMode Interrupt constants
-     * \brief Constants to be passed as "mode" parameter in ss_SetInterruptMode() function.
+     * \brief Constants to be passed as "mode" parameter in SS_SetInterruptMode() function.
      *  @{
      */
-        #define ss_INTR_NONE      (uint16)(0x0000u)
-        #define ss_INTR_RISING    (uint16)(0x0001u)
-        #define ss_INTR_FALLING   (uint16)(0x0002u)
-        #define ss_INTR_BOTH      (uint16)(0x0003u) 
+        #define SS_INTR_NONE      (uint16)(0x0000u)
+        #define SS_INTR_RISING    (uint16)(0x0001u)
+        #define SS_INTR_FALLING   (uint16)(0x0002u)
+        #define SS_INTR_BOTH      (uint16)(0x0003u) 
     /** @} intrMode */
 /** @} group_constants */
 
-    #define ss_INTR_MASK      (0x01u) 
-#endif /* (ss__INTSTAT) */
+    #define SS_INTR_MASK      (0x01u) 
+#endif /* (SS__INTSTAT) */
 
 
 /***************************************
@@ -97,69 +97,69 @@ uint8   ss_ClearInterrupt(void);
 
 /* Main Port Registers */
 /* Pin State */
-#define ss_PS                     (* (reg8 *) ss__PS)
+#define SS_PS                     (* (reg8 *) SS__PS)
 /* Data Register */
-#define ss_DR                     (* (reg8 *) ss__DR)
+#define SS_DR                     (* (reg8 *) SS__DR)
 /* Port Number */
-#define ss_PRT_NUM                (* (reg8 *) ss__PRT) 
+#define SS_PRT_NUM                (* (reg8 *) SS__PRT) 
 /* Connect to Analog Globals */                                                  
-#define ss_AG                     (* (reg8 *) ss__AG)                       
+#define SS_AG                     (* (reg8 *) SS__AG)                       
 /* Analog MUX bux enable */
-#define ss_AMUX                   (* (reg8 *) ss__AMUX) 
+#define SS_AMUX                   (* (reg8 *) SS__AMUX) 
 /* Bidirectional Enable */                                                        
-#define ss_BIE                    (* (reg8 *) ss__BIE)
+#define SS_BIE                    (* (reg8 *) SS__BIE)
 /* Bit-mask for Aliased Register Access */
-#define ss_BIT_MASK               (* (reg8 *) ss__BIT_MASK)
+#define SS_BIT_MASK               (* (reg8 *) SS__BIT_MASK)
 /* Bypass Enable */
-#define ss_BYP                    (* (reg8 *) ss__BYP)
+#define SS_BYP                    (* (reg8 *) SS__BYP)
 /* Port wide control signals */                                                   
-#define ss_CTL                    (* (reg8 *) ss__CTL)
+#define SS_CTL                    (* (reg8 *) SS__CTL)
 /* Drive Modes */
-#define ss_DM0                    (* (reg8 *) ss__DM0) 
-#define ss_DM1                    (* (reg8 *) ss__DM1)
-#define ss_DM2                    (* (reg8 *) ss__DM2) 
+#define SS_DM0                    (* (reg8 *) SS__DM0) 
+#define SS_DM1                    (* (reg8 *) SS__DM1)
+#define SS_DM2                    (* (reg8 *) SS__DM2) 
 /* Input Buffer Disable Override */
-#define ss_INP_DIS                (* (reg8 *) ss__INP_DIS)
+#define SS_INP_DIS                (* (reg8 *) SS__INP_DIS)
 /* LCD Common or Segment Drive */
-#define ss_LCD_COM_SEG            (* (reg8 *) ss__LCD_COM_SEG)
+#define SS_LCD_COM_SEG            (* (reg8 *) SS__LCD_COM_SEG)
 /* Enable Segment LCD */
-#define ss_LCD_EN                 (* (reg8 *) ss__LCD_EN)
+#define SS_LCD_EN                 (* (reg8 *) SS__LCD_EN)
 /* Slew Rate Control */
-#define ss_SLW                    (* (reg8 *) ss__SLW)
+#define SS_SLW                    (* (reg8 *) SS__SLW)
 
 /* DSI Port Registers */
 /* Global DSI Select Register */
-#define ss_PRTDSI__CAPS_SEL       (* (reg8 *) ss__PRTDSI__CAPS_SEL) 
+#define SS_PRTDSI__CAPS_SEL       (* (reg8 *) SS__PRTDSI__CAPS_SEL) 
 /* Double Sync Enable */
-#define ss_PRTDSI__DBL_SYNC_IN    (* (reg8 *) ss__PRTDSI__DBL_SYNC_IN) 
+#define SS_PRTDSI__DBL_SYNC_IN    (* (reg8 *) SS__PRTDSI__DBL_SYNC_IN) 
 /* Output Enable Select Drive Strength */
-#define ss_PRTDSI__OE_SEL0        (* (reg8 *) ss__PRTDSI__OE_SEL0) 
-#define ss_PRTDSI__OE_SEL1        (* (reg8 *) ss__PRTDSI__OE_SEL1) 
+#define SS_PRTDSI__OE_SEL0        (* (reg8 *) SS__PRTDSI__OE_SEL0) 
+#define SS_PRTDSI__OE_SEL1        (* (reg8 *) SS__PRTDSI__OE_SEL1) 
 /* Port Pin Output Select Registers */
-#define ss_PRTDSI__OUT_SEL0       (* (reg8 *) ss__PRTDSI__OUT_SEL0) 
-#define ss_PRTDSI__OUT_SEL1       (* (reg8 *) ss__PRTDSI__OUT_SEL1) 
+#define SS_PRTDSI__OUT_SEL0       (* (reg8 *) SS__PRTDSI__OUT_SEL0) 
+#define SS_PRTDSI__OUT_SEL1       (* (reg8 *) SS__PRTDSI__OUT_SEL1) 
 /* Sync Output Enable Registers */
-#define ss_PRTDSI__SYNC_OUT       (* (reg8 *) ss__PRTDSI__SYNC_OUT) 
+#define SS_PRTDSI__SYNC_OUT       (* (reg8 *) SS__PRTDSI__SYNC_OUT) 
 
 /* SIO registers */
-#if defined(ss__SIO_CFG)
-    #define ss_SIO_HYST_EN        (* (reg8 *) ss__SIO_HYST_EN)
-    #define ss_SIO_REG_HIFREQ     (* (reg8 *) ss__SIO_REG_HIFREQ)
-    #define ss_SIO_CFG            (* (reg8 *) ss__SIO_CFG)
-    #define ss_SIO_DIFF           (* (reg8 *) ss__SIO_DIFF)
-#endif /* (ss__SIO_CFG) */
+#if defined(SS__SIO_CFG)
+    #define SS_SIO_HYST_EN        (* (reg8 *) SS__SIO_HYST_EN)
+    #define SS_SIO_REG_HIFREQ     (* (reg8 *) SS__SIO_REG_HIFREQ)
+    #define SS_SIO_CFG            (* (reg8 *) SS__SIO_CFG)
+    #define SS_SIO_DIFF           (* (reg8 *) SS__SIO_DIFF)
+#endif /* (SS__SIO_CFG) */
 
 /* Interrupt Registers */
-#if defined(ss__INTSTAT)
-    #define ss_INTSTAT            (* (reg8 *) ss__INTSTAT)
-    #define ss_SNAP               (* (reg8 *) ss__SNAP)
+#if defined(SS__INTSTAT)
+    #define SS_INTSTAT            (* (reg8 *) SS__INTSTAT)
+    #define SS_SNAP               (* (reg8 *) SS__SNAP)
     
-	#define ss_0_INTTYPE_REG 		(* (reg8 *) ss__0__INTTYPE)
-#endif /* (ss__INTSTAT) */
+	#define SS_0_INTTYPE_REG 		(* (reg8 *) SS__0__INTTYPE)
+#endif /* (SS__INTSTAT) */
 
 #endif /* CY_PSOC5A... */
 
-#endif /*  CY_PINS_ss_H */
+#endif /*  CY_PINS_SS_H */
 
 
 /* [] END OF FILE */

@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: sclk.c  
+* File Name: SCLK.c  
 * Version 2.20
 *
 * Description:
@@ -15,15 +15,15 @@
 *******************************************************************************/
 
 #include "cytypes.h"
-#include "sclk.h"
+#include "SCLK.h"
 
 /* APIs are not generated for P15[7:6] on PSoC 5 */
 #if !(CY_PSOC5A &&\
-	 sclk__PORT == 15 && ((sclk__MASK & 0xC0) != 0))
+	 SCLK__PORT == 15 && ((SCLK__MASK & 0xC0) != 0))
 
 
 /*******************************************************************************
-* Function Name: sclk_Write
+* Function Name: SCLK_Write
 ****************************************************************************//**
 *
 * \brief Writes the value to the physical port (data output register), masking
@@ -52,17 +52,17 @@
 *  this function.
 *
 * \funcusage
-*  \snippet sclk_SUT.c usage_sclk_Write
+*  \snippet SCLK_SUT.c usage_SCLK_Write
 *******************************************************************************/
-void sclk_Write(uint8 value)
+void SCLK_Write(uint8 value)
 {
-    uint8 staticBits = (sclk_DR & (uint8)(~sclk_MASK));
-    sclk_DR = staticBits | ((uint8)(value << sclk_SHIFT) & sclk_MASK);
+    uint8 staticBits = (SCLK_DR & (uint8)(~SCLK_MASK));
+    SCLK_DR = staticBits | ((uint8)(value << SCLK_SHIFT) & SCLK_MASK);
 }
 
 
 /*******************************************************************************
-* Function Name: sclk_SetDriveMode
+* Function Name: SCLK_SetDriveMode
 ****************************************************************************//**
 *
 * \brief Sets the drive mode for each of the Pins component's pins.
@@ -85,16 +85,16 @@ void sclk_Write(uint8 value)
 *  APIs (primary method) or disable interrupts around this function.
 *
 * \funcusage
-*  \snippet sclk_SUT.c usage_sclk_SetDriveMode
+*  \snippet SCLK_SUT.c usage_SCLK_SetDriveMode
 *******************************************************************************/
-void sclk_SetDriveMode(uint8 mode)
+void SCLK_SetDriveMode(uint8 mode)
 {
-	CyPins_SetPinDriveMode(sclk_0, mode);
+	CyPins_SetPinDriveMode(SCLK_0, mode);
 }
 
 
 /*******************************************************************************
-* Function Name: sclk_Read
+* Function Name: SCLK_Read
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port (pin status register) and masks 
@@ -108,16 +108,16 @@ void sclk_SetDriveMode(uint8 mode)
 *  The current value for the pins in the component as a right justified number.
 *
 * \funcusage
-*  \snippet sclk_SUT.c usage_sclk_Read  
+*  \snippet SCLK_SUT.c usage_SCLK_Read  
 *******************************************************************************/
-uint8 sclk_Read(void)
+uint8 SCLK_Read(void)
 {
-    return (sclk_PS & sclk_MASK) >> sclk_SHIFT;
+    return (SCLK_PS & SCLK_MASK) >> SCLK_SHIFT;
 }
 
 
 /*******************************************************************************
-* Function Name: sclk_ReadDataReg
+* Function Name: SCLK_ReadDataReg
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port's data output register and masks 
@@ -126,8 +126,8 @@ uint8 sclk_Read(void)
 *
 * The data output register controls the signal applied to the physical pin in 
 * conjunction with the drive mode parameter. This is not the same as the 
-* preferred sclk_Read() API because the 
-* sclk_ReadDataReg() reads the data register instead of the status 
+* preferred SCLK_Read() API because the 
+* SCLK_ReadDataReg() reads the data register instead of the status 
 * register. For output pins this is a useful function to determine the value 
 * just written to the pin.
 *
@@ -136,19 +136,19 @@ uint8 sclk_Read(void)
 *  justified number for the component instance.
 *
 * \funcusage
-*  \snippet sclk_SUT.c usage_sclk_ReadDataReg 
+*  \snippet SCLK_SUT.c usage_SCLK_ReadDataReg 
 *******************************************************************************/
-uint8 sclk_ReadDataReg(void)
+uint8 SCLK_ReadDataReg(void)
 {
-    return (sclk_DR & sclk_MASK) >> sclk_SHIFT;
+    return (SCLK_DR & SCLK_MASK) >> SCLK_SHIFT;
 }
 
 
 /* If interrupt is connected for this Pins component */ 
-#if defined(sclk_INTSTAT) 
+#if defined(SCLK_INTSTAT) 
 
     /*******************************************************************************
-    * Function Name: sclk_SetInterruptMode
+    * Function Name: SCLK_SetInterruptMode
     ****************************************************************************//**
     *
     * \brief Configures the interrupt mode for each of the Pins component's
@@ -161,12 +161,12 @@ uint8 sclk_ReadDataReg(void)
     * \param position
     *  The pin position as listed in the Pins component. You may OR these to be 
     *  able to configure the interrupt mode of multiple pins within a Pins 
-    *  component. Or you may use sclk_INTR_ALL to configure the
+    *  component. Or you may use SCLK_INTR_ALL to configure the
     *  interrupt mode of all the pins in the Pins component.       
-    *  - sclk_0_INTR       (First pin in the list)
-    *  - sclk_1_INTR       (Second pin in the list)
+    *  - SCLK_0_INTR       (First pin in the list)
+    *  - SCLK_1_INTR       (Second pin in the list)
     *  - ...
-    *  - sclk_INTR_ALL     (All pins in Pins component)
+    *  - SCLK_INTR_ALL     (All pins in Pins component)
     *
     * \param mode
     *  Interrupt mode for the selected pins. Valid options are documented in
@@ -182,19 +182,19 @@ uint8 sclk_ReadDataReg(void)
     *  port.
     *
     * \funcusage
-    *  \snippet sclk_SUT.c usage_sclk_SetInterruptMode
+    *  \snippet SCLK_SUT.c usage_SCLK_SetInterruptMode
     *******************************************************************************/
-    void sclk_SetInterruptMode(uint16 position, uint16 mode)
+    void SCLK_SetInterruptMode(uint16 position, uint16 mode)
     {
-		if((position & sclk_0_INTR) != 0u) 
+		if((position & SCLK_0_INTR) != 0u) 
 		{ 
-			 sclk_0_INTTYPE_REG = (uint8)mode; 
+			 SCLK_0_INTTYPE_REG = (uint8)mode; 
 		}
     }
     
     
     /*******************************************************************************
-    * Function Name: sclk_ClearInterrupt
+    * Function Name: SCLK_ClearInterrupt
     ****************************************************************************//**
     *
     * \brief Clears any active interrupts attached with the component and returns 
@@ -211,11 +211,11 @@ uint8 sclk_ReadDataReg(void)
     *  those associated with the Pins component.
     *
     * \funcusage
-    *  \snippet sclk_SUT.c usage_sclk_ClearInterrupt
+    *  \snippet SCLK_SUT.c usage_SCLK_ClearInterrupt
     *******************************************************************************/
-    uint8 sclk_ClearInterrupt(void)
+    uint8 SCLK_ClearInterrupt(void)
     {
-        return (sclk_INTSTAT & sclk_MASK) >> sclk_SHIFT;
+        return (SCLK_INTSTAT & SCLK_MASK) >> SCLK_SHIFT;
     }
 
 #endif /* If Interrupts Are Enabled for this Pins component */ 

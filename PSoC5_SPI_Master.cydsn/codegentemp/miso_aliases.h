@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: miso.h  
+* File Name: MISO.h  
 * Version 2.20
 *
 * Description:
@@ -15,8 +15,8 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#if !defined(CY_PINS_miso_ALIASES_H) /* Pins miso_ALIASES_H */
-#define CY_PINS_miso_ALIASES_H
+#if !defined(CY_PINS_MISO_ALIASES_H) /* Pins MISO_ALIASES_H */
+#define CY_PINS_MISO_ALIASES_H
 
 #include "cytypes.h"
 #include "cyfitter.h"
@@ -25,12 +25,12 @@
 /***************************************
 *              Constants        
 ***************************************/
-#define miso_0			(miso__0__PC)
-#define miso_0_INTR	((uint16)((uint16)0x0001u << miso__0__SHIFT))
+#define MISO_0			(MISO__0__PC)
+#define MISO_0_INTR	((uint16)((uint16)0x0001u << MISO__0__SHIFT))
 
-#define miso_INTR_ALL	 ((uint16)(miso_0_INTR))
+#define MISO_INTR_ALL	 ((uint16)(MISO_0_INTR))
 
-#endif /* End Pins miso_ALIASES_H */
+#endif /* End Pins MISO_ALIASES_H */
 
 
 /* [] END OF FILE */

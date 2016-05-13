@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: ss.h  
+* File Name: SS.h  
 * Version 2.20
 *
 * Description:
@@ -15,8 +15,8 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#if !defined(CY_PINS_ss_ALIASES_H) /* Pins ss_ALIASES_H */
-#define CY_PINS_ss_ALIASES_H
+#if !defined(CY_PINS_SS_ALIASES_H) /* Pins SS_ALIASES_H */
+#define CY_PINS_SS_ALIASES_H
 
 #include "cytypes.h"
 #include "cyfitter.h"
@@ -25,12 +25,12 @@
 /***************************************
 *              Constants        
 ***************************************/
-#define ss_0			(ss__0__PC)
-#define ss_0_INTR	((uint16)((uint16)0x0001u << ss__0__SHIFT))
+#define SS_0			(SS__0__PC)
+#define SS_0_INTR	((uint16)((uint16)0x0001u << SS__0__SHIFT))
 
-#define ss_INTR_ALL	 ((uint16)(ss_0_INTR))
+#define SS_INTR_ALL	 ((uint16)(SS_0_INTR))
 
-#endif /* End Pins ss_ALIASES_H */
+#endif /* End Pins SS_ALIASES_H */
 
 
 /* [] END OF FILE */

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccsKhj6Q.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
   29:.\Generated_Source\PSoC5/SPIM_INT.c **** * Function Name: SPIM_TX_ISR
   30:.\Generated_Source\PSoC5/SPIM_INT.c **** ********************************************************************************
   31:.\Generated_Source\PSoC5/SPIM_INT.c **** *
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 2
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccsKhj6Q.s 			page 2
 
 
   32:.\Generated_Source\PSoC5/SPIM_INT.c **** * Summary:
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
   76:.\Generated_Source\PSoC5/SPIM_INT.c ****                 if(0u == SPIM_txBufferFull)
   77:.\Generated_Source\PSoC5/SPIM_INT.c ****                 {
   78:.\Generated_Source\PSoC5/SPIM_INT.c ****                    SPIM_txBufferRead++;
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccsKhj6Q.s 			page 3
 
 
   79:.\Generated_Source\PSoC5/SPIM_INT.c **** 
@@ -133,7 +133,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
   88:.\Generated_Source\PSoC5/SPIM_INT.c ****                 }
   89:.\Generated_Source\PSoC5/SPIM_INT.c **** 
   90:.\Generated_Source\PSoC5/SPIM_INT.c ****                 /* Put data element into the TX FIFO */
-  91:.\Generated_Source\PSoC5/SPIM_INT.c ****                 CY_SET_REG8(SPIM_TXDATA_PTR, 
+  91:.\Generated_Source\PSoC5/SPIM_INT.c ****                 CY_SET_REG16(SPIM_TXDATA_PTR, 
   92:.\Generated_Source\PSoC5/SPIM_INT.c ****                                              SPIM_txBuffer[SPIM_txBufferRead]);
   93:.\Generated_Source\PSoC5/SPIM_INT.c ****             }
   94:.\Generated_Source\PSoC5/SPIM_INT.c ****             else
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
   53              		.type	SPIM_RX_ISR, %function
   54              	SPIM_RX_ISR:
   55              	.LFB1:
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 4
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccsKhj6Q.s 			page 4
 
 
  117:.\Generated_Source\PSoC5/SPIM_INT.c **** 
@@ -221,7 +221,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
   65              		.cfi_def_cfa_register 7
  145:.\Generated_Source\PSoC5/SPIM_INT.c ****     #if(SPIM_RX_SOFTWARE_BUF_ENABLED)
  146:.\Generated_Source\PSoC5/SPIM_INT.c ****         uint8 tmpStatus;
- 147:.\Generated_Source\PSoC5/SPIM_INT.c ****         uint8 rxData;
+ 147:.\Generated_Source\PSoC5/SPIM_INT.c ****         uint16 rxData;
  148:.\Generated_Source\PSoC5/SPIM_INT.c ****     #endif /* (SPIM_RX_SOFTWARE_BUF_ENABLED) */
  149:.\Generated_Source\PSoC5/SPIM_INT.c **** 
  150:.\Generated_Source\PSoC5/SPIM_INT.c ****     #ifdef SPIM_RX_ISR_ENTRY_CALLBACK
@@ -238,13 +238,13 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
  161:.\Generated_Source\PSoC5/SPIM_INT.c ****         tmpStatus = SPIM_GET_STATUS_RX(SPIM_swStatusRx);
  162:.\Generated_Source\PSoC5/SPIM_INT.c ****         SPIM_swStatusRx = tmpStatus;
  163:.\Generated_Source\PSoC5/SPIM_INT.c **** 
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 5
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccsKhj6Q.s 			page 5
 
 
  164:.\Generated_Source\PSoC5/SPIM_INT.c ****         /* Check if RX data FIFO has some data to be moved into the RX Buffer */
  165:.\Generated_Source\PSoC5/SPIM_INT.c ****         while(0u != (SPIM_swStatusRx & SPIM_STS_RX_FIFO_NOT_EMPTY))
  166:.\Generated_Source\PSoC5/SPIM_INT.c ****         {
- 167:.\Generated_Source\PSoC5/SPIM_INT.c ****             rxData = CY_GET_REG8(SPIM_RXDATA_PTR);
+ 167:.\Generated_Source\PSoC5/SPIM_INT.c ****             rxData = CY_GET_REG16(SPIM_RXDATA_PTR);
  168:.\Generated_Source\PSoC5/SPIM_INT.c **** 
  169:.\Generated_Source\PSoC5/SPIM_INT.c ****             /* Set next pointer. */
  170:.\Generated_Source\PSoC5/SPIM_INT.c ****             SPIM_rxBufferWrite++;
@@ -298,40 +298,40 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
   79              		.section	.debug_info,"",%progbits
   80              	.Ldebug_info0:
   81 0000 A6000000 		.4byte	0xa6
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 6
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccsKhj6Q.s 			page 6
 
 
   82 0004 0400     		.2byte	0x4
   83 0006 00000000 		.4byte	.Ldebug_abbrev0
   84 000a 04       		.byte	0x4
   85 000b 01       		.uleb128 0x1
-  86 000c 7E000000 		.4byte	.LASF15
+  86 000c 18010000 		.4byte	.LASF15
   87 0010 01       		.byte	0x1
-  88 0011 84010000 		.4byte	.LASF16
-  89 0015 32010000 		.4byte	.LASF17
+  88 0011 F4000000 		.4byte	.LASF16
+  89 0015 78000000 		.4byte	.LASF17
   90 0019 00000000 		.4byte	.Ldebug_ranges0+0
   91 001d 00000000 		.4byte	0
   92 0021 00000000 		.4byte	.Ldebug_line0
   93 0025 02       		.uleb128 0x2
   94 0026 01       		.byte	0x1
   95 0027 06       		.byte	0x6
-  96 0028 26010000 		.4byte	.LASF0
+  96 0028 E2000000 		.4byte	.LASF0
   97 002c 02       		.uleb128 0x2
   98 002d 01       		.byte	0x1
   99 002e 08       		.byte	0x8
- 100 002f 62000000 		.4byte	.LASF1
+ 100 002f 5C000000 		.4byte	.LASF1
  101 0033 02       		.uleb128 0x2
  102 0034 02       		.byte	0x2
  103 0035 05       		.byte	0x5
- 104 0036 A8010000 		.4byte	.LASF2
+ 104 0036 A6010000 		.4byte	.LASF2
  105 003a 02       		.uleb128 0x2
  106 003b 02       		.byte	0x2
  107 003c 07       		.byte	0x7
- 108 003d 13010000 		.4byte	.LASF3
+ 108 003d CF000000 		.4byte	.LASF3
  109 0041 02       		.uleb128 0x2
  110 0042 04       		.byte	0x4
  111 0043 05       		.byte	0x5
- 112 0044 75000000 		.4byte	.LASF4
+ 112 0044 6F000000 		.4byte	.LASF4
  113 0048 02       		.uleb128 0x2
  114 0049 04       		.byte	0x4
  115 004a 07       		.byte	0x7
@@ -355,22 +355,22 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
  133 006b 02       		.uleb128 0x2
  134 006c 04       		.byte	0x4
  135 006d 04       		.byte	0x4
- 136 006e 5C000000 		.4byte	.LASF9
+ 136 006e EE000000 		.4byte	.LASF9
  137 0072 02       		.uleb128 0x2
  138 0073 08       		.byte	0x8
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 7
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccsKhj6Q.s 			page 7
 
 
  139 0074 04       		.byte	0x4
- 140 0075 0C010000 		.4byte	.LASF10
+ 140 0075 C8000000 		.4byte	.LASF10
  141 0079 02       		.uleb128 0x2
  142 007a 01       		.byte	0x1
  143 007b 08       		.byte	0x8
- 144 007c 70000000 		.4byte	.LASF11
+ 144 007c 6A000000 		.4byte	.LASF11
  145 0080 02       		.uleb128 0x2
  146 0081 04       		.byte	0x4
  147 0082 07       		.byte	0x7
- 148 0083 B2010000 		.4byte	.LASF12
+ 148 0083 B0010000 		.4byte	.LASF12
  149 0087 04       		.uleb128 0x4
  150 0088 1B000000 		.4byte	.LASF13
  151 008c 01       		.byte	0x1
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
  193 0019 0B       		.uleb128 0xb
  194 001a 03       		.uleb128 0x3
  195 001b 0E       		.uleb128 0xe
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccsKhj6Q.s 			page 8
 
 
  196 001c 00       		.byte	0
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
  250 0004 0C000000 		.4byte	.LFE0
  251 0008 00000000 		.4byte	.LFB1
  252 000c 0C000000 		.4byte	.LFE1
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 9
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccsKhj6Q.s 			page 9
 
 
  253 0010 00000000 		.4byte	0
@@ -520,76 +520,76 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 1
  269      6720756E 
  269      7369676E 
  269      65642069 
- 270              	.LASF9:
- 271 005c 666C6F61 		.ascii	"float\000"
- 271      7400
- 272              	.LASF1:
- 273 0062 756E7369 		.ascii	"unsigned char\000"
- 273      676E6564 
- 273      20636861 
- 273      7200
- 274              	.LASF11:
- 275 0070 63686172 		.ascii	"char\000"
+ 270              	.LASF1:
+ 271 005c 756E7369 		.ascii	"unsigned char\000"
+ 271      676E6564 
+ 271      20636861 
+ 271      7200
+ 272              	.LASF11:
+ 273 006a 63686172 		.ascii	"char\000"
+ 273      00
+ 274              	.LASF4:
+ 275 006f 6C6F6E67 		.ascii	"long int\000"
+ 275      20696E74 
  275      00
- 276              	.LASF4:
- 277 0075 6C6F6E67 		.ascii	"long int\000"
- 277      20696E74 
- 277      00
- 278              	.LASF15:
- 279 007e 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 279      4320342E 
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cckzGo5B.s 			page 10
+ 276              	.LASF17:
+ 277 0078 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 277      73657273 
+ 277      5C4C756B 
+ 277      61732043 
+ 277      72657574 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccsKhj6Q.s 			page 10
 
 
- 279      392E3320 
- 279      32303135 
- 279      30333033 
- 280 00b1 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
- 280      20726576 
- 280      6973696F 
- 280      6E203232 
- 280      31323230 
- 281 00e4 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
- 281      66756E63 
- 281      74696F6E 
- 281      2D736563 
- 281      74696F6E 
- 282              	.LASF10:
- 283 010c 646F7562 		.ascii	"double\000"
- 283      6C6500
- 284              	.LASF3:
- 285 0113 73686F72 		.ascii	"short unsigned int\000"
- 285      7420756E 
- 285      7369676E 
- 285      65642069 
- 285      6E7400
- 286              	.LASF0:
- 287 0126 7369676E 		.ascii	"signed char\000"
- 287      65642063 
- 287      68617200 
- 288              	.LASF17:
- 289 0132 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
- 289      73657273 
- 289      5C4C756B 
- 289      61732043 
- 289      72657574 
- 290 0160 65445350 		.ascii	"eDSPPSoC-I2C\\PSoC5_SPI_Master.cydsn\000"
- 290      50536F43 
- 290      2D493243 
- 290      5C50536F 
- 290      43355F53 
- 291              	.LASF16:
- 292 0184 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\SPIM_INT.c\000"
- 292      6E657261 
- 292      7465645F 
- 292      536F7572 
- 292      63655C50 
+ 278 00a6 65445350 		.ascii	"eDSPPSoC-I2C\\SAR_SPIM_USB01.cydsn\000"
+ 278      50536F43 
+ 278      2D493243 
+ 278      5C534152 
+ 278      5F535049 
+ 279              	.LASF10:
+ 280 00c8 646F7562 		.ascii	"double\000"
+ 280      6C6500
+ 281              	.LASF3:
+ 282 00cf 73686F72 		.ascii	"short unsigned int\000"
+ 282      7420756E 
+ 282      7369676E 
+ 282      65642069 
+ 282      6E7400
+ 283              	.LASF0:
+ 284 00e2 7369676E 		.ascii	"signed char\000"
+ 284      65642063 
+ 284      68617200 
+ 285              	.LASF9:
+ 286 00ee 666C6F61 		.ascii	"float\000"
+ 286      7400
+ 287              	.LASF16:
+ 288 00f4 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\SPIM_INT.c\000"
+ 288      6E657261 
+ 288      7465645F 
+ 288      536F7572 
+ 288      63655C50 
+ 289              	.LASF15:
+ 290 0118 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 290      4320342E 
+ 290      392E3320 
+ 290      32303135 
+ 290      30333033 
+ 291 014b 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 291      20726576 
+ 291      6973696F 
+ 291      6E203232 
+ 291      31323230 
+ 292 017e 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 292      66756E63 
+ 292      74696F6E 
+ 292      2D736563 
+ 292      74696F6E 
  293              	.LASF2:
- 294 01a8 73686F72 		.ascii	"short int\000"
+ 294 01a6 73686F72 		.ascii	"short int\000"
  294      7420696E 
  294      7400
  295              	.LASF12:
- 296 01b2 73697A65 		.ascii	"sizetype\000"
+ 296 01b0 73697A65 		.ascii	"sizetype\000"
  296      74797065 
  296      00
  297              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

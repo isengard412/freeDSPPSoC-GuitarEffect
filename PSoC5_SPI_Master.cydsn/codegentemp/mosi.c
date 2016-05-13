@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: mosi.c  
+* File Name: MOSI.c  
 * Version 2.20
 *
 * Description:
@@ -15,15 +15,15 @@
 *******************************************************************************/
 
 #include "cytypes.h"
-#include "mosi.h"
+#include "MOSI.h"
 
 /* APIs are not generated for P15[7:6] on PSoC 5 */
 #if !(CY_PSOC5A &&\
-	 mosi__PORT == 15 && ((mosi__MASK & 0xC0) != 0))
+	 MOSI__PORT == 15 && ((MOSI__MASK & 0xC0) != 0))
 
 
 /*******************************************************************************
-* Function Name: mosi_Write
+* Function Name: MOSI_Write
 ****************************************************************************//**
 *
 * \brief Writes the value to the physical port (data output register), masking
@@ -52,17 +52,17 @@
 *  this function.
 *
 * \funcusage
-*  \snippet mosi_SUT.c usage_mosi_Write
+*  \snippet MOSI_SUT.c usage_MOSI_Write
 *******************************************************************************/
-void mosi_Write(uint8 value)
+void MOSI_Write(uint8 value)
 {
-    uint8 staticBits = (mosi_DR & (uint8)(~mosi_MASK));
-    mosi_DR = staticBits | ((uint8)(value << mosi_SHIFT) & mosi_MASK);
+    uint8 staticBits = (MOSI_DR & (uint8)(~MOSI_MASK));
+    MOSI_DR = staticBits | ((uint8)(value << MOSI_SHIFT) & MOSI_MASK);
 }
 
 
 /*******************************************************************************
-* Function Name: mosi_SetDriveMode
+* Function Name: MOSI_SetDriveMode
 ****************************************************************************//**
 *
 * \brief Sets the drive mode for each of the Pins component's pins.
@@ -85,16 +85,16 @@ void mosi_Write(uint8 value)
 *  APIs (primary method) or disable interrupts around this function.
 *
 * \funcusage
-*  \snippet mosi_SUT.c usage_mosi_SetDriveMode
+*  \snippet MOSI_SUT.c usage_MOSI_SetDriveMode
 *******************************************************************************/
-void mosi_SetDriveMode(uint8 mode)
+void MOSI_SetDriveMode(uint8 mode)
 {
-	CyPins_SetPinDriveMode(mosi_0, mode);
+	CyPins_SetPinDriveMode(MOSI_0, mode);
 }
 
 
 /*******************************************************************************
-* Function Name: mosi_Read
+* Function Name: MOSI_Read
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port (pin status register) and masks 
@@ -108,16 +108,16 @@ void mosi_SetDriveMode(uint8 mode)
 *  The current value for the pins in the component as a right justified number.
 *
 * \funcusage
-*  \snippet mosi_SUT.c usage_mosi_Read  
+*  \snippet MOSI_SUT.c usage_MOSI_Read  
 *******************************************************************************/
-uint8 mosi_Read(void)
+uint8 MOSI_Read(void)
 {
-    return (mosi_PS & mosi_MASK) >> mosi_SHIFT;
+    return (MOSI_PS & MOSI_MASK) >> MOSI_SHIFT;
 }
 
 
 /*******************************************************************************
-* Function Name: mosi_ReadDataReg
+* Function Name: MOSI_ReadDataReg
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port's data output register and masks 
@@ -126,8 +126,8 @@ uint8 mosi_Read(void)
 *
 * The data output register controls the signal applied to the physical pin in 
 * conjunction with the drive mode parameter. This is not the same as the 
-* preferred mosi_Read() API because the 
-* mosi_ReadDataReg() reads the data register instead of the status 
+* preferred MOSI_Read() API because the 
+* MOSI_ReadDataReg() reads the data register instead of the status 
 * register. For output pins this is a useful function to determine the value 
 * just written to the pin.
 *
@@ -136,19 +136,19 @@ uint8 mosi_Read(void)
 *  justified number for the component instance.
 *
 * \funcusage
-*  \snippet mosi_SUT.c usage_mosi_ReadDataReg 
+*  \snippet MOSI_SUT.c usage_MOSI_ReadDataReg 
 *******************************************************************************/
-uint8 mosi_ReadDataReg(void)
+uint8 MOSI_ReadDataReg(void)
 {
-    return (mosi_DR & mosi_MASK) >> mosi_SHIFT;
+    return (MOSI_DR & MOSI_MASK) >> MOSI_SHIFT;
 }
 
 
 /* If interrupt is connected for this Pins component */ 
-#if defined(mosi_INTSTAT) 
+#if defined(MOSI_INTSTAT) 
 
     /*******************************************************************************
-    * Function Name: mosi_SetInterruptMode
+    * Function Name: MOSI_SetInterruptMode
     ****************************************************************************//**
     *
     * \brief Configures the interrupt mode for each of the Pins component's
@@ -161,12 +161,12 @@ uint8 mosi_ReadDataReg(void)
     * \param position
     *  The pin position as listed in the Pins component. You may OR these to be 
     *  able to configure the interrupt mode of multiple pins within a Pins 
-    *  component. Or you may use mosi_INTR_ALL to configure the
+    *  component. Or you may use MOSI_INTR_ALL to configure the
     *  interrupt mode of all the pins in the Pins component.       
-    *  - mosi_0_INTR       (First pin in the list)
-    *  - mosi_1_INTR       (Second pin in the list)
+    *  - MOSI_0_INTR       (First pin in the list)
+    *  - MOSI_1_INTR       (Second pin in the list)
     *  - ...
-    *  - mosi_INTR_ALL     (All pins in Pins component)
+    *  - MOSI_INTR_ALL     (All pins in Pins component)
     *
     * \param mode
     *  Interrupt mode for the selected pins. Valid options are documented in
@@ -182,19 +182,19 @@ uint8 mosi_ReadDataReg(void)
     *  port.
     *
     * \funcusage
-    *  \snippet mosi_SUT.c usage_mosi_SetInterruptMode
+    *  \snippet MOSI_SUT.c usage_MOSI_SetInterruptMode
     *******************************************************************************/
-    void mosi_SetInterruptMode(uint16 position, uint16 mode)
+    void MOSI_SetInterruptMode(uint16 position, uint16 mode)
     {
-		if((position & mosi_0_INTR) != 0u) 
+		if((position & MOSI_0_INTR) != 0u) 
 		{ 
-			 mosi_0_INTTYPE_REG = (uint8)mode; 
+			 MOSI_0_INTTYPE_REG = (uint8)mode; 
 		}
     }
     
     
     /*******************************************************************************
-    * Function Name: mosi_ClearInterrupt
+    * Function Name: MOSI_ClearInterrupt
     ****************************************************************************//**
     *
     * \brief Clears any active interrupts attached with the component and returns 
@@ -211,11 +211,11 @@ uint8 mosi_ReadDataReg(void)
     *  those associated with the Pins component.
     *
     * \funcusage
-    *  \snippet mosi_SUT.c usage_mosi_ClearInterrupt
+    *  \snippet MOSI_SUT.c usage_MOSI_ClearInterrupt
     *******************************************************************************/
-    uint8 mosi_ClearInterrupt(void)
+    uint8 MOSI_ClearInterrupt(void)
     {
-        return (mosi_INTSTAT & mosi_MASK) >> mosi_SHIFT;
+        return (MOSI_INTSTAT & MOSI_MASK) >> MOSI_SHIFT;
     }
 
 #endif /* If Interrupts Are Enabled for this Pins component */ 

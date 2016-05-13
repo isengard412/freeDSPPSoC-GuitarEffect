@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: mosi.h  
+* File Name: MOSI.h  
 * Version 2.20
 *
 * Description:
@@ -15,8 +15,8 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#if !defined(CY_PINS_mosi_ALIASES_H) /* Pins mosi_ALIASES_H */
-#define CY_PINS_mosi_ALIASES_H
+#if !defined(CY_PINS_MOSI_ALIASES_H) /* Pins MOSI_ALIASES_H */
+#define CY_PINS_MOSI_ALIASES_H
 
 #include "cytypes.h"
 #include "cyfitter.h"
@@ -25,12 +25,12 @@
 /***************************************
 *              Constants        
 ***************************************/
-#define mosi_0			(mosi__0__PC)
-#define mosi_0_INTR	((uint16)((uint16)0x0001u << mosi__0__SHIFT))
+#define MOSI_0			(MOSI__0__PC)
+#define MOSI_0_INTR	((uint16)((uint16)0x0001u << MOSI__0__SHIFT))
 
-#define mosi_INTR_ALL	 ((uint16)(mosi_0_INTR))
+#define MOSI_INTR_ALL	 ((uint16)(MOSI_0_INTR))
 
-#endif /* End Pins mosi_ALIASES_H */
+#endif /* End Pins MOSI_ALIASES_H */
 
 
 /* [] END OF FILE */

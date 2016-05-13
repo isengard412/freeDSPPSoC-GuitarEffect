@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: sclk.h  
+* File Name: SCLK.h  
 * Version 2.20
 *
 * Description:
@@ -15,8 +15,8 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#if !defined(CY_PINS_sclk_ALIASES_H) /* Pins sclk_ALIASES_H */
-#define CY_PINS_sclk_ALIASES_H
+#if !defined(CY_PINS_SCLK_ALIASES_H) /* Pins SCLK_ALIASES_H */
+#define CY_PINS_SCLK_ALIASES_H
 
 #include "cytypes.h"
 #include "cyfitter.h"
@@ -25,12 +25,12 @@
 /***************************************
 *              Constants        
 ***************************************/
-#define sclk_0			(sclk__0__PC)
-#define sclk_0_INTR	((uint16)((uint16)0x0001u << sclk__0__SHIFT))
+#define SCLK_0			(SCLK__0__PC)
+#define SCLK_0_INTR	((uint16)((uint16)0x0001u << SCLK__0__SHIFT))
 
-#define sclk_INTR_ALL	 ((uint16)(sclk_0_INTR))
+#define SCLK_INTR_ALL	 ((uint16)(SCLK_0_INTR))
 
-#endif /* End Pins sclk_ALIASES_H */
+#endif /* End Pins SCLK_ALIASES_H */
 
 
 /* [] END OF FILE */

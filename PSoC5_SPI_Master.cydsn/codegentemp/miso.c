@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: miso.c  
+* File Name: MISO.c  
 * Version 2.20
 *
 * Description:
@@ -15,15 +15,15 @@
 *******************************************************************************/
 
 #include "cytypes.h"
-#include "miso.h"
+#include "MISO.h"
 
 /* APIs are not generated for P15[7:6] on PSoC 5 */
 #if !(CY_PSOC5A &&\
-	 miso__PORT == 15 && ((miso__MASK & 0xC0) != 0))
+	 MISO__PORT == 15 && ((MISO__MASK & 0xC0) != 0))
 
 
 /*******************************************************************************
-* Function Name: miso_Write
+* Function Name: MISO_Write
 ****************************************************************************//**
 *
 * \brief Writes the value to the physical port (data output register), masking
@@ -52,17 +52,17 @@
 *  this function.
 *
 * \funcusage
-*  \snippet miso_SUT.c usage_miso_Write
+*  \snippet MISO_SUT.c usage_MISO_Write
 *******************************************************************************/
-void miso_Write(uint8 value)
+void MISO_Write(uint8 value)
 {
-    uint8 staticBits = (miso_DR & (uint8)(~miso_MASK));
-    miso_DR = staticBits | ((uint8)(value << miso_SHIFT) & miso_MASK);
+    uint8 staticBits = (MISO_DR & (uint8)(~MISO_MASK));
+    MISO_DR = staticBits | ((uint8)(value << MISO_SHIFT) & MISO_MASK);
 }
 
 
 /*******************************************************************************
-* Function Name: miso_SetDriveMode
+* Function Name: MISO_SetDriveMode
 ****************************************************************************//**
 *
 * \brief Sets the drive mode for each of the Pins component's pins.
@@ -85,16 +85,16 @@ void miso_Write(uint8 value)
 *  APIs (primary method) or disable interrupts around this function.
 *
 * \funcusage
-*  \snippet miso_SUT.c usage_miso_SetDriveMode
+*  \snippet MISO_SUT.c usage_MISO_SetDriveMode
 *******************************************************************************/
-void miso_SetDriveMode(uint8 mode)
+void MISO_SetDriveMode(uint8 mode)
 {
-	CyPins_SetPinDriveMode(miso_0, mode);
+	CyPins_SetPinDriveMode(MISO_0, mode);
 }
 
 
 /*******************************************************************************
-* Function Name: miso_Read
+* Function Name: MISO_Read
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port (pin status register) and masks 
@@ -108,16 +108,16 @@ void miso_SetDriveMode(uint8 mode)
 *  The current value for the pins in the component as a right justified number.
 *
 * \funcusage
-*  \snippet miso_SUT.c usage_miso_Read  
+*  \snippet MISO_SUT.c usage_MISO_Read  
 *******************************************************************************/
-uint8 miso_Read(void)
+uint8 MISO_Read(void)
 {
-    return (miso_PS & miso_MASK) >> miso_SHIFT;
+    return (MISO_PS & MISO_MASK) >> MISO_SHIFT;
 }
 
 
 /*******************************************************************************
-* Function Name: miso_ReadDataReg
+* Function Name: MISO_ReadDataReg
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port's data output register and masks 
@@ -126,8 +126,8 @@ uint8 miso_Read(void)
 *
 * The data output register controls the signal applied to the physical pin in 
 * conjunction with the drive mode parameter. This is not the same as the 
-* preferred miso_Read() API because the 
-* miso_ReadDataReg() reads the data register instead of the status 
+* preferred MISO_Read() API because the 
+* MISO_ReadDataReg() reads the data register instead of the status 
 * register. For output pins this is a useful function to determine the value 
 * just written to the pin.
 *
@@ -136,19 +136,19 @@ uint8 miso_Read(void)
 *  justified number for the component instance.
 *
 * \funcusage
-*  \snippet miso_SUT.c usage_miso_ReadDataReg 
+*  \snippet MISO_SUT.c usage_MISO_ReadDataReg 
 *******************************************************************************/
-uint8 miso_ReadDataReg(void)
+uint8 MISO_ReadDataReg(void)
 {
-    return (miso_DR & miso_MASK) >> miso_SHIFT;
+    return (MISO_DR & MISO_MASK) >> MISO_SHIFT;
 }
 
 
 /* If interrupt is connected for this Pins component */ 
-#if defined(miso_INTSTAT) 
+#if defined(MISO_INTSTAT) 
 
     /*******************************************************************************
-    * Function Name: miso_SetInterruptMode
+    * Function Name: MISO_SetInterruptMode
     ****************************************************************************//**
     *
     * \brief Configures the interrupt mode for each of the Pins component's
@@ -161,12 +161,12 @@ uint8 miso_ReadDataReg(void)
     * \param position
     *  The pin position as listed in the Pins component. You may OR these to be 
     *  able to configure the interrupt mode of multiple pins within a Pins 
-    *  component. Or you may use miso_INTR_ALL to configure the
+    *  component. Or you may use MISO_INTR_ALL to configure the
     *  interrupt mode of all the pins in the Pins component.       
-    *  - miso_0_INTR       (First pin in the list)
-    *  - miso_1_INTR       (Second pin in the list)
+    *  - MISO_0_INTR       (First pin in the list)
+    *  - MISO_1_INTR       (Second pin in the list)
     *  - ...
-    *  - miso_INTR_ALL     (All pins in Pins component)
+    *  - MISO_INTR_ALL     (All pins in Pins component)
     *
     * \param mode
     *  Interrupt mode for the selected pins. Valid options are documented in
@@ -182,19 +182,19 @@ uint8 miso_ReadDataReg(void)
     *  port.
     *
     * \funcusage
-    *  \snippet miso_SUT.c usage_miso_SetInterruptMode
+    *  \snippet MISO_SUT.c usage_MISO_SetInterruptMode
     *******************************************************************************/
-    void miso_SetInterruptMode(uint16 position, uint16 mode)
+    void MISO_SetInterruptMode(uint16 position, uint16 mode)
     {
-		if((position & miso_0_INTR) != 0u) 
+		if((position & MISO_0_INTR) != 0u) 
 		{ 
-			 miso_0_INTTYPE_REG = (uint8)mode; 
+			 MISO_0_INTTYPE_REG = (uint8)mode; 
 		}
     }
     
     
     /*******************************************************************************
-    * Function Name: miso_ClearInterrupt
+    * Function Name: MISO_ClearInterrupt
     ****************************************************************************//**
     *
     * \brief Clears any active interrupts attached with the component and returns 
@@ -211,11 +211,11 @@ uint8 miso_ReadDataReg(void)
     *  those associated with the Pins component.
     *
     * \funcusage
-    *  \snippet miso_SUT.c usage_miso_ClearInterrupt
+    *  \snippet MISO_SUT.c usage_MISO_ClearInterrupt
     *******************************************************************************/
-    uint8 miso_ClearInterrupt(void)
+    uint8 MISO_ClearInterrupt(void)
     {
-        return (miso_INTSTAT & miso_MASK) >> miso_SHIFT;
+        return (MISO_INTSTAT & MISO_MASK) >> MISO_SHIFT;
     }
 
 #endif /* If Interrupts Are Enabled for this Pins component */ 

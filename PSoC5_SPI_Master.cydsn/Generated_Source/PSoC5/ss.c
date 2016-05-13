@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: ss.c  
+* File Name: SS.c  
 * Version 2.20
 *
 * Description:
@@ -15,15 +15,15 @@
 *******************************************************************************/
 
 #include "cytypes.h"
-#include "ss.h"
+#include "SS.h"
 
 /* APIs are not generated for P15[7:6] on PSoC 5 */
 #if !(CY_PSOC5A &&\
-	 ss__PORT == 15 && ((ss__MASK & 0xC0) != 0))
+	 SS__PORT == 15 && ((SS__MASK & 0xC0) != 0))
 
 
 /*******************************************************************************
-* Function Name: ss_Write
+* Function Name: SS_Write
 ****************************************************************************//**
 *
 * \brief Writes the value to the physical port (data output register), masking
@@ -52,17 +52,17 @@
 *  this function.
 *
 * \funcusage
-*  \snippet ss_SUT.c usage_ss_Write
+*  \snippet SS_SUT.c usage_SS_Write
 *******************************************************************************/
-void ss_Write(uint8 value)
+void SS_Write(uint8 value)
 {
-    uint8 staticBits = (ss_DR & (uint8)(~ss_MASK));
-    ss_DR = staticBits | ((uint8)(value << ss_SHIFT) & ss_MASK);
+    uint8 staticBits = (SS_DR & (uint8)(~SS_MASK));
+    SS_DR = staticBits | ((uint8)(value << SS_SHIFT) & SS_MASK);
 }
 
 
 /*******************************************************************************
-* Function Name: ss_SetDriveMode
+* Function Name: SS_SetDriveMode
 ****************************************************************************//**
 *
 * \brief Sets the drive mode for each of the Pins component's pins.
@@ -85,16 +85,16 @@ void ss_Write(uint8 value)
 *  APIs (primary method) or disable interrupts around this function.
 *
 * \funcusage
-*  \snippet ss_SUT.c usage_ss_SetDriveMode
+*  \snippet SS_SUT.c usage_SS_SetDriveMode
 *******************************************************************************/
-void ss_SetDriveMode(uint8 mode)
+void SS_SetDriveMode(uint8 mode)
 {
-	CyPins_SetPinDriveMode(ss_0, mode);
+	CyPins_SetPinDriveMode(SS_0, mode);
 }
 
 
 /*******************************************************************************
-* Function Name: ss_Read
+* Function Name: SS_Read
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port (pin status register) and masks 
@@ -108,16 +108,16 @@ void ss_SetDriveMode(uint8 mode)
 *  The current value for the pins in the component as a right justified number.
 *
 * \funcusage
-*  \snippet ss_SUT.c usage_ss_Read  
+*  \snippet SS_SUT.c usage_SS_Read  
 *******************************************************************************/
-uint8 ss_Read(void)
+uint8 SS_Read(void)
 {
-    return (ss_PS & ss_MASK) >> ss_SHIFT;
+    return (SS_PS & SS_MASK) >> SS_SHIFT;
 }
 
 
 /*******************************************************************************
-* Function Name: ss_ReadDataReg
+* Function Name: SS_ReadDataReg
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port's data output register and masks 
@@ -126,8 +126,8 @@ uint8 ss_Read(void)
 *
 * The data output register controls the signal applied to the physical pin in 
 * conjunction with the drive mode parameter. This is not the same as the 
-* preferred ss_Read() API because the 
-* ss_ReadDataReg() reads the data register instead of the status 
+* preferred SS_Read() API because the 
+* SS_ReadDataReg() reads the data register instead of the status 
 * register. For output pins this is a useful function to determine the value 
 * just written to the pin.
 *
@@ -136,19 +136,19 @@ uint8 ss_Read(void)
 *  justified number for the component instance.
 *
 * \funcusage
-*  \snippet ss_SUT.c usage_ss_ReadDataReg 
+*  \snippet SS_SUT.c usage_SS_ReadDataReg 
 *******************************************************************************/
-uint8 ss_ReadDataReg(void)
+uint8 SS_ReadDataReg(void)
 {
-    return (ss_DR & ss_MASK) >> ss_SHIFT;
+    return (SS_DR & SS_MASK) >> SS_SHIFT;
 }
 
 
 /* If interrupt is connected for this Pins component */ 
-#if defined(ss_INTSTAT) 
+#if defined(SS_INTSTAT) 
 
     /*******************************************************************************
-    * Function Name: ss_SetInterruptMode
+    * Function Name: SS_SetInterruptMode
     ****************************************************************************//**
     *
     * \brief Configures the interrupt mode for each of the Pins component's
@@ -161,12 +161,12 @@ uint8 ss_ReadDataReg(void)
     * \param position
     *  The pin position as listed in the Pins component. You may OR these to be 
     *  able to configure the interrupt mode of multiple pins within a Pins 
-    *  component. Or you may use ss_INTR_ALL to configure the
+    *  component. Or you may use SS_INTR_ALL to configure the
     *  interrupt mode of all the pins in the Pins component.       
-    *  - ss_0_INTR       (First pin in the list)
-    *  - ss_1_INTR       (Second pin in the list)
+    *  - SS_0_INTR       (First pin in the list)
+    *  - SS_1_INTR       (Second pin in the list)
     *  - ...
-    *  - ss_INTR_ALL     (All pins in Pins component)
+    *  - SS_INTR_ALL     (All pins in Pins component)
     *
     * \param mode
     *  Interrupt mode for the selected pins. Valid options are documented in
@@ -182,19 +182,19 @@ uint8 ss_ReadDataReg(void)
     *  port.
     *
     * \funcusage
-    *  \snippet ss_SUT.c usage_ss_SetInterruptMode
+    *  \snippet SS_SUT.c usage_SS_SetInterruptMode
     *******************************************************************************/
-    void ss_SetInterruptMode(uint16 position, uint16 mode)
+    void SS_SetInterruptMode(uint16 position, uint16 mode)
     {
-		if((position & ss_0_INTR) != 0u) 
+		if((position & SS_0_INTR) != 0u) 
 		{ 
-			 ss_0_INTTYPE_REG = (uint8)mode; 
+			 SS_0_INTTYPE_REG = (uint8)mode; 
 		}
     }
     
     
     /*******************************************************************************
-    * Function Name: ss_ClearInterrupt
+    * Function Name: SS_ClearInterrupt
     ****************************************************************************//**
     *
     * \brief Clears any active interrupts attached with the component and returns 
@@ -211,11 +211,11 @@ uint8 ss_ReadDataReg(void)
     *  those associated with the Pins component.
     *
     * \funcusage
-    *  \snippet ss_SUT.c usage_ss_ClearInterrupt
+    *  \snippet SS_SUT.c usage_SS_ClearInterrupt
     *******************************************************************************/
-    uint8 ss_ClearInterrupt(void)
+    uint8 SS_ClearInterrupt(void)
     {
-        return (ss_INTSTAT & ss_MASK) >> ss_SHIFT;
+        return (SS_INTSTAT & SS_MASK) >> SS_SHIFT;
     }
 
 #endif /* If Interrupts Are Enabled for this Pins component */ 
