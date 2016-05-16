@@ -1,6 +1,6 @@
 // ======================================================================
 // PSoC5_SPI_Master.v generated from TopDesign.cysch
-// 05/13/2016 at 14:44
+// 05/16/2016 at 10:52
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -124,7 +124,7 @@
 `include "C:\Program Files (x86)\Cypress\PSoC Creator\3.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\ZeroTerminal\ZeroTerminal.v"
 `endif
 
-// SPI_Master_v2_50(BidirectMode=false, ClockInternal=false, CtlModeReplacementString=SyncCtl, CyGetRegReplacementString=CY_GET_REG16, CySetRegReplacementString=CY_SET_REG16, DesiredBitRate=500000, HighSpeedMode=false, InternalClockUsed=0, InternalInterruptEnabled=0, InternalRxInterruptEnabled=0, InternalTxInterruptEnabled=0, InterruptOnByteComplete=false, InterruptOnRXFull=false, InterruptOnRXNotEmpty=false, InterruptOnRXOverrun=false, InterruptOnSPIDone=false, InterruptOnSPIIdle=false, InterruptOnTXEmpty=false, InterruptOnTXNotFull=false, IntOnByteComp=0, IntOnRXFull=0, IntOnRXNotEmpty=0, IntOnRXOver=0, IntOnSPIDone=0, IntOnSPIIdle=0, IntOnTXEmpty=0, IntOnTXNotFull=0, Mode=1, ModeUseZero=1, NumberOfDataBits=16, RegDefReplacementString=reg16, RegSizeReplacementString=uint16, RxBufferSize=4, ShiftDir=0, TxBufferSize=4, UseInternalInterrupt=false, UseRxInternalInterrupt=false, UseTxInternalInterrupt=false, VerilogSectionReplacementString=sR16, CY_API_CALLBACK_HEADER_INCLUDE=#include "cyapicallbacks.h", CY_COMPONENT_NAME=SPI_Master_v2_50, CY_CONTROL_FILE=<:default:>, CY_DATASHEET_FILE=<:default:>, CY_FITTER_NAME=SPIM, CY_INSTANCE_SHORT_NAME=SPIM, CY_MAJOR_VERSION=2, CY_MINOR_VERSION=50, CY_REMOVE=false, CY_SUPPRESS_API_GEN=false, CY_VERSION=PSoC Creator  3.3 SP1, INSTANCE_NAME=SPIM, )
+// SPI_Master_v2_50(BidirectMode=false, ClockInternal=false, CtlModeReplacementString=SyncCtl, CyGetRegReplacementString=CY_GET_REG8, CySetRegReplacementString=CY_SET_REG8, DesiredBitRate=500000, HighSpeedMode=false, InternalClockUsed=0, InternalInterruptEnabled=0, InternalRxInterruptEnabled=0, InternalTxInterruptEnabled=0, InterruptOnByteComplete=false, InterruptOnRXFull=false, InterruptOnRXNotEmpty=false, InterruptOnRXOverrun=false, InterruptOnSPIDone=false, InterruptOnSPIIdle=false, InterruptOnTXEmpty=false, InterruptOnTXNotFull=false, IntOnByteComp=0, IntOnRXFull=0, IntOnRXNotEmpty=0, IntOnRXOver=0, IntOnSPIDone=0, IntOnSPIIdle=0, IntOnTXEmpty=0, IntOnTXNotFull=0, Mode=4, ModeUseZero=0, NumberOfDataBits=8, RegDefReplacementString=reg8, RegSizeReplacementString=uint8, RxBufferSize=4, ShiftDir=0, TxBufferSize=4, UseInternalInterrupt=false, UseRxInternalInterrupt=false, UseTxInternalInterrupt=false, VerilogSectionReplacementString=sR8, CY_API_CALLBACK_HEADER_INCLUDE=#include "cyapicallbacks.h", CY_COMPONENT_NAME=SPI_Master_v2_50, CY_CONTROL_FILE=<:default:>, CY_DATASHEET_FILE=<:default:>, CY_FITTER_NAME=SPIM, CY_INSTANCE_SHORT_NAME=SPIM, CY_MAJOR_VERSION=2, CY_MINOR_VERSION=50, CY_REMOVE=false, CY_SUPPRESS_API_GEN=false, CY_VERSION=PSoC Creator  3.3 SP1, INSTANCE_NAME=SPIM, )
 module SPI_Master_v2_50_0 (
     clock,
     reset,
@@ -147,7 +147,7 @@ module SPI_Master_v2_50_0 (
 
     parameter BidirectMode = 0;
     parameter HighSpeedMode = 0;
-    parameter NumberOfDataBits = 16;
+    parameter NumberOfDataBits = 8;
     parameter ShiftDir = 0;
 
           wire  Net_289;
@@ -174,9 +174,9 @@ module SPI_Master_v2_50_0 (
         .tx_interpt(tx_interrupt));
     defparam BSPIM.BidirectMode = 0;
     defparam BSPIM.HighSpeedMode = 0;
-    defparam BSPIM.ModeCPHA = 0;
-    defparam BSPIM.ModePOL = 0;
-    defparam BSPIM.NumberOfDataBits = 16;
+    defparam BSPIM.ModeCPHA = 1;
+    defparam BSPIM.ModePOL = 1;
+    defparam BSPIM.NumberOfDataBits = 8;
     defparam BSPIM.ShiftDir = 0;
 
 	// VirtualMux_2 (cy_virtualmux_v1_0)
@@ -564,7 +564,7 @@ module top ;
         .tx_interrupt(Net_410));
     defparam SPIM.BidirectMode = 0;
     defparam SPIM.HighSpeedMode = 0;
-    defparam SPIM.NumberOfDataBits = 16;
+    defparam SPIM.NumberOfDataBits = 8;
     defparam SPIM.ShiftDir = 0;
 
 
@@ -572,7 +572,7 @@ module top ;
 		#(.id("04740f1d-4c8d-4f0d-a342-aa7f8d15f889"),
 		  .source_clock_id("CEF43CFB-0213-49b9-B980-2FFAB81C5B47"),
 		  .divisor(0),
-		  .period("1000000000"),
+		  .period("250000000"),
 		  .is_direct(0),
 		  .is_digital(1))
 		Clock

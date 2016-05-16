@@ -1,6 +1,6 @@
 -- ======================================================================
 -- PSoC5_SPI_Master_DSP.ctl generated from PSoC5_SPI_Master_DSP
--- 05/13/2016 at 17:29
+-- 05/16/2016 at 12:09
 -- This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 -- ======================================================================
 

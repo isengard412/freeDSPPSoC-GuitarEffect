@@ -1,7 +1,7 @@
 /*******************************************************************************
 * File Name: spimaster.h
 *
-* Version: 1.1
+* Version: 1.2
 * Author: Lukas Creutzburg
 *
 * Description:
@@ -69,6 +69,22 @@ void SPIinit();
 void SPIsendNumber(uint16);
 
 /*******************************************************************************
+* Function Name: SPIsendNumber32
+********************************************************************************
+*
+* Summary:
+*  Sending a Number via SPI as Master
+*
+* Parameters:
+*  uint16 number
+*
+* Return:
+*  None.
+*
+*******************************************************************************/
+void SPIsendNumber32(uint32);
+
+/*******************************************************************************
 * Function Name: SPIsendArray
 ********************************************************************************
 *
@@ -76,13 +92,29 @@ void SPIsendNumber(uint16);
 *  Sending an Array via SPI as Master
 *
 * Parameters:
-*  uint8 numbers[]
+*  uint32 numbers[]
 *
 * Return:
 *  None.
 *
 *******************************************************************************/
 void SPIsendArray(uint16[]);
+
+/*******************************************************************************
+* Function Name: SPIsendArray32
+********************************************************************************
+*
+* Summary:
+*  Sending an Array via SPI as Master
+*
+* Parameters:
+*  uint32 numbers[]
+*
+* Return:
+*  None.
+*
+*******************************************************************************/
+void SPIsendArray32(uint32[],int);
 
 #endif /* (CY_SPIMASTER_H) */
 

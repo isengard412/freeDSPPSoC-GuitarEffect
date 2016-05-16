@@ -34,14 +34,14 @@ extern volatile uint8 SPIM_swStatusTx;
 extern volatile uint8 SPIM_swStatusRx;
 
 #if(SPIM_TX_SOFTWARE_BUF_ENABLED)
-    extern volatile uint16 SPIM_txBuffer[SPIM_TX_BUFFER_SIZE];
+    extern volatile uint8 SPIM_txBuffer[SPIM_TX_BUFFER_SIZE];
     extern volatile uint8 SPIM_txBufferRead;
     extern volatile uint8 SPIM_txBufferWrite;
     extern volatile uint8 SPIM_txBufferFull;
 #endif /* (SPIM_TX_SOFTWARE_BUF_ENABLED) */
 
 #if(SPIM_RX_SOFTWARE_BUF_ENABLED)
-    extern volatile uint16 SPIM_rxBuffer[SPIM_RX_BUFFER_SIZE];
+    extern volatile uint8 SPIM_rxBuffer[SPIM_RX_BUFFER_SIZE];
     extern volatile uint8 SPIM_rxBufferRead;
     extern volatile uint8 SPIM_rxBufferWrite;
     extern volatile uint8 SPIM_rxBufferFull;

@@ -1,5 +1,5 @@
 -- Project:   PSoC5_SPI_Master_DSP
--- Generated: 05/13/2016 17:30:04
+-- Generated: 05/16/2016 12:09:15
 -- PSoC Creator  3.3 SP1
 
 ENTITY PSoC5_SPI_Master_DSP IS
@@ -39,13 +39,15 @@ ARCHITECTURE __DEFAULT__ OF PSoC5_SPI_Master_DSP IS
     SIGNAL MOSI(0)__PA : bit;
     SIGNAL Net_337 : bit;
     SIGNAL Net_338 : bit;
-    SIGNAL Net_339 : bit;
     SIGNAL Net_340 : bit;
     ATTRIBUTE udbclken_assigned OF Net_340 : SIGNAL IS "True";
     ATTRIBUTE global_signal OF Net_340 : SIGNAL IS true;
     SIGNAL Net_340_local : bit;
     SIGNAL Net_412 : bit;
     SIGNAL Net_419 : bit;
+    SIGNAL Net_499 : bit;
+    SIGNAL Net_502 : bit;
+    SIGNAL Net_503 : bit;
     SIGNAL SCLK(0)__PA : bit;
     SIGNAL SS(0)__PA : bit;
     SIGNAL \SPIM:BSPIM:cnt_enable\ : bit;
@@ -57,7 +59,6 @@ ARCHITECTURE __DEFAULT__ OF PSoC5_SPI_Master_DSP IS
     SIGNAL \SPIM:BSPIM:count_4\ : bit;
     SIGNAL \SPIM:BSPIM:count_5\ : bit;
     SIGNAL \SPIM:BSPIM:count_6\ : bit;
-    SIGNAL \SPIM:BSPIM:ld_ident\ : bit;
     SIGNAL \SPIM:BSPIM:load_cond\ : bit;
     SIGNAL \SPIM:BSPIM:load_rx_data\ : bit;
     SIGNAL \SPIM:BSPIM:mosi_from_dp\ : bit;
@@ -71,6 +72,13 @@ ARCHITECTURE __DEFAULT__ OF PSoC5_SPI_Master_DSP IS
     SIGNAL \SPIM:BSPIM:tx_status_1\ : bit;
     SIGNAL \SPIM:BSPIM:tx_status_2\ : bit;
     SIGNAL \SPIM:BSPIM:tx_status_4\ : bit;
+    SIGNAL \SS_control:control_1\ : bit;
+    SIGNAL \SS_control:control_2\ : bit;
+    SIGNAL \SS_control:control_3\ : bit;
+    SIGNAL \SS_control:control_4\ : bit;
+    SIGNAL \SS_control:control_5\ : bit;
+    SIGNAL \SS_control:control_6\ : bit;
+    SIGNAL \SS_control:control_7\ : bit;
     SIGNAL \\\USBUART:Dm(0)\\__PA\ : bit;
     SIGNAL \\\USBUART:Dp(0)\\__PA\ : bit;
     SIGNAL \USBUART:Net_1010\ : bit;
@@ -134,18 +142,19 @@ ARCHITECTURE __DEFAULT__ OF PSoC5_SPI_Master_DSP IS
     ATTRIBUTE lib_model OF \SPIM:BSPIM:tx_status_0\ : LABEL IS "macrocell2";
     ATTRIBUTE lib_model OF \SPIM:BSPIM:tx_status_4\ : LABEL IS "macrocell3";
     ATTRIBUTE lib_model OF \SPIM:BSPIM:rx_status_6\ : LABEL IS "macrocell4";
+    ATTRIBUTE lib_model OF Net_502 : LABEL IS "macrocell5";
     ATTRIBUTE lib_model OF \SPIM:BSPIM:TxStsReg\ : LABEL IS "statusicell1";
     ATTRIBUTE lib_model OF \SPIM:BSPIM:RxStsReg\ : LABEL IS "statusicell2";
     ATTRIBUTE lib_model OF \SPIM:BSPIM:sR16:Dp:u0\ : LABEL IS "datapathcell1";
     ATTRIBUTE lib_model OF \SPIM:BSPIM:sR16:Dp:u1\ : LABEL IS "datapathcell2";
     ATTRIBUTE Location OF \USBUART:USB\ : LABEL IS "F(USB,0)";
-    ATTRIBUTE lib_model OF Net_337 : LABEL IS "macrocell5";
-    ATTRIBUTE lib_model OF \SPIM:BSPIM:state_2\ : LABEL IS "macrocell6";
-    ATTRIBUTE lib_model OF \SPIM:BSPIM:state_1\ : LABEL IS "macrocell7";
-    ATTRIBUTE lib_model OF \SPIM:BSPIM:state_0\ : LABEL IS "macrocell8";
-    ATTRIBUTE lib_model OF Net_339 : LABEL IS "macrocell9";
-    ATTRIBUTE lib_model OF \SPIM:BSPIM:load_cond\ : LABEL IS "macrocell10";
-    ATTRIBUTE lib_model OF \SPIM:BSPIM:ld_ident\ : LABEL IS "macrocell11";
+    ATTRIBUTE lib_model OF \SS_control:Sync:ctrl_reg\ : LABEL IS "controlcell1";
+    ATTRIBUTE lib_model OF Net_337 : LABEL IS "macrocell6";
+    ATTRIBUTE lib_model OF \SPIM:BSPIM:state_2\ : LABEL IS "macrocell7";
+    ATTRIBUTE lib_model OF \SPIM:BSPIM:state_1\ : LABEL IS "macrocell8";
+    ATTRIBUTE lib_model OF \SPIM:BSPIM:state_0\ : LABEL IS "macrocell9";
+    ATTRIBUTE lib_model OF Net_503 : LABEL IS "macrocell10";
+    ATTRIBUTE lib_model OF \SPIM:BSPIM:load_cond\ : LABEL IS "macrocell11";
     ATTRIBUTE lib_model OF \SPIM:BSPIM:cnt_enable\ : LABEL IS "macrocell12";
     ATTRIBUTE lib_model OF Net_338 : LABEL IS "macrocell13";
     COMPONENT clockblockcell
@@ -228,6 +237,24 @@ ARCHITECTURE __DEFAULT__ OF PSoC5_SPI_Master_DSP IS
             dclk_glb_ff_6 : OUT std_ulogic;
             dclk_glb_ff_7 : OUT std_ulogic);
     END COMPONENT;
+    COMPONENT controlcell
+        PORT (
+            control_0 : OUT std_ulogic;
+            control_1 : OUT std_ulogic;
+            control_2 : OUT std_ulogic;
+            control_3 : OUT std_ulogic;
+            control_4 : OUT std_ulogic;
+            control_5 : OUT std_ulogic;
+            control_6 : OUT std_ulogic;
+            control_7 : OUT std_ulogic;
+            clock : IN std_ulogic;
+            reset : IN std_ulogic;
+            clk_en : IN std_ulogic;
+            busclk : IN std_ulogic);
+    END COMPONENT;
+    ATTRIBUTE udb_clk OF controlcell : COMPONENT IS "clock";
+    ATTRIBUTE udb_clken OF controlcell : COMPONENT IS "clk_en";
+    ATTRIBUTE udb_reset OF controlcell : COMPONENT IS "reset";
     COMPONENT count7cell
         PORT (
             clock : IN std_ulogic;
@@ -853,7 +880,7 @@ BEGIN
         PORT MAP(
             pa_out => SS(0)__PA,
             oe => open,
-            pin_input => Net_339,
+            pin_input => Net_502,
             pad_out => SS(0)_PAD,
             pad_in => SS(0)_PAD,
             in_clock => open,
@@ -1273,6 +1300,15 @@ BEGIN
             main_4 => \SPIM:BSPIM:count_0\,
             main_5 => \SPIM:BSPIM:rx_status_4\);
 
+    Net_502:macrocell
+        GENERIC MAP(
+            eqn_main => "(main_0 * main_1)",
+            clken_mode => 1)
+        PORT MAP(
+            q => Net_502,
+            main_0 => Net_503,
+            main_1 => Net_499);
+
     \SPIM:BSPIM:BitCounter\:count7cell
         GENERIC MAP(
             cy_alt_mode => 0,
@@ -1339,7 +1375,7 @@ BEGIN
             cl1_sync => 1,
             cmsb_sync => 1,
             co_msb_sync => 1,
-            cy_dpconfig => "0000000000000000000000001100000000000001010000000001000100010000000000011100000000010001000000000000000101000000000000010100000011111111000000001111111111111111000000000000001000001000011100000000000000000100",
+            cy_dpconfig => "0000000000000000000000001100000000000001010000000001000100010000000000011100000000010001000000000000000101000000000000010100000011111111000000001111111111111111000000000000001000001100011100000000000000000100",
             d0_init => "00000000",
             d1_init => "00000000",
             f0_blk_sync => 1,
@@ -1388,7 +1424,7 @@ BEGIN
             cl1_sync => 1,
             cmsb_sync => 1,
             co_msb_sync => 1,
-            cy_dpconfig => "0000000000000000000000001100000000000001010000000001000100010000000000011100000000010001000000000000000101000000000000010100000011111111000000001111111111111111000000000010001100001000111100000000000000000100",
+            cy_dpconfig => "0000000000000000000000001100000000000001010000000001000100010000000000011100000000010001000000000000000101000000000000010100000011111111000000001111111111111111000000000010001100001100111100000000000000000100",
             d0_init => "00000000",
             d1_init => "00000000",
             f0_blk_sync => 1,
@@ -1522,9 +1558,28 @@ BEGIN
             interrupt => Net_412,
             clock => ClockBlock_BUS_CLK);
 
+    \SS_control:Sync:ctrl_reg\:controlcell
+        GENERIC MAP(
+            cy_ctrl_mode_0 => "00000000",
+            cy_ctrl_mode_1 => "00000000",
+            cy_ext_reset => 0,
+            cy_force_order => 1,
+            cy_init_value => "00000001",
+            clken_mode => 1)
+        PORT MAP(
+            control_7 => \SS_control:control_7\,
+            control_6 => \SS_control:control_6\,
+            control_5 => \SS_control:control_5\,
+            control_4 => \SS_control:control_4\,
+            control_3 => \SS_control:control_3\,
+            control_2 => \SS_control:control_2\,
+            control_1 => \SS_control:control_1\,
+            control_0 => Net_499,
+            busclk => ClockBlock_BUS_CLK);
+
     Net_337:macrocell
         GENERIC MAP(
-            eqn_main => "(!main_0 * !main_1 * main_3) + (!main_1 * !main_2 * !main_3) + (!main_1 * !main_3 * !main_5 * !main_6 * !main_7 * main_8 * !main_9 * !main_10) + (main_1 * !main_2 * main_3) + (main_1 * main_2 * !main_3) + (main_1 * !main_4) + (!main_3 * !main_4)",
+            eqn_main => "(main_0 * !main_1 * main_3) + (main_0 * main_1 * !main_2 * !main_3) + (!main_1 * main_2 * !main_3 * main_4)",
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
@@ -1534,17 +1589,11 @@ BEGIN
             main_1 => \SPIM:BSPIM:state_2\,
             main_2 => \SPIM:BSPIM:state_1\,
             main_3 => \SPIM:BSPIM:state_0\,
-            main_4 => \SPIM:BSPIM:mosi_from_dp\,
-            main_5 => \SPIM:BSPIM:count_4\,
-            main_6 => \SPIM:BSPIM:count_3\,
-            main_7 => \SPIM:BSPIM:count_2\,
-            main_8 => \SPIM:BSPIM:count_1\,
-            main_9 => \SPIM:BSPIM:count_0\,
-            main_10 => \SPIM:BSPIM:ld_ident\);
+            main_4 => \SPIM:BSPIM:mosi_from_dp\);
 
     \SPIM:BSPIM:state_2\:macrocell
         GENERIC MAP(
-            eqn_main => "(!main_0 * !main_1 * main_2) + (!main_0 * main_1 * !main_2 * !main_3 * !main_4 * !main_5 * main_6 * !main_7 * !main_9) + (!main_0 * main_2 * !main_3 * !main_4 * main_5 * !main_6 * main_7 * !main_8)",
+            eqn_main => "(!main_0 * main_1 * !main_2 * !main_3 * !main_4 * !main_5 * main_6 * !main_7 * !main_8) + (!main_0 * main_1 * main_2 * !main_3 * !main_4 * !main_5 * !main_6 * main_7)",
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
@@ -1558,12 +1607,11 @@ BEGIN
             main_5 => \SPIM:BSPIM:count_2\,
             main_6 => \SPIM:BSPIM:count_1\,
             main_7 => \SPIM:BSPIM:count_0\,
-            main_8 => \SPIM:BSPIM:tx_status_1\,
-            main_9 => \SPIM:BSPIM:ld_ident\);
+            main_8 => \SPIM:BSPIM:tx_status_1\);
 
     \SPIM:BSPIM:state_1\:macrocell
         GENERIC MAP(
-            eqn_main => "(!main_0 * !main_1 * main_2) + (!main_0 * main_2 * !main_3 * !main_4 * main_5 * !main_6 * main_7 * !main_8) + (main_0 * !main_2) + (main_1 * !main_2 * !main_3 * !main_4 * !main_5 * main_6 * !main_7 * !main_9)",
+            eqn_main => "(!main_0 * !main_1 * !main_2) + (!main_0 * !main_2 * !main_3 * !main_4 * !main_5 * main_6 * !main_7 * !main_8) + (main_0 * main_1) + (main_0 * main_2) + (main_1 * main_2 * !main_3 * !main_4 * !main_5 * !main_6 * main_7)",
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
@@ -1577,12 +1625,11 @@ BEGIN
             main_5 => \SPIM:BSPIM:count_2\,
             main_6 => \SPIM:BSPIM:count_1\,
             main_7 => \SPIM:BSPIM:count_0\,
-            main_8 => \SPIM:BSPIM:tx_status_1\,
-            main_9 => \SPIM:BSPIM:ld_ident\);
+            main_8 => \SPIM:BSPIM:tx_status_1\);
 
     \SPIM:BSPIM:state_0\:macrocell
         GENERIC MAP(
-            eqn_main => "(!main_0 * main_1) + (main_0 * !main_1) + (!main_1 * !main_2 * !main_3)",
+            eqn_main => "(!main_0 * main_1 * main_2 * !main_3 * !main_4 * !main_5 * !main_6 * main_7) + (main_0 * !main_2) + (!main_1 * !main_2 * main_8) + (main_1 * !main_2 * !main_3 * !main_4 * !main_5 * main_6 * !main_7 * !main_8)",
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
@@ -1591,20 +1638,25 @@ BEGIN
             main_0 => \SPIM:BSPIM:state_2\,
             main_1 => \SPIM:BSPIM:state_1\,
             main_2 => \SPIM:BSPIM:state_0\,
-            main_3 => \SPIM:BSPIM:tx_status_1\);
+            main_3 => \SPIM:BSPIM:count_4\,
+            main_4 => \SPIM:BSPIM:count_3\,
+            main_5 => \SPIM:BSPIM:count_2\,
+            main_6 => \SPIM:BSPIM:count_1\,
+            main_7 => \SPIM:BSPIM:count_0\,
+            main_8 => \SPIM:BSPIM:tx_status_1\);
 
-    Net_339:macrocell
+    Net_503:macrocell
         GENERIC MAP(
-            eqn_main => "(!main_0 * !main_1 * main_2) + (!main_0 * main_1 * !main_3) + (main_0 * !main_1 * !main_2 * !main_3) + (main_1 * main_2 * !main_3)",
+            eqn_main => "(!main_0 * !main_1 * main_2) + (!main_0 * main_1 * !main_3) + (main_0 * !main_1 * !main_3)",
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            q => Net_339,
+            q => Net_503,
             clock_0 => Net_340,
             main_0 => \SPIM:BSPIM:state_2\,
             main_1 => \SPIM:BSPIM:state_1\,
             main_2 => \SPIM:BSPIM:state_0\,
-            main_3 => Net_339);
+            main_3 => Net_503);
 
     \SPIM:BSPIM:load_cond\:macrocell
         GENERIC MAP(
@@ -1624,13 +1676,13 @@ BEGIN
             main_7 => \SPIM:BSPIM:count_0\,
             main_8 => \SPIM:BSPIM:load_cond\);
 
-    \SPIM:BSPIM:ld_ident\:macrocell
+    \SPIM:BSPIM:cnt_enable\:macrocell
         GENERIC MAP(
-            eqn_main => "(main_0 * !main_1 * !main_2 * !main_8) + (main_0 * main_1 * !main_2 * main_8) + (main_1 * !main_2 * !main_3 * !main_4 * !main_5 * main_6 * !main_7 * main_8)",
+            eqn_main => "(!main_0 * !main_1 * !main_2 * main_8) + (!main_0 * !main_1 * main_2 * !main_8) + (main_0 * main_1 * main_8) + (main_0 * main_2 * main_8) + (main_1 * main_2 * !main_3 * !main_4 * !main_5 * !main_6 * main_7 * main_8)",
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            q => \SPIM:BSPIM:ld_ident\,
+            q => \SPIM:BSPIM:cnt_enable\,
             clock_0 => Net_340,
             main_0 => \SPIM:BSPIM:state_2\,
             main_1 => \SPIM:BSPIM:state_1\,
@@ -1640,24 +1692,11 @@ BEGIN
             main_5 => \SPIM:BSPIM:count_2\,
             main_6 => \SPIM:BSPIM:count_1\,
             main_7 => \SPIM:BSPIM:count_0\,
-            main_8 => \SPIM:BSPIM:ld_ident\);
-
-    \SPIM:BSPIM:cnt_enable\:macrocell
-        GENERIC MAP(
-            eqn_main => "(!main_0 * !main_1 * !main_2 * main_3) + (!main_0 * main_1 * main_2 * !main_3) + (main_0 * !main_1 * main_2 * main_3) + (main_0 * main_1 * !main_2 * main_3)",
-            clk_inv => '0',
-            clken_mode => 1)
-        PORT MAP(
-            q => \SPIM:BSPIM:cnt_enable\,
-            clock_0 => Net_340,
-            main_0 => \SPIM:BSPIM:state_2\,
-            main_1 => \SPIM:BSPIM:state_1\,
-            main_2 => \SPIM:BSPIM:state_0\,
-            main_3 => \SPIM:BSPIM:cnt_enable\);
+            main_8 => \SPIM:BSPIM:cnt_enable\);
 
     Net_338:macrocell
         GENERIC MAP(
-            eqn_main => "(!main_0 * main_1 * main_2) + (main_1 * main_2 * main_3)",
+            eqn_main => "(!main_0 * main_1 * !main_2)",
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
@@ -1665,7 +1704,6 @@ BEGIN
             clock_0 => Net_340,
             main_0 => \SPIM:BSPIM:state_2\,
             main_1 => \SPIM:BSPIM:state_1\,
-            main_2 => \SPIM:BSPIM:state_0\,
-            main_3 => Net_338);
+            main_2 => \SPIM:BSPIM:state_0\);
 
 END __DEFAULT__;
