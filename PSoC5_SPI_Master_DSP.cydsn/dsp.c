@@ -100,91 +100,89 @@ void DSPinit()
 {
     /* SPI intialisieren */
     SPIinit();
-    CyDelay(22); /* warte auf Start des DSPs*/
+    DSP_reset_Write(0u);
+    /* warte auf Start des DSPs*/
+    CyDelay(25); 
     /* Umschalten des DSP von I2C auf SPI (3 mal dummy senden) */
-    SPIsendNumber32((uint32)0x89ABCDEF);
-    SPIsendNumber32((uint32)0x89ABCDEF);
-    SPIsendNumber32((uint32)0x89ABCDEF);
-    CyDelay(25);    /* Warte auf DSP SPI Initialisierung*/
+    SPIsendNumber((uint8)0x89);
+    SPIsendNumber((uint8)0x89);
+    SPIsendNumber((uint8)0x89);
+    /* Warte auf DSP SPI Initialisierung*/
+    CyDelay(25);    
     
     /* Schreiben des EEPROM zu Beginn */
-    uint32 toSend;
+    //uint8 toSend[5];
     uint16 address = 0;
-    /* Schreibe Programm in E2PROM */
-    for(address=0;address<E2PROM_HEX_SIZE;address++)  
-    {
-        toSend = ((uint32)CHIPADDRESS << 24) | ((uint32)address << 8) | (uint32)(e2prom_hex[address]);        
-        SPIsendNumber32(toSend);
-    }
+    DSPwrite(address,&e2prom_hex[0],E2PROM_HEX_SIZE);
     
     /*Starte DSP neu*/
     DSP_reset_Write(1u);
     CyDelay(1000);
     DSP_reset_Write(0u);
     
-    CyDelay(22); /*Warte auf Start des DSPs*/
-
+    /*Warte auf Start des DSPs*/
+    CyDelay(25); 
+    /* Umschalten des DSP von I2C auf SPI (3 mal dummy senden) */
+    SPIsendNumber((uint8)0x89AB);
+    SPIsendNumber((uint8)0x89AB);
+    SPIsendNumber((uint8)0x89AB);
+    /* Warte auf DSP SPI Initialisierung*/
+    CyDelay(25); 
 }
 
-
 /*******************************************************************************
-* Function Name: writeDSP
+* Function Name: DSPisReady
 ********************************************************************************
 *
 * Summary:
 *  Sending data to DSP
 *
 * Parameters:
-*  uint16 number
-*
-* Return:
 *  None.
 *
+* Return:
+*  uint8 ready
+*
 *******************************************************************************/
-//void SPIsendNumber(uint16 number)
-//{
-//
-//    /* Clear the transmit buffer before next reading (good practice) */
-//    SPIM_ClearTxBuffer();
-//
-//    temp = SPIM_ReadTxStatus();
-//
-//    /* Ensure that previous SPI read is done, or SPI is idle before sending data */
-//    if((temp & (SPIM_STS_SPI_DONE | SPIM_STS_SPI_IDLE)))
-//    {
-//        SPIM_WriteTxData(number);
-//    }
-//}
-
+uint8 DSPisReady()
+{
+    uint8 connected=0;
+    
+    
+    return connected;
+}
 
 /*******************************************************************************
-* Function Name: SPIsendArray
+* Function Name: DSPwrite
 ********************************************************************************
 *
 * Summary:
-*  Sending an Array via SPI as Master
+*  Sending data to DSP
 *
 * Parameters:
-*  uint8 numbers[]
+*  uint8  chipaddress + R/(not W)
+*  uint16 address
+*  uint8* pointer to data array
+*  uint16 datasize
 *
 * Return:
 *  None.
 *
 *******************************************************************************/
-//void SPIsendArray(uint16 numbers[])
-//{
-//
-//    /* Clear the transmit buffer before next reading (good practice) */
-//    SPIM_ClearTxBuffer();
-//
-//    temp = SPIM_ReadTxStatus();
-//
-//    /* Ensure that previous SPI read is done, or SPI is idle before sending data */
-//    if((temp & (SPIM_STS_SPI_DONE | SPIM_STS_SPI_IDLE)))
-//    {
-//        SPIM_PutArray(numbers,2);
-//    }
-//}
+void DSPwrite(uint16 address,uint8* data,uint16 datasize)
+{
+    uint8 toSend[datasize+3];
+    toSend[0] = (uint8)((CHIPADDRESS << 1) | (WRITE_DSP));
+    toSend[1] = (uint8)(address >> 8);
+    toSend[2] = (uint8)(address);
+    uint16 i;
+    for(i=0;i<datasize;i++)
+    {
+        toSend[i+3] = data[i];
+    }
+    SPIsendArray(&toSend[0],datasize+3);
+
+}
 
 
 /* [] END OF FILE */

@@ -1,11 +1,12 @@
 /*******************************************************************************
 * File Name: spimaster.h
 *
-* Version: 1.0
+* Version: 1.2
 * Author: Lukas Creutzburg
 *
 * Description:
 *   Component sends data via SPI as Master
+*   Can send arrays
 *
 *******************************************************************************/
 
@@ -25,7 +26,6 @@
 
 #define RD_BUFFER_LEN           (64u)
 #define WR_BUFFER_LEN           (64u)
-#define MUX_SIZE                (4u)
 
 /* ASCII value of decimal zero is 48 */
 #define ASCII_DECIMAL_ZERO      (48u)
@@ -68,6 +68,53 @@ void SPIinit();
 *******************************************************************************/
 void SPIsendNumber(uint16);
 
+/*******************************************************************************
+* Function Name: SPIsendNumber32
+********************************************************************************
+*
+* Summary:
+*  Sending a Number via SPI as Master
+*
+* Parameters:
+*  uint16 number
+*
+* Return:
+*  None.
+*
+*******************************************************************************/
+void SPIsendNumber32(uint32);
+
+/*******************************************************************************
+* Function Name: SPIsendArray
+********************************************************************************
+*
+* Summary:
+*  Sending an Array via SPI as Master
+*
+* Parameters:
+*  uint32 numbers[]
+*
+* Return:
+*  None.
+*
+*******************************************************************************/
+void SPIsendArray(uint16[]);
+
+/*******************************************************************************
+* Function Name: SPIsendArray32
+********************************************************************************
+*
+* Summary:
+*  Sending an Array via SPI as Master
+*
+* Parameters:
+*  uint32 numbers[]
+*
+* Return:
+*  None.
+*
+*******************************************************************************/
+void SPIsendArray32(uint32[],int);
 
 #endif /* (CY_SPIMASTER_H) */
 

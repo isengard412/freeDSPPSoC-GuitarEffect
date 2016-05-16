@@ -13,6 +13,7 @@
 #define CY_DSP_H
 
 #include <project.h>
+#include "ADAU1701Registers.h"
 #include "stdio.h"
 #include "spimaster.h"
 
@@ -25,6 +26,9 @@
 
 #define E2PROM_HEX_SIZE 544
 #define CHIPADDRESS 0x00
+#define WRITE_DSP 0x00
+#define READ_DSP 0x01
+
 #define VOLUME0_ADDR  0x0000 
 #define VOLUME1_ADDR  0x0001
 
@@ -45,36 +49,39 @@
 void DSPinit();
 
 /*******************************************************************************
-* Function Name: SPIsendNumber
+* Function Name: DSPisReady
 ********************************************************************************
 *
 * Summary:
-*  Sending a Number via SPI as Master
+*  Sending data to DSP
 *
 * Parameters:
-*  uint16 number
-*
-* Return:
 *  None.
 *
+* Return:
+*  uint8 ready
+*
 *******************************************************************************/
-//void SPIsendNumber(uint16);
+uint8 DSPisReady();
 
 /*******************************************************************************
-* Function Name: SPIsendArray
+* Function Name: DSPwrite
 ********************************************************************************
 *
 * Summary:
-*  Sending an Array via SPI as Master
+*  Sending data to DSP
 *
 * Parameters:
-*  uint8 numbers[]
+*  uint8  chipaddress + R/(not W)
+*  uint16 address
+*  uint8  data
 *
 * Return:
 *  None.
 *
 *******************************************************************************/
-//void SPIsendArray(uint16[]);
+void DSPwrite(uint16 address,uint8* data, uint16 datasize);
+
 
 #endif /* (CY_DSP_H) */
 

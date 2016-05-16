@@ -41,14 +41,14 @@
 #endif /* (0u != SPIM_INTERNAL_CLOCK) */
 
 #define SPIM_MODE                       (4u)
-#define SPIM_DATA_WIDTH                 (16u)
+#define SPIM_DATA_WIDTH                 (8u)
 #define SPIM_MODE_USE_ZERO              (0u)
 #define SPIM_BIDIRECTIONAL_MODE         (0u)
 
 /* Internal interrupt handling */
-#define SPIM_TX_BUFFER_SIZE             (4u)
+#define SPIM_TX_BUFFER_SIZE             (255u)
 #define SPIM_RX_BUFFER_SIZE             (4u)
-#define SPIM_INTERNAL_TX_INT_ENABLED    (0u)
+#define SPIM_INTERNAL_TX_INT_ENABLED    (1u)
 #define SPIM_INTERNAL_RX_INT_ENABLED    (0u)
 
 #define SPIM_SINGLE_REG_SIZE            (8u)
@@ -97,16 +97,16 @@ void  SPIM_SetTxInterruptMode(uint8 intSrc)     ;
 void  SPIM_SetRxInterruptMode(uint8 intSrc)     ;
 uint8 SPIM_ReadTxStatus(void)                   ;
 uint8 SPIM_ReadRxStatus(void)                   ;
-void  SPIM_WriteTxData(uint16 txData)  \
+void  SPIM_WriteTxData(uint8 txData)  \
                                                             ;
-uint16 SPIM_ReadRxData(void) \
+uint8 SPIM_ReadRxData(void) \
                                                             ;
 uint8 SPIM_GetRxBufferSize(void)                ;
 uint8 SPIM_GetTxBufferSize(void)                ;
 void  SPIM_ClearRxBuffer(void)                  ;
 void  SPIM_ClearTxBuffer(void)                  ;
 void  SPIM_ClearFIFO(void)                              ;
-void  SPIM_PutArray(const uint16 buffer[], uint8 byteCount) \
+void  SPIM_PutArray(const uint8 buffer[], uint8 byteCount) \
                                                             ;
 
 #if(0u != SPIM_BIDIRECTIONAL_MODE)
@@ -142,7 +142,7 @@ extern uint8 SPIM_initVar;
 
 #define SPIM_INT_ON_SPI_DONE    ((uint8) (0u   << SPIM_STS_SPI_DONE_SHIFT))
 #define SPIM_INT_ON_TX_EMPTY    ((uint8) (0u   << SPIM_STS_TX_FIFO_EMPTY_SHIFT))
-#define SPIM_INT_ON_TX_NOT_FULL ((uint8) (0u << \
+#define SPIM_INT_ON_TX_NOT_FULL ((uint8) (1u << \
                                                                            SPIM_STS_TX_FIFO_NOT_FULL_SHIFT))
 #define SPIM_INT_ON_BYTE_COMP   ((uint8) (0u  << SPIM_STS_BYTE_COMPLETE_SHIFT))
 #define SPIM_INT_ON_SPI_IDLE    ((uint8) (0u   << SPIM_STS_SPI_IDLE_SHIFT))
@@ -177,46 +177,46 @@ extern uint8 SPIM_initVar;
 *             Registers
 ***************************************/
 #if(CY_PSOC3 || CY_PSOC5)
-    #define SPIM_TXDATA_REG (* (reg16 *) \
-                                                SPIM_BSPIM_sR16_Dp_u0__F0_REG)
-    #define SPIM_TXDATA_PTR (  (reg16 *) \
-                                                SPIM_BSPIM_sR16_Dp_u0__F0_REG)
-    #define SPIM_RXDATA_REG (* (reg16 *) \
-                                                SPIM_BSPIM_sR16_Dp_u0__F1_REG)
-    #define SPIM_RXDATA_PTR (  (reg16 *) \
-                                                SPIM_BSPIM_sR16_Dp_u0__F1_REG)
+    #define SPIM_TXDATA_REG (* (reg8 *) \
+                                                SPIM_BSPIM_sR8_Dp_u0__F0_REG)
+    #define SPIM_TXDATA_PTR (  (reg8 *) \
+                                                SPIM_BSPIM_sR8_Dp_u0__F0_REG)
+    #define SPIM_RXDATA_REG (* (reg8 *) \
+                                                SPIM_BSPIM_sR8_Dp_u0__F1_REG)
+    #define SPIM_RXDATA_PTR (  (reg8 *) \
+                                                SPIM_BSPIM_sR8_Dp_u0__F1_REG)
 #else   /* PSOC4 */
     #if(SPIM_USE_SECOND_DATAPATH)
         #define SPIM_TXDATA_REG (* (reg16 *) \
-                                          SPIM_BSPIM_sR16_Dp_u0__16BIT_F0_REG)
+                                          SPIM_BSPIM_sR8_Dp_u0__16BIT_F0_REG)
         #define SPIM_TXDATA_PTR (  (reg16 *) \
-                                          SPIM_BSPIM_sR16_Dp_u0__16BIT_F0_REG)
+                                          SPIM_BSPIM_sR8_Dp_u0__16BIT_F0_REG)
         #define SPIM_RXDATA_REG (* (reg16 *) \
-                                          SPIM_BSPIM_sR16_Dp_u0__16BIT_F1_REG)
+                                          SPIM_BSPIM_sR8_Dp_u0__16BIT_F1_REG)
         #define SPIM_RXDATA_PTR (  (reg16 *) \
-                                          SPIM_BSPIM_sR16_Dp_u0__16BIT_F1_REG)
+                                          SPIM_BSPIM_sR8_Dp_u0__16BIT_F1_REG)
     #else
         #define SPIM_TXDATA_REG (* (reg8 *) \
-                                                SPIM_BSPIM_sR16_Dp_u0__F0_REG)
+                                                SPIM_BSPIM_sR8_Dp_u0__F0_REG)
         #define SPIM_TXDATA_PTR (  (reg8 *) \
-                                                SPIM_BSPIM_sR16_Dp_u0__F0_REG)
+                                                SPIM_BSPIM_sR8_Dp_u0__F0_REG)
         #define SPIM_RXDATA_REG (* (reg8 *) \
-                                                SPIM_BSPIM_sR16_Dp_u0__F1_REG)
+                                                SPIM_BSPIM_sR8_Dp_u0__F1_REG)
         #define SPIM_RXDATA_PTR (  (reg8 *) \
-                                                SPIM_BSPIM_sR16_Dp_u0__F1_REG)
+                                                SPIM_BSPIM_sR8_Dp_u0__F1_REG)
     #endif /* (SPIM_USE_SECOND_DATAPATH) */
 #endif     /* (CY_PSOC3 || CY_PSOC5) */
 
 #define SPIM_AUX_CONTROL_DP0_REG (* (reg8 *) \
-                                        SPIM_BSPIM_sR16_Dp_u0__DP_AUX_CTL_REG)
+                                        SPIM_BSPIM_sR8_Dp_u0__DP_AUX_CTL_REG)
 #define SPIM_AUX_CONTROL_DP0_PTR (  (reg8 *) \
-                                        SPIM_BSPIM_sR16_Dp_u0__DP_AUX_CTL_REG)
+                                        SPIM_BSPIM_sR8_Dp_u0__DP_AUX_CTL_REG)
 
 #if(SPIM_USE_SECOND_DATAPATH)
     #define SPIM_AUX_CONTROL_DP1_REG  (* (reg8 *) \
-                                        SPIM_BSPIM_sR16_Dp_u1__DP_AUX_CTL_REG)
+                                        SPIM_BSPIM_sR8_Dp_u1__DP_AUX_CTL_REG)
     #define SPIM_AUX_CONTROL_DP1_PTR  (  (reg8 *) \
-                                        SPIM_BSPIM_sR16_Dp_u1__DP_AUX_CTL_REG)
+                                        SPIM_BSPIM_sR8_Dp_u1__DP_AUX_CTL_REG)
 #endif /* (SPIM_USE_SECOND_DATAPATH) */
 
 #define SPIM_COUNTER_PERIOD_REG     (* (reg8 *) SPIM_BSPIM_BitCounter__PERIOD_REG)

@@ -42,7 +42,6 @@
 #include "Clock_out.h"
 #include "DSP_reset_aliases.h"
 #include "DSP_reset.h"
-#include "SS_control.h"
 #include "USBUART_Dm_aliases.h"
 #include "USBUART_Dm.h"
 #include "USBUART_Dp_aliases.h"

@@ -60,29 +60,13 @@ void SPIinit();
 *  Sending a Number via SPI as Master
 *
 * Parameters:
-*  uint16 number
+*  uint8 number
 *
 * Return:
 *  None.
 *
 *******************************************************************************/
-void SPIsendNumber(uint16);
-
-/*******************************************************************************
-* Function Name: SPIsendNumber32
-********************************************************************************
-*
-* Summary:
-*  Sending a Number via SPI as Master
-*
-* Parameters:
-*  uint16 number
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
-void SPIsendNumber32(uint32);
+void SPIsendNumber(uint8 number);
 
 /*******************************************************************************
 * Function Name: SPIsendArray
@@ -98,23 +82,7 @@ void SPIsendNumber32(uint32);
 *  None.
 *
 *******************************************************************************/
-void SPIsendArray(uint16[]);
-
-/*******************************************************************************
-* Function Name: SPIsendArray32
-********************************************************************************
-*
-* Summary:
-*  Sending an Array via SPI as Master
-*
-* Parameters:
-*  uint32 numbers[]
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
-void SPIsendArray32(uint32[],int);
+void SPIsendArray(uint8* numbers,uint16 numberOfbytes);
 
 #endif /* (CY_SPIMASTER_H) */
 

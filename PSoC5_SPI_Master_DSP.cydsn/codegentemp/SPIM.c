@@ -18,14 +18,14 @@
 #include "SPIM_PVT.h"
 
 #if(SPIM_TX_SOFTWARE_BUF_ENABLED)
-    volatile uint16 SPIM_txBuffer[SPIM_TX_BUFFER_SIZE];
+    volatile uint8 SPIM_txBuffer[SPIM_TX_BUFFER_SIZE];
     volatile uint8 SPIM_txBufferFull;
     volatile uint8 SPIM_txBufferRead;
     volatile uint8 SPIM_txBufferWrite;
 #endif /* (SPIM_TX_SOFTWARE_BUF_ENABLED) */
 
 #if(SPIM_RX_SOFTWARE_BUF_ENABLED)
-    volatile uint16 SPIM_rxBuffer[SPIM_RX_BUFFER_SIZE];
+    volatile uint8 SPIM_rxBuffer[SPIM_RX_BUFFER_SIZE];
     volatile uint8 SPIM_rxBufferFull;
     volatile uint8 SPIM_rxBufferRead;
     volatile uint8 SPIM_rxBufferWrite;
@@ -491,7 +491,7 @@ uint8 SPIM_ReadRxStatus(void)
 *  No.
 *
 *******************************************************************************/
-void SPIM_WriteTxData(uint16 txData) 
+void SPIM_WriteTxData(uint8 txData) 
 {
     #if(SPIM_TX_SOFTWARE_BUF_ENABLED)
 
@@ -524,7 +524,7 @@ void SPIM_WriteTxData(uint16 txData)
            (0u != (SPIM_swStatusTx & SPIM_STS_TX_FIFO_NOT_FULL)))
         {
             /* Put data element into the TX FIFO */
-            CY_SET_REG16(SPIM_TXDATA_PTR, txData);
+            CY_SET_REG8(SPIM_TXDATA_PTR, txData);
         }
         else
         {
@@ -559,7 +559,7 @@ void SPIM_WriteTxData(uint16 txData)
         }
 
         /* Put data element into the TX FIFO */
-        CY_SET_REG16(SPIM_TXDATA_PTR, txData);
+        CY_SET_REG8(SPIM_TXDATA_PTR, txData);
 
     #endif /* (SPIM_TX_SOFTWARE_BUF_ENABLED) */
 }
@@ -599,9 +599,9 @@ void SPIM_WriteTxData(uint16 txData)
 *  No.
 *
 *******************************************************************************/
-uint16 SPIM_ReadRxData(void) 
+uint8 SPIM_ReadRxData(void) 
 {
-    uint16 rxData;
+    uint8 rxData;
 
     #if(SPIM_RX_SOFTWARE_BUF_ENABLED)
 
@@ -630,7 +630,7 @@ uint16 SPIM_ReadRxData(void)
 
     #else
 
-        rxData = CY_GET_REG16(SPIM_RXDATA_PTR);
+        rxData = CY_GET_REG8(SPIM_RXDATA_PTR);
 
     #endif /* (SPIM_RX_SOFTWARE_BUF_ENABLED) */
 
@@ -808,7 +808,7 @@ void SPIM_ClearRxBuffer(void)
     /* Clear Hardware RX FIFO */
     while(0u !=(SPIM_RX_STATUS_REG & SPIM_STS_RX_FIFO_NOT_EMPTY))
     {
-        (void) CY_GET_REG16(SPIM_RXDATA_PTR);
+        (void) CY_GET_REG8(SPIM_RXDATA_PTR);
     }
 
     #if(SPIM_RX_SOFTWARE_BUF_ENABLED)
@@ -959,7 +959,7 @@ void SPIM_ClearTxBuffer(void)
 *  No.
 *
 *******************************************************************************/
-void SPIM_PutArray(const uint16 buffer[], uint8 byteCount)
+void SPIM_PutArray(const uint8 buffer[], uint8 byteCount)
                                                                           
 {
     uint8 bufIndex;
@@ -999,7 +999,7 @@ void SPIM_ClearFIFO(void)
     /* Clear Hardware RX FIFO */
     while(0u !=(SPIM_RX_STATUS_REG & SPIM_STS_RX_FIFO_NOT_EMPTY))
     {
-        (void) CY_GET_REG16(SPIM_RXDATA_PTR);
+        (void) CY_GET_REG8(SPIM_RXDATA_PTR);
     }
 
     enableInterrupts = CyEnterCriticalSection();
