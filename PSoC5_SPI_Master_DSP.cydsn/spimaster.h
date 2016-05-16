@@ -84,6 +84,38 @@ void SPIsendNumber(uint8 number);
 *******************************************************************************/
 void SPIsendArray(uint8* numbers,uint16 numberOfbytes);
 
+/*******************************************************************************
+* Function Name: SPIreadNumber
+********************************************************************************
+*
+* Summary:
+*  Receiving a Number via SPI as Master
+*
+* Parameters:
+*  None
+*
+* Return:
+*  uint8 received
+*
+*******************************************************************************/
+uint8 SPIreadNumber();
+
+/*******************************************************************************
+* Function Name: SPIreadFinished
+********************************************************************************
+*
+* Summary:
+*  Returning the RX buffersize
+*
+* Parameters:
+*  None
+*
+* Return:
+*  uint8 buffer
+*
+*******************************************************************************/
+uint8 SPIreadFinished();
+
 #endif /* (CY_SPIMASTER_H) */
 
 /* [] END OF FILE */

@@ -2,7 +2,7 @@
 --	Conversion of PSoC5_SPI_Master_DSP.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Mon May 16 20:23:21 2016
+--	Tue May 17 00:06:22 2016
 --
 
 USE cypress.cypress.all;
@@ -33,7 +33,7 @@ SIGNAL \SPIM:BSPIM:state_1\ : bit;
 SIGNAL \SPIM:BSPIM:state_0\ : bit;
 SIGNAL \SPIM:BSPIM:mosi_from_dp\ : bit;
 SIGNAL \SPIM:BSPIM:mosi_cpha_0\ : bit;
-SIGNAL Net_503 : bit;
+SIGNAL Net_339 : bit;
 SIGNAL \SPIM:BSPIM:mosi_hs_reg\ : bit;
 SIGNAL \SPIM:BSPIM:pre_mosi\ : bit;
 SIGNAL \SPIM:BSPIM:count_4\ : bit;
@@ -209,11 +209,6 @@ SIGNAL tmpFB_0__MOSI_net_0 : bit;
 SIGNAL tmpIO_0__MOSI_net_0 : bit;
 TERMINAL tmpSIOVREF__MOSI_net_0 : bit;
 SIGNAL tmpINTERRUPT_0__MOSI_net_0 : bit;
-SIGNAL tmpOE__Clock_out_net_0 : bit;
-SIGNAL tmpFB_0__Clock_out_net_0 : bit;
-SIGNAL tmpIO_0__Clock_out_net_0 : bit;
-TERMINAL tmpSIOVREF__Clock_out_net_0 : bit;
-SIGNAL tmpINTERRUPT_0__Clock_out_net_0 : bit;
 SIGNAL tmpOE__DSP_reset_net_0 : bit;
 SIGNAL tmpFB_0__DSP_reset_net_0 : bit;
 SIGNAL tmpIO_0__DSP_reset_net_0 : bit;
@@ -224,7 +219,7 @@ SIGNAL \SPIM:BSPIM:mosi_reg\\D\ : bit;
 SIGNAL \SPIM:BSPIM:state_2\\D\ : bit;
 SIGNAL \SPIM:BSPIM:state_1\\D\ : bit;
 SIGNAL \SPIM:BSPIM:state_0\\D\ : bit;
-SIGNAL Net_503D : bit;
+SIGNAL Net_339D : bit;
 SIGNAL \SPIM:BSPIM:mosi_pre_reg\\D\ : bit;
 SIGNAL \SPIM:BSPIM:load_cond\\D\ : bit;
 SIGNAL \SPIM:BSPIM:dpcounter_one_reg\\D\ : bit;
@@ -273,9 +268,9 @@ one <=  ('1') ;
 	OR (not \SPIM:BSPIM:state_2\ and not \SPIM:BSPIM:state_0\ and \SPIM:BSPIM:state_1\ and \SPIM:BSPIM:tx_status_1\)
 	OR (not \SPIM:BSPIM:state_2\ and not \SPIM:BSPIM:state_1\ and not \SPIM:BSPIM:state_0\ and not \SPIM:BSPIM:tx_status_1\));
 
-Net_503D <= ((not \SPIM:BSPIM:state_2\ and not \SPIM:BSPIM:state_1\ and not \SPIM:BSPIM:state_0\)
-	OR (\SPIM:BSPIM:state_1\ and Net_503)
-	OR (\SPIM:BSPIM:state_2\ and Net_503)
+Net_339D <= ((not \SPIM:BSPIM:state_2\ and not \SPIM:BSPIM:state_1\ and not \SPIM:BSPIM:state_0\)
+	OR (\SPIM:BSPIM:state_1\ and Net_339)
+	OR (\SPIM:BSPIM:state_2\ and Net_339)
 	OR (\SPIM:BSPIM:state_2\ and \SPIM:BSPIM:state_1\));
 
 \SPIM:BSPIM:cnt_enable\\D\ <= ((not \SPIM:BSPIM:state_2\ and \SPIM:BSPIM:state_0\ and \SPIM:BSPIM:count_4\ and \SPIM:BSPIM:cnt_enable\)
@@ -427,7 +422,7 @@ Clock:cy_clock_v1_0
 		id=>"04740f1d-4c8d-4f0d-a342-aa7f8d15f889",
 		source_clock_id=>"CEF43CFB-0213-49b9-B980-2FFAB81C5B47",
 		divisor=>0,
-		period=>"1000000000",
+		period=>"250000000",
 		is_direct=>'0',
 		is_digital=>'1')
 	PORT MAP(clock_out=>Net_340,
@@ -740,7 +735,7 @@ SS:cy_psoc3_pins_v1_10
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
 	PORT MAP(oe=>(one),
-		y=>Net_503,
+		y=>Net_339,
 		fb=>(tmpFB_0__SS_net_0),
 		analog=>(open),
 		io=>(tmpIO_0__SS_net_0),
@@ -893,76 +888,6 @@ MOSI:cy_psoc3_pins_v1_10
 		out_clock_en=>one,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__MOSI_net_0);
-Clock_out:cy_psoc3_pins_v1_10
-	GENERIC MAP(id=>"e851a3b9-efb8-48be-bbb8-b303b216c393",
-		drive_mode=>"110",
-		ibuf_enabled=>"1",
-		init_dr_st=>"0",
-		input_sync=>"1",
-		input_clk_en=>'0',
-		input_sync_mode=>"0",
-		intr_mode=>"00",
-		invert_in_clock=>'0',
-		invert_in_clock_en=>'0',
-		invert_in_reset=>'0',
-		invert_out_clock=>'0',
-		invert_out_clock_en=>'0',
-		invert_out_reset=>'0',
-		io_voltage=>"",
-		layout_mode=>"CONTIGUOUS",
-		output_conn=>"1",
-		output_sync=>"0",
-		output_clk_en=>'0',
-		output_mode=>"0",
-		output_reset=>'0',
-		output_clock_mode=>"0",
-		oe_sync=>"0",
-		oe_conn=>"0",
-		oe_reset=>'0',
-		pin_aliases=>"",
-		pin_mode=>"O",
-		por_state=>4,
-		sio_group_cnt=>0,
-		sio_hifreq=>"00000000",
-		sio_hyst=>"1",
-		sio_ibuf=>"00000000",
-		sio_info=>"00",
-		sio_obuf=>"00000000",
-		sio_refsel=>"00000000",
-		sio_vtrip=>"00000000",
-		sio_vohsel=>"00000000",
-		slew_rate=>"0",
-		spanning=>'0',
-		sw_only=>'0',
-		vtrip=>"10",
-		width=>1,
-		port_alias_required=>'0',
-		port_alias_group=>"",
-		use_annotation=>"0",
-		pa_in_clock=>-1,
-		pa_in_clock_en=>-1,
-		pa_in_reset=>-1,
-		pa_out_clock=>-1,
-		pa_out_clock_en=>-1,
-		pa_out_reset=>-1,
-		ovt_needed=>"0",
-		ovt_slew_control=>"00",
-		ovt_hyst_trim=>"0",
-		input_buffer_sel=>"00")
-	PORT MAP(oe=>(one),
-		y=>Net_340,
-		fb=>(tmpFB_0__Clock_out_net_0),
-		analog=>(open),
-		io=>(tmpIO_0__Clock_out_net_0),
-		siovref=>(tmpSIOVREF__Clock_out_net_0),
-		annotation=>(open),
-		in_clock=>zero,
-		in_clock_en=>one,
-		in_reset=>zero,
-		out_clock=>zero,
-		out_clock_en=>one,
-		out_reset=>zero,
-		interrupt=>tmpINTERRUPT_0__Clock_out_net_0);
 DSP_reset:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"3daed191-30d6-4187-9f64-678a00de48cd",
 		drive_mode=>"110",
@@ -1053,10 +978,10 @@ DSP_reset:cy_psoc3_pins_v1_10
 	PORT MAP(d=>\SPIM:BSPIM:state_0\\D\,
 		clk=>\SPIM:BSPIM:clk_fin\,
 		q=>\SPIM:BSPIM:state_0\);
-Net_503:cy_dff
-	PORT MAP(d=>Net_503D,
+Net_339:cy_dff
+	PORT MAP(d=>Net_339D,
 		clk=>\SPIM:BSPIM:clk_fin\,
-		q=>Net_503);
+		q=>Net_339);
 \SPIM:BSPIM:mosi_pre_reg\:cy_dff
 	PORT MAP(d=>zero,
 		clk=>\SPIM:BSPIM:clk_fin\,

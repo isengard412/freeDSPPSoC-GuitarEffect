@@ -1,5 +1,5 @@
 -- Project:   PSoC5_SPI_Master_DSP
--- Generated: 05/16/2016 20:23:23
+-- Generated: 05/17/2016 00:06:24
 -- PSoC Creator  3.3 SP1
 
 ENTITY PSoC5_SPI_Master_DSP IS
@@ -8,7 +8,6 @@ ENTITY PSoC5_SPI_Master_DSP IS
         SS(0)_PAD : OUT std_ulogic;
         MISO(0)_PAD : IN std_ulogic;
         MOSI(0)_PAD : OUT std_ulogic;
-        Clock_out(0)_PAD : OUT std_ulogic;
         DSP_reset(0)_PAD : OUT std_ulogic);
     ATTRIBUTE voltage_VDDABUF OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDA OF __DEFAULT__ : ENTITY IS 5e0;
@@ -33,7 +32,6 @@ ARCHITECTURE __DEFAULT__ OF PSoC5_SPI_Master_DSP IS
     SIGNAL ClockBlock_PLL_OUT : bit;
     SIGNAL ClockBlock_XTAL : bit;
     SIGNAL \ClockBlock_XTAL 32kHz\ : bit;
-    SIGNAL Clock_out(0)__PA : bit;
     SIGNAL DSP_reset(0)__PA : bit;
     SIGNAL MISO(0)__PA : bit;
     SIGNAL MOSI(0)__PA : bit;
@@ -41,6 +39,8 @@ ARCHITECTURE __DEFAULT__ OF PSoC5_SPI_Master_DSP IS
     ATTRIBUTE placement_force OF Net_337 : SIGNAL IS "U(3,1,B)1";
     SIGNAL Net_338 : bit;
     ATTRIBUTE placement_force OF Net_338 : SIGNAL IS "U(3,2,B)2";
+    SIGNAL Net_339 : bit;
+    ATTRIBUTE placement_force OF Net_339 : SIGNAL IS "U(3,1,A)1";
     SIGNAL Net_340 : bit;
     ATTRIBUTE udbclken_assigned OF Net_340 : SIGNAL IS "True";
     ATTRIBUTE global_signal OF Net_340 : SIGNAL IS true;
@@ -48,8 +48,6 @@ ARCHITECTURE __DEFAULT__ OF PSoC5_SPI_Master_DSP IS
     SIGNAL Net_410 : bit;
     SIGNAL Net_412 : bit;
     SIGNAL Net_419 : bit;
-    SIGNAL Net_503 : bit;
-    ATTRIBUTE placement_force OF Net_503 : SIGNAL IS "U(3,1,A)1";
     SIGNAL SCLK(0)__PA : bit;
     SIGNAL SS(0)__PA : bit;
     SIGNAL \SPIM:BSPIM:cnt_enable\ : bit;
@@ -129,9 +127,7 @@ ARCHITECTURE __DEFAULT__ OF PSoC5_SPI_Master_DSP IS
     ATTRIBUTE Location OF MISO(0) : LABEL IS "P3[0]";
     ATTRIBUTE lib_model OF MOSI(0) : LABEL IS "iocell6";
     ATTRIBUTE Location OF MOSI(0) : LABEL IS "P3[1]";
-    ATTRIBUTE lib_model OF Clock_out(0) : LABEL IS "iocell7";
-    ATTRIBUTE Location OF Clock_out(0) : LABEL IS "P3[4]";
-    ATTRIBUTE lib_model OF DSP_reset(0) : LABEL IS "iocell8";
+    ATTRIBUTE lib_model OF DSP_reset(0) : LABEL IS "iocell7";
     ATTRIBUTE Location OF DSP_reset(0) : LABEL IS "P0[0]";
     ATTRIBUTE lib_model OF \SPIM:BSPIM:load_rx_data\ : LABEL IS "macrocell1";
     ATTRIBUTE Location OF \SPIM:BSPIM:load_rx_data\ : LABEL IS "U(3,2)";
@@ -167,8 +163,8 @@ ARCHITECTURE __DEFAULT__ OF PSoC5_SPI_Master_DSP IS
     ATTRIBUTE Location OF \SPIM:BSPIM:state_1\ : LABEL IS "U(3,2)";
     ATTRIBUTE lib_model OF \SPIM:BSPIM:state_0\ : LABEL IS "macrocell8";
     ATTRIBUTE Location OF \SPIM:BSPIM:state_0\ : LABEL IS "U(3,2)";
-    ATTRIBUTE lib_model OF Net_503 : LABEL IS "macrocell9";
-    ATTRIBUTE Location OF Net_503 : LABEL IS "U(3,1)";
+    ATTRIBUTE lib_model OF Net_339 : LABEL IS "macrocell9";
+    ATTRIBUTE Location OF Net_339 : LABEL IS "U(3,1)";
     ATTRIBUTE lib_model OF \SPIM:BSPIM:load_cond\ : LABEL IS "macrocell10";
     ATTRIBUTE Location OF \SPIM:BSPIM:load_cond\ : LABEL IS "U(3,1)";
     ATTRIBUTE lib_model OF \SPIM:BSPIM:cnt_enable\ : LABEL IS "macrocell11";
@@ -861,7 +857,7 @@ BEGIN
         PORT MAP(
             pa_out => SS(0)__PA,
             oe => open,
-            pin_input => Net_503,
+            pin_input => Net_339,
             pad_out => SS(0)_PAD,
             pad_in => SS(0)_PAD,
             in_clock => open,
@@ -1047,98 +1043,6 @@ BEGIN
             pin_input => Net_337,
             pad_out => MOSI(0)_PAD,
             pad_in => MOSI(0)_PAD,
-            in_clock => open,
-            in_clock_en => '1',
-            in_reset => '0',
-            out_clock => open,
-            out_clock_en => '1',
-            out_reset => '0');
-
-    Clock_out:logicalport
-        GENERIC MAP(
-            drive_mode => "110",
-            ibuf_enabled => "1",
-            id => "e851a3b9-efb8-48be-bbb8-b303b216c393",
-            init_dr_st => "0",
-            input_buffer_sel => "00",
-            input_clk_en => 0,
-            input_sync => "1",
-            input_sync_mode => "0",
-            intr_mode => "00",
-            invert_in_clock => 0,
-            invert_in_clock_en => 0,
-            invert_in_reset => 0,
-            invert_out_clock => 0,
-            invert_out_clock_en => 0,
-            invert_out_reset => 0,
-            io_voltage => "",
-            layout_mode => "CONTIGUOUS",
-            oe_conn => "0",
-            oe_reset => 0,
-            oe_sync => "0",
-            output_clk_en => 0,
-            output_clock_mode => "0",
-            output_conn => "1",
-            output_mode => "0",
-            output_reset => 0,
-            output_sync => "0",
-            ovt_hyst_trim => "0",
-            ovt_needed => "0",
-            ovt_slew_control => "00",
-            pa_in_clock => -1,
-            pa_in_clock_en => -1,
-            pa_in_reset => -1,
-            pa_out_clock => -1,
-            pa_out_clock_en => -1,
-            pa_out_reset => -1,
-            pin_aliases => "",
-            pin_mode => "O",
-            por_state => 4,
-            port_alias_group => "",
-            port_alias_required => 0,
-            sio_group_cnt => 0,
-            sio_hifreq => "00000000",
-            sio_hyst => "1",
-            sio_ibuf => "00000000",
-            sio_info => "00",
-            sio_obuf => "00000000",
-            sio_refsel => "00000000",
-            sio_vohsel => "00000000",
-            sio_vtrip => "00000000",
-            slew_rate => "0",
-            spanning => 0,
-            sw_only => 0,
-            use_annotation => "0",
-            vtrip => "10",
-            width => 1,
-            in_clk_inv => 0,
-            in_clken_inv => 0,
-            in_clken_mode => 1,
-            in_rst_inv => 0,
-            out_clk_inv => 0,
-            out_clken_inv => 0,
-            out_clken_mode => 1,
-            out_rst_inv => 0)
-        PORT MAP(
-            in_clock_en => open,
-            in_reset => open,
-            out_clock_en => open,
-            out_reset => open);
-
-    Clock_out(0):iocell
-        GENERIC MAP(
-            in_sync_mode => 0,
-            out_sync_mode => 0,
-            oe_sync_mode => 0,
-            logicalport => "Clock_out",
-            logicalport_pin_id => 0,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000101")
-        PORT MAP(
-            pa_out => Clock_out(0)__PA,
-            oe => open,
-            pin_input => Net_340_local,
-            pad_out => Clock_out(0)_PAD,
-            pad_in => Clock_out(0)_PAD,
             in_clock => open,
             in_clock_en => '1',
             in_reset => '0',
@@ -1544,18 +1448,18 @@ BEGIN
             main_7 => \SPIM:BSPIM:count_0\,
             main_8 => \SPIM:BSPIM:tx_status_1\);
 
-    Net_503:macrocell
+    Net_339:macrocell
         GENERIC MAP(
             eqn_main => "(!main_0 * !main_1 * main_2) + (!main_0 * main_1 * !main_3) + (main_0 * !main_1 * !main_3)",
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            q => Net_503,
+            q => Net_339,
             clock_0 => Net_340,
             main_0 => \SPIM:BSPIM:state_2\,
             main_1 => \SPIM:BSPIM:state_1\,
             main_2 => \SPIM:BSPIM:state_0\,
-            main_3 => Net_503);
+            main_3 => Net_339);
 
     \SPIM:BSPIM:load_cond\:macrocell
         GENERIC MAP(

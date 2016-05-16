@@ -13,7 +13,7 @@
 #define CY_DSP_H
 
 #include <project.h>
-#include "ADAU1701Registers.h"
+#include "ADAU1452Registers.h"
 #include "stdio.h"
 #include "spimaster.h"
 
@@ -24,13 +24,14 @@
     asm (".global _printf_float");
 #endif
 
-#define E2PROM_HEX_SIZE 544
+#define PROGRAM_RAM_SIZE 0
+#define DM0_RAM_SIZE 176
+#define DM1_RAM_SIZE 32
+
 #define CHIPADDRESS 0x00
 #define WRITE_DSP 0x00
 #define READ_DSP 0x01
 
-#define VOLUME0_ADDR  0x0000 
-#define VOLUME1_ADDR  0x0001
 
 /*******************************************************************************
 * Function Name: DSPinit
@@ -81,6 +82,41 @@ uint8 DSPisReady();
 *
 *******************************************************************************/
 void DSPwrite(uint16 address,uint8* data, uint16 datasize);
+
+/*******************************************************************************
+* Function Name: DSPwriteWord
+********************************************************************************
+*
+* Summary:
+*  Sending word of data to DSP
+*
+* Parameters:
+*  uint16 address
+*  uint16 word of data
+*
+* Return:
+*  None.
+*
+*******************************************************************************/
+void DSPwriteWord(uint16 address,uint16 data);
+
+/*******************************************************************************
+* Function Name: DSPread
+********************************************************************************
+*
+* Summary:
+*  Reading data from DSP
+*
+* Parameters:
+*  uint16 address
+*  uint8* datatarget
+*  uint16 datasize
+*
+* Return:
+*  uint8* array
+*
+*******************************************************************************/
+void DSPread(uint16 address, uint8* datatarget, uint16 datasize);
 
 
 #endif /* (CY_DSP_H) */

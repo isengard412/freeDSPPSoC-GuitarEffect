@@ -38,8 +38,6 @@
 #include "MISO.h"
 #include "MOSI_aliases.h"
 #include "MOSI.h"
-#include "Clock_out_aliases.h"
-#include "Clock_out.h"
 #include "DSP_reset_aliases.h"
 #include "DSP_reset.h"
 #include "USBUART_Dm_aliases.h"

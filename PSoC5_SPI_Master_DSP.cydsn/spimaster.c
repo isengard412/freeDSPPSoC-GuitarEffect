@@ -9,7 +9,7 @@
 *   Can send arrays
 *
 * Changes:
-*   
+*   -Can now receive
 *
 *******************************************************************************/
 
@@ -98,6 +98,52 @@ void SPIsendArray(uint8* numbers, uint16 numberOfbytes)
         }
     }
 
+}
+
+/*******************************************************************************
+* Function Name: SPIreadNumber
+********************************************************************************
+*
+* Summary:
+*  Receiving a Number via SPI as Master
+*
+* Parameters:
+*  None
+*
+* Return:
+*  uint8 received
+*
+*******************************************************************************/
+uint8 SPIreadNumber()
+{
+
+    /* Warten auf Byte */
+    while(SPIM_GetRxBufferSize() == 0)
+    {
+        CyDelayUs(5);    
+    }
+    /* Senden eines Wortes */
+    uint8 received = SPIM_ReadRxData();
+    return received;
+}
+
+/*******************************************************************************
+* Function Name: SPIreadFinished
+********************************************************************************
+*
+* Summary:
+*  Returning the RX buffersize
+*
+* Parameters:
+*  None
+*
+* Return:
+*  uint8 buffer
+*
+*******************************************************************************/
+uint8 SPIreadFinished()
+{
+    return SPIM_GetRxBufferSize();
 }
 
 
