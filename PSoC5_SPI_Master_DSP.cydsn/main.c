@@ -11,6 +11,9 @@
 
 #include "main.h"
 
+uint8 slew[4] = {0x00,0x00,0x20,0x8A};
+uint8 volumereg[8] = {0x00,0x00,0x00,0x26, 0x00, 0x00, 0x00, 0x01};
+uint8 volumetosend[4] = {};
 
 
 /*******************************************************************************
@@ -43,14 +46,24 @@ int main()
 
     for(;;)
     {
-        int volume;
-        for(volume=50;volume<100;volume++)
+        uint8 volume;
+        for(volume=50;volume<0x80;volume++)
         {
-            //TODO Setzen des Volume Wertes im DSP
+            //Block Write Slew Mode
+            DSPwrite(0x0027,&slew[0],4);
+            //Safeload
+            //Data to 0x0014
+            volumetosend[0]=(volume>>7);
+            volumetosend[1]=(volume<<1);
+            volumetosend[2]=0x00;
+            volumetosend[3]=0x00;
+            DSPwrite(0x0027,&volumetosend[0],4);
+            //Register to write into
+            DSPwrite(0x0019,&volumereg[0],8);         
             
             sprintf((char *)wrBuffer, "Volume: %i\n\r", volume);
             UARTsendString((char8 *)wrBuffer);
-            CyDelay(250);
+            CyDelay(20);
         }
         
         

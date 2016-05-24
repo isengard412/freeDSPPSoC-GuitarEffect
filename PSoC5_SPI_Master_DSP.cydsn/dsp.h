@@ -16,6 +16,7 @@
 #include "ADAU1452Registers.h"
 #include "stdio.h"
 #include "spimaster.h"
+//#include "programdata.h"
 
 #if defined (__GNUC__)
     /* Add an explicit reference to the floating point printf library */
@@ -23,14 +24,6 @@
     /* This is not linked in by default with the newlib-nano library. */
     asm (".global _printf_float");
 #endif
-
-#define PROGRAM_RAM_SIZE 0
-#define DM0_RAM_SIZE 176
-#define DM1_RAM_SIZE 32
-
-#define CHIPADDRESS 0x00
-#define WRITE_DSP 0x00
-#define READ_DSP 0x01
 
 
 /*******************************************************************************

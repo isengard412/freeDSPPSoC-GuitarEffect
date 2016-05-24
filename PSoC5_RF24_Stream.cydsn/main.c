@@ -43,19 +43,8 @@ int main()
 
     for(;;)
     {
-        int volume;
-        for(volume=50;volume<100;volume++)
-        {
-            //TODO Setzen des Volume Wertes im DSP
-            
-            sprintf((char *)wrBuffer, "Volume: %i\n\r", volume);
-            UARTsendString((char8 *)wrBuffer);
-            CyDelay(250);
-        }
-        
-        
-        
-        
+        CyDelay(50);
+	}
 
     }  /* End of forever loop */
 }  /* End of main */
