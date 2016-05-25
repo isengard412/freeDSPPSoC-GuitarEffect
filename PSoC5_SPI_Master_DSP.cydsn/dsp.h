@@ -1,7 +1,7 @@
 /*******************************************************************************
 * File Name: dsp.h
 *
-* Version: 1.0
+* Version: 1.1
 * Author: Lukas Creutzburg
 *
 * Description:
@@ -16,7 +16,6 @@
 #include "ADAU1452Registers.h"
 #include "stdio.h"
 #include "spimaster.h"
-//#include "programdata.h"
 
 #if defined (__GNUC__)
     /* Add an explicit reference to the floating point printf library */
@@ -77,7 +76,7 @@ uint8 DSPisReady();
 void DSPwrite(uint16 address,uint8* data, uint16 datasize);
 
 /*******************************************************************************
-* Function Name: DSPwriteWord
+* Function Name: DSPwriteWord32
 ********************************************************************************
 *
 * Summary:
@@ -91,10 +90,44 @@ void DSPwrite(uint16 address,uint8* data, uint16 datasize);
 *  None.
 *
 *******************************************************************************/
-void DSPwriteWord(uint16 address,uint16 data);
+void DSPwriteWord32(uint16 address,uint32 data);
 
 /*******************************************************************************
-* Function Name: DSPread
+* Function Name: DSPwriteWord16
+********************************************************************************
+*
+* Summary:
+*  Sending word of data to DSP
+*
+* Parameters:
+*  uint16 address
+*  uint16 word of data
+*
+* Return:
+*  None.
+*
+*******************************************************************************/
+void DSPwriteWord16(uint16 address,uint16 data);
+
+/*******************************************************************************
+* Function Name: DSPsafeLoad
+********************************************************************************
+*
+* Summary:
+*  Letting the DSP perform a safeload Operation to prevent clicks
+*
+* Parameters:
+*  uint16 address
+*  uint32 word of data
+*
+* Return:
+*  None.
+*
+*******************************************************************************/
+void DSPsafeLoad(uint16 address,uint32 data);
+
+/*******************************************************************************
+* Function Name: DSPread32
 ********************************************************************************
 *
 * Summary:
@@ -109,7 +142,7 @@ void DSPwriteWord(uint16 address,uint16 data);
 *  uint8* array
 *
 *******************************************************************************/
-void DSPread(uint16 address, uint8* datatarget, uint16 datasize);
+void DSPread32(uint16 address, uint8* datatarget, uint16 datasize);
 
 
 #endif /* (CY_DSP_H) */

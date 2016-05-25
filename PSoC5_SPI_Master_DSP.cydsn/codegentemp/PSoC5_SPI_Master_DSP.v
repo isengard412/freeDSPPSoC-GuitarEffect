@@ -1,6 +1,6 @@
 // ======================================================================
 // PSoC5_SPI_Master_DSP.v generated from TopDesign.cysch
-// 05/24/2016 at 14:54
+// 05/25/2016 at 10:02
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -579,7 +579,7 @@ module top ;
 		#(.id("04740f1d-4c8d-4f0d-a342-aa7f8d15f889"),
 		  .source_clock_id("CEF43CFB-0213-49b9-B980-2FFAB81C5B47"),
 		  .divisor(0),
-		  .period("250000000"),
+		  .period("1377410468.31956"),
 		  .is_direct(0),
 		  .is_digital(1))
 		Clock

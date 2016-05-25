@@ -11,15 +11,14 @@
 
 #define PROGRAM_RAM_SIZE 480
 #define DM0_RAM_SIZE 176
-#define DM1_RAM_SIZE 32
-#define DUMMY_SIZE 4
-#define SERIAL_OUTPUT_SIZE 24
+#define DM1_RAM_SIZE 16
 
 #define CHIPADDRESS 0x00
 #define WRITE_DSP 0x00
 #define READ_DSP 0x01
 
 /* init sequence registers */
+/* all control registers are 16bit registers */
 #define DUMMY_REGISTER      0x4FFF
 #define SOFT_RESET          0xF890
 #define HYPERNATE           0xF400
@@ -38,6 +37,7 @@
 #define START_PULSE         0xF401
 #define START_CORE          0xF402
 #define SERIAL_OUTPUT       0xF180
+#define SERIAL_OUTPUT_END   0xF197
 
 /* Volume Registers */
 #define VOLADDRESS          0x0026
