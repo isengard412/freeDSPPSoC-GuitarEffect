@@ -143,7 +143,7 @@ extern uint8 I2S_1_initVar;
 #define I2S_1_INT_SOURCE             (0u)
 #define I2S_1_RX_INT_SOURCE          (0u)
 #define I2S_1_TX_INT_SOURCE          (0u)
-#define I2S_1_DATA_BITS              (20u)
+#define I2S_1_DATA_BITS              (16u)
 
 
 /***************************************

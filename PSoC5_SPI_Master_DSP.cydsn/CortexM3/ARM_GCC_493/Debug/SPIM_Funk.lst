@@ -1,0 +1,3725 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"SPIM_Funk.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	SPIM_Funk_initVar
+  19              		.bss
+  20              		.type	SPIM_Funk_initVar, %object
+  21              		.size	SPIM_Funk_initVar, 1
+  22              	SPIM_Funk_initVar:
+  23 0000 00       		.space	1
+  24              		.comm	SPIM_Funk_swStatusTx,1,1
+  25              		.comm	SPIM_Funk_swStatusRx,1,1
+  26              		.section	.text.SPIM_Funk_Init,"ax",%progbits
+  27              		.align	2
+  28              		.global	SPIM_Funk_Init
+  29              		.thumb
+  30              		.thumb_func
+  31              		.type	SPIM_Funk_Init, %function
+  32              	SPIM_Funk_Init:
+  33              	.LFB0:
+  34              		.file 1 ".\\Generated_Source\\PSoC5\\SPIM_Funk.c"
+   1:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC5/SPIM_Funk.c **** * File Name: SPIM_Funk.c
+   3:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Version 2.50
+   4:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+   5:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Description:
+   6:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  This file provides all API functionality of the SPI Master component.
+   7:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+   8:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Note:
+   9:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+  10:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+  11:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+  12:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  13:.\Generated_Source\PSoC5/SPIM_Funk.c **** * You may use this file only in accordance with the license, terms, conditions,
+  14:.\Generated_Source\PSoC5/SPIM_Funk.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  15:.\Generated_Source\PSoC5/SPIM_Funk.c **** * the software package with which this file was provided.
+  16:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+  17:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  18:.\Generated_Source\PSoC5/SPIM_Funk.c **** #include "SPIM_Funk_PVT.h"
+  19:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  20:.\Generated_Source\PSoC5/SPIM_Funk.c **** #if(SPIM_Funk_TX_SOFTWARE_BUF_ENABLED)
+  21:.\Generated_Source\PSoC5/SPIM_Funk.c ****     volatile uint8 SPIM_Funk_txBuffer[SPIM_Funk_TX_BUFFER_SIZE];
+  22:.\Generated_Source\PSoC5/SPIM_Funk.c ****     volatile uint8 SPIM_Funk_txBufferFull;
+  23:.\Generated_Source\PSoC5/SPIM_Funk.c ****     volatile uint8 SPIM_Funk_txBufferRead;
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 2
+
+
+  24:.\Generated_Source\PSoC5/SPIM_Funk.c ****     volatile uint8 SPIM_Funk_txBufferWrite;
+  25:.\Generated_Source\PSoC5/SPIM_Funk.c **** #endif /* (SPIM_Funk_TX_SOFTWARE_BUF_ENABLED) */
+  26:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  27:.\Generated_Source\PSoC5/SPIM_Funk.c **** #if(SPIM_Funk_RX_SOFTWARE_BUF_ENABLED)
+  28:.\Generated_Source\PSoC5/SPIM_Funk.c ****     volatile uint8 SPIM_Funk_rxBuffer[SPIM_Funk_RX_BUFFER_SIZE];
+  29:.\Generated_Source\PSoC5/SPIM_Funk.c ****     volatile uint8 SPIM_Funk_rxBufferFull;
+  30:.\Generated_Source\PSoC5/SPIM_Funk.c ****     volatile uint8 SPIM_Funk_rxBufferRead;
+  31:.\Generated_Source\PSoC5/SPIM_Funk.c ****     volatile uint8 SPIM_Funk_rxBufferWrite;
+  32:.\Generated_Source\PSoC5/SPIM_Funk.c **** #endif /* (SPIM_Funk_RX_SOFTWARE_BUF_ENABLED) */
+  33:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  34:.\Generated_Source\PSoC5/SPIM_Funk.c **** uint8 SPIM_Funk_initVar = 0u;
+  35:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  36:.\Generated_Source\PSoC5/SPIM_Funk.c **** volatile uint8 SPIM_Funk_swStatusTx;
+  37:.\Generated_Source\PSoC5/SPIM_Funk.c **** volatile uint8 SPIM_Funk_swStatusRx;
+  38:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  39:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  40:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+  41:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_Init
+  42:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+  43:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+  44:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+  45:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Inits/Restores default SPIM configuration provided with customizer.
+  46:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+  47:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+  48:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+  49:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+  50:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+  51:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+  52:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+  53:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+  54:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  When this function is called it initializes all of the necessary parameters
+  55:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  for execution. i.e. setting the initial interrupt mask, configuring the
+  56:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  interrupt service routine, configuring the bit-counter parameters and
+  57:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  clearing the FIFO and Status Register.
+  58:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+  59:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Reentrant:
+  60:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  No.
+  61:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+  62:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+  63:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_Init(void) 
+  64:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+  35              		.loc 1 64 0
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 0
+  38              		@ frame_needed = 1, uses_anonymous_args = 0
+  39 0000 80B5     		push	{r7, lr}
+  40              		.cfi_def_cfa_offset 8
+  41              		.cfi_offset 7, -8
+  42              		.cfi_offset 14, -4
+  43 0002 00AF     		add	r7, sp, #0
+  44              		.cfi_def_cfa_register 7
+  65:.\Generated_Source\PSoC5/SPIM_Funk.c ****     /* Initialize the Bit counter */
+  66:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_COUNTER_PERIOD_REG = SPIM_Funk_BITCTR_INIT;
+  45              		.loc 1 66 0
+  46 0004 074B     		ldr	r3, .L2
+  47 0006 0F22     		movs	r2, #15
+  48 0008 1A70     		strb	r2, [r3]
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 3
+
+
+  67:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  68:.\Generated_Source\PSoC5/SPIM_Funk.c ****     /* Init TX ISR  */
+  69:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(0u != SPIM_Funk_INTERNAL_TX_INT_ENABLED)
+  70:.\Generated_Source\PSoC5/SPIM_Funk.c ****         CyIntDisable         (SPIM_Funk_TX_ISR_NUMBER);
+  71:.\Generated_Source\PSoC5/SPIM_Funk.c ****         CyIntSetPriority     (SPIM_Funk_TX_ISR_NUMBER,  SPIM_Funk_TX_ISR_PRIORITY);
+  72:.\Generated_Source\PSoC5/SPIM_Funk.c ****         (void) CyIntSetVector(SPIM_Funk_TX_ISR_NUMBER, &SPIM_Funk_TX_ISR);
+  73:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (0u != SPIM_Funk_INTERNAL_TX_INT_ENABLED) */
+  74:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  75:.\Generated_Source\PSoC5/SPIM_Funk.c ****     /* Init RX ISR  */
+  76:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(0u != SPIM_Funk_INTERNAL_RX_INT_ENABLED)
+  77:.\Generated_Source\PSoC5/SPIM_Funk.c ****         CyIntDisable         (SPIM_Funk_RX_ISR_NUMBER);
+  78:.\Generated_Source\PSoC5/SPIM_Funk.c ****         CyIntSetPriority     (SPIM_Funk_RX_ISR_NUMBER,  SPIM_Funk_RX_ISR_PRIORITY);
+  79:.\Generated_Source\PSoC5/SPIM_Funk.c ****         (void) CyIntSetVector(SPIM_Funk_RX_ISR_NUMBER, &SPIM_Funk_RX_ISR);
+  80:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (0u != SPIM_Funk_INTERNAL_RX_INT_ENABLED) */
+  81:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  82:.\Generated_Source\PSoC5/SPIM_Funk.c ****     /* Clear any stray data from the RX and TX FIFO */
+  83:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_ClearFIFO();
+  49              		.loc 1 83 0
+  50 000a FFF7FEFF 		bl	SPIM_Funk_ClearFIFO
+  84:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  85:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_RX_SOFTWARE_BUF_ENABLED)
+  86:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_rxBufferFull  = 0u;
+  87:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_rxBufferRead  = 0u;
+  88:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_rxBufferWrite = 0u;
+  89:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_RX_SOFTWARE_BUF_ENABLED) */
+  90:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  91:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_TX_SOFTWARE_BUF_ENABLED)
+  92:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_txBufferFull  = 0u;
+  93:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_txBufferRead  = 0u;
+  94:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_txBufferWrite = 0u;
+  95:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_TX_SOFTWARE_BUF_ENABLED) */
+  96:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+  97:.\Generated_Source\PSoC5/SPIM_Funk.c ****     (void) SPIM_Funk_ReadTxStatus(); /* Clear Tx status and swStatusTx */
+  51              		.loc 1 97 0
+  52 000e FFF7FEFF 		bl	SPIM_Funk_ReadTxStatus
+  98:.\Generated_Source\PSoC5/SPIM_Funk.c ****     (void) SPIM_Funk_ReadRxStatus(); /* Clear Rx status and swStatusRx */
+  53              		.loc 1 98 0
+  54 0012 FFF7FEFF 		bl	SPIM_Funk_ReadRxStatus
+  99:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 100:.\Generated_Source\PSoC5/SPIM_Funk.c ****     /* Configure TX and RX interrupt mask */
+ 101:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_TX_STATUS_MASK_REG = SPIM_Funk_TX_INIT_INTERRUPTS_MASK;
+  55              		.loc 1 101 0
+  56 0016 044B     		ldr	r3, .L2+4
+  57 0018 0022     		movs	r2, #0
+  58 001a 1A70     		strb	r2, [r3]
+ 102:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_RX_STATUS_MASK_REG = SPIM_Funk_RX_INIT_INTERRUPTS_MASK;
+  59              		.loc 1 102 0
+  60 001c 034B     		ldr	r3, .L2+8
+  61 001e 0022     		movs	r2, #0
+  62 0020 1A70     		strb	r2, [r3]
+ 103:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+  63              		.loc 1 103 0
+  64 0022 80BD     		pop	{r7, pc}
+  65              	.L3:
+  66              		.align	2
+  67              	.L2:
+  68 0024 87650040 		.word	1073767815
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 4
+
+
+  69 0028 85640040 		.word	1073767557
+  70 002c 84640040 		.word	1073767556
+  71              		.cfi_endproc
+  72              	.LFE0:
+  73              		.size	SPIM_Funk_Init, .-SPIM_Funk_Init
+  74              		.section	.text.SPIM_Funk_Enable,"ax",%progbits
+  75              		.align	2
+  76              		.global	SPIM_Funk_Enable
+  77              		.thumb
+  78              		.thumb_func
+  79              		.type	SPIM_Funk_Enable, %function
+  80              	SPIM_Funk_Enable:
+  81              	.LFB1:
+ 104:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 105:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 106:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 107:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_Enable
+ 108:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 109:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 110:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 111:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Enable SPIM component.
+ 112:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 113:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 114:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 115:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 116:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 117:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 118:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 119:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 120:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_Enable(void) 
+ 121:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+  82              		.loc 1 121 0
+  83              		.cfi_startproc
+  84              		@ args = 0, pretend = 0, frame = 8
+  85              		@ frame_needed = 1, uses_anonymous_args = 0
+  86 0000 80B5     		push	{r7, lr}
+  87              		.cfi_def_cfa_offset 8
+  88              		.cfi_offset 7, -8
+  89              		.cfi_offset 14, -4
+  90 0002 82B0     		sub	sp, sp, #8
+  91              		.cfi_def_cfa_offset 16
+  92 0004 00AF     		add	r7, sp, #0
+  93              		.cfi_def_cfa_register 7
+ 122:.\Generated_Source\PSoC5/SPIM_Funk.c ****     uint8 enableInterrupts;
+ 123:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 124:.\Generated_Source\PSoC5/SPIM_Funk.c ****     enableInterrupts = CyEnterCriticalSection();
+  94              		.loc 1 124 0
+  95 0006 FFF7FEFF 		bl	CyEnterCriticalSection
+  96 000a 0346     		mov	r3, r0
+  97 000c FB71     		strb	r3, [r7, #7]
+ 125:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_COUNTER_CONTROL_REG |= SPIM_Funk_CNTR_ENABLE;
+  98              		.loc 1 125 0
+  99 000e 114A     		ldr	r2, .L5
+ 100 0010 104B     		ldr	r3, .L5
+ 101 0012 1B78     		ldrb	r3, [r3]
+ 102 0014 DBB2     		uxtb	r3, r3
+ 103 0016 43F02003 		orr	r3, r3, #32
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 5
+
+
+ 104 001a DBB2     		uxtb	r3, r3
+ 105 001c 1370     		strb	r3, [r2]
+ 126:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_TX_STATUS_ACTL_REG  |= SPIM_Funk_INT_ENABLE;
+ 106              		.loc 1 126 0
+ 107 001e 0E4A     		ldr	r2, .L5+4
+ 108 0020 0D4B     		ldr	r3, .L5+4
+ 109 0022 1B78     		ldrb	r3, [r3]
+ 110 0024 DBB2     		uxtb	r3, r3
+ 111 0026 43F01003 		orr	r3, r3, #16
+ 112 002a DBB2     		uxtb	r3, r3
+ 113 002c 1370     		strb	r3, [r2]
+ 127:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_RX_STATUS_ACTL_REG  |= SPIM_Funk_INT_ENABLE;
+ 114              		.loc 1 127 0
+ 115 002e 0B4A     		ldr	r2, .L5+8
+ 116 0030 0A4B     		ldr	r3, .L5+8
+ 117 0032 1B78     		ldrb	r3, [r3]
+ 118 0034 DBB2     		uxtb	r3, r3
+ 119 0036 43F01003 		orr	r3, r3, #16
+ 120 003a DBB2     		uxtb	r3, r3
+ 121 003c 1370     		strb	r3, [r2]
+ 128:.\Generated_Source\PSoC5/SPIM_Funk.c ****     CyExitCriticalSection(enableInterrupts);
+ 122              		.loc 1 128 0
+ 123 003e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 124 0040 1846     		mov	r0, r3
+ 125 0042 FFF7FEFF 		bl	CyExitCriticalSection
+ 129:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 130:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(0u != SPIM_Funk_INTERNAL_CLOCK)
+ 131:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_IntClock_Enable();
+ 132:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (0u != SPIM_Funk_INTERNAL_CLOCK) */
+ 133:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 134:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_EnableTxInt();
+ 126              		.loc 1 134 0
+ 127 0046 FFF7FEFF 		bl	SPIM_Funk_EnableTxInt
+ 135:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_EnableRxInt();
+ 128              		.loc 1 135 0
+ 129 004a FFF7FEFF 		bl	SPIM_Funk_EnableRxInt
+ 136:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 130              		.loc 1 136 0
+ 131 004e 0837     		adds	r7, r7, #8
+ 132              		.cfi_def_cfa_offset 8
+ 133 0050 BD46     		mov	sp, r7
+ 134              		.cfi_def_cfa_register 13
+ 135              		@ sp needed
+ 136 0052 80BD     		pop	{r7, pc}
+ 137              	.L6:
+ 138              		.align	2
+ 139              	.L5:
+ 140 0054 97650040 		.word	1073767831
+ 141 0058 95640040 		.word	1073767573
+ 142 005c 94640040 		.word	1073767572
+ 143              		.cfi_endproc
+ 144              	.LFE1:
+ 145              		.size	SPIM_Funk_Enable, .-SPIM_Funk_Enable
+ 146              		.section	.text.SPIM_Funk_Start,"ax",%progbits
+ 147              		.align	2
+ 148              		.global	SPIM_Funk_Start
+ 149              		.thumb
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 6
+
+
+ 150              		.thumb_func
+ 151              		.type	SPIM_Funk_Start, %function
+ 152              	SPIM_Funk_Start:
+ 153              	.LFB2:
+ 137:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 138:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 139:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 140:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_Start
+ 141:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 142:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 143:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 144:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Initialize and Enable the SPI Master component.
+ 145:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 146:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 147:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 148:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 149:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 150:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 151:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 152:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Global variables:
+ 153:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_initVar - used to check initial configuration, modified on
+ 154:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  first function call.
+ 155:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 156:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 157:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Enable the clock input to enable operation.
+ 158:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 159:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Reentrant:
+ 160:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  No.
+ 161:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 162:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 163:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_Start(void) 
+ 164:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 154              		.loc 1 164 0
+ 155              		.cfi_startproc
+ 156              		@ args = 0, pretend = 0, frame = 0
+ 157              		@ frame_needed = 1, uses_anonymous_args = 0
+ 158 0000 80B5     		push	{r7, lr}
+ 159              		.cfi_def_cfa_offset 8
+ 160              		.cfi_offset 7, -8
+ 161              		.cfi_offset 14, -4
+ 162 0002 00AF     		add	r7, sp, #0
+ 163              		.cfi_def_cfa_register 7
+ 165:.\Generated_Source\PSoC5/SPIM_Funk.c ****     if(0u == SPIM_Funk_initVar)
+ 164              		.loc 1 165 0
+ 165 0004 054B     		ldr	r3, .L9
+ 166 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 167 0008 002B     		cmp	r3, #0
+ 168 000a 04D1     		bne	.L8
+ 166:.\Generated_Source\PSoC5/SPIM_Funk.c ****     {
+ 167:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_Init();
+ 169              		.loc 1 167 0
+ 170 000c FFF7FEFF 		bl	SPIM_Funk_Init
+ 168:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_initVar = 1u;
+ 171              		.loc 1 168 0
+ 172 0010 024B     		ldr	r3, .L9
+ 173 0012 0122     		movs	r2, #1
+ 174 0014 1A70     		strb	r2, [r3]
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 7
+
+
+ 175              	.L8:
+ 169:.\Generated_Source\PSoC5/SPIM_Funk.c ****     }
+ 170:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 171:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_Enable();
+ 176              		.loc 1 171 0
+ 177 0016 FFF7FEFF 		bl	SPIM_Funk_Enable
+ 172:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 178              		.loc 1 172 0
+ 179 001a 80BD     		pop	{r7, pc}
+ 180              	.L10:
+ 181              		.align	2
+ 182              	.L9:
+ 183 001c 00000000 		.word	SPIM_Funk_initVar
+ 184              		.cfi_endproc
+ 185              	.LFE2:
+ 186              		.size	SPIM_Funk_Start, .-SPIM_Funk_Start
+ 187              		.section	.text.SPIM_Funk_Stop,"ax",%progbits
+ 188              		.align	2
+ 189              		.global	SPIM_Funk_Stop
+ 190              		.thumb
+ 191              		.thumb_func
+ 192              		.type	SPIM_Funk_Stop, %function
+ 193              	SPIM_Funk_Stop:
+ 194              	.LFB3:
+ 173:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 174:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 175:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 176:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_Stop
+ 177:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 178:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 179:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 180:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Disable the SPI Master component.
+ 181:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 182:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 183:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 184:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 185:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 186:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 187:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 188:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 189:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Disable the clock input to enable operation.
+ 190:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 191:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 192:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_Stop(void) 
+ 193:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 195              		.loc 1 193 0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 8
+ 198              		@ frame_needed = 1, uses_anonymous_args = 0
+ 199 0000 80B5     		push	{r7, lr}
+ 200              		.cfi_def_cfa_offset 8
+ 201              		.cfi_offset 7, -8
+ 202              		.cfi_offset 14, -4
+ 203 0002 82B0     		sub	sp, sp, #8
+ 204              		.cfi_def_cfa_offset 16
+ 205 0004 00AF     		add	r7, sp, #0
+ 206              		.cfi_def_cfa_register 7
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 8
+
+
+ 194:.\Generated_Source\PSoC5/SPIM_Funk.c ****     uint8 enableInterrupts;
+ 195:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 196:.\Generated_Source\PSoC5/SPIM_Funk.c ****     enableInterrupts = CyEnterCriticalSection();
+ 207              		.loc 1 196 0
+ 208 0006 FFF7FEFF 		bl	CyEnterCriticalSection
+ 209 000a 0346     		mov	r3, r0
+ 210 000c FB71     		strb	r3, [r7, #7]
+ 197:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_TX_STATUS_ACTL_REG &= ((uint8) ~SPIM_Funk_INT_ENABLE);
+ 211              		.loc 1 197 0
+ 212 000e 0D4A     		ldr	r2, .L12
+ 213 0010 0C4B     		ldr	r3, .L12
+ 214 0012 1B78     		ldrb	r3, [r3]
+ 215 0014 DBB2     		uxtb	r3, r3
+ 216 0016 23F01003 		bic	r3, r3, #16
+ 217 001a DBB2     		uxtb	r3, r3
+ 218 001c 1370     		strb	r3, [r2]
+ 198:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_RX_STATUS_ACTL_REG &= ((uint8) ~SPIM_Funk_INT_ENABLE);
+ 219              		.loc 1 198 0
+ 220 001e 0A4A     		ldr	r2, .L12+4
+ 221 0020 094B     		ldr	r3, .L12+4
+ 222 0022 1B78     		ldrb	r3, [r3]
+ 223 0024 DBB2     		uxtb	r3, r3
+ 224 0026 23F01003 		bic	r3, r3, #16
+ 225 002a DBB2     		uxtb	r3, r3
+ 226 002c 1370     		strb	r3, [r2]
+ 199:.\Generated_Source\PSoC5/SPIM_Funk.c ****     CyExitCriticalSection(enableInterrupts);
+ 227              		.loc 1 199 0
+ 228 002e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 229 0030 1846     		mov	r0, r3
+ 230 0032 FFF7FEFF 		bl	CyExitCriticalSection
+ 200:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 201:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(0u != SPIM_Funk_INTERNAL_CLOCK)
+ 202:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_IntClock_Disable();
+ 203:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (0u != SPIM_Funk_INTERNAL_CLOCK) */
+ 204:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 205:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_DisableTxInt();
+ 231              		.loc 1 205 0
+ 232 0036 FFF7FEFF 		bl	SPIM_Funk_DisableTxInt
+ 206:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_DisableRxInt();
+ 233              		.loc 1 206 0
+ 234 003a FFF7FEFF 		bl	SPIM_Funk_DisableRxInt
+ 207:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 235              		.loc 1 207 0
+ 236 003e 0837     		adds	r7, r7, #8
+ 237              		.cfi_def_cfa_offset 8
+ 238 0040 BD46     		mov	sp, r7
+ 239              		.cfi_def_cfa_register 13
+ 240              		@ sp needed
+ 241 0042 80BD     		pop	{r7, pc}
+ 242              	.L13:
+ 243              		.align	2
+ 244              	.L12:
+ 245 0044 95640040 		.word	1073767573
+ 246 0048 94640040 		.word	1073767572
+ 247              		.cfi_endproc
+ 248              	.LFE3:
+ 249              		.size	SPIM_Funk_Stop, .-SPIM_Funk_Stop
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 9
+
+
+ 250              		.section	.text.SPIM_Funk_EnableTxInt,"ax",%progbits
+ 251              		.align	2
+ 252              		.global	SPIM_Funk_EnableTxInt
+ 253              		.thumb
+ 254              		.thumb_func
+ 255              		.type	SPIM_Funk_EnableTxInt, %function
+ 256              	SPIM_Funk_EnableTxInt:
+ 257              	.LFB4:
+ 208:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 209:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 210:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 211:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_EnableTxInt
+ 212:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 213:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 214:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 215:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Enable internal Tx interrupt generation.
+ 216:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 217:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 218:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 219:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 220:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 221:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 222:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 223:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 224:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Enable the internal Tx interrupt output -or- the interrupt component itself.
+ 225:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 226:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 227:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_EnableTxInt(void) 
+ 228:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 258              		.loc 1 228 0
+ 259              		.cfi_startproc
+ 260              		@ args = 0, pretend = 0, frame = 0
+ 261              		@ frame_needed = 1, uses_anonymous_args = 0
+ 262              		@ link register save eliminated.
+ 263 0000 80B4     		push	{r7}
+ 264              		.cfi_def_cfa_offset 4
+ 265              		.cfi_offset 7, -4
+ 266 0002 00AF     		add	r7, sp, #0
+ 267              		.cfi_def_cfa_register 7
+ 229:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(0u != SPIM_Funk_INTERNAL_TX_INT_ENABLED)
+ 230:.\Generated_Source\PSoC5/SPIM_Funk.c ****         CyIntEnable(SPIM_Funk_TX_ISR_NUMBER);
+ 231:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (0u != SPIM_Funk_INTERNAL_TX_INT_ENABLED) */
+ 232:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 268              		.loc 1 232 0
+ 269 0004 BD46     		mov	sp, r7
+ 270              		.cfi_def_cfa_register 13
+ 271              		@ sp needed
+ 272 0006 5DF8047B 		ldr	r7, [sp], #4
+ 273              		.cfi_restore 7
+ 274              		.cfi_def_cfa_offset 0
+ 275 000a 7047     		bx	lr
+ 276              		.cfi_endproc
+ 277              	.LFE4:
+ 278              		.size	SPIM_Funk_EnableTxInt, .-SPIM_Funk_EnableTxInt
+ 279              		.section	.text.SPIM_Funk_EnableRxInt,"ax",%progbits
+ 280              		.align	2
+ 281              		.global	SPIM_Funk_EnableRxInt
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 10
+
+
+ 282              		.thumb
+ 283              		.thumb_func
+ 284              		.type	SPIM_Funk_EnableRxInt, %function
+ 285              	SPIM_Funk_EnableRxInt:
+ 286              	.LFB5:
+ 233:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 234:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 235:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 236:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_EnableRxInt
+ 237:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 238:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 239:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 240:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Enable internal Rx interrupt generation.
+ 241:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 242:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 243:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 244:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 245:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 246:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 247:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 248:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 249:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Enable the internal Rx interrupt output -or- the interrupt component itself.
+ 250:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 251:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 252:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_EnableRxInt(void) 
+ 253:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 287              		.loc 1 253 0
+ 288              		.cfi_startproc
+ 289              		@ args = 0, pretend = 0, frame = 0
+ 290              		@ frame_needed = 1, uses_anonymous_args = 0
+ 291              		@ link register save eliminated.
+ 292 0000 80B4     		push	{r7}
+ 293              		.cfi_def_cfa_offset 4
+ 294              		.cfi_offset 7, -4
+ 295 0002 00AF     		add	r7, sp, #0
+ 296              		.cfi_def_cfa_register 7
+ 254:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(0u != SPIM_Funk_INTERNAL_RX_INT_ENABLED)
+ 255:.\Generated_Source\PSoC5/SPIM_Funk.c ****         CyIntEnable(SPIM_Funk_RX_ISR_NUMBER);
+ 256:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (0u != SPIM_Funk_INTERNAL_RX_INT_ENABLED) */
+ 257:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 297              		.loc 1 257 0
+ 298 0004 BD46     		mov	sp, r7
+ 299              		.cfi_def_cfa_register 13
+ 300              		@ sp needed
+ 301 0006 5DF8047B 		ldr	r7, [sp], #4
+ 302              		.cfi_restore 7
+ 303              		.cfi_def_cfa_offset 0
+ 304 000a 7047     		bx	lr
+ 305              		.cfi_endproc
+ 306              	.LFE5:
+ 307              		.size	SPIM_Funk_EnableRxInt, .-SPIM_Funk_EnableRxInt
+ 308              		.section	.text.SPIM_Funk_DisableTxInt,"ax",%progbits
+ 309              		.align	2
+ 310              		.global	SPIM_Funk_DisableTxInt
+ 311              		.thumb
+ 312              		.thumb_func
+ 313              		.type	SPIM_Funk_DisableTxInt, %function
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 11
+
+
+ 314              	SPIM_Funk_DisableTxInt:
+ 315              	.LFB6:
+ 258:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 259:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 260:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 261:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_DisableTxInt
+ 262:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 263:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 264:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 265:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Disable internal Tx interrupt generation.
+ 266:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 267:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 268:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 269:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 270:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 271:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 272:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 273:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 274:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Disable the internal Tx interrupt output -or- the interrupt component itself.
+ 275:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 276:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 277:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_DisableTxInt(void) 
+ 278:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 316              		.loc 1 278 0
+ 317              		.cfi_startproc
+ 318              		@ args = 0, pretend = 0, frame = 0
+ 319              		@ frame_needed = 1, uses_anonymous_args = 0
+ 320              		@ link register save eliminated.
+ 321 0000 80B4     		push	{r7}
+ 322              		.cfi_def_cfa_offset 4
+ 323              		.cfi_offset 7, -4
+ 324 0002 00AF     		add	r7, sp, #0
+ 325              		.cfi_def_cfa_register 7
+ 279:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(0u != SPIM_Funk_INTERNAL_TX_INT_ENABLED)
+ 280:.\Generated_Source\PSoC5/SPIM_Funk.c ****         CyIntDisable(SPIM_Funk_TX_ISR_NUMBER);
+ 281:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (0u != SPIM_Funk_INTERNAL_TX_INT_ENABLED) */
+ 282:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 326              		.loc 1 282 0
+ 327 0004 BD46     		mov	sp, r7
+ 328              		.cfi_def_cfa_register 13
+ 329              		@ sp needed
+ 330 0006 5DF8047B 		ldr	r7, [sp], #4
+ 331              		.cfi_restore 7
+ 332              		.cfi_def_cfa_offset 0
+ 333 000a 7047     		bx	lr
+ 334              		.cfi_endproc
+ 335              	.LFE6:
+ 336              		.size	SPIM_Funk_DisableTxInt, .-SPIM_Funk_DisableTxInt
+ 337              		.section	.text.SPIM_Funk_DisableRxInt,"ax",%progbits
+ 338              		.align	2
+ 339              		.global	SPIM_Funk_DisableRxInt
+ 340              		.thumb
+ 341              		.thumb_func
+ 342              		.type	SPIM_Funk_DisableRxInt, %function
+ 343              	SPIM_Funk_DisableRxInt:
+ 344              	.LFB7:
+ 283:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 12
+
+
+ 284:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 285:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 286:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_DisableRxInt
+ 287:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 288:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 289:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 290:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Disable internal Rx interrupt generation.
+ 291:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 292:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 293:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 294:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 295:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 296:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 297:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 298:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 299:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Disable the internal Rx interrupt output -or- the interrupt component itself.
+ 300:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 301:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 302:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_DisableRxInt(void) 
+ 303:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 345              		.loc 1 303 0
+ 346              		.cfi_startproc
+ 347              		@ args = 0, pretend = 0, frame = 0
+ 348              		@ frame_needed = 1, uses_anonymous_args = 0
+ 349              		@ link register save eliminated.
+ 350 0000 80B4     		push	{r7}
+ 351              		.cfi_def_cfa_offset 4
+ 352              		.cfi_offset 7, -4
+ 353 0002 00AF     		add	r7, sp, #0
+ 354              		.cfi_def_cfa_register 7
+ 304:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(0u != SPIM_Funk_INTERNAL_RX_INT_ENABLED)
+ 305:.\Generated_Source\PSoC5/SPIM_Funk.c ****         CyIntDisable(SPIM_Funk_RX_ISR_NUMBER);
+ 306:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (0u != SPIM_Funk_INTERNAL_RX_INT_ENABLED) */
+ 307:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 355              		.loc 1 307 0
+ 356 0004 BD46     		mov	sp, r7
+ 357              		.cfi_def_cfa_register 13
+ 358              		@ sp needed
+ 359 0006 5DF8047B 		ldr	r7, [sp], #4
+ 360              		.cfi_restore 7
+ 361              		.cfi_def_cfa_offset 0
+ 362 000a 7047     		bx	lr
+ 363              		.cfi_endproc
+ 364              	.LFE7:
+ 365              		.size	SPIM_Funk_DisableRxInt, .-SPIM_Funk_DisableRxInt
+ 366              		.section	.text.SPIM_Funk_SetTxInterruptMode,"ax",%progbits
+ 367              		.align	2
+ 368              		.global	SPIM_Funk_SetTxInterruptMode
+ 369              		.thumb
+ 370              		.thumb_func
+ 371              		.type	SPIM_Funk_SetTxInterruptMode, %function
+ 372              	SPIM_Funk_SetTxInterruptMode:
+ 373              	.LFB8:
+ 308:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 309:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 310:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 311:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_SetTxInterruptMode
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 13
+
+
+ 312:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 313:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 314:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 315:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Configure which status bits trigger an interrupt event.
+ 316:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 317:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 318:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  intSrc: An or'd combination of the desired status bit masks (defined in the
+ 319:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  header file).
+ 320:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 321:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 322:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 323:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 324:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 325:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Enables the output of specific status bits to the interrupt controller.
+ 326:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 327:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 328:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_SetTxInterruptMode(uint8 intSrc) 
+ 329:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 374              		.loc 1 329 0
+ 375              		.cfi_startproc
+ 376              		@ args = 0, pretend = 0, frame = 8
+ 377              		@ frame_needed = 1, uses_anonymous_args = 0
+ 378              		@ link register save eliminated.
+ 379 0000 80B4     		push	{r7}
+ 380              		.cfi_def_cfa_offset 4
+ 381              		.cfi_offset 7, -4
+ 382 0002 83B0     		sub	sp, sp, #12
+ 383              		.cfi_def_cfa_offset 16
+ 384 0004 00AF     		add	r7, sp, #0
+ 385              		.cfi_def_cfa_register 7
+ 386 0006 0346     		mov	r3, r0
+ 387 0008 FB71     		strb	r3, [r7, #7]
+ 330:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_TX_STATUS_MASK_REG = intSrc;
+ 388              		.loc 1 330 0
+ 389 000a 044A     		ldr	r2, .L19
+ 390 000c FB79     		ldrb	r3, [r7, #7]
+ 391 000e 1370     		strb	r3, [r2]
+ 331:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 392              		.loc 1 331 0
+ 393 0010 0C37     		adds	r7, r7, #12
+ 394              		.cfi_def_cfa_offset 4
+ 395 0012 BD46     		mov	sp, r7
+ 396              		.cfi_def_cfa_register 13
+ 397              		@ sp needed
+ 398 0014 5DF8047B 		ldr	r7, [sp], #4
+ 399              		.cfi_restore 7
+ 400              		.cfi_def_cfa_offset 0
+ 401 0018 7047     		bx	lr
+ 402              	.L20:
+ 403 001a 00BF     		.align	2
+ 404              	.L19:
+ 405 001c 85640040 		.word	1073767557
+ 406              		.cfi_endproc
+ 407              	.LFE8:
+ 408              		.size	SPIM_Funk_SetTxInterruptMode, .-SPIM_Funk_SetTxInterruptMode
+ 409              		.section	.text.SPIM_Funk_SetRxInterruptMode,"ax",%progbits
+ 410              		.align	2
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 14
+
+
+ 411              		.global	SPIM_Funk_SetRxInterruptMode
+ 412              		.thumb
+ 413              		.thumb_func
+ 414              		.type	SPIM_Funk_SetRxInterruptMode, %function
+ 415              	SPIM_Funk_SetRxInterruptMode:
+ 416              	.LFB9:
+ 332:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 333:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 334:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 335:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_SetRxInterruptMode
+ 336:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 337:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 338:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 339:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Configure which status bits trigger an interrupt event.
+ 340:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 341:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 342:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  intSrc: An or'd combination of the desired status bit masks (defined in the
+ 343:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  header file).
+ 344:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 345:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 346:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 347:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 348:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 349:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Enables the output of specific status bits to the interrupt controller.
+ 350:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 351:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 352:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_SetRxInterruptMode(uint8 intSrc) 
+ 353:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 417              		.loc 1 353 0
+ 418              		.cfi_startproc
+ 419              		@ args = 0, pretend = 0, frame = 8
+ 420              		@ frame_needed = 1, uses_anonymous_args = 0
+ 421              		@ link register save eliminated.
+ 422 0000 80B4     		push	{r7}
+ 423              		.cfi_def_cfa_offset 4
+ 424              		.cfi_offset 7, -4
+ 425 0002 83B0     		sub	sp, sp, #12
+ 426              		.cfi_def_cfa_offset 16
+ 427 0004 00AF     		add	r7, sp, #0
+ 428              		.cfi_def_cfa_register 7
+ 429 0006 0346     		mov	r3, r0
+ 430 0008 FB71     		strb	r3, [r7, #7]
+ 354:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_RX_STATUS_MASK_REG  = intSrc;
+ 431              		.loc 1 354 0
+ 432 000a 044A     		ldr	r2, .L22
+ 433 000c FB79     		ldrb	r3, [r7, #7]
+ 434 000e 1370     		strb	r3, [r2]
+ 355:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 435              		.loc 1 355 0
+ 436 0010 0C37     		adds	r7, r7, #12
+ 437              		.cfi_def_cfa_offset 4
+ 438 0012 BD46     		mov	sp, r7
+ 439              		.cfi_def_cfa_register 13
+ 440              		@ sp needed
+ 441 0014 5DF8047B 		ldr	r7, [sp], #4
+ 442              		.cfi_restore 7
+ 443              		.cfi_def_cfa_offset 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 15
+
+
+ 444 0018 7047     		bx	lr
+ 445              	.L23:
+ 446 001a 00BF     		.align	2
+ 447              	.L22:
+ 448 001c 84640040 		.word	1073767556
+ 449              		.cfi_endproc
+ 450              	.LFE9:
+ 451              		.size	SPIM_Funk_SetRxInterruptMode, .-SPIM_Funk_SetRxInterruptMode
+ 452              		.section	.text.SPIM_Funk_ReadTxStatus,"ax",%progbits
+ 453              		.align	2
+ 454              		.global	SPIM_Funk_ReadTxStatus
+ 455              		.thumb
+ 456              		.thumb_func
+ 457              		.type	SPIM_Funk_ReadTxStatus, %function
+ 458              	SPIM_Funk_ReadTxStatus:
+ 459              	.LFB10:
+ 356:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 357:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 358:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 359:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_ReadTxStatus
+ 360:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 361:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 362:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 363:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Read the Tx status register for the component.
+ 364:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 365:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 366:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 367:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 368:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 369:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Contents of the Tx status register.
+ 370:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 371:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Global variables:
+ 372:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_swStatusTx - used to store in software status register,
+ 373:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  modified every function call - resets to zero.
+ 374:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 375:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 376:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Allows the user and the API to read the Tx status register for error
+ 377:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  detection and flow control.
+ 378:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 379:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+ 380:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Clear Tx status register of the component.
+ 381:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 382:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Reentrant:
+ 383:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  No.
+ 384:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 385:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 386:.\Generated_Source\PSoC5/SPIM_Funk.c **** uint8 SPIM_Funk_ReadTxStatus(void) 
+ 387:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 460              		.loc 1 387 0
+ 461              		.cfi_startproc
+ 462              		@ args = 0, pretend = 0, frame = 8
+ 463              		@ frame_needed = 1, uses_anonymous_args = 0
+ 464              		@ link register save eliminated.
+ 465 0000 80B4     		push	{r7}
+ 466              		.cfi_def_cfa_offset 4
+ 467              		.cfi_offset 7, -4
+ 468 0002 83B0     		sub	sp, sp, #12
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 16
+
+
+ 469              		.cfi_def_cfa_offset 16
+ 470 0004 00AF     		add	r7, sp, #0
+ 471              		.cfi_def_cfa_register 7
+ 388:.\Generated_Source\PSoC5/SPIM_Funk.c ****     uint8 tmpStatus;
+ 389:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 390:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_TX_SOFTWARE_BUF_ENABLED)
+ 391:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Disable TX interrupt to protect global veriables */
+ 392:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_DisableTxInt();
+ 393:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 394:.\Generated_Source\PSoC5/SPIM_Funk.c ****         tmpStatus = SPIM_Funk_GET_STATUS_TX(SPIM_Funk_swStatusTx);
+ 395:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_swStatusTx = 0u;
+ 396:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 397:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_EnableTxInt();
+ 398:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 399:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #else
+ 400:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 401:.\Generated_Source\PSoC5/SPIM_Funk.c ****         tmpStatus = SPIM_Funk_TX_STATUS_REG;
+ 472              		.loc 1 401 0
+ 473 0006 054B     		ldr	r3, .L26
+ 474 0008 1B78     		ldrb	r3, [r3]
+ 475 000a FB71     		strb	r3, [r7, #7]
+ 402:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 403:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_TX_SOFTWARE_BUF_ENABLED) */
+ 404:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 405:.\Generated_Source\PSoC5/SPIM_Funk.c ****     return(tmpStatus);
+ 476              		.loc 1 405 0
+ 477 000c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 406:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 478              		.loc 1 406 0
+ 479 000e 1846     		mov	r0, r3
+ 480 0010 0C37     		adds	r7, r7, #12
+ 481              		.cfi_def_cfa_offset 4
+ 482 0012 BD46     		mov	sp, r7
+ 483              		.cfi_def_cfa_register 13
+ 484              		@ sp needed
+ 485 0014 5DF8047B 		ldr	r7, [sp], #4
+ 486              		.cfi_restore 7
+ 487              		.cfi_def_cfa_offset 0
+ 488 0018 7047     		bx	lr
+ 489              	.L27:
+ 490 001a 00BF     		.align	2
+ 491              	.L26:
+ 492 001c 65640040 		.word	1073767525
+ 493              		.cfi_endproc
+ 494              	.LFE10:
+ 495              		.size	SPIM_Funk_ReadTxStatus, .-SPIM_Funk_ReadTxStatus
+ 496              		.section	.text.SPIM_Funk_ReadRxStatus,"ax",%progbits
+ 497              		.align	2
+ 498              		.global	SPIM_Funk_ReadRxStatus
+ 499              		.thumb
+ 500              		.thumb_func
+ 501              		.type	SPIM_Funk_ReadRxStatus, %function
+ 502              	SPIM_Funk_ReadRxStatus:
+ 503              	.LFB11:
+ 407:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 408:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 409:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 17
+
+
+ 410:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_ReadRxStatus
+ 411:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 412:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 413:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 414:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Read the Rx status register for the component.
+ 415:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 416:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 417:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 418:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 419:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 420:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Contents of the Rx status register.
+ 421:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 422:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Global variables:
+ 423:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_swStatusRx - used to store in software Rx status register,
+ 424:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  modified every function call - resets to zero.
+ 425:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 426:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 427:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Allows the user and the API to read the Rx status register for error
+ 428:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  detection and flow control.
+ 429:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 430:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+ 431:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Clear Rx status register of the component.
+ 432:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 433:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Reentrant:
+ 434:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  No.
+ 435:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 436:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 437:.\Generated_Source\PSoC5/SPIM_Funk.c **** uint8 SPIM_Funk_ReadRxStatus(void) 
+ 438:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 504              		.loc 1 438 0
+ 505              		.cfi_startproc
+ 506              		@ args = 0, pretend = 0, frame = 8
+ 507              		@ frame_needed = 1, uses_anonymous_args = 0
+ 508              		@ link register save eliminated.
+ 509 0000 80B4     		push	{r7}
+ 510              		.cfi_def_cfa_offset 4
+ 511              		.cfi_offset 7, -4
+ 512 0002 83B0     		sub	sp, sp, #12
+ 513              		.cfi_def_cfa_offset 16
+ 514 0004 00AF     		add	r7, sp, #0
+ 515              		.cfi_def_cfa_register 7
+ 439:.\Generated_Source\PSoC5/SPIM_Funk.c ****     uint8 tmpStatus;
+ 440:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 441:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_RX_SOFTWARE_BUF_ENABLED)
+ 442:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Disable RX interrupt to protect global veriables */
+ 443:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_DisableRxInt();
+ 444:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 445:.\Generated_Source\PSoC5/SPIM_Funk.c ****         tmpStatus = SPIM_Funk_GET_STATUS_RX(SPIM_Funk_swStatusRx);
+ 446:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_swStatusRx = 0u;
+ 447:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 448:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_EnableRxInt();
+ 449:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 450:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #else
+ 451:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 452:.\Generated_Source\PSoC5/SPIM_Funk.c ****         tmpStatus = SPIM_Funk_RX_STATUS_REG;
+ 516              		.loc 1 452 0
+ 517 0006 054B     		ldr	r3, .L30
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 18
+
+
+ 518 0008 1B78     		ldrb	r3, [r3]
+ 519 000a FB71     		strb	r3, [r7, #7]
+ 453:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 454:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_RX_SOFTWARE_BUF_ENABLED) */
+ 455:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 456:.\Generated_Source\PSoC5/SPIM_Funk.c ****     return(tmpStatus);
+ 520              		.loc 1 456 0
+ 521 000c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 457:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 522              		.loc 1 457 0
+ 523 000e 1846     		mov	r0, r3
+ 524 0010 0C37     		adds	r7, r7, #12
+ 525              		.cfi_def_cfa_offset 4
+ 526 0012 BD46     		mov	sp, r7
+ 527              		.cfi_def_cfa_register 13
+ 528              		@ sp needed
+ 529 0014 5DF8047B 		ldr	r7, [sp], #4
+ 530              		.cfi_restore 7
+ 531              		.cfi_def_cfa_offset 0
+ 532 0018 7047     		bx	lr
+ 533              	.L31:
+ 534 001a 00BF     		.align	2
+ 535              	.L30:
+ 536 001c 64640040 		.word	1073767524
+ 537              		.cfi_endproc
+ 538              	.LFE11:
+ 539              		.size	SPIM_Funk_ReadRxStatus, .-SPIM_Funk_ReadRxStatus
+ 540              		.section	.text.SPIM_Funk_WriteTxData,"ax",%progbits
+ 541              		.align	2
+ 542              		.global	SPIM_Funk_WriteTxData
+ 543              		.thumb
+ 544              		.thumb_func
+ 545              		.type	SPIM_Funk_WriteTxData, %function
+ 546              	SPIM_Funk_WriteTxData:
+ 547              	.LFB12:
+ 458:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 459:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 460:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 461:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_WriteTxData
+ 462:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 463:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 464:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 465:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Write a byte of data to be sent across the SPI.
+ 466:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 467:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 468:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  txDataByte: The data value to send across the SPI.
+ 469:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 470:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 471:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 472:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 473:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Global variables:
+ 474:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_txBufferWrite - used for the account of the bytes which
+ 475:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been written down in the TX software buffer, modified every function
+ 476:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  call if TX Software Buffer is used.
+ 477:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_txBufferRead - used for the account of the bytes which
+ 478:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been read from the TX software buffer.
+ 479:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_txBuffer[SPIM_Funk_TX_BUFFER_SIZE] - used to store
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 19
+
+
+ 480:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  data to sending, modified every function call if TX Software Buffer is used.
+ 481:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 482:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 483:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Allows the user to transmit any byte of data in a single transfer.
+ 484:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 485:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+ 486:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  If this function is called again before the previous byte is finished then
+ 487:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  the next byte will be appended to the transfer with no time between
+ 488:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  the byte transfers. Clear Tx status register of the component.
+ 489:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 490:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Reentrant:
+ 491:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  No.
+ 492:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 493:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 494:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_WriteTxData(uint8 txData) 
+ 495:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 548              		.loc 1 495 0
+ 549              		.cfi_startproc
+ 550              		@ args = 0, pretend = 0, frame = 8
+ 551              		@ frame_needed = 1, uses_anonymous_args = 0
+ 552              		@ link register save eliminated.
+ 553 0000 80B4     		push	{r7}
+ 554              		.cfi_def_cfa_offset 4
+ 555              		.cfi_offset 7, -4
+ 556 0002 83B0     		sub	sp, sp, #12
+ 557              		.cfi_def_cfa_offset 16
+ 558 0004 00AF     		add	r7, sp, #0
+ 559              		.cfi_def_cfa_register 7
+ 560 0006 0346     		mov	r3, r0
+ 561 0008 FB71     		strb	r3, [r7, #7]
+ 496:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_TX_SOFTWARE_BUF_ENABLED)
+ 497:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 498:.\Generated_Source\PSoC5/SPIM_Funk.c ****         uint8 tempStatus;
+ 499:.\Generated_Source\PSoC5/SPIM_Funk.c ****         uint8 tmpTxBufferRead;
+ 500:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 501:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Block if TX buffer is FULL: don't overwrite */
+ 502:.\Generated_Source\PSoC5/SPIM_Funk.c ****         do
+ 503:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 504:.\Generated_Source\PSoC5/SPIM_Funk.c ****             tmpTxBufferRead = SPIM_Funk_txBufferRead;
+ 505:.\Generated_Source\PSoC5/SPIM_Funk.c ****             if(0u == tmpTxBufferRead)
+ 506:.\Generated_Source\PSoC5/SPIM_Funk.c ****             {
+ 507:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 tmpTxBufferRead = (SPIM_Funk_TX_BUFFER_SIZE - 1u);
+ 508:.\Generated_Source\PSoC5/SPIM_Funk.c ****             }
+ 509:.\Generated_Source\PSoC5/SPIM_Funk.c ****             else
+ 510:.\Generated_Source\PSoC5/SPIM_Funk.c ****             {
+ 511:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 tmpTxBufferRead--;
+ 512:.\Generated_Source\PSoC5/SPIM_Funk.c ****             }
+ 513:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 514:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }while(tmpTxBufferRead == SPIM_Funk_txBufferWrite);
+ 515:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 516:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Disable TX interrupt to protect global veriables */
+ 517:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_DisableTxInt();
+ 518:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 519:.\Generated_Source\PSoC5/SPIM_Funk.c ****         tempStatus = SPIM_Funk_GET_STATUS_TX(SPIM_Funk_swStatusTx);
+ 520:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_swStatusTx = tempStatus;
+ 521:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 522:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 20
+
+
+ 523:.\Generated_Source\PSoC5/SPIM_Funk.c ****         if((SPIM_Funk_txBufferRead == SPIM_Funk_txBufferWrite) &&
+ 524:.\Generated_Source\PSoC5/SPIM_Funk.c ****            (0u != (SPIM_Funk_swStatusTx & SPIM_Funk_STS_TX_FIFO_NOT_FULL)))
+ 525:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 526:.\Generated_Source\PSoC5/SPIM_Funk.c ****             /* Put data element into the TX FIFO */
+ 527:.\Generated_Source\PSoC5/SPIM_Funk.c ****             CY_SET_REG8(SPIM_Funk_TXDATA_PTR, txData);
+ 528:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 529:.\Generated_Source\PSoC5/SPIM_Funk.c ****         else
+ 530:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 531:.\Generated_Source\PSoC5/SPIM_Funk.c ****             /* Add to the TX software buffer */
+ 532:.\Generated_Source\PSoC5/SPIM_Funk.c ****             SPIM_Funk_txBufferWrite++;
+ 533:.\Generated_Source\PSoC5/SPIM_Funk.c ****             if(SPIM_Funk_txBufferWrite >= SPIM_Funk_TX_BUFFER_SIZE)
+ 534:.\Generated_Source\PSoC5/SPIM_Funk.c ****             {
+ 535:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 SPIM_Funk_txBufferWrite = 0u;
+ 536:.\Generated_Source\PSoC5/SPIM_Funk.c ****             }
+ 537:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 538:.\Generated_Source\PSoC5/SPIM_Funk.c ****             if(SPIM_Funk_txBufferWrite == SPIM_Funk_txBufferRead)
+ 539:.\Generated_Source\PSoC5/SPIM_Funk.c ****             {
+ 540:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 SPIM_Funk_txBufferRead++;
+ 541:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 if(SPIM_Funk_txBufferRead >= SPIM_Funk_TX_BUFFER_SIZE)
+ 542:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 {
+ 543:.\Generated_Source\PSoC5/SPIM_Funk.c ****                     SPIM_Funk_txBufferRead = 0u;
+ 544:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 }
+ 545:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 SPIM_Funk_txBufferFull = 1u;
+ 546:.\Generated_Source\PSoC5/SPIM_Funk.c ****             }
+ 547:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 548:.\Generated_Source\PSoC5/SPIM_Funk.c ****             SPIM_Funk_txBuffer[SPIM_Funk_txBufferWrite] = txData;
+ 549:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 550:.\Generated_Source\PSoC5/SPIM_Funk.c ****             SPIM_Funk_TX_STATUS_MASK_REG |= SPIM_Funk_STS_TX_FIFO_NOT_FULL;
+ 551:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 552:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 553:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_EnableTxInt();
+ 554:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 555:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #else
+ 556:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Wait until TX FIFO has a place */
+ 557:.\Generated_Source\PSoC5/SPIM_Funk.c ****         while(0u == (SPIM_Funk_TX_STATUS_REG & SPIM_Funk_STS_TX_FIFO_NOT_FULL))
+ 562              		.loc 1 557 0
+ 563 000a 00BF     		nop
+ 564              	.L33:
+ 565              		.loc 1 557 0 is_stmt 0 discriminator 1
+ 566 000c 074B     		ldr	r3, .L34
+ 567 000e 1B78     		ldrb	r3, [r3]
+ 568 0010 DBB2     		uxtb	r3, r3
+ 569 0012 03F00403 		and	r3, r3, #4
+ 570 0016 002B     		cmp	r3, #0
+ 571 0018 F8D0     		beq	.L33
+ 558:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 559:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 560:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 561:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Put data element into the TX FIFO */
+ 562:.\Generated_Source\PSoC5/SPIM_Funk.c ****         CY_SET_REG8(SPIM_Funk_TXDATA_PTR, txData);
+ 572              		.loc 1 562 0 is_stmt 1
+ 573 001a 054A     		ldr	r2, .L34+4
+ 574 001c FB79     		ldrb	r3, [r7, #7]
+ 575 001e 1370     		strb	r3, [r2]
+ 563:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 564:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_TX_SOFTWARE_BUF_ENABLED) */
+ 565:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 21
+
+
+ 576              		.loc 1 565 0
+ 577 0020 0C37     		adds	r7, r7, #12
+ 578              		.cfi_def_cfa_offset 4
+ 579 0022 BD46     		mov	sp, r7
+ 580              		.cfi_def_cfa_register 13
+ 581              		@ sp needed
+ 582 0024 5DF8047B 		ldr	r7, [sp], #4
+ 583              		.cfi_restore 7
+ 584              		.cfi_def_cfa_offset 0
+ 585 0028 7047     		bx	lr
+ 586              	.L35:
+ 587 002a 00BF     		.align	2
+ 588              	.L34:
+ 589 002c 65640040 		.word	1073767525
+ 590 0030 47640040 		.word	1073767495
+ 591              		.cfi_endproc
+ 592              	.LFE12:
+ 593              		.size	SPIM_Funk_WriteTxData, .-SPIM_Funk_WriteTxData
+ 594              		.section	.text.SPIM_Funk_ReadRxData,"ax",%progbits
+ 595              		.align	2
+ 596              		.global	SPIM_Funk_ReadRxData
+ 597              		.thumb
+ 598              		.thumb_func
+ 599              		.type	SPIM_Funk_ReadRxData, %function
+ 600              	SPIM_Funk_ReadRxData:
+ 601              	.LFB13:
+ 566:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 567:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 568:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 569:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_ReadRxData
+ 570:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 571:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 572:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 573:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Read the next byte of data received across the SPI.
+ 574:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 575:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 576:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 577:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 578:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 579:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  The next byte of data read from the FIFO.
+ 580:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 581:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Global variables:
+ 582:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_rxBufferWrite - used for the account of the bytes which
+ 583:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been written down in the RX software buffer.
+ 584:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_rxBufferRead - used for the account of the bytes which
+ 585:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been read from the RX software buffer, modified every function
+ 586:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  call if RX Software Buffer is used.
+ 587:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_rxBuffer[SPIM_Funk_RX_BUFFER_SIZE] - used to store
+ 588:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  received data.
+ 589:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 590:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 591:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Allows the user to read a byte of data received.
+ 592:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 593:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+ 594:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Will return invalid data if the FIFO is empty. The user should Call
+ 595:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  GetRxBufferSize() and if it returns a non-zero value then it is safe to call
+ 596:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  ReadByte() function.
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 22
+
+
+ 597:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 598:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Reentrant:
+ 599:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  No.
+ 600:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 601:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 602:.\Generated_Source\PSoC5/SPIM_Funk.c **** uint8 SPIM_Funk_ReadRxData(void) 
+ 603:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 602              		.loc 1 603 0
+ 603              		.cfi_startproc
+ 604              		@ args = 0, pretend = 0, frame = 8
+ 605              		@ frame_needed = 1, uses_anonymous_args = 0
+ 606              		@ link register save eliminated.
+ 607 0000 80B4     		push	{r7}
+ 608              		.cfi_def_cfa_offset 4
+ 609              		.cfi_offset 7, -4
+ 610 0002 83B0     		sub	sp, sp, #12
+ 611              		.cfi_def_cfa_offset 16
+ 612 0004 00AF     		add	r7, sp, #0
+ 613              		.cfi_def_cfa_register 7
+ 604:.\Generated_Source\PSoC5/SPIM_Funk.c ****     uint8 rxData;
+ 605:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 606:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_RX_SOFTWARE_BUF_ENABLED)
+ 607:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 608:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Disable RX interrupt to protect global veriables */
+ 609:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_DisableRxInt();
+ 610:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 611:.\Generated_Source\PSoC5/SPIM_Funk.c ****         if(SPIM_Funk_rxBufferRead != SPIM_Funk_rxBufferWrite)
+ 612:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 613:.\Generated_Source\PSoC5/SPIM_Funk.c ****             if(0u == SPIM_Funk_rxBufferFull)
+ 614:.\Generated_Source\PSoC5/SPIM_Funk.c ****             {
+ 615:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 SPIM_Funk_rxBufferRead++;
+ 616:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 if(SPIM_Funk_rxBufferRead >= SPIM_Funk_RX_BUFFER_SIZE)
+ 617:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 {
+ 618:.\Generated_Source\PSoC5/SPIM_Funk.c ****                     SPIM_Funk_rxBufferRead = 0u;
+ 619:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 }
+ 620:.\Generated_Source\PSoC5/SPIM_Funk.c ****             }
+ 621:.\Generated_Source\PSoC5/SPIM_Funk.c ****             else
+ 622:.\Generated_Source\PSoC5/SPIM_Funk.c ****             {
+ 623:.\Generated_Source\PSoC5/SPIM_Funk.c ****                 SPIM_Funk_rxBufferFull = 0u;
+ 624:.\Generated_Source\PSoC5/SPIM_Funk.c ****             }
+ 625:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 626:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 627:.\Generated_Source\PSoC5/SPIM_Funk.c ****         rxData = SPIM_Funk_rxBuffer[SPIM_Funk_rxBufferRead];
+ 628:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 629:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_EnableRxInt();
+ 630:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 631:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #else
+ 632:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 633:.\Generated_Source\PSoC5/SPIM_Funk.c ****         rxData = CY_GET_REG8(SPIM_Funk_RXDATA_PTR);
+ 614              		.loc 1 633 0
+ 615 0006 054B     		ldr	r3, .L38
+ 616 0008 1B78     		ldrb	r3, [r3]
+ 617 000a FB71     		strb	r3, [r7, #7]
+ 634:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 635:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_RX_SOFTWARE_BUF_ENABLED) */
+ 636:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 637:.\Generated_Source\PSoC5/SPIM_Funk.c ****     return(rxData);
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 23
+
+
+ 618              		.loc 1 637 0
+ 619 000c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 638:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 620              		.loc 1 638 0
+ 621 000e 1846     		mov	r0, r3
+ 622 0010 0C37     		adds	r7, r7, #12
+ 623              		.cfi_def_cfa_offset 4
+ 624 0012 BD46     		mov	sp, r7
+ 625              		.cfi_def_cfa_register 13
+ 626              		@ sp needed
+ 627 0014 5DF8047B 		ldr	r7, [sp], #4
+ 628              		.cfi_restore 7
+ 629              		.cfi_def_cfa_offset 0
+ 630 0018 7047     		bx	lr
+ 631              	.L39:
+ 632 001a 00BF     		.align	2
+ 633              	.L38:
+ 634 001c 57640040 		.word	1073767511
+ 635              		.cfi_endproc
+ 636              	.LFE13:
+ 637              		.size	SPIM_Funk_ReadRxData, .-SPIM_Funk_ReadRxData
+ 638              		.section	.text.SPIM_Funk_GetRxBufferSize,"ax",%progbits
+ 639              		.align	2
+ 640              		.global	SPIM_Funk_GetRxBufferSize
+ 641              		.thumb
+ 642              		.thumb_func
+ 643              		.type	SPIM_Funk_GetRxBufferSize, %function
+ 644              	SPIM_Funk_GetRxBufferSize:
+ 645              	.LFB14:
+ 639:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 640:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 641:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 642:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_GetRxBufferSize
+ 643:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 644:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 645:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 646:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Returns the number of bytes/words of data currently held in the RX buffer.
+ 647:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  If RX Software Buffer not used then function return 0 if FIFO empty or 1 if
+ 648:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  FIFO not empty. In another case function return size of RX Software Buffer.
+ 649:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 650:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 651:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 652:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 653:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 654:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Integer count of the number of bytes/words in the RX buffer.
+ 655:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 656:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Global variables:
+ 657:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_rxBufferWrite - used for the account of the bytes which
+ 658:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been written down in the RX software buffer.
+ 659:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_rxBufferRead - used for the account of the bytes which
+ 660:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been read from the RX software buffer.
+ 661:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 662:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+ 663:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Clear status register of the component.
+ 664:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 665:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 666:.\Generated_Source\PSoC5/SPIM_Funk.c **** uint8 SPIM_Funk_GetRxBufferSize(void) 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 24
+
+
+ 667:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 646              		.loc 1 667 0
+ 647              		.cfi_startproc
+ 648              		@ args = 0, pretend = 0, frame = 8
+ 649              		@ frame_needed = 1, uses_anonymous_args = 0
+ 650              		@ link register save eliminated.
+ 651 0000 80B4     		push	{r7}
+ 652              		.cfi_def_cfa_offset 4
+ 653              		.cfi_offset 7, -4
+ 654 0002 83B0     		sub	sp, sp, #12
+ 655              		.cfi_def_cfa_offset 16
+ 656 0004 00AF     		add	r7, sp, #0
+ 657              		.cfi_def_cfa_register 7
+ 668:.\Generated_Source\PSoC5/SPIM_Funk.c ****     uint8 size;
+ 669:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 670:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_RX_SOFTWARE_BUF_ENABLED)
+ 671:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 672:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Disable RX interrupt to protect global veriables */
+ 673:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_DisableRxInt();
+ 674:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 675:.\Generated_Source\PSoC5/SPIM_Funk.c ****         if(SPIM_Funk_rxBufferRead == SPIM_Funk_rxBufferWrite)
+ 676:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 677:.\Generated_Source\PSoC5/SPIM_Funk.c ****             size = 0u;
+ 678:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 679:.\Generated_Source\PSoC5/SPIM_Funk.c ****         else if(SPIM_Funk_rxBufferRead < SPIM_Funk_rxBufferWrite)
+ 680:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 681:.\Generated_Source\PSoC5/SPIM_Funk.c ****             size = (SPIM_Funk_rxBufferWrite - SPIM_Funk_rxBufferRead);
+ 682:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 683:.\Generated_Source\PSoC5/SPIM_Funk.c ****         else
+ 684:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 685:.\Generated_Source\PSoC5/SPIM_Funk.c ****             size = (SPIM_Funk_RX_BUFFER_SIZE - SPIM_Funk_rxBufferRead) + SPIM_Funk_rxBufferWrite;
+ 686:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 687:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 688:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_EnableRxInt();
+ 689:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 690:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #else
+ 691:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 692:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* We can only know if there is data in the RX FIFO */
+ 693:.\Generated_Source\PSoC5/SPIM_Funk.c ****         size = (0u != (SPIM_Funk_RX_STATUS_REG & SPIM_Funk_STS_RX_FIFO_NOT_EMPTY)) ? 1u : 0u;
+ 658              		.loc 1 693 0
+ 659 0006 094B     		ldr	r3, .L44
+ 660 0008 1B78     		ldrb	r3, [r3]
+ 661 000a DBB2     		uxtb	r3, r3
+ 662 000c 03F02003 		and	r3, r3, #32
+ 663 0010 002B     		cmp	r3, #0
+ 664 0012 01D0     		beq	.L41
+ 665              		.loc 1 693 0 is_stmt 0 discriminator 1
+ 666 0014 0123     		movs	r3, #1
+ 667 0016 00E0     		b	.L42
+ 668              	.L41:
+ 669              		.loc 1 693 0 discriminator 2
+ 670 0018 0023     		movs	r3, #0
+ 671              	.L42:
+ 672              		.loc 1 693 0 discriminator 4
+ 673 001a FB71     		strb	r3, [r7, #7]
+ 694:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 695:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_TX_SOFTWARE_BUF_ENABLED) */
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 25
+
+
+ 696:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 697:.\Generated_Source\PSoC5/SPIM_Funk.c ****     return(size);
+ 674              		.loc 1 697 0 is_stmt 1 discriminator 4
+ 675 001c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 698:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 676              		.loc 1 698 0 discriminator 4
+ 677 001e 1846     		mov	r0, r3
+ 678 0020 0C37     		adds	r7, r7, #12
+ 679              		.cfi_def_cfa_offset 4
+ 680 0022 BD46     		mov	sp, r7
+ 681              		.cfi_def_cfa_register 13
+ 682              		@ sp needed
+ 683 0024 5DF8047B 		ldr	r7, [sp], #4
+ 684              		.cfi_restore 7
+ 685              		.cfi_def_cfa_offset 0
+ 686 0028 7047     		bx	lr
+ 687              	.L45:
+ 688 002a 00BF     		.align	2
+ 689              	.L44:
+ 690 002c 64640040 		.word	1073767524
+ 691              		.cfi_endproc
+ 692              	.LFE14:
+ 693              		.size	SPIM_Funk_GetRxBufferSize, .-SPIM_Funk_GetRxBufferSize
+ 694              		.section	.text.SPIM_Funk_GetTxBufferSize,"ax",%progbits
+ 695              		.align	2
+ 696              		.global	SPIM_Funk_GetTxBufferSize
+ 697              		.thumb
+ 698              		.thumb_func
+ 699              		.type	SPIM_Funk_GetTxBufferSize, %function
+ 700              	SPIM_Funk_GetTxBufferSize:
+ 701              	.LFB15:
+ 699:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 700:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 701:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 702:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_GetTxBufferSize
+ 703:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 704:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 705:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 706:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Returns the number of bytes/words of data currently held in the TX buffer.
+ 707:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  If TX Software Buffer not used then function return 0 - if FIFO empty, 1 - if
+ 708:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  FIFO not full, 4 - if FIFO full. In another case function return size of TX
+ 709:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Software Buffer.
+ 710:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 711:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 712:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 713:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 714:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 715:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Integer count of the number of bytes/words in the TX buffer.
+ 716:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 717:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Global variables:
+ 718:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_txBufferWrite - used for the account of the bytes which
+ 719:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been written down in the TX software buffer.
+ 720:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_txBufferRead - used for the account of the bytes which
+ 721:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been read from the TX software buffer.
+ 722:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 723:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+ 724:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Clear status register of the component.
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 26
+
+
+ 725:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 726:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 727:.\Generated_Source\PSoC5/SPIM_Funk.c **** uint8  SPIM_Funk_GetTxBufferSize(void) 
+ 728:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 702              		.loc 1 728 0
+ 703              		.cfi_startproc
+ 704              		@ args = 0, pretend = 0, frame = 8
+ 705              		@ frame_needed = 1, uses_anonymous_args = 0
+ 706              		@ link register save eliminated.
+ 707 0000 80B4     		push	{r7}
+ 708              		.cfi_def_cfa_offset 4
+ 709              		.cfi_offset 7, -4
+ 710 0002 83B0     		sub	sp, sp, #12
+ 711              		.cfi_def_cfa_offset 16
+ 712 0004 00AF     		add	r7, sp, #0
+ 713              		.cfi_def_cfa_register 7
+ 729:.\Generated_Source\PSoC5/SPIM_Funk.c ****     uint8 size;
+ 730:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 731:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_TX_SOFTWARE_BUF_ENABLED)
+ 732:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Disable TX interrupt to protect global veriables */
+ 733:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_DisableTxInt();
+ 734:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 735:.\Generated_Source\PSoC5/SPIM_Funk.c ****         if(SPIM_Funk_txBufferRead == SPIM_Funk_txBufferWrite)
+ 736:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 737:.\Generated_Source\PSoC5/SPIM_Funk.c ****             size = 0u;
+ 738:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 739:.\Generated_Source\PSoC5/SPIM_Funk.c ****         else if(SPIM_Funk_txBufferRead < SPIM_Funk_txBufferWrite)
+ 740:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 741:.\Generated_Source\PSoC5/SPIM_Funk.c ****             size = (SPIM_Funk_txBufferWrite - SPIM_Funk_txBufferRead);
+ 742:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 743:.\Generated_Source\PSoC5/SPIM_Funk.c ****         else
+ 744:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 745:.\Generated_Source\PSoC5/SPIM_Funk.c ****             size = (SPIM_Funk_TX_BUFFER_SIZE - SPIM_Funk_txBufferRead) + SPIM_Funk_txBufferWrite;
+ 746:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 747:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 748:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_EnableTxInt();
+ 749:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 750:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #else
+ 751:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 752:.\Generated_Source\PSoC5/SPIM_Funk.c ****         size = SPIM_Funk_TX_STATUS_REG;
+ 714              		.loc 1 752 0
+ 715 0006 0E4B     		ldr	r3, .L51
+ 716 0008 1B78     		ldrb	r3, [r3]
+ 717 000a FB71     		strb	r3, [r7, #7]
+ 753:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 754:.\Generated_Source\PSoC5/SPIM_Funk.c ****         if(0u != (size & SPIM_Funk_STS_TX_FIFO_EMPTY))
+ 718              		.loc 1 754 0
+ 719 000c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 720 000e 03F00203 		and	r3, r3, #2
+ 721 0012 002B     		cmp	r3, #0
+ 722 0014 02D0     		beq	.L47
+ 755:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 756:.\Generated_Source\PSoC5/SPIM_Funk.c ****             size = 0u;
+ 723              		.loc 1 756 0
+ 724 0016 0023     		movs	r3, #0
+ 725 0018 FB71     		strb	r3, [r7, #7]
+ 726 001a 09E0     		b	.L48
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 27
+
+
+ 727              	.L47:
+ 757:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 758:.\Generated_Source\PSoC5/SPIM_Funk.c ****         else if(0u != (size & SPIM_Funk_STS_TX_FIFO_NOT_FULL))
+ 728              		.loc 1 758 0
+ 729 001c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 730 001e 03F00403 		and	r3, r3, #4
+ 731 0022 002B     		cmp	r3, #0
+ 732 0024 02D0     		beq	.L49
+ 759:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 760:.\Generated_Source\PSoC5/SPIM_Funk.c ****             size = 1u;
+ 733              		.loc 1 760 0
+ 734 0026 0123     		movs	r3, #1
+ 735 0028 FB71     		strb	r3, [r7, #7]
+ 736 002a 01E0     		b	.L48
+ 737              	.L49:
+ 761:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 762:.\Generated_Source\PSoC5/SPIM_Funk.c ****         else
+ 763:.\Generated_Source\PSoC5/SPIM_Funk.c ****         {
+ 764:.\Generated_Source\PSoC5/SPIM_Funk.c ****             size = SPIM_Funk_FIFO_SIZE;
+ 738              		.loc 1 764 0
+ 739 002c 0423     		movs	r3, #4
+ 740 002e FB71     		strb	r3, [r7, #7]
+ 741              	.L48:
+ 765:.\Generated_Source\PSoC5/SPIM_Funk.c ****         }
+ 766:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 767:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_TX_SOFTWARE_BUF_ENABLED) */
+ 768:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 769:.\Generated_Source\PSoC5/SPIM_Funk.c ****     return(size);
+ 742              		.loc 1 769 0
+ 743 0030 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 770:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 744              		.loc 1 770 0
+ 745 0032 1846     		mov	r0, r3
+ 746 0034 0C37     		adds	r7, r7, #12
+ 747              		.cfi_def_cfa_offset 4
+ 748 0036 BD46     		mov	sp, r7
+ 749              		.cfi_def_cfa_register 13
+ 750              		@ sp needed
+ 751 0038 5DF8047B 		ldr	r7, [sp], #4
+ 752              		.cfi_restore 7
+ 753              		.cfi_def_cfa_offset 0
+ 754 003c 7047     		bx	lr
+ 755              	.L52:
+ 756 003e 00BF     		.align	2
+ 757              	.L51:
+ 758 0040 65640040 		.word	1073767525
+ 759              		.cfi_endproc
+ 760              	.LFE15:
+ 761              		.size	SPIM_Funk_GetTxBufferSize, .-SPIM_Funk_GetTxBufferSize
+ 762              		.section	.text.SPIM_Funk_ClearRxBuffer,"ax",%progbits
+ 763              		.align	2
+ 764              		.global	SPIM_Funk_ClearRxBuffer
+ 765              		.thumb
+ 766              		.thumb_func
+ 767              		.type	SPIM_Funk_ClearRxBuffer, %function
+ 768              	SPIM_Funk_ClearRxBuffer:
+ 769              	.LFB16:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 28
+
+
+ 771:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 772:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 773:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 774:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_ClearRxBuffer
+ 775:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 776:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 777:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 778:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Clear the RX RAM buffer by setting the read and write pointers both to zero.
+ 779:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 780:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 781:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 782:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 783:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 784:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 785:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 786:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Global variables:
+ 787:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_rxBufferWrite - used for the account of the bytes which
+ 788:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been written down in the RX software buffer, modified every function
+ 789:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  call - resets to zero.
+ 790:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_rxBufferRead - used for the account of the bytes which
+ 791:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been read from the RX software buffer, modified every function call -
+ 792:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  resets to zero.
+ 793:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 794:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 795:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Setting the pointers to zero makes the system believe there is no data to
+ 796:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  read and writing will resume at address 0 overwriting any data that may have
+ 797:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  remained in the RAM.
+ 798:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 799:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+ 800:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Any received data not read from the RAM buffer will be lost when overwritten.
+ 801:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 802:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Reentrant:
+ 803:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  No.
+ 804:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 805:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 806:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_ClearRxBuffer(void) 
+ 807:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 770              		.loc 1 807 0
+ 771              		.cfi_startproc
+ 772              		@ args = 0, pretend = 0, frame = 0
+ 773              		@ frame_needed = 1, uses_anonymous_args = 0
+ 774              		@ link register save eliminated.
+ 775 0000 80B4     		push	{r7}
+ 776              		.cfi_def_cfa_offset 4
+ 777              		.cfi_offset 7, -4
+ 778 0002 00AF     		add	r7, sp, #0
+ 779              		.cfi_def_cfa_register 7
+ 808:.\Generated_Source\PSoC5/SPIM_Funk.c ****     /* Clear Hardware RX FIFO */
+ 809:.\Generated_Source\PSoC5/SPIM_Funk.c ****     while(0u !=(SPIM_Funk_RX_STATUS_REG & SPIM_Funk_STS_RX_FIFO_NOT_EMPTY))
+ 780              		.loc 1 809 0
+ 781 0004 01E0     		b	.L54
+ 782              	.L55:
+ 810:.\Generated_Source\PSoC5/SPIM_Funk.c ****     {
+ 811:.\Generated_Source\PSoC5/SPIM_Funk.c ****         (void) CY_GET_REG8(SPIM_Funk_RXDATA_PTR);
+ 783              		.loc 1 811 0
+ 784 0006 064B     		ldr	r3, .L56
+ 785 0008 1B78     		ldrb	r3, [r3]
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 29
+
+
+ 786              	.L54:
+ 809:.\Generated_Source\PSoC5/SPIM_Funk.c ****     {
+ 787              		.loc 1 809 0
+ 788 000a 064B     		ldr	r3, .L56+4
+ 789 000c 1B78     		ldrb	r3, [r3]
+ 790 000e DBB2     		uxtb	r3, r3
+ 791 0010 03F02003 		and	r3, r3, #32
+ 792 0014 002B     		cmp	r3, #0
+ 793 0016 F6D1     		bne	.L55
+ 812:.\Generated_Source\PSoC5/SPIM_Funk.c ****     }
+ 813:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 814:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_RX_SOFTWARE_BUF_ENABLED)
+ 815:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Disable RX interrupt to protect global veriables */
+ 816:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_DisableRxInt();
+ 817:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 818:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_rxBufferFull  = 0u;
+ 819:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_rxBufferRead  = 0u;
+ 820:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_rxBufferWrite = 0u;
+ 821:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 822:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_EnableRxInt();
+ 823:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_RX_SOFTWARE_BUF_ENABLED) */
+ 824:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 794              		.loc 1 824 0
+ 795 0018 BD46     		mov	sp, r7
+ 796              		.cfi_def_cfa_register 13
+ 797              		@ sp needed
+ 798 001a 5DF8047B 		ldr	r7, [sp], #4
+ 799              		.cfi_restore 7
+ 800              		.cfi_def_cfa_offset 0
+ 801 001e 7047     		bx	lr
+ 802              	.L57:
+ 803              		.align	2
+ 804              	.L56:
+ 805 0020 57640040 		.word	1073767511
+ 806 0024 64640040 		.word	1073767524
+ 807              		.cfi_endproc
+ 808              	.LFE16:
+ 809              		.size	SPIM_Funk_ClearRxBuffer, .-SPIM_Funk_ClearRxBuffer
+ 810              		.section	.text.SPIM_Funk_ClearTxBuffer,"ax",%progbits
+ 811              		.align	2
+ 812              		.global	SPIM_Funk_ClearTxBuffer
+ 813              		.thumb
+ 814              		.thumb_func
+ 815              		.type	SPIM_Funk_ClearTxBuffer, %function
+ 816              	SPIM_Funk_ClearTxBuffer:
+ 817              	.LFB17:
+ 825:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 826:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 827:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 828:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_ClearTxBuffer
+ 829:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 830:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 831:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 832:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Clear the TX RAM buffer by setting the read and write pointers both to zero.
+ 833:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 834:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 835:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 30
+
+
+ 836:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 837:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 838:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 839:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 840:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Global variables:
+ 841:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_txBufferWrite - used for the account of the bytes which
+ 842:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been written down in the TX software buffer, modified every function
+ 843:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  call - resets to zero.
+ 844:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_txBufferRead - used for the account of the bytes which
+ 845:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  have been read from the TX software buffer, modified every function call -
+ 846:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  resets to zero.
+ 847:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 848:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+ 849:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Setting the pointers to zero makes the system believe there is no data to
+ 850:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  read and writing will resume at address 0 overwriting any data that may have
+ 851:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  remained in the RAM.
+ 852:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 853:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+ 854:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Any data not yet transmitted from the RAM buffer will be lost when
+ 855:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  overwritten.
+ 856:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 857:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Reentrant:
+ 858:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  No.
+ 859:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 860:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 861:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_ClearTxBuffer(void) 
+ 862:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 818              		.loc 1 862 0
+ 819              		.cfi_startproc
+ 820              		@ args = 0, pretend = 0, frame = 8
+ 821              		@ frame_needed = 1, uses_anonymous_args = 0
+ 822 0000 80B5     		push	{r7, lr}
+ 823              		.cfi_def_cfa_offset 8
+ 824              		.cfi_offset 7, -8
+ 825              		.cfi_offset 14, -4
+ 826 0002 82B0     		sub	sp, sp, #8
+ 827              		.cfi_def_cfa_offset 16
+ 828 0004 00AF     		add	r7, sp, #0
+ 829              		.cfi_def_cfa_register 7
+ 863:.\Generated_Source\PSoC5/SPIM_Funk.c ****     uint8 enableInterrupts;
+ 864:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 865:.\Generated_Source\PSoC5/SPIM_Funk.c ****     enableInterrupts = CyEnterCriticalSection();
+ 830              		.loc 1 865 0
+ 831 0006 FFF7FEFF 		bl	CyEnterCriticalSection
+ 832 000a 0346     		mov	r3, r0
+ 833 000c FB71     		strb	r3, [r7, #7]
+ 866:.\Generated_Source\PSoC5/SPIM_Funk.c ****     /* Clear TX FIFO */
+ 867:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_AUX_CONTROL_DP0_REG |= ((uint8)  SPIM_Funk_TX_FIFO_CLR);
+ 834              		.loc 1 867 0
+ 835 000e 0B4A     		ldr	r2, .L59
+ 836 0010 0A4B     		ldr	r3, .L59
+ 837 0012 1B78     		ldrb	r3, [r3]
+ 838 0014 DBB2     		uxtb	r3, r3
+ 839 0016 43F00103 		orr	r3, r3, #1
+ 840 001a DBB2     		uxtb	r3, r3
+ 841 001c 1370     		strb	r3, [r2]
+ 868:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_AUX_CONTROL_DP0_REG &= ((uint8) ~SPIM_Funk_TX_FIFO_CLR);
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 31
+
+
+ 842              		.loc 1 868 0
+ 843 001e 074A     		ldr	r2, .L59
+ 844 0020 064B     		ldr	r3, .L59
+ 845 0022 1B78     		ldrb	r3, [r3]
+ 846 0024 DBB2     		uxtb	r3, r3
+ 847 0026 23F00103 		bic	r3, r3, #1
+ 848 002a DBB2     		uxtb	r3, r3
+ 849 002c 1370     		strb	r3, [r2]
+ 869:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 870:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_USE_SECOND_DATAPATH)
+ 871:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Clear TX FIFO for 2nd Datapath */
+ 872:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_AUX_CONTROL_DP1_REG |= ((uint8)  SPIM_Funk_TX_FIFO_CLR);
+ 873:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_AUX_CONTROL_DP1_REG &= ((uint8) ~SPIM_Funk_TX_FIFO_CLR);
+ 874:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_USE_SECOND_DATAPATH) */
+ 875:.\Generated_Source\PSoC5/SPIM_Funk.c ****     CyExitCriticalSection(enableInterrupts);
+ 850              		.loc 1 875 0
+ 851 002e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 852 0030 1846     		mov	r0, r3
+ 853 0032 FFF7FEFF 		bl	CyExitCriticalSection
+ 876:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 877:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_TX_SOFTWARE_BUF_ENABLED)
+ 878:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Disable TX interrupt to protect global veriables */
+ 879:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_DisableTxInt();
+ 880:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 881:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_txBufferFull  = 0u;
+ 882:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_txBufferRead  = 0u;
+ 883:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_txBufferWrite = 0u;
+ 884:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 885:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Buffer is EMPTY: disable TX FIFO NOT FULL interrupt */
+ 886:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_TX_STATUS_MASK_REG &= ((uint8) ~SPIM_Funk_STS_TX_FIFO_NOT_FULL);
+ 887:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 888:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_EnableTxInt();
+ 889:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_TX_SOFTWARE_BUF_ENABLED) */
+ 890:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 854              		.loc 1 890 0
+ 855 0036 0837     		adds	r7, r7, #8
+ 856              		.cfi_def_cfa_offset 8
+ 857 0038 BD46     		mov	sp, r7
+ 858              		.cfi_def_cfa_register 13
+ 859              		@ sp needed
+ 860 003a 80BD     		pop	{r7, pc}
+ 861              	.L60:
+ 862              		.align	2
+ 863              	.L59:
+ 864 003c 97640040 		.word	1073767575
+ 865              		.cfi_endproc
+ 866              	.LFE17:
+ 867              		.size	SPIM_Funk_ClearTxBuffer, .-SPIM_Funk_ClearTxBuffer
+ 868              		.section	.text.SPIM_Funk_PutArray,"ax",%progbits
+ 869              		.align	2
+ 870              		.global	SPIM_Funk_PutArray
+ 871              		.thumb
+ 872              		.thumb_func
+ 873              		.type	SPIM_Funk_PutArray, %function
+ 874              	SPIM_Funk_PutArray:
+ 875              	.LFB18:
+ 891:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 32
+
+
+ 892:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 893:.\Generated_Source\PSoC5/SPIM_Funk.c **** #if(0u != SPIM_Funk_BIDIRECTIONAL_MODE)
+ 894:.\Generated_Source\PSoC5/SPIM_Funk.c ****     /*******************************************************************************
+ 895:.\Generated_Source\PSoC5/SPIM_Funk.c ****     * Function Name: SPIM_Funk_TxEnable
+ 896:.\Generated_Source\PSoC5/SPIM_Funk.c ****     ********************************************************************************
+ 897:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *
+ 898:.\Generated_Source\PSoC5/SPIM_Funk.c ****     * Summary:
+ 899:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *  If the SPI master is configured to use a single bi-directional pin then this
+ 900:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *  will set the bi-directional pin to transmit.
+ 901:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *
+ 902:.\Generated_Source\PSoC5/SPIM_Funk.c ****     * Parameters:
+ 903:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *  None.
+ 904:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *
+ 905:.\Generated_Source\PSoC5/SPIM_Funk.c ****     * Return:
+ 906:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *  None.
+ 907:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *
+ 908:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *******************************************************************************/
+ 909:.\Generated_Source\PSoC5/SPIM_Funk.c ****     void SPIM_Funk_TxEnable(void) 
+ 910:.\Generated_Source\PSoC5/SPIM_Funk.c ****     {
+ 911:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_CONTROL_REG |= SPIM_Funk_CTRL_TX_SIGNAL_EN;
+ 912:.\Generated_Source\PSoC5/SPIM_Funk.c ****     }
+ 913:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 914:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 915:.\Generated_Source\PSoC5/SPIM_Funk.c ****     /*******************************************************************************
+ 916:.\Generated_Source\PSoC5/SPIM_Funk.c ****     * Function Name: SPIM_Funk_TxDisable
+ 917:.\Generated_Source\PSoC5/SPIM_Funk.c ****     ********************************************************************************
+ 918:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *
+ 919:.\Generated_Source\PSoC5/SPIM_Funk.c ****     * Summary:
+ 920:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *  If the SPI master is configured to use a single bi-directional pin then this
+ 921:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *  will set the bi-directional pin to receive.
+ 922:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *
+ 923:.\Generated_Source\PSoC5/SPIM_Funk.c ****     * Parameters:
+ 924:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *  None.
+ 925:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *
+ 926:.\Generated_Source\PSoC5/SPIM_Funk.c ****     * Return:
+ 927:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *  None.
+ 928:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *
+ 929:.\Generated_Source\PSoC5/SPIM_Funk.c ****     *******************************************************************************/
+ 930:.\Generated_Source\PSoC5/SPIM_Funk.c ****     void SPIM_Funk_TxDisable(void) 
+ 931:.\Generated_Source\PSoC5/SPIM_Funk.c ****     {
+ 932:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_CONTROL_REG &= ((uint8) ~SPIM_Funk_CTRL_TX_SIGNAL_EN);
+ 933:.\Generated_Source\PSoC5/SPIM_Funk.c ****     }
+ 934:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 935:.\Generated_Source\PSoC5/SPIM_Funk.c **** #endif /* (0u != SPIM_Funk_BIDIRECTIONAL_MODE) */
+ 936:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 937:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 938:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 939:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_PutArray
+ 940:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 941:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 942:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 943:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Write available data from ROM/RAM to the TX buffer while space is available
+ 944:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  in the TX buffer. Keep trying until all data is passed to the TX buffer.
+ 945:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 946:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 947:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  *buffer: Pointer to the location in RAM containing the data to send
+ 948:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  byteCount: The number of bytes to move to the transmit buffer.
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 33
+
+
+ 949:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 950:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 951:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 952:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 953:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+ 954:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Will stay in this routine until all data has been sent.  May get locked in
+ 955:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  this loop if data is not being initiated by the master if there is not
+ 956:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  enough room in the TX FIFO.
+ 957:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 958:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Reentrant:
+ 959:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  No.
+ 960:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 961:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 962:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_PutArray(const uint8 buffer[], uint8 byteCount)
+ 963:.\Generated_Source\PSoC5/SPIM_Funk.c ****                                                                           
+ 964:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 876              		.loc 1 964 0
+ 877              		.cfi_startproc
+ 878              		@ args = 0, pretend = 0, frame = 16
+ 879              		@ frame_needed = 1, uses_anonymous_args = 0
+ 880 0000 80B5     		push	{r7, lr}
+ 881              		.cfi_def_cfa_offset 8
+ 882              		.cfi_offset 7, -8
+ 883              		.cfi_offset 14, -4
+ 884 0002 84B0     		sub	sp, sp, #16
+ 885              		.cfi_def_cfa_offset 24
+ 886 0004 00AF     		add	r7, sp, #0
+ 887              		.cfi_def_cfa_register 7
+ 888 0006 7860     		str	r0, [r7, #4]
+ 889 0008 0B46     		mov	r3, r1
+ 890 000a FB70     		strb	r3, [r7, #3]
+ 965:.\Generated_Source\PSoC5/SPIM_Funk.c ****     uint8 bufIndex;
+ 966:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 967:.\Generated_Source\PSoC5/SPIM_Funk.c ****     bufIndex = 0u;
+ 891              		.loc 1 967 0
+ 892 000c 0023     		movs	r3, #0
+ 893 000e FB73     		strb	r3, [r7, #15]
+ 968:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 969:.\Generated_Source\PSoC5/SPIM_Funk.c ****     while(byteCount > 0u)
+ 894              		.loc 1 969 0
+ 895 0010 0CE0     		b	.L62
+ 896              	.L63:
+ 970:.\Generated_Source\PSoC5/SPIM_Funk.c ****     {
+ 971:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_WriteTxData(buffer[bufIndex]);
+ 897              		.loc 1 971 0
+ 898 0012 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 899 0014 7A68     		ldr	r2, [r7, #4]
+ 900 0016 1344     		add	r3, r3, r2
+ 901 0018 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 902 001a 1846     		mov	r0, r3
+ 903 001c FFF7FEFF 		bl	SPIM_Funk_WriteTxData
+ 972:.\Generated_Source\PSoC5/SPIM_Funk.c ****         bufIndex++;
+ 904              		.loc 1 972 0
+ 905 0020 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 906 0022 0133     		adds	r3, r3, #1
+ 907 0024 FB73     		strb	r3, [r7, #15]
+ 973:.\Generated_Source\PSoC5/SPIM_Funk.c ****         byteCount--;
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 34
+
+
+ 908              		.loc 1 973 0
+ 909 0026 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 910 0028 013B     		subs	r3, r3, #1
+ 911 002a FB70     		strb	r3, [r7, #3]
+ 912              	.L62:
+ 969:.\Generated_Source\PSoC5/SPIM_Funk.c ****     {
+ 913              		.loc 1 969 0
+ 914 002c FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 915 002e 002B     		cmp	r3, #0
+ 916 0030 EFD1     		bne	.L63
+ 974:.\Generated_Source\PSoC5/SPIM_Funk.c ****     }
+ 975:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 917              		.loc 1 975 0
+ 918 0032 1037     		adds	r7, r7, #16
+ 919              		.cfi_def_cfa_offset 8
+ 920 0034 BD46     		mov	sp, r7
+ 921              		.cfi_def_cfa_register 13
+ 922              		@ sp needed
+ 923 0036 80BD     		pop	{r7, pc}
+ 924              		.cfi_endproc
+ 925              	.LFE18:
+ 926              		.size	SPIM_Funk_PutArray, .-SPIM_Funk_PutArray
+ 927              		.section	.text.SPIM_Funk_ClearFIFO,"ax",%progbits
+ 928              		.align	2
+ 929              		.global	SPIM_Funk_ClearFIFO
+ 930              		.thumb
+ 931              		.thumb_func
+ 932              		.type	SPIM_Funk_ClearFIFO, %function
+ 933              	SPIM_Funk_ClearFIFO:
+ 934              	.LFB19:
+ 976:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 977:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 978:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+ 979:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_ClearFIFO
+ 980:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+ 981:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 982:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+ 983:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Clear the RX and TX FIFO's of all data for a fresh start.
+ 984:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 985:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+ 986:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 987:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 988:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+ 989:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+ 990:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 991:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+ 992:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Clear status register of the component.
+ 993:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+ 994:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+ 995:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_ClearFIFO(void) 
+ 996:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 935              		.loc 1 996 0
+ 936              		.cfi_startproc
+ 937              		@ args = 0, pretend = 0, frame = 8
+ 938              		@ frame_needed = 1, uses_anonymous_args = 0
+ 939 0000 80B5     		push	{r7, lr}
+ 940              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 35
+
+
+ 941              		.cfi_offset 7, -8
+ 942              		.cfi_offset 14, -4
+ 943 0002 82B0     		sub	sp, sp, #8
+ 944              		.cfi_def_cfa_offset 16
+ 945 0004 00AF     		add	r7, sp, #0
+ 946              		.cfi_def_cfa_register 7
+ 997:.\Generated_Source\PSoC5/SPIM_Funk.c ****     uint8 enableInterrupts;
+ 998:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+ 999:.\Generated_Source\PSoC5/SPIM_Funk.c ****     /* Clear Hardware RX FIFO */
+1000:.\Generated_Source\PSoC5/SPIM_Funk.c ****     while(0u !=(SPIM_Funk_RX_STATUS_REG & SPIM_Funk_STS_RX_FIFO_NOT_EMPTY))
+ 947              		.loc 1 1000 0
+ 948 0006 01E0     		b	.L65
+ 949              	.L66:
+1001:.\Generated_Source\PSoC5/SPIM_Funk.c ****     {
+1002:.\Generated_Source\PSoC5/SPIM_Funk.c ****         (void) CY_GET_REG8(SPIM_Funk_RXDATA_PTR);
+ 950              		.loc 1 1002 0
+ 951 0008 114B     		ldr	r3, .L67
+ 952 000a 1B78     		ldrb	r3, [r3]
+ 953              	.L65:
+1000:.\Generated_Source\PSoC5/SPIM_Funk.c ****     {
+ 954              		.loc 1 1000 0
+ 955 000c 114B     		ldr	r3, .L67+4
+ 956 000e 1B78     		ldrb	r3, [r3]
+ 957 0010 DBB2     		uxtb	r3, r3
+ 958 0012 03F02003 		and	r3, r3, #32
+ 959 0016 002B     		cmp	r3, #0
+ 960 0018 F6D1     		bne	.L66
+1003:.\Generated_Source\PSoC5/SPIM_Funk.c ****     }
+1004:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1005:.\Generated_Source\PSoC5/SPIM_Funk.c ****     enableInterrupts = CyEnterCriticalSection();
+ 961              		.loc 1 1005 0
+ 962 001a FFF7FEFF 		bl	CyEnterCriticalSection
+ 963 001e 0346     		mov	r3, r0
+ 964 0020 FB71     		strb	r3, [r7, #7]
+1006:.\Generated_Source\PSoC5/SPIM_Funk.c ****     /* Clear TX FIFO */
+1007:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_AUX_CONTROL_DP0_REG |= ((uint8)  SPIM_Funk_TX_FIFO_CLR);
+ 965              		.loc 1 1007 0
+ 966 0022 0D4A     		ldr	r2, .L67+8
+ 967 0024 0C4B     		ldr	r3, .L67+8
+ 968 0026 1B78     		ldrb	r3, [r3]
+ 969 0028 DBB2     		uxtb	r3, r3
+ 970 002a 43F00103 		orr	r3, r3, #1
+ 971 002e DBB2     		uxtb	r3, r3
+ 972 0030 1370     		strb	r3, [r2]
+1008:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_AUX_CONTROL_DP0_REG &= ((uint8) ~SPIM_Funk_TX_FIFO_CLR);
+ 973              		.loc 1 1008 0
+ 974 0032 094A     		ldr	r2, .L67+8
+ 975 0034 084B     		ldr	r3, .L67+8
+ 976 0036 1B78     		ldrb	r3, [r3]
+ 977 0038 DBB2     		uxtb	r3, r3
+ 978 003a 23F00103 		bic	r3, r3, #1
+ 979 003e DBB2     		uxtb	r3, r3
+ 980 0040 1370     		strb	r3, [r2]
+1009:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1010:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_USE_SECOND_DATAPATH)
+1011:.\Generated_Source\PSoC5/SPIM_Funk.c ****         /* Clear TX FIFO for 2nd Datapath */
+1012:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_AUX_CONTROL_DP1_REG |= ((uint8)  SPIM_Funk_TX_FIFO_CLR);
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 36
+
+
+1013:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_AUX_CONTROL_DP1_REG &= ((uint8) ~SPIM_Funk_TX_FIFO_CLR);
+1014:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_USE_SECOND_DATAPATH) */
+1015:.\Generated_Source\PSoC5/SPIM_Funk.c ****     CyExitCriticalSection(enableInterrupts);
+ 981              		.loc 1 1015 0
+ 982 0042 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 983 0044 1846     		mov	r0, r3
+ 984 0046 FFF7FEFF 		bl	CyExitCriticalSection
+1016:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 985              		.loc 1 1016 0
+ 986 004a 0837     		adds	r7, r7, #8
+ 987              		.cfi_def_cfa_offset 8
+ 988 004c BD46     		mov	sp, r7
+ 989              		.cfi_def_cfa_register 13
+ 990              		@ sp needed
+ 991 004e 80BD     		pop	{r7, pc}
+ 992              	.L68:
+ 993              		.align	2
+ 994              	.L67:
+ 995 0050 57640040 		.word	1073767511
+ 996 0054 64640040 		.word	1073767524
+ 997 0058 97640040 		.word	1073767575
+ 998              		.cfi_endproc
+ 999              	.LFE19:
+ 1000              		.size	SPIM_Funk_ClearFIFO, .-SPIM_Funk_ClearFIFO
+ 1001              		.section	.text.SPIM_Funk_EnableInt,"ax",%progbits
+ 1002              		.align	2
+ 1003              		.global	SPIM_Funk_EnableInt
+ 1004              		.thumb
+ 1005              		.thumb_func
+ 1006              		.type	SPIM_Funk_EnableInt, %function
+ 1007              	SPIM_Funk_EnableInt:
+ 1008              	.LFB20:
+1017:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1018:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1019:.\Generated_Source\PSoC5/SPIM_Funk.c **** /* Following functions are for version Compatibility, they are obsolete.
+1020:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Please do not use it in new projects.
+1021:.\Generated_Source\PSoC5/SPIM_Funk.c **** */
+1022:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1023:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1024:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+1025:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_EnableInt
+1026:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+1027:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1028:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+1029:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Enable internal interrupt generation.
+1030:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1031:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+1032:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+1033:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1034:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+1035:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+1036:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1037:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+1038:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Enable the internal interrupt output -or- the interrupt component itself.
+1039:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1040:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+1041:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_EnableInt(void) 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 37
+
+
+1042:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 1009              		.loc 1 1042 0
+ 1010              		.cfi_startproc
+ 1011              		@ args = 0, pretend = 0, frame = 0
+ 1012              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1013 0000 80B5     		push	{r7, lr}
+ 1014              		.cfi_def_cfa_offset 8
+ 1015              		.cfi_offset 7, -8
+ 1016              		.cfi_offset 14, -4
+ 1017 0002 00AF     		add	r7, sp, #0
+ 1018              		.cfi_def_cfa_register 7
+1043:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_EnableRxInt();
+ 1019              		.loc 1 1043 0
+ 1020 0004 FFF7FEFF 		bl	SPIM_Funk_EnableRxInt
+1044:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_EnableTxInt();
+ 1021              		.loc 1 1044 0
+ 1022 0008 FFF7FEFF 		bl	SPIM_Funk_EnableTxInt
+1045:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 1023              		.loc 1 1045 0
+ 1024 000c 80BD     		pop	{r7, pc}
+ 1025              		.cfi_endproc
+ 1026              	.LFE20:
+ 1027              		.size	SPIM_Funk_EnableInt, .-SPIM_Funk_EnableInt
+ 1028 000e 00BF     		.section	.text.SPIM_Funk_DisableInt,"ax",%progbits
+ 1029              		.align	2
+ 1030              		.global	SPIM_Funk_DisableInt
+ 1031              		.thumb
+ 1032              		.thumb_func
+ 1033              		.type	SPIM_Funk_DisableInt, %function
+ 1034              	SPIM_Funk_DisableInt:
+ 1035              	.LFB21:
+1046:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1047:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1048:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+1049:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_DisableInt
+1050:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+1051:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1052:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+1053:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Disable internal interrupt generation.
+1054:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1055:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+1056:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+1057:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1058:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+1059:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+1060:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1061:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+1062:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Disable the internal interrupt output -or- the interrupt component itself.
+1063:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1064:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+1065:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_DisableInt(void) 
+1066:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 1036              		.loc 1 1066 0
+ 1037              		.cfi_startproc
+ 1038              		@ args = 0, pretend = 0, frame = 0
+ 1039              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1040 0000 80B5     		push	{r7, lr}
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 38
+
+
+ 1041              		.cfi_def_cfa_offset 8
+ 1042              		.cfi_offset 7, -8
+ 1043              		.cfi_offset 14, -4
+ 1044 0002 00AF     		add	r7, sp, #0
+ 1045              		.cfi_def_cfa_register 7
+1067:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_DisableTxInt();
+ 1046              		.loc 1 1067 0
+ 1047 0004 FFF7FEFF 		bl	SPIM_Funk_DisableTxInt
+1068:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_DisableRxInt();
+ 1048              		.loc 1 1068 0
+ 1049 0008 FFF7FEFF 		bl	SPIM_Funk_DisableRxInt
+1069:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 1050              		.loc 1 1069 0
+ 1051 000c 80BD     		pop	{r7, pc}
+ 1052              		.cfi_endproc
+ 1053              	.LFE21:
+ 1054              		.size	SPIM_Funk_DisableInt, .-SPIM_Funk_DisableInt
+ 1055 000e 00BF     		.section	.text.SPIM_Funk_SetInterruptMode,"ax",%progbits
+ 1056              		.align	2
+ 1057              		.global	SPIM_Funk_SetInterruptMode
+ 1058              		.thumb
+ 1059              		.thumb_func
+ 1060              		.type	SPIM_Funk_SetInterruptMode, %function
+ 1061              	SPIM_Funk_SetInterruptMode:
+ 1062              	.LFB22:
+1070:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1071:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1072:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+1073:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_SetInterruptMode
+1074:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+1075:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1076:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+1077:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Configure which status bits trigger an interrupt event.
+1078:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1079:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+1080:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  intSrc: An or'd combination of the desired status bit masks (defined in the
+1081:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  header file).
+1082:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1083:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+1084:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+1085:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1086:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+1087:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Enables the output of specific status bits to the interrupt controller.
+1088:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1089:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+1090:.\Generated_Source\PSoC5/SPIM_Funk.c **** void SPIM_Funk_SetInterruptMode(uint8 intSrc) 
+1091:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 1063              		.loc 1 1091 0
+ 1064              		.cfi_startproc
+ 1065              		@ args = 0, pretend = 0, frame = 8
+ 1066              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1067              		@ link register save eliminated.
+ 1068 0000 80B4     		push	{r7}
+ 1069              		.cfi_def_cfa_offset 4
+ 1070              		.cfi_offset 7, -4
+ 1071 0002 83B0     		sub	sp, sp, #12
+ 1072              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 39
+
+
+ 1073 0004 00AF     		add	r7, sp, #0
+ 1074              		.cfi_def_cfa_register 7
+ 1075 0006 0346     		mov	r3, r0
+ 1076 0008 FB71     		strb	r3, [r7, #7]
+1092:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_TX_STATUS_MASK_REG  = (intSrc & ((uint8) ~SPIM_Funk_STS_SPI_IDLE));
+ 1077              		.loc 1 1092 0
+ 1078 000a 074A     		ldr	r2, .L72
+ 1079 000c FB79     		ldrb	r3, [r7, #7]
+ 1080 000e 23F01003 		bic	r3, r3, #16
+ 1081 0012 DBB2     		uxtb	r3, r3
+ 1082 0014 1370     		strb	r3, [r2]
+1093:.\Generated_Source\PSoC5/SPIM_Funk.c ****     SPIM_Funk_RX_STATUS_MASK_REG  =  intSrc;
+ 1083              		.loc 1 1093 0
+ 1084 0016 054A     		ldr	r2, .L72+4
+ 1085 0018 FB79     		ldrb	r3, [r7, #7]
+ 1086 001a 1370     		strb	r3, [r2]
+1094:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 1087              		.loc 1 1094 0
+ 1088 001c 0C37     		adds	r7, r7, #12
+ 1089              		.cfi_def_cfa_offset 4
+ 1090 001e BD46     		mov	sp, r7
+ 1091              		.cfi_def_cfa_register 13
+ 1092              		@ sp needed
+ 1093 0020 5DF8047B 		ldr	r7, [sp], #4
+ 1094              		.cfi_restore 7
+ 1095              		.cfi_def_cfa_offset 0
+ 1096 0024 7047     		bx	lr
+ 1097              	.L73:
+ 1098 0026 00BF     		.align	2
+ 1099              	.L72:
+ 1100 0028 85640040 		.word	1073767557
+ 1101 002c 84640040 		.word	1073767556
+ 1102              		.cfi_endproc
+ 1103              	.LFE22:
+ 1104              		.size	SPIM_Funk_SetInterruptMode, .-SPIM_Funk_SetInterruptMode
+ 1105              		.section	.text.SPIM_Funk_ReadStatus,"ax",%progbits
+ 1106              		.align	2
+ 1107              		.global	SPIM_Funk_ReadStatus
+ 1108              		.thumb
+ 1109              		.thumb_func
+ 1110              		.type	SPIM_Funk_ReadStatus, %function
+ 1111              	SPIM_Funk_ReadStatus:
+ 1112              	.LFB23:
+1095:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1096:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1097:.\Generated_Source\PSoC5/SPIM_Funk.c **** /*******************************************************************************
+1098:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Function Name: SPIM_Funk_ReadStatus
+1099:.\Generated_Source\PSoC5/SPIM_Funk.c **** ********************************************************************************
+1100:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1101:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Summary:
+1102:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Read the status register for the component.
+1103:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1104:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Parameters:
+1105:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  None.
+1106:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1107:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Return:
+1108:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Contents of the status register.
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 40
+
+
+1109:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1110:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Global variables:
+1111:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  SPIM_Funk_swStatus - used to store in software status register,
+1112:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  modified every function call - resets to zero.
+1113:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1114:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Theory:
+1115:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Allows the user and the API to read the status register for error detection
+1116:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  and flow control.
+1117:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1118:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Side Effects:
+1119:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  Clear status register of the component.
+1120:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1121:.\Generated_Source\PSoC5/SPIM_Funk.c **** * Reentrant:
+1122:.\Generated_Source\PSoC5/SPIM_Funk.c **** *  No.
+1123:.\Generated_Source\PSoC5/SPIM_Funk.c **** *
+1124:.\Generated_Source\PSoC5/SPIM_Funk.c **** *******************************************************************************/
+1125:.\Generated_Source\PSoC5/SPIM_Funk.c **** uint8 SPIM_Funk_ReadStatus(void) 
+1126:.\Generated_Source\PSoC5/SPIM_Funk.c **** {
+ 1113              		.loc 1 1126 0
+ 1114              		.cfi_startproc
+ 1115              		@ args = 0, pretend = 0, frame = 8
+ 1116              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1117              		@ link register save eliminated.
+ 1118 0000 80B4     		push	{r7}
+ 1119              		.cfi_def_cfa_offset 4
+ 1120              		.cfi_offset 7, -4
+ 1121 0002 83B0     		sub	sp, sp, #12
+ 1122              		.cfi_def_cfa_offset 16
+ 1123 0004 00AF     		add	r7, sp, #0
+ 1124              		.cfi_def_cfa_register 7
+1127:.\Generated_Source\PSoC5/SPIM_Funk.c ****     uint8 tmpStatus;
+1128:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1129:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #if(SPIM_Funk_TX_SOFTWARE_BUF_ENABLED || SPIM_Funk_RX_SOFTWARE_BUF_ENABLED)
+1130:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1131:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_DisableInt();
+1132:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1133:.\Generated_Source\PSoC5/SPIM_Funk.c ****         tmpStatus  = SPIM_Funk_GET_STATUS_RX(SPIM_Funk_swStatusRx);
+1134:.\Generated_Source\PSoC5/SPIM_Funk.c ****         tmpStatus |= SPIM_Funk_GET_STATUS_TX(SPIM_Funk_swStatusTx);
+1135:.\Generated_Source\PSoC5/SPIM_Funk.c ****         tmpStatus &= ((uint8) ~SPIM_Funk_STS_SPI_IDLE);
+1136:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1137:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_swStatusTx = 0u;
+1138:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_swStatusRx = 0u;
+1139:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1140:.\Generated_Source\PSoC5/SPIM_Funk.c ****         SPIM_Funk_EnableInt();
+1141:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1142:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #else
+1143:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1144:.\Generated_Source\PSoC5/SPIM_Funk.c ****         tmpStatus  = SPIM_Funk_RX_STATUS_REG;
+ 1125              		.loc 1 1144 0
+ 1126 0006 0A4B     		ldr	r3, .L76
+ 1127 0008 1B78     		ldrb	r3, [r3]
+ 1128 000a FB71     		strb	r3, [r7, #7]
+1145:.\Generated_Source\PSoC5/SPIM_Funk.c ****         tmpStatus |= SPIM_Funk_TX_STATUS_REG;
+ 1129              		.loc 1 1145 0
+ 1130 000c 094B     		ldr	r3, .L76+4
+ 1131 000e 1B78     		ldrb	r3, [r3]
+ 1132 0010 DAB2     		uxtb	r2, r3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 41
+
+
+ 1133 0012 FB79     		ldrb	r3, [r7, #7]
+ 1134 0014 1343     		orrs	r3, r3, r2
+ 1135 0016 FB71     		strb	r3, [r7, #7]
+1146:.\Generated_Source\PSoC5/SPIM_Funk.c ****         tmpStatus &= ((uint8) ~SPIM_Funk_STS_SPI_IDLE);
+ 1136              		.loc 1 1146 0
+ 1137 0018 FB79     		ldrb	r3, [r7, #7]
+ 1138 001a 23F01003 		bic	r3, r3, #16
+ 1139 001e FB71     		strb	r3, [r7, #7]
+1147:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1148:.\Generated_Source\PSoC5/SPIM_Funk.c ****     #endif /* (SPIM_Funk_TX_SOFTWARE_BUF_ENABLED || SPIM_Funk_RX_SOFTWARE_BUF_ENABLED) */
+1149:.\Generated_Source\PSoC5/SPIM_Funk.c **** 
+1150:.\Generated_Source\PSoC5/SPIM_Funk.c ****     return(tmpStatus);
+ 1140              		.loc 1 1150 0
+ 1141 0020 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+1151:.\Generated_Source\PSoC5/SPIM_Funk.c **** }
+ 1142              		.loc 1 1151 0
+ 1143 0022 1846     		mov	r0, r3
+ 1144 0024 0C37     		adds	r7, r7, #12
+ 1145              		.cfi_def_cfa_offset 4
+ 1146 0026 BD46     		mov	sp, r7
+ 1147              		.cfi_def_cfa_register 13
+ 1148              		@ sp needed
+ 1149 0028 5DF8047B 		ldr	r7, [sp], #4
+ 1150              		.cfi_restore 7
+ 1151              		.cfi_def_cfa_offset 0
+ 1152 002c 7047     		bx	lr
+ 1153              	.L77:
+ 1154 002e 00BF     		.align	2
+ 1155              	.L76:
+ 1156 0030 64640040 		.word	1073767524
+ 1157 0034 65640040 		.word	1073767525
+ 1158              		.cfi_endproc
+ 1159              	.LFE23:
+ 1160              		.size	SPIM_Funk_ReadStatus, .-SPIM_Funk_ReadStatus
+ 1161              		.text
+ 1162              	.Letext0:
+ 1163              		.file 2 ".\\Generated_Source\\PSoC5\\cytypes.h"
+ 1164              		.section	.debug_info,"",%progbits
+ 1165              	.Ldebug_info0:
+ 1166 0000 E9030000 		.4byte	0x3e9
+ 1167 0004 0400     		.2byte	0x4
+ 1168 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1169 000a 04       		.byte	0x4
+ 1170 000b 01       		.uleb128 0x1
+ 1171 000c BE010000 		.4byte	.LASF51
+ 1172 0010 01       		.byte	0x1
+ 1173 0011 5A020000 		.4byte	.LASF52
+ 1174 0015 BD000000 		.4byte	.LASF53
+ 1175 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1176 001d 00000000 		.4byte	0
+ 1177 0021 00000000 		.4byte	.Ldebug_line0
+ 1178 0025 02       		.uleb128 0x2
+ 1179 0026 01       		.byte	0x1
+ 1180 0027 06       		.byte	0x6
+ 1181 0028 2C040000 		.4byte	.LASF0
+ 1182 002c 02       		.uleb128 0x2
+ 1183 002d 01       		.byte	0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 42
+
+
+ 1184 002e 08       		.byte	0x8
+ 1185 002f B0010000 		.4byte	.LASF1
+ 1186 0033 02       		.uleb128 0x2
+ 1187 0034 02       		.byte	0x2
+ 1188 0035 05       		.byte	0x5
+ 1189 0036 C3030000 		.4byte	.LASF2
+ 1190 003a 02       		.uleb128 0x2
+ 1191 003b 02       		.byte	0x2
+ 1192 003c 07       		.byte	0x7
+ 1193 003d 90000000 		.4byte	.LASF3
+ 1194 0041 02       		.uleb128 0x2
+ 1195 0042 04       		.byte	0x4
+ 1196 0043 05       		.byte	0x5
+ 1197 0044 E9030000 		.4byte	.LASF4
+ 1198 0048 02       		.uleb128 0x2
+ 1199 0049 04       		.byte	0x4
+ 1200 004a 07       		.byte	0x7
+ 1201 004b 35010000 		.4byte	.LASF5
+ 1202 004f 02       		.uleb128 0x2
+ 1203 0050 08       		.byte	0x8
+ 1204 0051 05       		.byte	0x5
+ 1205 0052 6F030000 		.4byte	.LASF6
+ 1206 0056 02       		.uleb128 0x2
+ 1207 0057 08       		.byte	0x8
+ 1208 0058 07       		.byte	0x7
+ 1209 0059 DA020000 		.4byte	.LASF7
+ 1210 005d 03       		.uleb128 0x3
+ 1211 005e 04       		.byte	0x4
+ 1212 005f 05       		.byte	0x5
+ 1213 0060 696E7400 		.ascii	"int\000"
+ 1214 0064 02       		.uleb128 0x2
+ 1215 0065 04       		.byte	0x4
+ 1216 0066 07       		.byte	0x7
+ 1217 0067 A3020000 		.4byte	.LASF8
+ 1218 006b 04       		.uleb128 0x4
+ 1219 006c 5C010000 		.4byte	.LASF12
+ 1220 0070 02       		.byte	0x2
+ 1221 0071 3801     		.2byte	0x138
+ 1222 0073 2C000000 		.4byte	0x2c
+ 1223 0077 02       		.uleb128 0x2
+ 1224 0078 04       		.byte	0x4
+ 1225 0079 04       		.byte	0x4
+ 1226 007a 25010000 		.4byte	.LASF9
+ 1227 007e 02       		.uleb128 0x2
+ 1228 007f 08       		.byte	0x8
+ 1229 0080 04       		.byte	0x4
+ 1230 0081 4C020000 		.4byte	.LASF10
+ 1231 0085 02       		.uleb128 0x2
+ 1232 0086 01       		.byte	0x1
+ 1233 0087 08       		.byte	0x8
+ 1234 0088 B8000000 		.4byte	.LASF11
+ 1235 008c 04       		.uleb128 0x4
+ 1236 008d 30010000 		.4byte	.LASF13
+ 1237 0091 02       		.byte	0x2
+ 1238 0092 E201     		.2byte	0x1e2
+ 1239 0094 98000000 		.4byte	0x98
+ 1240 0098 05       		.uleb128 0x5
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 43
+
+
+ 1241 0099 6B000000 		.4byte	0x6b
+ 1242 009d 02       		.uleb128 0x2
+ 1243 009e 04       		.byte	0x4
+ 1244 009f 07       		.byte	0x7
+ 1245 00a0 55030000 		.4byte	.LASF14
+ 1246 00a4 06       		.uleb128 0x6
+ 1247 00a5 46030000 		.4byte	.LASF15
+ 1248 00a9 01       		.byte	0x1
+ 1249 00aa 3F       		.byte	0x3f
+ 1250 00ab 00000000 		.4byte	.LFB0
+ 1251 00af 30000000 		.4byte	.LFE0-.LFB0
+ 1252 00b3 01       		.uleb128 0x1
+ 1253 00b4 9C       		.byte	0x9c
+ 1254 00b5 07       		.uleb128 0x7
+ 1255 00b6 7F000000 		.4byte	.LASF17
+ 1256 00ba 01       		.byte	0x1
+ 1257 00bb 78       		.byte	0x78
+ 1258 00bc 00000000 		.4byte	.LFB1
+ 1259 00c0 60000000 		.4byte	.LFE1-.LFB1
+ 1260 00c4 01       		.uleb128 0x1
+ 1261 00c5 9C       		.byte	0x9c
+ 1262 00c6 D9000000 		.4byte	0xd9
+ 1263 00ca 08       		.uleb128 0x8
+ 1264 00cb 5E030000 		.4byte	.LASF19
+ 1265 00cf 01       		.byte	0x1
+ 1266 00d0 7A       		.byte	0x7a
+ 1267 00d1 6B000000 		.4byte	0x6b
+ 1268 00d5 02       		.uleb128 0x2
+ 1269 00d6 91       		.byte	0x91
+ 1270 00d7 77       		.sleb128 -9
+ 1271 00d8 00       		.byte	0
+ 1272 00d9 06       		.uleb128 0x6
+ 1273 00da 93020000 		.4byte	.LASF16
+ 1274 00de 01       		.byte	0x1
+ 1275 00df A3       		.byte	0xa3
+ 1276 00e0 00000000 		.4byte	.LFB2
+ 1277 00e4 20000000 		.4byte	.LFE2-.LFB2
+ 1278 00e8 01       		.uleb128 0x1
+ 1279 00e9 9C       		.byte	0x9c
+ 1280 00ea 07       		.uleb128 0x7
+ 1281 00eb 15000000 		.4byte	.LASF18
+ 1282 00ef 01       		.byte	0x1
+ 1283 00f0 C0       		.byte	0xc0
+ 1284 00f1 00000000 		.4byte	.LFB3
+ 1285 00f5 4C000000 		.4byte	.LFE3-.LFB3
+ 1286 00f9 01       		.uleb128 0x1
+ 1287 00fa 9C       		.byte	0x9c
+ 1288 00fb 0E010000 		.4byte	0x10e
+ 1289 00ff 08       		.uleb128 0x8
+ 1290 0100 5E030000 		.4byte	.LASF19
+ 1291 0104 01       		.byte	0x1
+ 1292 0105 C2       		.byte	0xc2
+ 1293 0106 6B000000 		.4byte	0x6b
+ 1294 010a 02       		.uleb128 0x2
+ 1295 010b 91       		.byte	0x91
+ 1296 010c 77       		.sleb128 -9
+ 1297 010d 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 44
+
+
+ 1298 010e 09       		.uleb128 0x9
+ 1299 010f 38040000 		.4byte	.LASF20
+ 1300 0113 01       		.byte	0x1
+ 1301 0114 E3       		.byte	0xe3
+ 1302 0115 00000000 		.4byte	.LFB4
+ 1303 0119 0C000000 		.4byte	.LFE4-.LFB4
+ 1304 011d 01       		.uleb128 0x1
+ 1305 011e 9C       		.byte	0x9c
+ 1306 011f 09       		.uleb128 0x9
+ 1307 0120 FC030000 		.4byte	.LASF21
+ 1308 0124 01       		.byte	0x1
+ 1309 0125 FC       		.byte	0xfc
+ 1310 0126 00000000 		.4byte	.LFB5
+ 1311 012a 0C000000 		.4byte	.LFE5-.LFB5
+ 1312 012e 01       		.uleb128 0x1
+ 1313 012f 9C       		.byte	0x9c
+ 1314 0130 0A       		.uleb128 0xa
+ 1315 0131 AC030000 		.4byte	.LASF22
+ 1316 0135 01       		.byte	0x1
+ 1317 0136 1501     		.2byte	0x115
+ 1318 0138 00000000 		.4byte	.LFB6
+ 1319 013c 0C000000 		.4byte	.LFE6-.LFB6
+ 1320 0140 01       		.uleb128 0x1
+ 1321 0141 9C       		.byte	0x9c
+ 1322 0142 0A       		.uleb128 0xa
+ 1323 0143 C3020000 		.4byte	.LASF23
+ 1324 0147 01       		.byte	0x1
+ 1325 0148 2E01     		.2byte	0x12e
+ 1326 014a 00000000 		.4byte	.LFB7
+ 1327 014e 0C000000 		.4byte	.LFE7-.LFB7
+ 1328 0152 01       		.uleb128 0x1
+ 1329 0153 9C       		.byte	0x9c
+ 1330 0154 0B       		.uleb128 0xb
+ 1331 0155 F1020000 		.4byte	.LASF24
+ 1332 0159 01       		.byte	0x1
+ 1333 015a 4801     		.2byte	0x148
+ 1334 015c 00000000 		.4byte	.LFB8
+ 1335 0160 20000000 		.4byte	.LFE8-.LFB8
+ 1336 0164 01       		.uleb128 0x1
+ 1337 0165 9C       		.byte	0x9c
+ 1338 0166 7A010000 		.4byte	0x17a
+ 1339 016a 0C       		.uleb128 0xc
+ 1340 016b 53020000 		.4byte	.LASF26
+ 1341 016f 01       		.byte	0x1
+ 1342 0170 4801     		.2byte	0x148
+ 1343 0172 6B000000 		.4byte	0x6b
+ 1344 0176 02       		.uleb128 0x2
+ 1345 0177 91       		.byte	0x91
+ 1346 0178 77       		.sleb128 -9
+ 1347 0179 00       		.byte	0
+ 1348 017a 0B       		.uleb128 0xb
+ 1349 017b 24000000 		.4byte	.LASF25
+ 1350 017f 01       		.byte	0x1
+ 1351 0180 6001     		.2byte	0x160
+ 1352 0182 00000000 		.4byte	.LFB9
+ 1353 0186 20000000 		.4byte	.LFE9-.LFB9
+ 1354 018a 01       		.uleb128 0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 45
+
+
+ 1355 018b 9C       		.byte	0x9c
+ 1356 018c A0010000 		.4byte	0x1a0
+ 1357 0190 0C       		.uleb128 0xc
+ 1358 0191 53020000 		.4byte	.LASF26
+ 1359 0195 01       		.byte	0x1
+ 1360 0196 6001     		.2byte	0x160
+ 1361 0198 6B000000 		.4byte	0x6b
+ 1362 019c 02       		.uleb128 0x2
+ 1363 019d 91       		.byte	0x91
+ 1364 019e 77       		.sleb128 -9
+ 1365 019f 00       		.byte	0
+ 1366 01a0 0D       		.uleb128 0xd
+ 1367 01a1 62010000 		.4byte	.LASF28
+ 1368 01a5 01       		.byte	0x1
+ 1369 01a6 8201     		.2byte	0x182
+ 1370 01a8 6B000000 		.4byte	0x6b
+ 1371 01ac 00000000 		.4byte	.LFB10
+ 1372 01b0 20000000 		.4byte	.LFE10-.LFB10
+ 1373 01b4 01       		.uleb128 0x1
+ 1374 01b5 9C       		.byte	0x9c
+ 1375 01b6 CA010000 		.4byte	0x1ca
+ 1376 01ba 0E       		.uleb128 0xe
+ 1377 01bb F2030000 		.4byte	.LASF27
+ 1378 01bf 01       		.byte	0x1
+ 1379 01c0 8401     		.2byte	0x184
+ 1380 01c2 6B000000 		.4byte	0x6b
+ 1381 01c6 02       		.uleb128 0x2
+ 1382 01c7 91       		.byte	0x91
+ 1383 01c8 77       		.sleb128 -9
+ 1384 01c9 00       		.byte	0
+ 1385 01ca 0D       		.uleb128 0xd
+ 1386 01cb 7D030000 		.4byte	.LASF29
+ 1387 01cf 01       		.byte	0x1
+ 1388 01d0 B501     		.2byte	0x1b5
+ 1389 01d2 6B000000 		.4byte	0x6b
+ 1390 01d6 00000000 		.4byte	.LFB11
+ 1391 01da 20000000 		.4byte	.LFE11-.LFB11
+ 1392 01de 01       		.uleb128 0x1
+ 1393 01df 9C       		.byte	0x9c
+ 1394 01e0 F4010000 		.4byte	0x1f4
+ 1395 01e4 0E       		.uleb128 0xe
+ 1396 01e5 F2030000 		.4byte	.LASF27
+ 1397 01e9 01       		.byte	0x1
+ 1398 01ea B701     		.2byte	0x1b7
+ 1399 01ec 6B000000 		.4byte	0x6b
+ 1400 01f0 02       		.uleb128 0x2
+ 1401 01f1 91       		.byte	0x91
+ 1402 01f2 77       		.sleb128 -9
+ 1403 01f3 00       		.byte	0
+ 1404 01f4 0B       		.uleb128 0xb
+ 1405 01f5 41000000 		.4byte	.LASF30
+ 1406 01f9 01       		.byte	0x1
+ 1407 01fa EE01     		.2byte	0x1ee
+ 1408 01fc 00000000 		.4byte	.LFB12
+ 1409 0200 34000000 		.4byte	.LFE12-.LFB12
+ 1410 0204 01       		.uleb128 0x1
+ 1411 0205 9C       		.byte	0x9c
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 46
+
+
+ 1412 0206 1A020000 		.4byte	0x21a
+ 1413 020a 0C       		.uleb128 0xc
+ 1414 020b 78000000 		.4byte	.LASF31
+ 1415 020f 01       		.byte	0x1
+ 1416 0210 EE01     		.2byte	0x1ee
+ 1417 0212 6B000000 		.4byte	0x6b
+ 1418 0216 02       		.uleb128 0x2
+ 1419 0217 91       		.byte	0x91
+ 1420 0218 77       		.sleb128 -9
+ 1421 0219 00       		.byte	0
+ 1422 021a 0D       		.uleb128 0xd
+ 1423 021b 47010000 		.4byte	.LASF32
+ 1424 021f 01       		.byte	0x1
+ 1425 0220 5A02     		.2byte	0x25a
+ 1426 0222 6B000000 		.4byte	0x6b
+ 1427 0226 00000000 		.4byte	.LFB13
+ 1428 022a 20000000 		.4byte	.LFE13-.LFB13
+ 1429 022e 01       		.uleb128 0x1
+ 1430 022f 9C       		.byte	0x9c
+ 1431 0230 44020000 		.4byte	0x244
+ 1432 0234 0E       		.uleb128 0xe
+ 1433 0235 71000000 		.4byte	.LASF33
+ 1434 0239 01       		.byte	0x1
+ 1435 023a 5C02     		.2byte	0x25c
+ 1436 023c 6B000000 		.4byte	0x6b
+ 1437 0240 02       		.uleb128 0x2
+ 1438 0241 91       		.byte	0x91
+ 1439 0242 77       		.sleb128 -9
+ 1440 0243 00       		.byte	0
+ 1441 0244 0D       		.uleb128 0xd
+ 1442 0245 57000000 		.4byte	.LASF34
+ 1443 0249 01       		.byte	0x1
+ 1444 024a 9A02     		.2byte	0x29a
+ 1445 024c 6B000000 		.4byte	0x6b
+ 1446 0250 00000000 		.4byte	.LFB14
+ 1447 0254 30000000 		.4byte	.LFE14-.LFB14
+ 1448 0258 01       		.uleb128 0x1
+ 1449 0259 9C       		.byte	0x9c
+ 1450 025a 6E020000 		.4byte	0x26e
+ 1451 025e 0E       		.uleb128 0xe
+ 1452 025f 2B010000 		.4byte	.LASF35
+ 1453 0263 01       		.byte	0x1
+ 1454 0264 9C02     		.2byte	0x29c
+ 1455 0266 6B000000 		.4byte	0x6b
+ 1456 026a 02       		.uleb128 0x2
+ 1457 026b 91       		.byte	0x91
+ 1458 026c 77       		.sleb128 -9
+ 1459 026d 00       		.byte	0
+ 1460 026e 0D       		.uleb128 0xd
+ 1461 026f 12040000 		.4byte	.LASF36
+ 1462 0273 01       		.byte	0x1
+ 1463 0274 D702     		.2byte	0x2d7
+ 1464 0276 6B000000 		.4byte	0x6b
+ 1465 027a 00000000 		.4byte	.LFB15
+ 1466 027e 44000000 		.4byte	.LFE15-.LFB15
+ 1467 0282 01       		.uleb128 0x1
+ 1468 0283 9C       		.byte	0x9c
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 47
+
+
+ 1469 0284 98020000 		.4byte	0x298
+ 1470 0288 0E       		.uleb128 0xe
+ 1471 0289 2B010000 		.4byte	.LASF35
+ 1472 028d 01       		.byte	0x1
+ 1473 028e D902     		.2byte	0x2d9
+ 1474 0290 6B000000 		.4byte	0x6b
+ 1475 0294 02       		.uleb128 0x2
+ 1476 0295 91       		.byte	0x91
+ 1477 0296 77       		.sleb128 -9
+ 1478 0297 00       		.byte	0
+ 1479 0298 0A       		.uleb128 0xa
+ 1480 0299 94030000 		.4byte	.LASF37
+ 1481 029d 01       		.byte	0x1
+ 1482 029e 2603     		.2byte	0x326
+ 1483 02a0 00000000 		.4byte	.LFB16
+ 1484 02a4 28000000 		.4byte	.LFE16-.LFB16
+ 1485 02a8 01       		.uleb128 0x1
+ 1486 02a9 9C       		.byte	0x9c
+ 1487 02aa 0F       		.uleb128 0xf
+ 1488 02ab 79010000 		.4byte	.LASF38
+ 1489 02af 01       		.byte	0x1
+ 1490 02b0 5D03     		.2byte	0x35d
+ 1491 02b2 00000000 		.4byte	.LFB17
+ 1492 02b6 40000000 		.4byte	.LFE17-.LFB17
+ 1493 02ba 01       		.uleb128 0x1
+ 1494 02bb 9C       		.byte	0x9c
+ 1495 02bc D0020000 		.4byte	0x2d0
+ 1496 02c0 0E       		.uleb128 0xe
+ 1497 02c1 5E030000 		.4byte	.LASF19
+ 1498 02c5 01       		.byte	0x1
+ 1499 02c6 5F03     		.2byte	0x35f
+ 1500 02c8 6B000000 		.4byte	0x6b
+ 1501 02cc 02       		.uleb128 0x2
+ 1502 02cd 91       		.byte	0x91
+ 1503 02ce 77       		.sleb128 -9
+ 1504 02cf 00       		.byte	0
+ 1505 02d0 0F       		.uleb128 0xf
+ 1506 02d1 B0020000 		.4byte	.LASF39
+ 1507 02d5 01       		.byte	0x1
+ 1508 02d6 C203     		.2byte	0x3c2
+ 1509 02d8 00000000 		.4byte	.LFB18
+ 1510 02dc 38000000 		.4byte	.LFE18-.LFB18
+ 1511 02e0 01       		.uleb128 0x1
+ 1512 02e1 9C       		.byte	0x9c
+ 1513 02e2 14030000 		.4byte	0x314
+ 1514 02e6 0C       		.uleb128 0xc
+ 1515 02e7 E2030000 		.4byte	.LASF40
+ 1516 02eb 01       		.byte	0x1
+ 1517 02ec C203     		.2byte	0x3c2
+ 1518 02ee 14030000 		.4byte	0x314
+ 1519 02f2 02       		.uleb128 0x2
+ 1520 02f3 91       		.byte	0x91
+ 1521 02f4 6C       		.sleb128 -20
+ 1522 02f5 0C       		.uleb128 0xc
+ 1523 02f6 91010000 		.4byte	.LASF41
+ 1524 02fa 01       		.byte	0x1
+ 1525 02fb C203     		.2byte	0x3c2
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 48
+
+
+ 1526 02fd 6B000000 		.4byte	0x6b
+ 1527 0301 02       		.uleb128 0x2
+ 1528 0302 91       		.byte	0x91
+ 1529 0303 6B       		.sleb128 -21
+ 1530 0304 0E       		.uleb128 0xe
+ 1531 0305 3D030000 		.4byte	.LASF42
+ 1532 0309 01       		.byte	0x1
+ 1533 030a C503     		.2byte	0x3c5
+ 1534 030c 6B000000 		.4byte	0x6b
+ 1535 0310 02       		.uleb128 0x2
+ 1536 0311 91       		.byte	0x91
+ 1537 0312 77       		.sleb128 -9
+ 1538 0313 00       		.byte	0
+ 1539 0314 10       		.uleb128 0x10
+ 1540 0315 04       		.byte	0x4
+ 1541 0316 1A030000 		.4byte	0x31a
+ 1542 031a 11       		.uleb128 0x11
+ 1543 031b 6B000000 		.4byte	0x6b
+ 1544 031f 0F       		.uleb128 0xf
+ 1545 0320 29030000 		.4byte	.LASF43
+ 1546 0324 01       		.byte	0x1
+ 1547 0325 E303     		.2byte	0x3e3
+ 1548 0327 00000000 		.4byte	.LFB19
+ 1549 032b 5C000000 		.4byte	.LFE19-.LFB19
+ 1550 032f 01       		.uleb128 0x1
+ 1551 0330 9C       		.byte	0x9c
+ 1552 0331 45030000 		.4byte	0x345
+ 1553 0335 0E       		.uleb128 0xe
+ 1554 0336 5E030000 		.4byte	.LASF19
+ 1555 033a 01       		.byte	0x1
+ 1556 033b E503     		.2byte	0x3e5
+ 1557 033d 6B000000 		.4byte	0x6b
+ 1558 0341 02       		.uleb128 0x2
+ 1559 0342 91       		.byte	0x91
+ 1560 0343 77       		.sleb128 -9
+ 1561 0344 00       		.byte	0
+ 1562 0345 12       		.uleb128 0x12
+ 1563 0346 7F020000 		.4byte	.LASF44
+ 1564 034a 01       		.byte	0x1
+ 1565 034b 1104     		.2byte	0x411
+ 1566 034d 00000000 		.4byte	.LFB20
+ 1567 0351 0E000000 		.4byte	.LFE20-.LFB20
+ 1568 0355 01       		.uleb128 0x1
+ 1569 0356 9C       		.byte	0x9c
+ 1570 0357 12       		.uleb128 0x12
+ 1571 0358 00000000 		.4byte	.LASF45
+ 1572 035c 01       		.byte	0x1
+ 1573 035d 2904     		.2byte	0x429
+ 1574 035f 00000000 		.4byte	.LFB21
+ 1575 0363 0E000000 		.4byte	.LFE21-.LFB21
+ 1576 0367 01       		.uleb128 0x1
+ 1577 0368 9C       		.byte	0x9c
+ 1578 0369 0B       		.uleb128 0xb
+ 1579 036a 0E030000 		.4byte	.LASF46
+ 1580 036e 01       		.byte	0x1
+ 1581 036f 4204     		.2byte	0x442
+ 1582 0371 00000000 		.4byte	.LFB22
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 49
+
+
+ 1583 0375 30000000 		.4byte	.LFE22-.LFB22
+ 1584 0379 01       		.uleb128 0x1
+ 1585 037a 9C       		.byte	0x9c
+ 1586 037b 8F030000 		.4byte	0x38f
+ 1587 037f 0C       		.uleb128 0xc
+ 1588 0380 53020000 		.4byte	.LASF26
+ 1589 0384 01       		.byte	0x1
+ 1590 0385 4204     		.2byte	0x442
+ 1591 0387 6B000000 		.4byte	0x6b
+ 1592 038b 02       		.uleb128 0x2
+ 1593 038c 91       		.byte	0x91
+ 1594 038d 77       		.sleb128 -9
+ 1595 038e 00       		.byte	0
+ 1596 038f 0D       		.uleb128 0xd
+ 1597 0390 A3000000 		.4byte	.LASF47
+ 1598 0394 01       		.byte	0x1
+ 1599 0395 6504     		.2byte	0x465
+ 1600 0397 6B000000 		.4byte	0x6b
+ 1601 039b 00000000 		.4byte	.LFB23
+ 1602 039f 38000000 		.4byte	.LFE23-.LFB23
+ 1603 03a3 01       		.uleb128 0x1
+ 1604 03a4 9C       		.byte	0x9c
+ 1605 03a5 B9030000 		.4byte	0x3b9
+ 1606 03a9 0E       		.uleb128 0xe
+ 1607 03aa F2030000 		.4byte	.LASF27
+ 1608 03ae 01       		.byte	0x1
+ 1609 03af 6704     		.2byte	0x467
+ 1610 03b1 6B000000 		.4byte	0x6b
+ 1611 03b5 02       		.uleb128 0x2
+ 1612 03b6 91       		.byte	0x91
+ 1613 03b7 77       		.sleb128 -9
+ 1614 03b8 00       		.byte	0
+ 1615 03b9 13       		.uleb128 0x13
+ 1616 03ba 13010000 		.4byte	.LASF48
+ 1617 03be 01       		.byte	0x1
+ 1618 03bf 22       		.byte	0x22
+ 1619 03c0 6B000000 		.4byte	0x6b
+ 1620 03c4 05       		.uleb128 0x5
+ 1621 03c5 03       		.byte	0x3
+ 1622 03c6 00000000 		.4byte	SPIM_Funk_initVar
+ 1623 03ca 13       		.uleb128 0x13
+ 1624 03cb CD030000 		.4byte	.LASF49
+ 1625 03cf 01       		.byte	0x1
+ 1626 03d0 24       		.byte	0x24
+ 1627 03d1 98000000 		.4byte	0x98
+ 1628 03d5 05       		.uleb128 0x5
+ 1629 03d6 03       		.byte	0x3
+ 1630 03d7 00000000 		.4byte	SPIM_Funk_swStatusTx
+ 1631 03db 13       		.uleb128 0x13
+ 1632 03dc 9B010000 		.4byte	.LASF50
+ 1633 03e0 01       		.byte	0x1
+ 1634 03e1 25       		.byte	0x25
+ 1635 03e2 98000000 		.4byte	0x98
+ 1636 03e6 05       		.uleb128 0x5
+ 1637 03e7 03       		.byte	0x3
+ 1638 03e8 00000000 		.4byte	SPIM_Funk_swStatusRx
+ 1639 03ec 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 50
+
+
+ 1640              		.section	.debug_abbrev,"",%progbits
+ 1641              	.Ldebug_abbrev0:
+ 1642 0000 01       		.uleb128 0x1
+ 1643 0001 11       		.uleb128 0x11
+ 1644 0002 01       		.byte	0x1
+ 1645 0003 25       		.uleb128 0x25
+ 1646 0004 0E       		.uleb128 0xe
+ 1647 0005 13       		.uleb128 0x13
+ 1648 0006 0B       		.uleb128 0xb
+ 1649 0007 03       		.uleb128 0x3
+ 1650 0008 0E       		.uleb128 0xe
+ 1651 0009 1B       		.uleb128 0x1b
+ 1652 000a 0E       		.uleb128 0xe
+ 1653 000b 55       		.uleb128 0x55
+ 1654 000c 17       		.uleb128 0x17
+ 1655 000d 11       		.uleb128 0x11
+ 1656 000e 01       		.uleb128 0x1
+ 1657 000f 10       		.uleb128 0x10
+ 1658 0010 17       		.uleb128 0x17
+ 1659 0011 00       		.byte	0
+ 1660 0012 00       		.byte	0
+ 1661 0013 02       		.uleb128 0x2
+ 1662 0014 24       		.uleb128 0x24
+ 1663 0015 00       		.byte	0
+ 1664 0016 0B       		.uleb128 0xb
+ 1665 0017 0B       		.uleb128 0xb
+ 1666 0018 3E       		.uleb128 0x3e
+ 1667 0019 0B       		.uleb128 0xb
+ 1668 001a 03       		.uleb128 0x3
+ 1669 001b 0E       		.uleb128 0xe
+ 1670 001c 00       		.byte	0
+ 1671 001d 00       		.byte	0
+ 1672 001e 03       		.uleb128 0x3
+ 1673 001f 24       		.uleb128 0x24
+ 1674 0020 00       		.byte	0
+ 1675 0021 0B       		.uleb128 0xb
+ 1676 0022 0B       		.uleb128 0xb
+ 1677 0023 3E       		.uleb128 0x3e
+ 1678 0024 0B       		.uleb128 0xb
+ 1679 0025 03       		.uleb128 0x3
+ 1680 0026 08       		.uleb128 0x8
+ 1681 0027 00       		.byte	0
+ 1682 0028 00       		.byte	0
+ 1683 0029 04       		.uleb128 0x4
+ 1684 002a 16       		.uleb128 0x16
+ 1685 002b 00       		.byte	0
+ 1686 002c 03       		.uleb128 0x3
+ 1687 002d 0E       		.uleb128 0xe
+ 1688 002e 3A       		.uleb128 0x3a
+ 1689 002f 0B       		.uleb128 0xb
+ 1690 0030 3B       		.uleb128 0x3b
+ 1691 0031 05       		.uleb128 0x5
+ 1692 0032 49       		.uleb128 0x49
+ 1693 0033 13       		.uleb128 0x13
+ 1694 0034 00       		.byte	0
+ 1695 0035 00       		.byte	0
+ 1696 0036 05       		.uleb128 0x5
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 51
+
+
+ 1697 0037 35       		.uleb128 0x35
+ 1698 0038 00       		.byte	0
+ 1699 0039 49       		.uleb128 0x49
+ 1700 003a 13       		.uleb128 0x13
+ 1701 003b 00       		.byte	0
+ 1702 003c 00       		.byte	0
+ 1703 003d 06       		.uleb128 0x6
+ 1704 003e 2E       		.uleb128 0x2e
+ 1705 003f 00       		.byte	0
+ 1706 0040 3F       		.uleb128 0x3f
+ 1707 0041 19       		.uleb128 0x19
+ 1708 0042 03       		.uleb128 0x3
+ 1709 0043 0E       		.uleb128 0xe
+ 1710 0044 3A       		.uleb128 0x3a
+ 1711 0045 0B       		.uleb128 0xb
+ 1712 0046 3B       		.uleb128 0x3b
+ 1713 0047 0B       		.uleb128 0xb
+ 1714 0048 27       		.uleb128 0x27
+ 1715 0049 19       		.uleb128 0x19
+ 1716 004a 11       		.uleb128 0x11
+ 1717 004b 01       		.uleb128 0x1
+ 1718 004c 12       		.uleb128 0x12
+ 1719 004d 06       		.uleb128 0x6
+ 1720 004e 40       		.uleb128 0x40
+ 1721 004f 18       		.uleb128 0x18
+ 1722 0050 9642     		.uleb128 0x2116
+ 1723 0052 19       		.uleb128 0x19
+ 1724 0053 00       		.byte	0
+ 1725 0054 00       		.byte	0
+ 1726 0055 07       		.uleb128 0x7
+ 1727 0056 2E       		.uleb128 0x2e
+ 1728 0057 01       		.byte	0x1
+ 1729 0058 3F       		.uleb128 0x3f
+ 1730 0059 19       		.uleb128 0x19
+ 1731 005a 03       		.uleb128 0x3
+ 1732 005b 0E       		.uleb128 0xe
+ 1733 005c 3A       		.uleb128 0x3a
+ 1734 005d 0B       		.uleb128 0xb
+ 1735 005e 3B       		.uleb128 0x3b
+ 1736 005f 0B       		.uleb128 0xb
+ 1737 0060 27       		.uleb128 0x27
+ 1738 0061 19       		.uleb128 0x19
+ 1739 0062 11       		.uleb128 0x11
+ 1740 0063 01       		.uleb128 0x1
+ 1741 0064 12       		.uleb128 0x12
+ 1742 0065 06       		.uleb128 0x6
+ 1743 0066 40       		.uleb128 0x40
+ 1744 0067 18       		.uleb128 0x18
+ 1745 0068 9642     		.uleb128 0x2116
+ 1746 006a 19       		.uleb128 0x19
+ 1747 006b 01       		.uleb128 0x1
+ 1748 006c 13       		.uleb128 0x13
+ 1749 006d 00       		.byte	0
+ 1750 006e 00       		.byte	0
+ 1751 006f 08       		.uleb128 0x8
+ 1752 0070 34       		.uleb128 0x34
+ 1753 0071 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 52
+
+
+ 1754 0072 03       		.uleb128 0x3
+ 1755 0073 0E       		.uleb128 0xe
+ 1756 0074 3A       		.uleb128 0x3a
+ 1757 0075 0B       		.uleb128 0xb
+ 1758 0076 3B       		.uleb128 0x3b
+ 1759 0077 0B       		.uleb128 0xb
+ 1760 0078 49       		.uleb128 0x49
+ 1761 0079 13       		.uleb128 0x13
+ 1762 007a 02       		.uleb128 0x2
+ 1763 007b 18       		.uleb128 0x18
+ 1764 007c 00       		.byte	0
+ 1765 007d 00       		.byte	0
+ 1766 007e 09       		.uleb128 0x9
+ 1767 007f 2E       		.uleb128 0x2e
+ 1768 0080 00       		.byte	0
+ 1769 0081 3F       		.uleb128 0x3f
+ 1770 0082 19       		.uleb128 0x19
+ 1771 0083 03       		.uleb128 0x3
+ 1772 0084 0E       		.uleb128 0xe
+ 1773 0085 3A       		.uleb128 0x3a
+ 1774 0086 0B       		.uleb128 0xb
+ 1775 0087 3B       		.uleb128 0x3b
+ 1776 0088 0B       		.uleb128 0xb
+ 1777 0089 27       		.uleb128 0x27
+ 1778 008a 19       		.uleb128 0x19
+ 1779 008b 11       		.uleb128 0x11
+ 1780 008c 01       		.uleb128 0x1
+ 1781 008d 12       		.uleb128 0x12
+ 1782 008e 06       		.uleb128 0x6
+ 1783 008f 40       		.uleb128 0x40
+ 1784 0090 18       		.uleb128 0x18
+ 1785 0091 9742     		.uleb128 0x2117
+ 1786 0093 19       		.uleb128 0x19
+ 1787 0094 00       		.byte	0
+ 1788 0095 00       		.byte	0
+ 1789 0096 0A       		.uleb128 0xa
+ 1790 0097 2E       		.uleb128 0x2e
+ 1791 0098 00       		.byte	0
+ 1792 0099 3F       		.uleb128 0x3f
+ 1793 009a 19       		.uleb128 0x19
+ 1794 009b 03       		.uleb128 0x3
+ 1795 009c 0E       		.uleb128 0xe
+ 1796 009d 3A       		.uleb128 0x3a
+ 1797 009e 0B       		.uleb128 0xb
+ 1798 009f 3B       		.uleb128 0x3b
+ 1799 00a0 05       		.uleb128 0x5
+ 1800 00a1 27       		.uleb128 0x27
+ 1801 00a2 19       		.uleb128 0x19
+ 1802 00a3 11       		.uleb128 0x11
+ 1803 00a4 01       		.uleb128 0x1
+ 1804 00a5 12       		.uleb128 0x12
+ 1805 00a6 06       		.uleb128 0x6
+ 1806 00a7 40       		.uleb128 0x40
+ 1807 00a8 18       		.uleb128 0x18
+ 1808 00a9 9742     		.uleb128 0x2117
+ 1809 00ab 19       		.uleb128 0x19
+ 1810 00ac 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 53
+
+
+ 1811 00ad 00       		.byte	0
+ 1812 00ae 0B       		.uleb128 0xb
+ 1813 00af 2E       		.uleb128 0x2e
+ 1814 00b0 01       		.byte	0x1
+ 1815 00b1 3F       		.uleb128 0x3f
+ 1816 00b2 19       		.uleb128 0x19
+ 1817 00b3 03       		.uleb128 0x3
+ 1818 00b4 0E       		.uleb128 0xe
+ 1819 00b5 3A       		.uleb128 0x3a
+ 1820 00b6 0B       		.uleb128 0xb
+ 1821 00b7 3B       		.uleb128 0x3b
+ 1822 00b8 05       		.uleb128 0x5
+ 1823 00b9 27       		.uleb128 0x27
+ 1824 00ba 19       		.uleb128 0x19
+ 1825 00bb 11       		.uleb128 0x11
+ 1826 00bc 01       		.uleb128 0x1
+ 1827 00bd 12       		.uleb128 0x12
+ 1828 00be 06       		.uleb128 0x6
+ 1829 00bf 40       		.uleb128 0x40
+ 1830 00c0 18       		.uleb128 0x18
+ 1831 00c1 9742     		.uleb128 0x2117
+ 1832 00c3 19       		.uleb128 0x19
+ 1833 00c4 01       		.uleb128 0x1
+ 1834 00c5 13       		.uleb128 0x13
+ 1835 00c6 00       		.byte	0
+ 1836 00c7 00       		.byte	0
+ 1837 00c8 0C       		.uleb128 0xc
+ 1838 00c9 05       		.uleb128 0x5
+ 1839 00ca 00       		.byte	0
+ 1840 00cb 03       		.uleb128 0x3
+ 1841 00cc 0E       		.uleb128 0xe
+ 1842 00cd 3A       		.uleb128 0x3a
+ 1843 00ce 0B       		.uleb128 0xb
+ 1844 00cf 3B       		.uleb128 0x3b
+ 1845 00d0 05       		.uleb128 0x5
+ 1846 00d1 49       		.uleb128 0x49
+ 1847 00d2 13       		.uleb128 0x13
+ 1848 00d3 02       		.uleb128 0x2
+ 1849 00d4 18       		.uleb128 0x18
+ 1850 00d5 00       		.byte	0
+ 1851 00d6 00       		.byte	0
+ 1852 00d7 0D       		.uleb128 0xd
+ 1853 00d8 2E       		.uleb128 0x2e
+ 1854 00d9 01       		.byte	0x1
+ 1855 00da 3F       		.uleb128 0x3f
+ 1856 00db 19       		.uleb128 0x19
+ 1857 00dc 03       		.uleb128 0x3
+ 1858 00dd 0E       		.uleb128 0xe
+ 1859 00de 3A       		.uleb128 0x3a
+ 1860 00df 0B       		.uleb128 0xb
+ 1861 00e0 3B       		.uleb128 0x3b
+ 1862 00e1 05       		.uleb128 0x5
+ 1863 00e2 27       		.uleb128 0x27
+ 1864 00e3 19       		.uleb128 0x19
+ 1865 00e4 49       		.uleb128 0x49
+ 1866 00e5 13       		.uleb128 0x13
+ 1867 00e6 11       		.uleb128 0x11
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 54
+
+
+ 1868 00e7 01       		.uleb128 0x1
+ 1869 00e8 12       		.uleb128 0x12
+ 1870 00e9 06       		.uleb128 0x6
+ 1871 00ea 40       		.uleb128 0x40
+ 1872 00eb 18       		.uleb128 0x18
+ 1873 00ec 9742     		.uleb128 0x2117
+ 1874 00ee 19       		.uleb128 0x19
+ 1875 00ef 01       		.uleb128 0x1
+ 1876 00f0 13       		.uleb128 0x13
+ 1877 00f1 00       		.byte	0
+ 1878 00f2 00       		.byte	0
+ 1879 00f3 0E       		.uleb128 0xe
+ 1880 00f4 34       		.uleb128 0x34
+ 1881 00f5 00       		.byte	0
+ 1882 00f6 03       		.uleb128 0x3
+ 1883 00f7 0E       		.uleb128 0xe
+ 1884 00f8 3A       		.uleb128 0x3a
+ 1885 00f9 0B       		.uleb128 0xb
+ 1886 00fa 3B       		.uleb128 0x3b
+ 1887 00fb 05       		.uleb128 0x5
+ 1888 00fc 49       		.uleb128 0x49
+ 1889 00fd 13       		.uleb128 0x13
+ 1890 00fe 02       		.uleb128 0x2
+ 1891 00ff 18       		.uleb128 0x18
+ 1892 0100 00       		.byte	0
+ 1893 0101 00       		.byte	0
+ 1894 0102 0F       		.uleb128 0xf
+ 1895 0103 2E       		.uleb128 0x2e
+ 1896 0104 01       		.byte	0x1
+ 1897 0105 3F       		.uleb128 0x3f
+ 1898 0106 19       		.uleb128 0x19
+ 1899 0107 03       		.uleb128 0x3
+ 1900 0108 0E       		.uleb128 0xe
+ 1901 0109 3A       		.uleb128 0x3a
+ 1902 010a 0B       		.uleb128 0xb
+ 1903 010b 3B       		.uleb128 0x3b
+ 1904 010c 05       		.uleb128 0x5
+ 1905 010d 27       		.uleb128 0x27
+ 1906 010e 19       		.uleb128 0x19
+ 1907 010f 11       		.uleb128 0x11
+ 1908 0110 01       		.uleb128 0x1
+ 1909 0111 12       		.uleb128 0x12
+ 1910 0112 06       		.uleb128 0x6
+ 1911 0113 40       		.uleb128 0x40
+ 1912 0114 18       		.uleb128 0x18
+ 1913 0115 9642     		.uleb128 0x2116
+ 1914 0117 19       		.uleb128 0x19
+ 1915 0118 01       		.uleb128 0x1
+ 1916 0119 13       		.uleb128 0x13
+ 1917 011a 00       		.byte	0
+ 1918 011b 00       		.byte	0
+ 1919 011c 10       		.uleb128 0x10
+ 1920 011d 0F       		.uleb128 0xf
+ 1921 011e 00       		.byte	0
+ 1922 011f 0B       		.uleb128 0xb
+ 1923 0120 0B       		.uleb128 0xb
+ 1924 0121 49       		.uleb128 0x49
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 55
+
+
+ 1925 0122 13       		.uleb128 0x13
+ 1926 0123 00       		.byte	0
+ 1927 0124 00       		.byte	0
+ 1928 0125 11       		.uleb128 0x11
+ 1929 0126 26       		.uleb128 0x26
+ 1930 0127 00       		.byte	0
+ 1931 0128 49       		.uleb128 0x49
+ 1932 0129 13       		.uleb128 0x13
+ 1933 012a 00       		.byte	0
+ 1934 012b 00       		.byte	0
+ 1935 012c 12       		.uleb128 0x12
+ 1936 012d 2E       		.uleb128 0x2e
+ 1937 012e 00       		.byte	0
+ 1938 012f 3F       		.uleb128 0x3f
+ 1939 0130 19       		.uleb128 0x19
+ 1940 0131 03       		.uleb128 0x3
+ 1941 0132 0E       		.uleb128 0xe
+ 1942 0133 3A       		.uleb128 0x3a
+ 1943 0134 0B       		.uleb128 0xb
+ 1944 0135 3B       		.uleb128 0x3b
+ 1945 0136 05       		.uleb128 0x5
+ 1946 0137 27       		.uleb128 0x27
+ 1947 0138 19       		.uleb128 0x19
+ 1948 0139 11       		.uleb128 0x11
+ 1949 013a 01       		.uleb128 0x1
+ 1950 013b 12       		.uleb128 0x12
+ 1951 013c 06       		.uleb128 0x6
+ 1952 013d 40       		.uleb128 0x40
+ 1953 013e 18       		.uleb128 0x18
+ 1954 013f 9642     		.uleb128 0x2116
+ 1955 0141 19       		.uleb128 0x19
+ 1956 0142 00       		.byte	0
+ 1957 0143 00       		.byte	0
+ 1958 0144 13       		.uleb128 0x13
+ 1959 0145 34       		.uleb128 0x34
+ 1960 0146 00       		.byte	0
+ 1961 0147 03       		.uleb128 0x3
+ 1962 0148 0E       		.uleb128 0xe
+ 1963 0149 3A       		.uleb128 0x3a
+ 1964 014a 0B       		.uleb128 0xb
+ 1965 014b 3B       		.uleb128 0x3b
+ 1966 014c 0B       		.uleb128 0xb
+ 1967 014d 49       		.uleb128 0x49
+ 1968 014e 13       		.uleb128 0x13
+ 1969 014f 3F       		.uleb128 0x3f
+ 1970 0150 19       		.uleb128 0x19
+ 1971 0151 02       		.uleb128 0x2
+ 1972 0152 18       		.uleb128 0x18
+ 1973 0153 00       		.byte	0
+ 1974 0154 00       		.byte	0
+ 1975 0155 00       		.byte	0
+ 1976              		.section	.debug_aranges,"",%progbits
+ 1977 0000 D4000000 		.4byte	0xd4
+ 1978 0004 0200     		.2byte	0x2
+ 1979 0006 00000000 		.4byte	.Ldebug_info0
+ 1980 000a 04       		.byte	0x4
+ 1981 000b 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 56
+
+
+ 1982 000c 0000     		.2byte	0
+ 1983 000e 0000     		.2byte	0
+ 1984 0010 00000000 		.4byte	.LFB0
+ 1985 0014 30000000 		.4byte	.LFE0-.LFB0
+ 1986 0018 00000000 		.4byte	.LFB1
+ 1987 001c 60000000 		.4byte	.LFE1-.LFB1
+ 1988 0020 00000000 		.4byte	.LFB2
+ 1989 0024 20000000 		.4byte	.LFE2-.LFB2
+ 1990 0028 00000000 		.4byte	.LFB3
+ 1991 002c 4C000000 		.4byte	.LFE3-.LFB3
+ 1992 0030 00000000 		.4byte	.LFB4
+ 1993 0034 0C000000 		.4byte	.LFE4-.LFB4
+ 1994 0038 00000000 		.4byte	.LFB5
+ 1995 003c 0C000000 		.4byte	.LFE5-.LFB5
+ 1996 0040 00000000 		.4byte	.LFB6
+ 1997 0044 0C000000 		.4byte	.LFE6-.LFB6
+ 1998 0048 00000000 		.4byte	.LFB7
+ 1999 004c 0C000000 		.4byte	.LFE7-.LFB7
+ 2000 0050 00000000 		.4byte	.LFB8
+ 2001 0054 20000000 		.4byte	.LFE8-.LFB8
+ 2002 0058 00000000 		.4byte	.LFB9
+ 2003 005c 20000000 		.4byte	.LFE9-.LFB9
+ 2004 0060 00000000 		.4byte	.LFB10
+ 2005 0064 20000000 		.4byte	.LFE10-.LFB10
+ 2006 0068 00000000 		.4byte	.LFB11
+ 2007 006c 20000000 		.4byte	.LFE11-.LFB11
+ 2008 0070 00000000 		.4byte	.LFB12
+ 2009 0074 34000000 		.4byte	.LFE12-.LFB12
+ 2010 0078 00000000 		.4byte	.LFB13
+ 2011 007c 20000000 		.4byte	.LFE13-.LFB13
+ 2012 0080 00000000 		.4byte	.LFB14
+ 2013 0084 30000000 		.4byte	.LFE14-.LFB14
+ 2014 0088 00000000 		.4byte	.LFB15
+ 2015 008c 44000000 		.4byte	.LFE15-.LFB15
+ 2016 0090 00000000 		.4byte	.LFB16
+ 2017 0094 28000000 		.4byte	.LFE16-.LFB16
+ 2018 0098 00000000 		.4byte	.LFB17
+ 2019 009c 40000000 		.4byte	.LFE17-.LFB17
+ 2020 00a0 00000000 		.4byte	.LFB18
+ 2021 00a4 38000000 		.4byte	.LFE18-.LFB18
+ 2022 00a8 00000000 		.4byte	.LFB19
+ 2023 00ac 5C000000 		.4byte	.LFE19-.LFB19
+ 2024 00b0 00000000 		.4byte	.LFB20
+ 2025 00b4 0E000000 		.4byte	.LFE20-.LFB20
+ 2026 00b8 00000000 		.4byte	.LFB21
+ 2027 00bc 0E000000 		.4byte	.LFE21-.LFB21
+ 2028 00c0 00000000 		.4byte	.LFB22
+ 2029 00c4 30000000 		.4byte	.LFE22-.LFB22
+ 2030 00c8 00000000 		.4byte	.LFB23
+ 2031 00cc 38000000 		.4byte	.LFE23-.LFB23
+ 2032 00d0 00000000 		.4byte	0
+ 2033 00d4 00000000 		.4byte	0
+ 2034              		.section	.debug_ranges,"",%progbits
+ 2035              	.Ldebug_ranges0:
+ 2036 0000 00000000 		.4byte	.LFB0
+ 2037 0004 30000000 		.4byte	.LFE0
+ 2038 0008 00000000 		.4byte	.LFB1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 57
+
+
+ 2039 000c 60000000 		.4byte	.LFE1
+ 2040 0010 00000000 		.4byte	.LFB2
+ 2041 0014 20000000 		.4byte	.LFE2
+ 2042 0018 00000000 		.4byte	.LFB3
+ 2043 001c 4C000000 		.4byte	.LFE3
+ 2044 0020 00000000 		.4byte	.LFB4
+ 2045 0024 0C000000 		.4byte	.LFE4
+ 2046 0028 00000000 		.4byte	.LFB5
+ 2047 002c 0C000000 		.4byte	.LFE5
+ 2048 0030 00000000 		.4byte	.LFB6
+ 2049 0034 0C000000 		.4byte	.LFE6
+ 2050 0038 00000000 		.4byte	.LFB7
+ 2051 003c 0C000000 		.4byte	.LFE7
+ 2052 0040 00000000 		.4byte	.LFB8
+ 2053 0044 20000000 		.4byte	.LFE8
+ 2054 0048 00000000 		.4byte	.LFB9
+ 2055 004c 20000000 		.4byte	.LFE9
+ 2056 0050 00000000 		.4byte	.LFB10
+ 2057 0054 20000000 		.4byte	.LFE10
+ 2058 0058 00000000 		.4byte	.LFB11
+ 2059 005c 20000000 		.4byte	.LFE11
+ 2060 0060 00000000 		.4byte	.LFB12
+ 2061 0064 34000000 		.4byte	.LFE12
+ 2062 0068 00000000 		.4byte	.LFB13
+ 2063 006c 20000000 		.4byte	.LFE13
+ 2064 0070 00000000 		.4byte	.LFB14
+ 2065 0074 30000000 		.4byte	.LFE14
+ 2066 0078 00000000 		.4byte	.LFB15
+ 2067 007c 44000000 		.4byte	.LFE15
+ 2068 0080 00000000 		.4byte	.LFB16
+ 2069 0084 28000000 		.4byte	.LFE16
+ 2070 0088 00000000 		.4byte	.LFB17
+ 2071 008c 40000000 		.4byte	.LFE17
+ 2072 0090 00000000 		.4byte	.LFB18
+ 2073 0094 38000000 		.4byte	.LFE18
+ 2074 0098 00000000 		.4byte	.LFB19
+ 2075 009c 5C000000 		.4byte	.LFE19
+ 2076 00a0 00000000 		.4byte	.LFB20
+ 2077 00a4 0E000000 		.4byte	.LFE20
+ 2078 00a8 00000000 		.4byte	.LFB21
+ 2079 00ac 0E000000 		.4byte	.LFE21
+ 2080 00b0 00000000 		.4byte	.LFB22
+ 2081 00b4 30000000 		.4byte	.LFE22
+ 2082 00b8 00000000 		.4byte	.LFB23
+ 2083 00bc 38000000 		.4byte	.LFE23
+ 2084 00c0 00000000 		.4byte	0
+ 2085 00c4 00000000 		.4byte	0
+ 2086              		.section	.debug_line,"",%progbits
+ 2087              	.Ldebug_line0:
+ 2088 0000 63020000 		.section	.debug_str,"MS",%progbits,1
+ 2088      02004800 
+ 2088      00000201 
+ 2088      FB0E0D00 
+ 2088      01010101 
+ 2089              	.LASF45:
+ 2090 0000 5350494D 		.ascii	"SPIM_Funk_DisableInt\000"
+ 2090      5F46756E 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 58
+
+
+ 2090      6B5F4469 
+ 2090      7361626C 
+ 2090      65496E74 
+ 2091              	.LASF18:
+ 2092 0015 5350494D 		.ascii	"SPIM_Funk_Stop\000"
+ 2092      5F46756E 
+ 2092      6B5F5374 
+ 2092      6F7000
+ 2093              	.LASF25:
+ 2094 0024 5350494D 		.ascii	"SPIM_Funk_SetRxInterruptMode\000"
+ 2094      5F46756E 
+ 2094      6B5F5365 
+ 2094      74527849 
+ 2094      6E746572 
+ 2095              	.LASF30:
+ 2096 0041 5350494D 		.ascii	"SPIM_Funk_WriteTxData\000"
+ 2096      5F46756E 
+ 2096      6B5F5772 
+ 2096      69746554 
+ 2096      78446174 
+ 2097              	.LASF34:
+ 2098 0057 5350494D 		.ascii	"SPIM_Funk_GetRxBufferSize\000"
+ 2098      5F46756E 
+ 2098      6B5F4765 
+ 2098      74527842 
+ 2098      75666665 
+ 2099              	.LASF33:
+ 2100 0071 72784461 		.ascii	"rxData\000"
+ 2100      746100
+ 2101              	.LASF31:
+ 2102 0078 74784461 		.ascii	"txData\000"
+ 2102      746100
+ 2103              	.LASF17:
+ 2104 007f 5350494D 		.ascii	"SPIM_Funk_Enable\000"
+ 2104      5F46756E 
+ 2104      6B5F456E 
+ 2104      61626C65 
+ 2104      00
+ 2105              	.LASF3:
+ 2106 0090 73686F72 		.ascii	"short unsigned int\000"
+ 2106      7420756E 
+ 2106      7369676E 
+ 2106      65642069 
+ 2106      6E7400
+ 2107              	.LASF47:
+ 2108 00a3 5350494D 		.ascii	"SPIM_Funk_ReadStatus\000"
+ 2108      5F46756E 
+ 2108      6B5F5265 
+ 2108      61645374 
+ 2108      61747573 
+ 2109              	.LASF11:
+ 2110 00b8 63686172 		.ascii	"char\000"
+ 2110      00
+ 2111              	.LASF53:
+ 2112 00bd 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 2112      73657273 
+ 2112      5C4C756B 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 59
+
+
+ 2112      61732043 
+ 2112      72657574 
+ 2113 00eb 65445350 		.ascii	"eDSPPSoC-I2C\\PSoC5_SPI_Master_DSP.cydsn\000"
+ 2113      50536F43 
+ 2113      2D493243 
+ 2113      5C50536F 
+ 2113      43355F53 
+ 2114              	.LASF48:
+ 2115 0113 5350494D 		.ascii	"SPIM_Funk_initVar\000"
+ 2115      5F46756E 
+ 2115      6B5F696E 
+ 2115      69745661 
+ 2115      7200
+ 2116              	.LASF9:
+ 2117 0125 666C6F61 		.ascii	"float\000"
+ 2117      7400
+ 2118              	.LASF35:
+ 2119 012b 73697A65 		.ascii	"size\000"
+ 2119      00
+ 2120              	.LASF13:
+ 2121 0130 72656738 		.ascii	"reg8\000"
+ 2121      00
+ 2122              	.LASF5:
+ 2123 0135 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2123      20756E73 
+ 2123      69676E65 
+ 2123      6420696E 
+ 2123      7400
+ 2124              	.LASF32:
+ 2125 0147 5350494D 		.ascii	"SPIM_Funk_ReadRxData\000"
+ 2125      5F46756E 
+ 2125      6B5F5265 
+ 2125      61645278 
+ 2125      44617461 
+ 2126              	.LASF12:
+ 2127 015c 75696E74 		.ascii	"uint8\000"
+ 2127      3800
+ 2128              	.LASF28:
+ 2129 0162 5350494D 		.ascii	"SPIM_Funk_ReadTxStatus\000"
+ 2129      5F46756E 
+ 2129      6B5F5265 
+ 2129      61645478 
+ 2129      53746174 
+ 2130              	.LASF38:
+ 2131 0179 5350494D 		.ascii	"SPIM_Funk_ClearTxBuffer\000"
+ 2131      5F46756E 
+ 2131      6B5F436C 
+ 2131      65617254 
+ 2131      78427566 
+ 2132              	.LASF41:
+ 2133 0191 62797465 		.ascii	"byteCount\000"
+ 2133      436F756E 
+ 2133      7400
+ 2134              	.LASF50:
+ 2135 019b 5350494D 		.ascii	"SPIM_Funk_swStatusRx\000"
+ 2135      5F46756E 
+ 2135      6B5F7377 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 60
+
+
+ 2135      53746174 
+ 2135      75735278 
+ 2136              	.LASF1:
+ 2137 01b0 756E7369 		.ascii	"unsigned char\000"
+ 2137      676E6564 
+ 2137      20636861 
+ 2137      7200
+ 2138              	.LASF51:
+ 2139 01be 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 2139      4320342E 
+ 2139      392E3320 
+ 2139      32303135 
+ 2139      30333033 
+ 2140 01f1 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 2140      20726576 
+ 2140      6973696F 
+ 2140      6E203232 
+ 2140      31323230 
+ 2141 0224 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 2141      66756E63 
+ 2141      74696F6E 
+ 2141      2D736563 
+ 2141      74696F6E 
+ 2142              	.LASF10:
+ 2143 024c 646F7562 		.ascii	"double\000"
+ 2143      6C6500
+ 2144              	.LASF26:
+ 2145 0253 696E7453 		.ascii	"intSrc\000"
+ 2145      726300
+ 2146              	.LASF52:
+ 2147 025a 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\SPIM_Funk.c\000"
+ 2147      6E657261 
+ 2147      7465645F 
+ 2147      536F7572 
+ 2147      63655C50 
+ 2148              	.LASF44:
+ 2149 027f 5350494D 		.ascii	"SPIM_Funk_EnableInt\000"
+ 2149      5F46756E 
+ 2149      6B5F456E 
+ 2149      61626C65 
+ 2149      496E7400 
+ 2150              	.LASF16:
+ 2151 0293 5350494D 		.ascii	"SPIM_Funk_Start\000"
+ 2151      5F46756E 
+ 2151      6B5F5374 
+ 2151      61727400 
+ 2152              	.LASF8:
+ 2153 02a3 756E7369 		.ascii	"unsigned int\000"
+ 2153      676E6564 
+ 2153      20696E74 
+ 2153      00
+ 2154              	.LASF39:
+ 2155 02b0 5350494D 		.ascii	"SPIM_Funk_PutArray\000"
+ 2155      5F46756E 
+ 2155      6B5F5075 
+ 2155      74417272 
+ 2155      617900
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 61
+
+
+ 2156              	.LASF23:
+ 2157 02c3 5350494D 		.ascii	"SPIM_Funk_DisableRxInt\000"
+ 2157      5F46756E 
+ 2157      6B5F4469 
+ 2157      7361626C 
+ 2157      65527849 
+ 2158              	.LASF7:
+ 2159 02da 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2159      206C6F6E 
+ 2159      6720756E 
+ 2159      7369676E 
+ 2159      65642069 
+ 2160              	.LASF24:
+ 2161 02f1 5350494D 		.ascii	"SPIM_Funk_SetTxInterruptMode\000"
+ 2161      5F46756E 
+ 2161      6B5F5365 
+ 2161      74547849 
+ 2161      6E746572 
+ 2162              	.LASF46:
+ 2163 030e 5350494D 		.ascii	"SPIM_Funk_SetInterruptMode\000"
+ 2163      5F46756E 
+ 2163      6B5F5365 
+ 2163      74496E74 
+ 2163      65727275 
+ 2164              	.LASF43:
+ 2165 0329 5350494D 		.ascii	"SPIM_Funk_ClearFIFO\000"
+ 2165      5F46756E 
+ 2165      6B5F436C 
+ 2165      65617246 
+ 2165      49464F00 
+ 2166              	.LASF42:
+ 2167 033d 62756649 		.ascii	"bufIndex\000"
+ 2167      6E646578 
+ 2167      00
+ 2168              	.LASF15:
+ 2169 0346 5350494D 		.ascii	"SPIM_Funk_Init\000"
+ 2169      5F46756E 
+ 2169      6B5F496E 
+ 2169      697400
+ 2170              	.LASF14:
+ 2171 0355 73697A65 		.ascii	"sizetype\000"
+ 2171      74797065 
+ 2171      00
+ 2172              	.LASF19:
+ 2173 035e 656E6162 		.ascii	"enableInterrupts\000"
+ 2173      6C65496E 
+ 2173      74657272 
+ 2173      75707473 
+ 2173      00
+ 2174              	.LASF6:
+ 2175 036f 6C6F6E67 		.ascii	"long long int\000"
+ 2175      206C6F6E 
+ 2175      6720696E 
+ 2175      7400
+ 2176              	.LASF29:
+ 2177 037d 5350494D 		.ascii	"SPIM_Funk_ReadRxStatus\000"
+ 2177      5F46756E 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 62
+
+
+ 2177      6B5F5265 
+ 2177      61645278 
+ 2177      53746174 
+ 2178              	.LASF37:
+ 2179 0394 5350494D 		.ascii	"SPIM_Funk_ClearRxBuffer\000"
+ 2179      5F46756E 
+ 2179      6B5F436C 
+ 2179      65617252 
+ 2179      78427566 
+ 2180              	.LASF22:
+ 2181 03ac 5350494D 		.ascii	"SPIM_Funk_DisableTxInt\000"
+ 2181      5F46756E 
+ 2181      6B5F4469 
+ 2181      7361626C 
+ 2181      65547849 
+ 2182              	.LASF2:
+ 2183 03c3 73686F72 		.ascii	"short int\000"
+ 2183      7420696E 
+ 2183      7400
+ 2184              	.LASF49:
+ 2185 03cd 5350494D 		.ascii	"SPIM_Funk_swStatusTx\000"
+ 2185      5F46756E 
+ 2185      6B5F7377 
+ 2185      53746174 
+ 2185      75735478 
+ 2186              	.LASF40:
+ 2187 03e2 62756666 		.ascii	"buffer\000"
+ 2187      657200
+ 2188              	.LASF4:
+ 2189 03e9 6C6F6E67 		.ascii	"long int\000"
+ 2189      20696E74 
+ 2189      00
+ 2190              	.LASF27:
+ 2191 03f2 746D7053 		.ascii	"tmpStatus\000"
+ 2191      74617475 
+ 2191      7300
+ 2192              	.LASF21:
+ 2193 03fc 5350494D 		.ascii	"SPIM_Funk_EnableRxInt\000"
+ 2193      5F46756E 
+ 2193      6B5F456E 
+ 2193      61626C65 
+ 2193      5278496E 
+ 2194              	.LASF36:
+ 2195 0412 5350494D 		.ascii	"SPIM_Funk_GetTxBufferSize\000"
+ 2195      5F46756E 
+ 2195      6B5F4765 
+ 2195      74547842 
+ 2195      75666665 
+ 2196              	.LASF0:
+ 2197 042c 7369676E 		.ascii	"signed char\000"
+ 2197      65642063 
+ 2197      68617200 
+ 2198              	.LASF20:
+ 2199 0438 5350494D 		.ascii	"SPIM_Funk_EnableTxInt\000"
+ 2199      5F46756E 
+ 2199      6B5F456E 
+ 2199      61626C65 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccDCR0QP.s 			page 63
+
+
+ 2199      5478496E 
+ 2200              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

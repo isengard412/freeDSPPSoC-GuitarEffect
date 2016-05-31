@@ -43,6 +43,8 @@ int main()
     if(DSPisReady()==1) UARTsendString("connected\n\r");
     else UARTsendString("NOT connected\n\r");
     
+    I2Sinit();
+    NRF24L01init();
     
     for(;;)
     {

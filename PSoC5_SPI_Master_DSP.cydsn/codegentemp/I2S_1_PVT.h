@@ -27,7 +27,7 @@
 ***************************************/
 
 #define I2S_1_DIRECTION              (2u)
-#define I2S_1_WORD_SELECT            (64u)
+#define I2S_1_WORD_SELECT            (32u)
 #define I2S_1_DYNAMIC_BIT_RESOLUTION (0u == 1u)
 #define I2S_1_RX_DATA_INTERLEAVING   (1u)
 #define I2S_1_TX_DATA_INTERLEAVING   (1u)
@@ -40,7 +40,7 @@
 #define I2S_1_TX_DIRECTION_ENABLE    (0u != (I2S_1_DIR_TX & I2S_1_DIRECTION))
 
 #define I2S_1_NUMBER_RX_CHANNELS     (0u)
-#define I2S_1_NUMBER_TX_CHANNELS     (2u)
+#define I2S_1_NUMBER_TX_CHANNELS     (0u)
 
 #define I2S_1_RX_DATA_SEPARATE       (0u == I2S_1_RX_DATA_INTERLEAVING)
 #define I2S_1_RX_DATA_INTERLEAVED    (0u != I2S_1_RX_DATA_INTERLEAVING)
