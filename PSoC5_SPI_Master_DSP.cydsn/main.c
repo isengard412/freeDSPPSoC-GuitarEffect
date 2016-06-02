@@ -48,21 +48,21 @@ int main()
     
     for(;;)
     {
-        uint32 vol=0x01000000;
-        DSPsafeLoad(0x0026,vol);
-        while(vol>0x0007A120)
+        int32 pitch=0x00000000;
+        while(pitch<(int32)0x0000888A)
         {
-            //Safeload
-            DSPsafeLoad(0x0026,vol);
-            vol -= 0x7A120;
+            DSPpitch(pitch);
+            pitch += 0x1000;
+            CyDelay(20);
+        }
+        while(pitch>(int32)0xFFFF7777)
+        {
+            DSPpitch(pitch);
+            pitch -= 0x1000;
             //sprintf((char *)wrBuffer, "Volume: %i\n\r", (int)volume);
             //UARTsendString((char8 *)wrBuffer);
             CyDelay(20);
         }
-        
-        
-        
-        
 
     }  /* End of forever loop */
 }  /* End of main */

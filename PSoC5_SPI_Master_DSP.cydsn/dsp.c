@@ -240,5 +240,32 @@ void DSPread32(uint16 address, uint8* datatarget, uint16 datasize)
     
 }
 
+void DSPi2sInput(uint8 active)
+{
+    /* generated input */
+    if(active==0)
+    {
+        /* i2s mute */
+        DSPwriteWord32(0x0000,0x00000000);
+        /* unmute generator */
+        DSPwriteWord32(0x0000,0x01000000); //data
+        DSPwriteWord32(0x0000,0x0000208A); //slew mode
+    }
+    else
+    {
+        /* mute generator */
+        DSPwriteWord32(0x0000,0x00000000); //data
+        DSPwriteWord32(0x0000,0x0000208A); //slew mode
+        /* i2s mute */
+        DSPwriteWord32(0x0000,0x00000001);
+    }
+}
+
+void DSPpitch(int32 pitch)
+{
+    /* Wert zwischen 0x00008889 und 0xFFFF7777 */
+    DSPwriteWord32(0x0000,pitch);
+}
+
 
 /* [] END OF FILE */
