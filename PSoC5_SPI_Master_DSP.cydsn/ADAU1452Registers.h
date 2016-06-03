@@ -9,9 +9,9 @@
  * ========================================
 */
 
-#define PROGRAM_RAM_SIZE 480
-#define DM0_RAM_SIZE 176
-#define DM1_RAM_SIZE 16
+#define PROGRAM_RAM_SIZE 1292
+#define DM0_RAM_SIZE 412
+#define DM1_RAM_SIZE 36
 
 #define CHIPADDRESS 0x00
 #define WRITE_DSP 0x00
@@ -32,7 +32,7 @@
 #define POWER_ENABLE1       0xF051
 #define PROGRAM_RAM_DATA    0xC000  //Data from Sigma Studio
 #define DM0_RAM_DATA        0x0000  //Data from Sigma Studio
-#define DM1_RAM_DATA        0x6004  //Data from Sigma Studio !!datasheet: 0x6000
+#define DM1_RAM_DATA        0x613C  //Data from Sigma Studio !!datasheet: 0x6000
 #define START_ADDRESS       0xF404
 #define START_PULSE         0xF401
 #define START_CORE          0xF402

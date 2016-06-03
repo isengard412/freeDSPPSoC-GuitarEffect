@@ -48,21 +48,25 @@ int main()
     
     for(;;)
     {
-        int32 pitch=0x00000000;
-        while(pitch<(int32)0x0000888A)
-        {
-            DSPpitch(pitch);
-            pitch += 0x1000;
-            CyDelay(20);
-        }
-        while(pitch>(int32)0xFFFF7777)
-        {
-            DSPpitch(pitch);
-            pitch -= 0x1000;
-            //sprintf((char *)wrBuffer, "Volume: %i\n\r", (int)volume);
-            //UARTsendString((char8 *)wrBuffer);
-            CyDelay(20);
-        }
+//        int32 pitch=0x00000000;
+//        while(pitch<(int32)0x0000888A)
+//        {
+//            DSPpitch(pitch);
+//            pitch += 0x1000;
+//            CyDelay(20);
+//        }
+//        while(pitch>(int32)0xFFFF7777)
+//        {
+//            DSPpitch(pitch);
+//            pitch -= 0x1000;
+//            //sprintf((char *)wrBuffer, "Volume: %i\n\r", (int)volume);
+//            //UARTsendString((char8 *)wrBuffer);
+//            CyDelay(20);
+//        }
+        DSPi2sInput(0);
+        CyDelay(500);
+        DSPi2sInput(1);
+        CyDelay(500);
 
     }  /* End of forever loop */
 }  /* End of main */
