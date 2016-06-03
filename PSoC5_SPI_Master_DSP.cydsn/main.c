@@ -36,17 +36,18 @@ int main()
     CyGlobalIntEnable;
 
     UARTinit();
-    UARTsendString("DSP init......\r");
+    //UARTsendString("DSP init......\r");
     DSPinit();
-    UARTsendString("done\n\r");
-    UARTsendString("DSP......\r");
-    if(DSPisReady()==1) UARTsendString("connected\n\r");
-    else UARTsendString("NOT connected\n\r");
+    //UARTsendString("done\n\r");
+    //UARTsendString("DSP......\r");
+    //if(DSPisReady()==1) UARTsendString("connected\n\r");
+    //else UARTsendString("NOT connected\n\r");
     
     I2Sinit();
     NRF24L01init();
     
     DSPi2sInput(0);
+    uint16 out;
     //uint32 pitch=0x00000000;
     
     for(;;)
@@ -57,7 +58,8 @@ int main()
 //        pitch=0xFFEAAAAB;
 //        DSPpitch(pitch);
 //        CyDelay(500);
-        UARTsendNumber(NRF24L01GetReg(STATUS));
+        out = NRF24L01readReg(0x00);
+        UARTsendNumber(out);
         CyDelay(500);
         
 

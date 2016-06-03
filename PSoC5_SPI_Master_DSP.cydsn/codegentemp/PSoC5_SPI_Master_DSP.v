@@ -1,6 +1,6 @@
 // ======================================================================
 // PSoC5_SPI_Master_DSP.v generated from TopDesign.cysch
-// 06/03/2016 at 16:58
+// 06/03/2016 at 18:52
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 

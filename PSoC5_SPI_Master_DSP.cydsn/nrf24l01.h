@@ -13,7 +13,6 @@
 #define CY_NRF24L01_H
 
 #include <project.h>
-#include "NRF24L01_Registers.h"
 #include "spimaster.h"
 
 #if defined (__GNUC__)
@@ -54,7 +53,8 @@ void NRF24L01init();
 *  uint8 data
 *
 *******************************************************************************/
-uint8 NRF24L01GetReg(uint8 number);
+uint16 NRF24L01readReg(uint8 addressfivebit);
+void NRF24L01writeReg(uint8 fivebit);
 
 /*******************************************************************************
 * Function Name: DSPwrite

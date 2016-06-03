@@ -17,24 +17,36 @@ void NRF24L01init()
 {
     SPIM_Funk_Start();
     
-    CE_Funk_Write(0);
+    CE_Funk_Write(1);
     
-    /* Dummy Read for Test */
-    NRF24L01GetReg(STATUS);
 }
 
-uint8 NRF24L01GetReg(uint8 number)
+void NRF24L01writeReg(uint8 fivebit)
 {
+    CE_Funk_Write(0);
+    while(!(SPIM_Funk_ReadTxStatus() & (SPIM_Funk_STS_SPI_DONE | SPIM_Funk_STS_SPI_IDLE)));
+    /* Senden eines Wortes */
+    SPIM_Funk_WriteTxData((1 << 5) & fivebit);
+    CyDelayUs(10);
+    CE_Funk_Write(1);
+}
+
+uint16 NRF24L01readReg(uint8 addressfivebit)
+{
+    CE_Funk_Write(0);
     SPIM_Funk_ClearRxBuffer();
     /* Warten auf abschliessen der TX Uebertragung */
     while(!(SPIM_Funk_ReadTxStatus() & (SPIM_Funk_STS_SPI_DONE | SPIM_Funk_STS_SPI_IDLE)));
     /* Senden eines Wortes */
-    SPIM_Funk_WriteTxData(R_REGISTER + number);
+    SPIM_Funk_WriteTxData(0x00 + addressfivebit);
     CyDelayUs(10);
-    SPIM_Funk_WriteTxData(NOP);
+    SPIM_Funk_WriteTxData(0xFF);
     CyDelayUs(10);
-    uint8 received=SPIM_Funk_ReadRxData();
+    while(SPIM_Funk_GetRxBufferSize()==0){CyDelayUs(50);}
+    uint16 received=SPIM_Funk_ReadRxData();
+    received=SPIM_Funk_ReadRxData();
     CyDelayUs(10);
+    CE_Funk_Write(1);
     return received;
 }
 
