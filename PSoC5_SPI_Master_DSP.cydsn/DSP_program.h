@@ -1,14 +1,4 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
-*/
+
 
 0x00, 	0x00, 	0x00, 	0x02,
 0x0C, 	0x00, 	0xDC, 	0xDC,
@@ -335,7 +325,3 @@
 0x00, 	0x00, 	0x00, 	0x00
 
 
-
-
-
-/* [] END OF FILE */

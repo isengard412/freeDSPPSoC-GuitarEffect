@@ -46,27 +46,21 @@ int main()
     I2Sinit();
     NRF24L01init();
     
+    DSPi2sInput(0);
+    //uint32 pitch=0x00000000;
+    
     for(;;)
     {
-//        int32 pitch=0x00000000;
-//        while(pitch<(int32)0x0000888A)
-//        {
-//            DSPpitch(pitch);
-//            pitch += 0x1000;
-//            CyDelay(20);
-//        }
-//        while(pitch>(int32)0xFFFF7777)
-//        {
-//            DSPpitch(pitch);
-//            pitch -= 0x1000;
-//            //sprintf((char *)wrBuffer, "Volume: %i\n\r", (int)volume);
-//            //UARTsendString((char8 *)wrBuffer);
-//            CyDelay(20);
-//        }
-        DSPi2sInput(0);
+//        pitch=0x00155555;
+//        DSPpitch(pitch);
+//        CyDelay(500);
+//        pitch=0xFFEAAAAB;
+//        DSPpitch(pitch);
+//        CyDelay(500);
+        UARTsendNumber(NRF24L01GetReg(STATUS));
         CyDelay(500);
-        DSPi2sInput(1);
-        CyDelay(500);
+        
+
 
     }  /* End of forever loop */
 }  /* End of main */

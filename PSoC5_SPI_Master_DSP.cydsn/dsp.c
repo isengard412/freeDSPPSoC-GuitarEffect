@@ -261,10 +261,10 @@ void DSPi2sInput(uint8 active)
     }
 }
 
-void DSPpitch(int32 pitch)
+void DSPpitch(uint32 pitch)
 {
     /* Wert zwischen 0x00008889 und 0xFFFF7777 */
-    DSPwriteWord32(0x0059,pitch);
+    DSPsafeLoad(0x0059,pitch);
 }
 
 

@@ -172,7 +172,7 @@ void DSPi2sInput(uint8 active);
 * Return:
 *
 *******************************************************************************/
-void DSPpitch(int32 pitch);
+void DSPpitch(uint32 pitch);
 
 #endif /* (CY_DSP_H) */
 

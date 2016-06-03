@@ -13,6 +13,8 @@
 #define CY_NRF24L01_H
 
 #include <project.h>
+#include "NRF24L01_Registers.h"
+#include "spimaster.h"
 
 #if defined (__GNUC__)
     /* Add an explicit reference to the floating point printf library */
@@ -39,20 +41,20 @@
 void NRF24L01init();
 
 /*******************************************************************************
-* Function Name: DSPisReady
+* Function Name: NRF24L01GetReg
 ********************************************************************************
 *
 * Summary:
-*  Sending data to DSP
+*  Getting data from RX
 *
 * Parameters:
-*  None.
+*  uint8 register
 *
 * Return:
-*  uint8 ready
+*  uint8 data
 *
 *******************************************************************************/
-//uint8 DSPisReady();
+uint8 NRF24L01GetReg(uint8 number);
 
 /*******************************************************************************
 * Function Name: DSPwrite
