@@ -46,10 +46,10 @@
 #define SPIM_Funk_BIDIRECTIONAL_MODE         (0u)
 
 /* Internal interrupt handling */
-#define SPIM_Funk_TX_BUFFER_SIZE             (4u)
-#define SPIM_Funk_RX_BUFFER_SIZE             (4u)
-#define SPIM_Funk_INTERNAL_TX_INT_ENABLED    (0u)
-#define SPIM_Funk_INTERNAL_RX_INT_ENABLED    (0u)
+#define SPIM_Funk_TX_BUFFER_SIZE             (48u)
+#define SPIM_Funk_RX_BUFFER_SIZE             (48u)
+#define SPIM_Funk_INTERNAL_TX_INT_ENABLED    (1u)
+#define SPIM_Funk_INTERNAL_RX_INT_ENABLED    (1u)
 
 #define SPIM_Funk_SINGLE_REG_SIZE            (8u)
 #define SPIM_Funk_USE_SECOND_DATAPATH        (SPIM_Funk_DATA_WIDTH > SPIM_Funk_SINGLE_REG_SIZE)
@@ -142,7 +142,7 @@ extern uint8 SPIM_Funk_initVar;
 
 #define SPIM_Funk_INT_ON_SPI_DONE    ((uint8) (0u   << SPIM_Funk_STS_SPI_DONE_SHIFT))
 #define SPIM_Funk_INT_ON_TX_EMPTY    ((uint8) (0u   << SPIM_Funk_STS_TX_FIFO_EMPTY_SHIFT))
-#define SPIM_Funk_INT_ON_TX_NOT_FULL ((uint8) (0u << \
+#define SPIM_Funk_INT_ON_TX_NOT_FULL ((uint8) (1u << \
                                                                            SPIM_Funk_STS_TX_FIFO_NOT_FULL_SHIFT))
 #define SPIM_Funk_INT_ON_BYTE_COMP   ((uint8) (0u  << SPIM_Funk_STS_BYTE_COMPLETE_SHIFT))
 #define SPIM_Funk_INT_ON_SPI_IDLE    ((uint8) (0u   << SPIM_Funk_STS_SPI_IDLE_SHIFT))
@@ -160,7 +160,7 @@ extern uint8 SPIM_Funk_initVar;
 
 #define SPIM_Funk_INT_ON_RX_FULL         ((uint8) (0u << \
                                                                           SPIM_Funk_STS_RX_FIFO_FULL_SHIFT))
-#define SPIM_Funk_INT_ON_RX_NOT_EMPTY    ((uint8) (0u << \
+#define SPIM_Funk_INT_ON_RX_NOT_EMPTY    ((uint8) (1u << \
                                                                           SPIM_Funk_STS_RX_FIFO_NOT_EMPTY_SHIFT))
 #define SPIM_Funk_INT_ON_RX_OVER         ((uint8) (0u << \
                                                                           SPIM_Funk_STS_RX_FIFO_OVERRUN_SHIFT))

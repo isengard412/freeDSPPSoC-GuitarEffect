@@ -11,9 +11,21 @@
 
 #include "main.h"
 
-uint8 slew[4] = {0x00,0x00,0x20,0x8A};
-uint8 volumereg[8] = {0x00,0x00,0x00,0x26, 0x00, 0x00, 0x00, 0x01};
-
+/* receive interrupt */
+CY_ISR(IRQ_handler)
+{
+    LED_Write(1);
+    uint8 target[32];
+    NRF24L01readRXpayload(32,&target[0]);
+    CyDelay(500);
+    LED_Write(0);
+    int i;
+    for(i=0;i<32;i++)
+    {
+        UARTsendNumber(target[i]);
+    }
+    
+}
 
 /*******************************************************************************
 * Function Name: main
@@ -31,23 +43,28 @@ uint8 volumereg[8] = {0x00,0x00,0x00,0x26, 0x00, 0x00, 0x00, 0x01};
 *******************************************************************************/
 int main()
 {
-
-    /* Enable Global interrupts - used for USB communication */
+    /* Configuring IRQ RX interrupt */
+    Funk_RX_interrupt_StartEx(IRQ_handler);
+    Funk_RX_interrupt_SetPriority(3u);
+    Funk_RX_interrupt_Stop();
+    /* Enable Global interrupts */
     CyGlobalIntEnable;
-
+    /*Activating UART */
     UARTinit();
-    //UARTsendString("DSP init......\r");
+    /* Initializing DSP */
     DSPinit();
-    //UARTsendString("done\n\r");
-    //UARTsendString("DSP......\r");
-    //if(DSPisReady()==1) UARTsendString("connected\n\r");
-    //else UARTsendString("NOT connected\n\r");
-    
+    /* Activating I2S Communication */
     I2Sinit();
-    NRF24L01init();
+    /* Activating RX transciver */
+    NRF24L01initRX();
+    Funk_RX_interrupt_Start();
+    
+    
+    
+    /***** Initialization completed *****/
     
     DSPi2sInput(0);
-    uint16 out;
+    //uint16 out;
     //uint32 pitch=0x00000000;
     
     for(;;)
@@ -57,10 +74,9 @@ int main()
 //        CyDelay(500);
 //        pitch=0xFFEAAAAB;
 //        DSPpitch(pitch);
-//        CyDelay(500);
-        out = NRF24L01readReg(0x00);
-        UARTsendNumber(out);
         CyDelay(500);
+        UARTsendString("bla");
+        
         
 
 

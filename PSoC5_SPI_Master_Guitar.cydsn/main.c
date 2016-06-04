@@ -46,7 +46,7 @@ int main()
     
     for(;;)
     {
-        UARTsendNumber(NRF24L01GetReg(STATUS));
+        UARTsendNumber(NRF24L01GetReg(0x00));
         CyDelay(500);
         
 

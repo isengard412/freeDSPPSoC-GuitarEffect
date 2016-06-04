@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <blockRegMap version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cyblockregmap cyblockregmap.xsd" xmlns="http://cypress.com/xsd/cyblockregmap">
-  <block name="MISO_Funk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="MOSI_Funk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="SCLK_Funk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="I2S_BLCLK" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="I2S_LRCLK" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="I2S_Clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="SPIM_Funk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+    <block name="TxInternalInterrupt" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="VirtualMux_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="VirtualMux_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="VirtualMux_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="RxInternalInterrupt" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="BSPIM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   </block>
-  <block name="IRQ_Funk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="CE_Funk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="SS_Funk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="MOSI_Funk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="I2S_LRCLK" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="I2S_Clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="MISO_Funk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Funk_RX_interrupt" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="LED" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="cy_boot" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="CE_Funk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="cy_constant_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="Clock_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="IRQ_Funk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="USBUART" BASE="0x0" SIZE="0x0" desc="USBFS" visible="true" hidden="false">
     <block name="ep_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="ord_int" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -879,6 +881,8 @@
     </register>
   </block>
   <block name="SS" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="MISO" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="SPIM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="TxInternalInterrupt" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
     <block name="VirtualMux_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
@@ -889,11 +893,9 @@
   </block>
   <block name="Clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="SCLK" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="MISO" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-  <block name="cy_constant_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="I2S_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
     <block name="bI2S" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
-    <register name="TX_STATUS_0_REG" address="0x40006564" bitWidth="8" desc="" hidden="false">
+    <register name="TX_STATUS_0_REG" address="0x40006465" bitWidth="8" desc="" hidden="false">
       <field name="INT" from="7" to="7" access="R" resetVal="" desc="Interrupt bit" />
       <field name="CH1 F1" from="5" to="5" access="R" resetVal="" desc="Stereo channel 1 FIFO 1 state">
         <value name="FULL" value="0" desc="" />
@@ -920,7 +922,7 @@
         <value name="UNDERFLOW" value="1" desc="" />
       </field>
     </register>
-    <register name="CONTROL_REG" address="0x40006574" bitWidth="8" desc="" hidden="false">
+    <register name="CONTROL_REG" address="0x40006475" bitWidth="8" desc="" hidden="false">
       <field name="RESOLUTION" from="4" to="3" access="RW" resetVal="" desc="Specifies data bits value. Applicable only if dynamic bit resolution is selected.">
         <value name="8-BIT" value="00" desc="" />
         <value name="16-BIT" value="01" desc="" />
@@ -942,6 +944,8 @@
     </register>
   </block>
   <block name="I2S_SDATA_OUT" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="I2S_BLCLK" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="cy_constant_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="MOSI" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="DSP_reset" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
   <block name="GND" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
