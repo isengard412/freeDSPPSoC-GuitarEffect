@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CapSense_1_CSHL.c
-* Version 3.50
+* Version 3.40
 *
 * Description:
 *  This file provides the source code to the High Level APIs for the CapSesne
@@ -40,25 +40,25 @@
 
 uint16 CapSense_1_sensorBaseline[CapSense_1_TOTAL_SENSOR_COUNT];
 uint8 CapSense_1_sensorBaselineLow[CapSense_1_TOTAL_SENSOR_COUNT];
-uint8 CapSense_1_sensorSignal[CapSense_1_TOTAL_SENSOR_COUNT];
+uint16 CapSense_1_sensorSignal[CapSense_1_TOTAL_SENSOR_COUNT];
 uint8 CapSense_1_sensorOnMask[(((CapSense_1_TOTAL_SENSOR_COUNT - 1u) / 8u) + 1u)];
 
 uint8 CapSense_1_lowBaselineResetCnt[CapSense_1_TOTAL_SENSOR_COUNT];
 
-uint8 CapSense_1_fingerThreshold[] = {
+const uint16 CYCODE CapSense_1_fingerThreshold[] = {
     100u, 100u, 100u, 100u, 
 };
 
-uint8 CapSense_1_noiseThreshold[] = {
+const uint16 CYCODE CapSense_1_noiseThreshold[] = {
     20u, 20u, 20u, 20u, 
 };
 
-uint8 CapSense_1_hysteresis[] = {
+const uint16 CYCODE CapSense_1_hysteresis[] = {
     0u, 10u, 10u, 10u, 
 };
 
-uint8 CapSense_1_debounce[] = {
-    1u, 1u, 1u, 1u, 
+const uint8 CYCODE CapSense_1_debounce[] = {
+    1u, 5u, 5u, 5u, 
 };
 
 uint8 CapSense_1_debounceCounter[] = {
@@ -66,10 +66,10 @@ uint8 CapSense_1_debounceCounter[] = {
 };
 
 const uint8 CYCODE CapSense_1_rawDataIndex[] = {
-    3u, /* LinearSlider0__LS */
+    2u, /* LinearSlider0__LS */
     0u, /* Button0__BTN */
     1u, /* Button1__BTN */
-    2u, /* Button2__BTN */
+    21u, /* Button2__BTN */
 
 };
 
@@ -82,15 +82,7 @@ const uint8 CYCODE CapSense_1_numberOfSensors[] = {
 };
 
 const uint16 CYCODE CapSense_1_centroidMult[] = {
-    1422u, 
-};
-
-const uint8 CYCODE CapSense_1_posFiltersMask[] = {
-    0x8u, 
-};
-
-uint8 CapSense_1_posFiltersData[] = {
-    1u, 0u, 0u, 
+    3626u, 
 };
 
 
@@ -371,7 +363,7 @@ void CapSense_1_InitializeEnabledBaselines(void)
     uint16 tempRaw;
     uint16 filteredRawData;
     uint8 widget = CapSense_1_widgetNumber[sensor];
-    uint8 noiseThreshold = CapSense_1_noiseThreshold[widget];
+    uint16 noiseThreshold = CapSense_1_noiseThreshold[widget];
     
     #if (CapSense_1_TOTAL_GENERICS_COUNT)
         /* Exclude generic widget */
@@ -604,8 +596,8 @@ uint8 CapSense_1_CheckIsSensorActive(uint8 sensor)
     uint8 onMask = 0x01u << (sensor & 0x07u);
     /* Prepare to find debounce counter index */
     uint8 widget = CapSense_1_widgetNumber[sensor];
-    uint8 fingerThreshold = CapSense_1_fingerThreshold[widget];
-    uint8 hysteresis = CapSense_1_hysteresis[widget];
+    uint16 fingerThreshold = CapSense_1_fingerThreshold[widget];
+    uint16 hysteresis = CapSense_1_hysteresis[widget];
     uint8 debounce = CapSense_1_debounce[widget];
     
     if (widget < CapSense_1_TOTAL_CENTROIDS_COUNT)
@@ -862,10 +854,10 @@ void CapSense_1_DisableWidget(uint8 widget)
     * 
     *******************************************************************************/
     #if (CapSense_1_IS_DIPLEX_SLIDER)
-        uint8 CapSense_1_FindMaximum(uint8 offset, uint8 count, uint8 fingerThreshold, const uint8 CYCODE *diplex)
+        uint8 CapSense_1_FindMaximum(uint8 offset, uint8 count, uint16 fingerThreshold, const uint8 CYCODE *diplex)
 	                                       
     #else 
-        uint8 CapSense_1_FindMaximum(uint8 offset, uint8 count, uint8 fingerThreshold)
+        uint8 CapSense_1_FindMaximum(uint8 offset, uint8 count, uint16 fingerThreshold)
 	                                       
     #endif /* (CapSense_1_IS_DIPLEX_SLIDER) */
     {
@@ -880,8 +872,8 @@ void CapSense_1_DisableWidget(uint8 widget)
             uint8 biggestCtrdStartPos = 0u;
         #endif /* (CapSense_1_IS_DIPLEX_SLIDER) */
         uint8 maximum = 0xFFu;
-        uint8 temp = 0u;
-        uint8 *startOfSlider = &CapSense_1_sensorSignal[offset]; 
+        uint16 temp = 0u;
+        uint16 *startOfSlider = &CapSense_1_sensorSignal[offset]; 
 
         #if (CapSense_1_IS_DIPLEX_SLIDER)        
             if(diplex != 0u)
@@ -1022,7 +1014,7 @@ void CapSense_1_DisableWidget(uint8 widget)
     *
     *******************************************************************************/
     uint8 CapSense_1_CalcCentroid(uint8 maximum, uint8 offset, 
-                                        uint8 count, uint16 resolution, uint8 noiseThreshold)
+                                        uint8 count, uint16 resolution, uint16 noiseThreshold)
 	                                    
     {
         #if ((CapSense_1_TOTAL_LINEAR_SLIDERS_COUNT > 0u) || (CapSense_1_TOTAL_TOUCH_PADS_COUNT > 0u))
@@ -1035,12 +1027,12 @@ void CapSense_1_DisableWidget(uint8 widget)
         #endif /* (CapSense_1_IS_DIPLEX_SLIDER) */
         
         /* Helps while centroid calulation */
-        static uint8 CapSense_1_centroid[3u];
+        static uint16 CapSense_1_centroid[3u];
 
         uint8 position;
         uint32 numerator;
         int32 denominator;
-        uint8 *startOfSlider = &CapSense_1_sensorSignal[offset];
+        uint16 *startOfSlider = &CapSense_1_sensorSignal[offset];
                     
         #if (CapSense_1_ADD_SLIDER_TYPE)
             if(type == CapSense_1_TYPE_RADIAL_SLIDER)

@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CapSense_1_Pins.c
-* Version 3.50
+* Version 3.40
 *
 * Description:
 *  This file contains API to enable firmware control of a Pins component.
@@ -36,8 +36,6 @@ void CapSense_1_SetAllSensorsDriveMode(uint8 mode)
 {
     /* Set pins drive mode */
     CyPins_SetPinDriveMode(CapSense_1_PortCH0__Button0__BTN, mode);
-    CyPins_SetPinDriveMode(CapSense_1_PortCH0__Button1__BTN, mode);
-    CyPins_SetPinDriveMode(CapSense_1_PortCH0__Button2__BTN, mode);
     CyPins_SetPinDriveMode(CapSense_1_PortCH0__LinearSlider0_e0__LS, mode);
     CyPins_SetPinDriveMode(CapSense_1_PortCH0__LinearSlider0_e1__LS, mode);
     CyPins_SetPinDriveMode(CapSense_1_PortCH0__LinearSlider0_e2__LS, mode);
@@ -57,6 +55,8 @@ void CapSense_1_SetAllSensorsDriveMode(uint8 mode)
     CyPins_SetPinDriveMode(CapSense_1_PortCH0__LinearSlider0_e16__LS, mode);
     CyPins_SetPinDriveMode(CapSense_1_PortCH0__LinearSlider0_e17__LS, mode);
     CyPins_SetPinDriveMode(CapSense_1_PortCH0__LinearSlider0_e18__LS, mode);
+    CyPins_SetPinDriveMode(CapSense_1_PortCH0__Button1__BTN, mode);
+    CyPins_SetPinDriveMode(CapSense_1_PortCH0__Button2__BTN, mode);
 
 }
 

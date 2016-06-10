@@ -1,7 +1,7 @@
 /* ========================================
 * File Name: capsense.h
 *
-* Version: 0
+* Version: 1
 * Author: Lukas Creutzburg
 *
 *  Description:
@@ -51,7 +51,7 @@ void CapSenseInit(void);
 *   uint32: Position on slider
 *
 *******************************************************************************/
-uint32 CapSense_DisplayState(void);
+int16 CapSense_DisplayState(void);
 
 
 /*******************************************************************************
@@ -68,6 +68,23 @@ uint32 CapSense_DisplayState(void);
 *
 *******************************************************************************/
 int32 CapSense_Refresh(void);
+
+/*******************************************************************************
+* Function Name: CapSense_ButtonX
+********************************************************************************
+*
+* Summary:
+*  Interaktion if ButtonX pressed
+*
+* Parameters:  
+*   None
+* Return: 
+*   None
+*
+*******************************************************************************/
+void CapSense_Button0(void);
+void CapSense_Button1(void);
+void CapSense_Button2(void);
 
 #endif
 

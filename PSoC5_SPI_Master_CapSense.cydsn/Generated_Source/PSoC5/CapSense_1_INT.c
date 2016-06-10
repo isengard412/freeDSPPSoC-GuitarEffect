@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CapSense_1_INT.c
-* Version 3.50
+* Version 3.40
 *
 * Description:
 *  This file provides the source code of Interrupt Service Routine (ISR)

@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CapSense_1.c
-* Version 3.50
+* Version 3.40
 *
 * Description:
 *  This file provides the source code of scanning APIs for the CapSense CSD 
@@ -46,7 +46,6 @@ uint8 CapSense_1_sensorEnableMask[(((CapSense_1_TOTAL_SENSOR_COUNT - 1u) / 8u) +
 uint8 CYXDATA * const CYCODE CapSense_1_pcTable[] = {
     (uint8 CYXDATA *)CapSense_1_PortCH0__Button0__BTN__PC, 
     (uint8 CYXDATA *)CapSense_1_PortCH0__Button1__BTN__PC, 
-    (uint8 CYXDATA *)CapSense_1_PortCH0__Button2__BTN__PC, 
     (uint8 CYXDATA *)CapSense_1_PortCH0__LinearSlider0_e0__LS__PC, 
     (uint8 CYXDATA *)CapSense_1_PortCH0__LinearSlider0_e1__LS__PC, 
     (uint8 CYXDATA *)CapSense_1_PortCH0__LinearSlider0_e2__LS__PC, 
@@ -66,12 +65,12 @@ uint8 CYXDATA * const CYCODE CapSense_1_pcTable[] = {
     (uint8 CYXDATA *)CapSense_1_PortCH0__LinearSlider0_e16__LS__PC, 
     (uint8 CYXDATA *)CapSense_1_PortCH0__LinearSlider0_e17__LS__PC, 
     (uint8 CYXDATA *)CapSense_1_PortCH0__LinearSlider0_e18__LS__PC, 
+    (uint8 CYXDATA *)CapSense_1_PortCH0__Button2__BTN__PC, 
 };
 
 const uint8 CYCODE CapSense_1_portTable[] = {
     CapSense_1_PortCH0__Button0__BTN__PORT, 
     CapSense_1_PortCH0__Button1__BTN__PORT, 
-    CapSense_1_PortCH0__Button2__BTN__PORT, 
     CapSense_1_PortCH0__LinearSlider0_e0__LS__PORT, 
     CapSense_1_PortCH0__LinearSlider0_e1__LS__PORT, 
     CapSense_1_PortCH0__LinearSlider0_e2__LS__PORT, 
@@ -91,12 +90,12 @@ const uint8 CYCODE CapSense_1_portTable[] = {
     CapSense_1_PortCH0__LinearSlider0_e16__LS__PORT, 
     CapSense_1_PortCH0__LinearSlider0_e17__LS__PORT, 
     CapSense_1_PortCH0__LinearSlider0_e18__LS__PORT, 
+    CapSense_1_PortCH0__Button2__BTN__PORT, 
 };
 
 const uint8 CYCODE CapSense_1_maskTable[] = {
     CapSense_1_PortCH0__Button0__BTN__MASK,
     CapSense_1_PortCH0__Button1__BTN__MASK,
-    CapSense_1_PortCH0__Button2__BTN__MASK,
     CapSense_1_PortCH0__LinearSlider0_e0__LS__MASK,
     CapSense_1_PortCH0__LinearSlider0_e1__LS__MASK,
     CapSense_1_PortCH0__LinearSlider0_e2__LS__MASK,
@@ -116,6 +115,7 @@ const uint8 CYCODE CapSense_1_maskTable[] = {
     CapSense_1_PortCH0__LinearSlider0_e16__LS__MASK,
     CapSense_1_PortCH0__LinearSlider0_e17__LS__MASK,
     CapSense_1_PortCH0__LinearSlider0_e18__LS__MASK,
+    CapSense_1_PortCH0__Button2__BTN__MASK,
 };
 
 uint8 CYXDATA * const CYCODE CapSense_1_csTable[] = {
@@ -124,23 +124,26 @@ uint8 CYXDATA * const CYCODE CapSense_1_csTable[] = {
     (uint8 CYXDATA *)CYREG_PRT6_CAPS_SEL, (uint8 CYXDATA *)CYREG_PRT15_CAPS_SEL,
 };
 
-uint8 CapSense_1_idacSettings[] = {
-    200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,
+const uint8 CYCODE CapSense_1_idacSettings[] = {
+    43u,41u,48u,49u,41u,38u,34u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,
 };
 
-uint8 CapSense_1_widgetResolution[] = {
+const uint8 CYCODE CapSense_1_widgetResolution[] = {
     CapSense_1_PWM_RESOLUTION_10_BITS,
     CapSense_1_PWM_RESOLUTION_10_BITS,
     CapSense_1_PWM_RESOLUTION_10_BITS,
     CapSense_1_PWM_RESOLUTION_10_BITS,
 };
 
-uint8 CapSense_1_analogSwitchDivider[CapSense_1_TOTAL_SCANSLOT_COUNT];
+uint8 CapSense_1_analogSwitchDivider[CapSense_1_TOTAL_SCANSLOT_COUNT] = {
+    2u, 2u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 2u, 
+};
+
 const uint8 CYCODE CapSense_1_widgetNumber[] = {
     1u, /* Button0__BTN */
     2u, /* Button1__BTN */
-    3u, /* Button2__BTN */
     0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, 0u, /* LinearSlider0__LS */
+    3u, /* Button2__BTN */
     
 };
 

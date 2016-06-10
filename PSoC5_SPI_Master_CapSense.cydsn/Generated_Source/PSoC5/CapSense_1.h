@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CapSense_1.h
-* Version 3.50
+* Version 3.40
 *
 * Description:
 *  This file provides constants and parameter values for the CapSense CSD
@@ -58,13 +58,13 @@
 #define CapSense_1_MULTIPLE_PRESCALER_ENABLED (1u)
 
 #define CapSense_1_PRS_OPTIONS                (2u)
-#define CapSense_1_SCANSPEED_VALUE            (7u)
+#define CapSense_1_SCANSPEED_VALUE            (1u)
 
 #define CapSense_1_VREF_OPTIONS               (0u)
 
 #define CapSense_1_WATER_PROOF                (0u)
 
-#define CapSense_1_TUNING_METHOD              (2u)
+#define CapSense_1_TUNING_METHOD              (0u)
 #define CapSense_1_TUNER_API_GENERATE         (0u)
 
 #define CapSense_1_IMPLEMENTATION_CH0         (1u)
@@ -187,26 +187,26 @@ CY_ISR_PROTO(CapSense_1_IsrCH0_ISR);
 /* Define Sensors */
 #define CapSense_1_SENSOR_BUTTON0__BTN    (0u)
 #define CapSense_1_SENSOR_BUTTON1__BTN    (1u)
-#define CapSense_1_SENSOR_BUTTON2__BTN    (2u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E0__LS    (3u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E1__LS    (4u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E2__LS    (5u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E3__LS    (6u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E4__LS    (7u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E5__LS    (8u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E6__LS    (9u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E7__LS    (10u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E8__LS    (11u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E9__LS    (12u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E10__LS    (13u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E11__LS    (14u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E12__LS    (15u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E13__LS    (16u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E14__LS    (17u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E15__LS    (18u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E16__LS    (19u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E17__LS    (20u)
-#define CapSense_1_SENSOR_LINEARSLIDER0_E18__LS    (21u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E0__LS    (2u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E1__LS    (3u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E2__LS    (4u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E3__LS    (5u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E4__LS    (6u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E5__LS    (7u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E6__LS    (8u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E7__LS    (9u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E8__LS    (10u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E9__LS    (11u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E10__LS    (12u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E11__LS    (13u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E12__LS    (14u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E13__LS    (15u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E14__LS    (16u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E15__LS    (17u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E16__LS    (18u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E17__LS    (19u)
+#define CapSense_1_SENSOR_LINEARSLIDER0_E18__LS    (20u)
+#define CapSense_1_SENSOR_BUTTON2__BTN    (21u)
 /* AMux Cmod, Comparator and Idac Channels definitions */
 #define CapSense_1_AMuxCH0_CMOD_CHANNEL          (22u)
 #define CapSense_1_AMuxCH0_CMP_VP_CHANNEL        (23u)

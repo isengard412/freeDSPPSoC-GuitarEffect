@@ -1,7 +1,7 @@
 /* ========================================
 * File Name: capsense.h
 *
-* Version: 0
+* Version: 1
 * Author: Lukas Creutzburg
 *
 *  Description:
@@ -15,22 +15,7 @@
 
 uint16 curPos, oldPos;
 
-//_________________________________
 
-/*******************************************************************************
-* Function Name:  CapSenseInit
-********************************************************************************
-*
-* Summary:
-*   Initializes CapSense  
-*
-* Parameters:  
-*  None
-*
-* Return: 
-*  None 
-*  
-*******************************************************************************/
 void CapSenseInit(void)
 {
     /* Start CapSense components */
@@ -39,22 +24,8 @@ void CapSenseInit(void)
     /* Initialize baselines */
     CapSense_1_InitializeAllBaselines();
 }
-//_________________________________________________________
 
-/*******************************************************************************
-* Function Name: CapSense_DisplayState
-********************************************************************************
-*
-* Summary:
-*  Get current CapSense State
-*
-* Parameters:  
-*   None
-* Return: 
-*   uint32: Position on slider
-*
-*******************************************************************************/
-uint32 CapSense_DisplayState(void)
+int16 CapSense_DisplayState(void)
 {
     /* Find Slider Position */
     curPos = CapSense_1_GetCentroidPos(CapSense_1_LINEARSLIDER0__LS);
@@ -72,28 +43,14 @@ uint32 CapSense_DisplayState(void)
         /* Display Slider bargraph */
         if (curPos != 0u)
         {
-            uint32 myInt = (uint32)curPos << SLIDER_POS_TO_COMPARE_SHIFT; 
+            int16 myInt = (uint32)curPos; 
             return myInt;
         }
     }
     //not moved
     return -1;
 }
-//_________________________________________________________
 
-/*******************************************************************************
-* Function Name: CapSense_Refresh
-********************************************************************************
-*
-* Summary:
-*  Refresh CapSense
-*
-* Parameters:  
-*   None
-* Return: 
-*   uint32: Position on slider
-*
-*******************************************************************************/
 int32 CapSense_Refresh(void)
 {
     /* Check whether the scanning of all enabled widgets is completed. */
@@ -109,6 +66,45 @@ int32 CapSense_Refresh(void)
         /* Display CapSense state using LEDs */
         return CapSense_DisplayState();
 }
-//_________________________________________________________
+
+void CapSense_Button0(void)
+{
+    /* Display BUTTON0 state */
+    if (CapSense_1_CheckIsWidgetActive(CapSense_1_BUTTON0__BTN))
+    {
+        //is pressed
+    }
+    else
+    {
+        //is notpressed
+    }
+}
+
+void CapSense_Button1(void)
+{
+    /* Display BUTTON0 state */
+    if (CapSense_1_CheckIsWidgetActive(CapSense_1_BUTTON1__BTN))
+    {
+        //is pressed
+    }
+    else
+    {
+        //is notpressed
+    }
+}
+
+void CapSense_Button2(void)
+{
+    /* Display BUTTON0 state */
+    if (CapSense_1_CheckIsWidgetActive(CapSense_1_BUTTON2__BTN))
+    {
+        //is pressed
+    }
+    else
+    {
+        //is notpressed
+    }
+}
+
 
 //[] END OF FILE

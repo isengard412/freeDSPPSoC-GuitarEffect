@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CapSense_1_CSHL.h
-* Version 3.50
+* Version 3.40
 *
 * Description:
 *  This file provides constants and parameter values for the High Level APIs
@@ -25,9 +25,9 @@
 *   Condition compilation parameters
 ***************************************/
 
-#define CapSense_1_SIGNAL_SIZE                (8u)
+#define CapSense_1_SIGNAL_SIZE                (16u)
 #define CapSense_1_AUTO_RESET                 (0u)
-#define CapSense_1_RAW_FILTER_MASK            (8u)
+#define CapSense_1_RAW_FILTER_MASK            (0u)
 
 /* Signal size definition */
 #define CapSense_1_SIGNAL_SIZE_UINT8          (8u)
@@ -65,8 +65,8 @@
 #define CapSense_1_TOTAL_MATRIX_BUTTONS_COUNT          (0u)
 #define CapSense_1_TOTAL_GENERICS_COUNT                (0u)
 
-#define CapSense_1_POS_FILTERS_MASK        (8u)
-#define CapSense_1_LINEAR_SLIDERS_POS_FILTERS_MASK        (8u)
+#define CapSense_1_POS_FILTERS_MASK        (0u)
+#define CapSense_1_LINEAR_SLIDERS_POS_FILTERS_MASK        (0u)
 #define CapSense_1_RADIAL_SLIDERS_POS_FILTERS_MASK        (0u)
 #define CapSense_1_TOUCH_PADS_POS_FILTERS_MASK        (0u)
 
@@ -177,16 +177,16 @@ void CapSense_1_DisableWidget(uint8 widget) ;
 #endif /* (CapSense_1_TOTAL_TOUCH_PADS_COUNT) */
 
 #if (CapSense_1_IS_DIPLEX_SLIDER)
-    uint8 CapSense_1_FindMaximum(uint8 offset, uint8 count, uint8 fingerThreshold, const uint8 CYCODE *diplex)
+    uint8 CapSense_1_FindMaximum(uint8 offset, uint8 count, uint16 fingerThreshold, const uint8 CYCODE *diplex)
                                        ;
 #else 
-    uint8 CapSense_1_FindMaximum(uint8 offset, uint8 count, uint8 fingerThreshold)
+    uint8 CapSense_1_FindMaximum(uint8 offset, uint8 count, uint16 fingerThreshold)
                                        ;
 #endif /* (CapSense_1_IS_DIPLEX_SLIDER) */
 
 #if(CapSense_1_TOTAL_CENTROIDS_COUNT)
     uint8 CapSense_1_CalcCentroid(uint8 maximum, uint8 offset, 
-                                        uint8 count, uint16 resolution, uint8 noiseThreshold)
+                                        uint8 count, uint16 resolution, uint16 noiseThreshold)
 	                                    ;
 #endif /* (CapSense_1_TOTAL_CENTROIDS_COUNT) */
 
@@ -264,7 +264,7 @@ extern const uint8 CYCODE CapSense_1_widgetNumber[CapSense_1_TOTAL_SENSOR_COUNT]
 
 extern uint16 CapSense_1_sensorBaseline[CapSense_1_TOTAL_SENSOR_COUNT];
 extern uint8 CapSense_1_sensorBaselineLow[CapSense_1_TOTAL_SENSOR_COUNT];
-extern uint8 CapSense_1_sensorSignal[CapSense_1_TOTAL_SENSOR_COUNT];
+extern uint16 CapSense_1_sensorSignal[CapSense_1_TOTAL_SENSOR_COUNT];
 extern uint8 CapSense_1_sensorOnMask[(((CapSense_1_TOTAL_SENSOR_COUNT - 1u) / 8u) + 1u)];
 
 extern uint8 CapSense_1_lowBaselineResetCnt[CapSense_1_TOTAL_SENSOR_COUNT];

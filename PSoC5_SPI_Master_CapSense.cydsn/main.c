@@ -53,7 +53,7 @@ int main()
     /* Enable Global interrupts */
     CyGlobalIntEnable;
     /*Activating UART */
-    UARTinit();;
+    UARTinit();
     /* Activating RX transciver */
     NRF24L01initTX();
     Funk_RX_interrupt_Start();
@@ -73,9 +73,8 @@ int main()
         /* Next command to be written */
         pos = CapSense_Refresh();
         if(pos!=-1){
-            UARTsendNumber((uint8)(((uint32)pos) >> 8));
+            UARTsendNumber((uint8)(((uint32)pos) >> 0));
         }
-        //UARTsendString("Next\n");
         
         
 

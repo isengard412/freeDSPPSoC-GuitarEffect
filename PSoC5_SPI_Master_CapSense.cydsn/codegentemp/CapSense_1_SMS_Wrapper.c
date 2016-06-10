@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CapSense_1_SMS_Wrapper.c
-* Version 3.50
+* Version 3.40
 *
 * Description:
 *  This file provides the source code of wrapper between CapSense CSD component 
@@ -20,13 +20,13 @@
 
 #if (CapSense_1_TUNING_METHOD == CapSense_1_AUTO_TUNING)
 
-extern uint8 CapSense_1_noiseThreshold[CapSense_1_WIDGET_CSHL_PARAMETERS_COUNT];
-extern uint8 CapSense_1_hysteresis[CapSense_1_WIDGET_CSHL_PARAMETERS_COUNT];
+extern uint16 CapSense_1_noiseThreshold[CapSense_1_WIDGET_CSHL_PARAMETERS_COUNT];
+extern uint16 CapSense_1_hysteresis[CapSense_1_WIDGET_CSHL_PARAMETERS_COUNT];
 extern uint8 CapSense_1_widgetResolution[CapSense_1_WIDGET_RESOLUTION_PARAMETERS_COUNT];
 extern const uint8 CYCODE CapSense_1_numberOfSensors[CapSense_1_SENSORS_TBL_SIZE];
 extern const uint8 CYCODE CapSense_1_rawDataIndex[CapSense_1_SENSORS_TBL_SIZE];
 
-extern uint8 CapSense_1_fingerThreshold[CapSense_1_WIDGET_CSHL_PARAMETERS_COUNT];
+extern uint16 CapSense_1_fingerThreshold[CapSense_1_WIDGET_CSHL_PARAMETERS_COUNT];
 extern uint8 CapSense_1_idacSettings[CapSense_1_TOTAL_SENSOR_COUNT];
 extern uint8 CapSense_1_analogSwitchDivider[CapSense_1_TOTAL_SCANSLOT_COUNT];
 
@@ -34,8 +34,8 @@ extern void SMS_LIB_V3_50_CalculateThresholds(uint8 SensorNumber);
 extern void SMS_LIB_V3_50_AutoTune1Ch(void);
 extern void SMS_LIB_V3_50_AutoTune2Ch(void);
 
-uint8  * SMS_LIB_noiseThreshold = CapSense_1_noiseThreshold;
-uint8 * SMS_LIB_hysteresis = CapSense_1_hysteresis;
+uint16  * SMS_LIB_noiseThreshold = CapSense_1_noiseThreshold;
+uint16 * SMS_LIB_hysteresis = CapSense_1_hysteresis;
 
 uint8 * SMS_LIB_widgetResolution = CapSense_1_widgetResolution;
 
@@ -43,21 +43,13 @@ const uint8 CYCODE * SMS_LIB_widgetNumber = CapSense_1_widgetNumber;
 const uint8 CYCODE * SMS_LIB_numberOfSensors = CapSense_1_numberOfSensors;
 const uint8 CYCODE * SMS_LIB_rawDataIndex = CapSense_1_rawDataIndex;
 
-uint8 * SMS_LIB_fingerThreshold = CapSense_1_fingerThreshold;
+uint16 * SMS_LIB_fingerThreshold = CapSense_1_fingerThreshold;
 uint8 * SMS_LIB_idacSettings = CapSense_1_idacSettings;
 uint8 * SMS_LIB_prescaler = CapSense_1_analogSwitchDivider;
 
 uint16 * SMS_LIB_SensorRaw = CapSense_1_sensorRaw;
 uint16 * SMS_LIB_SensorBaseline = CapSense_1_sensorBaseline;
 
-const uint8 CYCODE SMS_LIB_SensorSensitivity[] = {
-    2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
-};
-
-
-const uint8 CYCODE SMS_LIB_PrescalerTbl[] = {
-    1u, 1u, 1u, 1u, 1u, 1u, 2u, 2u, 2u, 2u, 2u, 3u, 3u, 3u, 3u, 3u, 3u, 4u, 4u, 4u, 4u, 4u, 4u, 5u, 5u, 5u, 5u, 5u, 5u, 6u, 6u, 6u, 
-};
 
 
 
@@ -71,8 +63,8 @@ uint8 SMS_LIB_Table7[CapSense_1_TOTAL_SENSOR_COUNT];
 uint8 SMS_LIB_Table8[CapSense_1_END_OF_WIDGETS_INDEX];
 uint8 SMS_LIB_Table9[CapSense_1_END_OF_WIDGETS_INDEX];
 
-uint8 SMS_LIB_Var1 = (5u);
-uint16 SMS_LIB_Var2 = (10738u);
+uint8 SMS_LIB_Var1 = ();
+uint16 SMS_LIB_Var2 = ();
 
 uint8 SMS_LIB_TotalSnsCnt = CapSense_1_TOTAL_SENSOR_COUNT;
 uint8 SMS_LIB_TotalScanSlCnt = CapSense_1_TOTAL_SCANSLOT_COUNT;

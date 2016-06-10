@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CapSense_1_TunerHelper.h
-* Version 3.50
+* Version 3.40
 *
 * Description:
 *  This file provides constants and structure declarations for the tunner hepl

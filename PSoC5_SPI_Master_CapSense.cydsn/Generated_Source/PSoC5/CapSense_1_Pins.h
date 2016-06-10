@@ -1,6 +1,6 @@
 /*******************************************************************************
 * File Name: CapSense_1_Pins.h
-* Version 3.50
+* Version 3.40
 *
 * Description:
 *  This file contains API to enable firmware control of a Pins component.
@@ -51,8 +51,6 @@ void CapSense_1_SetAllCmodsDriveMode(uint8 mode) ;
 
 /* PC registers defines for sensors */
 #define CapSense_1_PortCH0__Button0__BTN  CapSense_1_PortCH0__Button0__BTN__PC
-#define CapSense_1_PortCH0__Button1__BTN  CapSense_1_PortCH0__Button1__BTN__PC
-#define CapSense_1_PortCH0__Button2__BTN  CapSense_1_PortCH0__Button2__BTN__PC
 #define CapSense_1_PortCH0__LinearSlider0_e0__LS  CapSense_1_PortCH0__LinearSlider0_e0__LS__PC
 #define CapSense_1_PortCH0__LinearSlider0_e1__LS  CapSense_1_PortCH0__LinearSlider0_e1__LS__PC
 #define CapSense_1_PortCH0__LinearSlider0_e2__LS  CapSense_1_PortCH0__LinearSlider0_e2__LS__PC
@@ -72,6 +70,8 @@ void CapSense_1_SetAllCmodsDriveMode(uint8 mode) ;
 #define CapSense_1_PortCH0__LinearSlider0_e16__LS  CapSense_1_PortCH0__LinearSlider0_e16__LS__PC
 #define CapSense_1_PortCH0__LinearSlider0_e17__LS  CapSense_1_PortCH0__LinearSlider0_e17__LS__PC
 #define CapSense_1_PortCH0__LinearSlider0_e18__LS  CapSense_1_PortCH0__LinearSlider0_e18__LS__PC
+#define CapSense_1_PortCH0__Button1__BTN  CapSense_1_PortCH0__Button1__BTN__PC
+#define CapSense_1_PortCH0__Button2__BTN  CapSense_1_PortCH0__Button2__BTN__PC
 /* For Cmods*/
 #define CapSense_1_CmodCH0_Cmod_CH0       CapSense_1_CmodCH0__Cmod_CH0__PC
 
