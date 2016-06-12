@@ -53,6 +53,9 @@ int16 CapSense_DisplayState(void)
 
 int32 CapSense_Refresh(void)
 {
+    CapSense_Button0();
+    CapSense_Button1();
+    CapSense_Button2();
     /* Check whether the scanning of all enabled widgets is completed. */
         if(0u == CapSense_1_IsBusy())
         {
@@ -82,7 +85,7 @@ void CapSense_Button0(void)
 
 void CapSense_Button1(void)
 {
-    /* Display BUTTON0 state */
+    /* Display BUTTON1 state */
     if (CapSense_1_CheckIsWidgetActive(CapSense_1_BUTTON1__BTN))
     {
         //is pressed
@@ -95,7 +98,7 @@ void CapSense_Button1(void)
 
 void CapSense_Button2(void)
 {
-    /* Display BUTTON0 state */
+    /* Display BUTTON2 state */
     if (CapSense_1_CheckIsWidgetActive(CapSense_1_BUTTON2__BTN))
     {
         //is pressed

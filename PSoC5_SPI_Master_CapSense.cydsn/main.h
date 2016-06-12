@@ -14,8 +14,9 @@
 
 #include <project.h>
 #include "uart.h"
-#include "nrf24l01.h"
+//#include "nrf24l01.h"
 #include "capsense.h"
+#include "funk.h"
 
 #endif /* (CY_MAIN_H) */
 

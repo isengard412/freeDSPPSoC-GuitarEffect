@@ -55,11 +55,12 @@ int main()
     /*Activating UART */
     UARTinit();
     /* Activating RX transciver */
-    NRF24L01initTX();
-    Funk_RX_interrupt_Start();
+    //NRF24L01initTX();
+    //Funk_RX_interrupt_Start();
     
     VDAC8_1_Start();
     CapSenseInit();
+    funkTxTest();
     /***** Initialization completed *****/
     
     int32 pos = 30000;

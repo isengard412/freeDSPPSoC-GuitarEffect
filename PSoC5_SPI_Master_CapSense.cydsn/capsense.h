@@ -14,12 +14,6 @@
 	
 #include <project.h>
 
-/* CapSense Slider resoluton is set to 127 (7 bits).
-*  Since PWM has 16 bit resolution, slider position value should be shifted left
-*  by 9 bits.
-*/
-#define SLIDER_POS_TO_COMPARE_SHIFT    (9u)
-
 
 /*******************************************************************************
 * Function Name:  CapSenseInit

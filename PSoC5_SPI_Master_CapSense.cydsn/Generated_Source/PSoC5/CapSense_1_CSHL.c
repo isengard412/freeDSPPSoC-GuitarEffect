@@ -46,7 +46,7 @@ uint8 CapSense_1_sensorOnMask[(((CapSense_1_TOTAL_SENSOR_COUNT - 1u) / 8u) + 1u)
 uint8 CapSense_1_lowBaselineResetCnt[CapSense_1_TOTAL_SENSOR_COUNT];
 
 const uint16 CYCODE CapSense_1_fingerThreshold[] = {
-    100u, 100u, 100u, 100u, 
+    100u, 55u, 66u, 44u, 
 };
 
 const uint16 CYCODE CapSense_1_noiseThreshold[] = {

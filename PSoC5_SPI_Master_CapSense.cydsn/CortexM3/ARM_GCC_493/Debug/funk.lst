@@ -1,0 +1,940 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"funk.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global _printf_float
+  19              		.thumb
+  20              		.comm	temp,1,1
+  21              		.global	q
+  22              		.bss
+  23              		.type	q, %object
+  24              		.size	q, 1
+  25              	q:
+  26 0000 00       		.space	1
+  27              		.comm	data_array,4,4
+  28              		.global	tx_address
+  29              		.data
+  30              		.align	2
+  31              		.type	tx_address, %object
+  32              		.size	tx_address, 5
+  33              	tx_address:
+  34 0000 E7       		.byte	-25
+  35 0001 E7       		.byte	-25
+  36 0002 E7       		.byte	-25
+  37 0003 E7       		.byte	-25
+  38 0004 E7       		.byte	-25
+  39              		.global	rx_address
+  40 0005 000000   		.align	2
+  41              		.type	rx_address, %object
+  42              		.size	rx_address, 5
+  43              	rx_address:
+  44 0008 D7       		.byte	-41
+  45 0009 D7       		.byte	-41
+  46 000a D7       		.byte	-41
+  47 000b D7       		.byte	-41
+  48 000c D7       		.byte	-41
+  49 000d 000000   		.section	.rodata
+  50              		.align	2
+  51              	.LC0:
+  52 0000 54582069 		.ascii	"TX init\000"
+  52      6E697400 
+  53              		.align	2
+  54              	.LC1:
+  55 0008 3E205472 		.ascii	"> Tranmission went OK\015\012\000"
+  55      616E6D69 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 2
+
+
+  55      7373696F 
+  55      6E207765 
+  55      6E74204F 
+  56              		.align	2
+  57              	.LC2:
+  58 0020 3E204D65 		.ascii	"> Message is lost ...\015\012\000"
+  58      73736167 
+  58      65206973 
+  58      206C6F73 
+  58      74202E2E 
+  59              		.align	2
+  60              	.LC3:
+  61 0038 3E205265 		.ascii	"> Retranmission count: \000"
+  61      7472616E 
+  61      6D697373 
+  61      696F6E20 
+  61      636F756E 
+  62              		.section	.text.funkTxTest,"ax",%progbits
+  63              		.align	2
+  64              		.global	funkTxTest
+  65              		.thumb
+  66              		.thumb_func
+  67              		.type	funkTxTest, %function
+  68              	funkTxTest:
+  69              	.LFB63:
+  70              		.file 1 ".\\funk.c"
+   1:.\funk.c      **** /*
+   2:.\funk.c      **** * funk.c 
+   3:.\funk.c      **** * Author: Lukas Creutzburg
+   4:.\funk.c      **** * Based on:
+   5:.\funk.c      **** * ----------------------------------------------------------------------------
+   6:.\funk.c      **** * THE COFFEEWARE LICENSE (Revision 1):
+   7:.\funk.c      **** * <ihsan@kehribar.me> wrote this file. As long as you retain this notice you
+   8:.\funk.c      **** * can do whatever you want with this stuff. If we meet some day, and you think
+   9:.\funk.c      **** * this stuff is worth it, you can buy me a coffee in return.
+  10:.\funk.c      **** * -----------------------------------------------------------------------------
+  11:.\funk.c      **** *
+  12:.\funk.c      **** * Version: 0.1
+  13:.\funk.c      **** */
+  14:.\funk.c      **** 
+  15:.\funk.c      **** #include "funk.h"
+  16:.\funk.c      **** 
+  17:.\funk.c      **** 
+  18:.\funk.c      **** /* ------------------------------------------------------------------------- */
+  19:.\funk.c      **** uint8 temp;
+  20:.\funk.c      **** uint8 q = 0;
+  21:.\funk.c      **** uint8 data_array[4];
+  22:.\funk.c      **** uint8 tx_address[5] = {0xE7,0xE7,0xE7,0xE7,0xE7};
+  23:.\funk.c      **** uint8 rx_address[5] = {0xD7,0xD7,0xD7,0xD7,0xD7};
+  24:.\funk.c      **** /* ------------------------------------------------------------------------- */
+  25:.\funk.c      **** int funkTxTest()
+  26:.\funk.c      **** {
+  71              		.loc 1 26 0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 0
+  74              		@ frame_needed = 1, uses_anonymous_args = 0
+  75 0000 80B5     		push	{r7, lr}
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 3
+
+
+  76              		.cfi_def_cfa_offset 8
+  77              		.cfi_offset 7, -8
+  78              		.cfi_offset 14, -4
+  79 0002 00AF     		add	r7, sp, #0
+  80              		.cfi_def_cfa_register 7
+  27:.\funk.c      ****     UARTsendString("TX init");
+  81              		.loc 1 27 0
+  82 0004 2848     		ldr	r0, .L6
+  83 0006 FFF7FEFF 		bl	UARTsendString
+  28:.\funk.c      ****     
+  29:.\funk.c      ****     /* init hardware pins */
+  30:.\funk.c      ****     nrf24_init();
+  84              		.loc 1 30 0
+  85 000a FFF7FEFF 		bl	nrf24_init
+  31:.\funk.c      ****     
+  32:.\funk.c      ****     /* Channel #2 , payload length: 4 */
+  33:.\funk.c      ****     nrf24_config(2,4);
+  86              		.loc 1 33 0
+  87 000e 0220     		movs	r0, #2
+  88 0010 0421     		movs	r1, #4
+  89 0012 FFF7FEFF 		bl	nrf24_config
+  34:.\funk.c      **** 
+  35:.\funk.c      ****     /* Set the device addresses */
+  36:.\funk.c      ****     nrf24_tx_address(tx_address);
+  90              		.loc 1 36 0
+  91 0016 2548     		ldr	r0, .L6+4
+  92 0018 FFF7FEFF 		bl	nrf24_tx_address
+  37:.\funk.c      ****     nrf24_rx_address(rx_address);    
+  93              		.loc 1 37 0
+  94 001c 2448     		ldr	r0, .L6+8
+  95 001e FFF7FEFF 		bl	nrf24_rx_address
+  96              	.L5:
+  38:.\funk.c      **** 
+  39:.\funk.c      ****     while(1)
+  40:.\funk.c      ****     {                
+  41:.\funk.c      ****         /* Fill the data buffer */
+  42:.\funk.c      ****         data_array[0] = 0x00;
+  97              		.loc 1 42 0
+  98 0022 244B     		ldr	r3, .L6+12
+  99 0024 0022     		movs	r2, #0
+ 100 0026 1A70     		strb	r2, [r3]
+  43:.\funk.c      ****         data_array[1] = 0xAA;
+ 101              		.loc 1 43 0
+ 102 0028 224B     		ldr	r3, .L6+12
+ 103 002a AA22     		movs	r2, #170
+ 104 002c 5A70     		strb	r2, [r3, #1]
+  44:.\funk.c      ****         data_array[2] = 0x55;
+ 105              		.loc 1 44 0
+ 106 002e 214B     		ldr	r3, .L6+12
+ 107 0030 5522     		movs	r2, #85
+ 108 0032 9A70     		strb	r2, [r3, #2]
+  45:.\funk.c      ****         data_array[3] = q++;                                    
+ 109              		.loc 1 45 0
+ 110 0034 204B     		ldr	r3, .L6+16
+ 111 0036 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 112 0038 5A1C     		adds	r2, r3, #1
+ 113 003a D1B2     		uxtb	r1, r2
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 4
+
+
+ 114 003c 1E4A     		ldr	r2, .L6+16
+ 115 003e 1170     		strb	r1, [r2]
+ 116 0040 1C4A     		ldr	r2, .L6+12
+ 117 0042 D370     		strb	r3, [r2, #3]
+  46:.\funk.c      **** 
+  47:.\funk.c      ****         /* Automatically goes to TX mode */
+  48:.\funk.c      ****         nrf24_send(data_array);        
+ 118              		.loc 1 48 0
+ 119 0044 1B48     		ldr	r0, .L6+12
+ 120 0046 FFF7FEFF 		bl	nrf24_send
+  49:.\funk.c      ****         
+  50:.\funk.c      ****         /* Wait for transmission to end */
+  51:.\funk.c      ****         while(nrf24_isSending());
+ 121              		.loc 1 51 0
+ 122 004a 00BF     		nop
+ 123              	.L2:
+ 124              		.loc 1 51 0 is_stmt 0 discriminator 1
+ 125 004c FFF7FEFF 		bl	nrf24_isSending
+ 126 0050 0346     		mov	r3, r0
+ 127 0052 002B     		cmp	r3, #0
+ 128 0054 FAD1     		bne	.L2
+  52:.\funk.c      **** 
+  53:.\funk.c      ****         /* Make analysis on last tranmission attempt */
+  54:.\funk.c      ****         temp = nrf24_lastMessageStatus();
+ 129              		.loc 1 54 0 is_stmt 1
+ 130 0056 FFF7FEFF 		bl	nrf24_lastMessageStatus
+ 131 005a 0346     		mov	r3, r0
+ 132 005c 1A46     		mov	r2, r3
+ 133 005e 174B     		ldr	r3, .L6+20
+ 134 0060 1A70     		strb	r2, [r3]
+  55:.\funk.c      **** 
+  56:.\funk.c      ****         if(temp == NRF24_TRANSMISSON_OK)
+ 135              		.loc 1 56 0
+ 136 0062 164B     		ldr	r3, .L6+20
+ 137 0064 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 138 0066 002B     		cmp	r3, #0
+ 139 0068 03D1     		bne	.L3
+  57:.\funk.c      ****         {                    
+  58:.\funk.c      ****             UARTsendString("> Tranmission went OK\r\n");
+ 140              		.loc 1 58 0
+ 141 006a 1548     		ldr	r0, .L6+24
+ 142 006c FFF7FEFF 		bl	UARTsendString
+ 143 0070 06E0     		b	.L4
+ 144              	.L3:
+  59:.\funk.c      ****         }
+  60:.\funk.c      ****         else if(temp == NRF24_MESSAGE_LOST)
+ 145              		.loc 1 60 0
+ 146 0072 124B     		ldr	r3, .L6+20
+ 147 0074 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 148 0076 012B     		cmp	r3, #1
+ 149 0078 02D1     		bne	.L4
+  61:.\funk.c      ****         {                    
+  62:.\funk.c      ****             UARTsendString("> Message is lost ...\r\n");    
+ 150              		.loc 1 62 0
+ 151 007a 1248     		ldr	r0, .L6+28
+ 152 007c FFF7FEFF 		bl	UARTsendString
+ 153              	.L4:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 5
+
+
+  63:.\funk.c      ****         }
+  64:.\funk.c      ****         
+  65:.\funk.c      **** 		/* Retranmission count indicates the tranmission quality */
+  66:.\funk.c      **** 		temp = nrf24_retransmissionCount();
+ 154              		.loc 1 66 0
+ 155 0080 FFF7FEFF 		bl	nrf24_retransmissionCount
+ 156 0084 0346     		mov	r3, r0
+ 157 0086 1A46     		mov	r2, r3
+ 158 0088 0C4B     		ldr	r3, .L6+20
+ 159 008a 1A70     		strb	r2, [r3]
+  67:.\funk.c      **** 		UARTsendString("> Retranmission count: ");
+ 160              		.loc 1 67 0
+ 161 008c 0E48     		ldr	r0, .L6+32
+ 162 008e FFF7FEFF 		bl	UARTsendString
+  68:.\funk.c      ****         UARTsendNumber(temp);
+ 163              		.loc 1 68 0
+ 164 0092 0A4B     		ldr	r3, .L6+20
+ 165 0094 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 166 0096 1846     		mov	r0, r3
+ 167 0098 FFF7FEFF 		bl	UARTsendNumber
+  69:.\funk.c      **** 
+  70:.\funk.c      **** 		/* Optionally, go back to RX mode ... */
+  71:.\funk.c      **** 		nrf24_powerUpRx();
+ 168              		.loc 1 71 0
+ 169 009c FFF7FEFF 		bl	nrf24_powerUpRx
+  72:.\funk.c      **** 
+  73:.\funk.c      **** 		/* Or you might want to power down after TX */
+  74:.\funk.c      **** 		// nrf24_powerDown();            
+  75:.\funk.c      **** 
+  76:.\funk.c      **** 		/* Wait a little ... */
+  77:.\funk.c      **** 		CyDelay(10);
+ 170              		.loc 1 77 0
+ 171 00a0 0A20     		movs	r0, #10
+ 172 00a2 FFF7FEFF 		bl	CyDelay
+  78:.\funk.c      ****     }
+ 173              		.loc 1 78 0
+ 174 00a6 BCE7     		b	.L5
+ 175              	.L7:
+ 176              		.align	2
+ 177              	.L6:
+ 178 00a8 00000000 		.word	.LC0
+ 179 00ac 00000000 		.word	tx_address
+ 180 00b0 00000000 		.word	rx_address
+ 181 00b4 00000000 		.word	data_array
+ 182 00b8 00000000 		.word	q
+ 183 00bc 00000000 		.word	temp
+ 184 00c0 08000000 		.word	.LC1
+ 185 00c4 20000000 		.word	.LC2
+ 186 00c8 38000000 		.word	.LC3
+ 187              		.cfi_endproc
+ 188              	.LFE63:
+ 189              		.size	funkTxTest, .-funkTxTest
+ 190              		.section	.rodata
+ 191              		.align	2
+ 192              	.LC4:
+ 193 0050 52582069 		.ascii	"RX init...\000"
+ 193      6E69742E 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 6
+
+
+ 193      2E2E00
+ 194 005b 00       		.align	2
+ 195              	.LC5:
+ 196 005c 3E2000   		.ascii	"> \000"
+ 197 005f 00       		.section	.text.funkRxTest,"ax",%progbits
+ 198              		.align	2
+ 199              		.global	funkRxTest
+ 200              		.thumb
+ 201              		.thumb_func
+ 202              		.type	funkRxTest, %function
+ 203              	funkRxTest:
+ 204              	.LFB64:
+  79:.\funk.c      **** }
+  80:.\funk.c      **** 
+  81:.\funk.c      **** int funkRxTest()
+  82:.\funk.c      **** {
+ 205              		.loc 1 82 0
+ 206              		.cfi_startproc
+ 207              		@ args = 0, pretend = 0, frame = 0
+ 208              		@ frame_needed = 1, uses_anonymous_args = 0
+ 209 0000 80B5     		push	{r7, lr}
+ 210              		.cfi_def_cfa_offset 8
+ 211              		.cfi_offset 7, -8
+ 212              		.cfi_offset 14, -4
+ 213 0002 00AF     		add	r7, sp, #0
+ 214              		.cfi_def_cfa_register 7
+  83:.\funk.c      ****     UARTsendString("RX init...");
+ 215              		.loc 1 83 0
+ 216 0004 1748     		ldr	r0, .L11
+ 217 0006 FFF7FEFF 		bl	UARTsendString
+  84:.\funk.c      ****     /* init hardware pins */
+  85:.\funk.c      ****     nrf24_init();
+ 218              		.loc 1 85 0
+ 219 000a FFF7FEFF 		bl	nrf24_init
+  86:.\funk.c      ****     
+  87:.\funk.c      ****     /* Channel #2 , payload length: 4 */
+  88:.\funk.c      ****     nrf24_config(2,4);
+ 220              		.loc 1 88 0
+ 221 000e 0220     		movs	r0, #2
+ 222 0010 0421     		movs	r1, #4
+ 223 0012 FFF7FEFF 		bl	nrf24_config
+  89:.\funk.c      ****  
+  90:.\funk.c      ****     /* Set the device addresses */
+  91:.\funk.c      ****     nrf24_tx_address(tx_address);
+ 224              		.loc 1 91 0
+ 225 0016 1448     		ldr	r0, .L11+4
+ 226 0018 FFF7FEFF 		bl	nrf24_tx_address
+  92:.\funk.c      ****     nrf24_rx_address(rx_address);
+ 227              		.loc 1 92 0
+ 228 001c 1348     		ldr	r0, .L11+8
+ 229 001e FFF7FEFF 		bl	nrf24_rx_address
+ 230              	.L10:
+  93:.\funk.c      **** 
+  94:.\funk.c      ****     while(1)
+  95:.\funk.c      ****     {    
+  96:.\funk.c      ****         if(nrf24_dataReady())
+ 231              		.loc 1 96 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 7
+
+
+ 232 0022 FFF7FEFF 		bl	nrf24_dataReady
+ 233 0026 0346     		mov	r3, r0
+ 234 0028 002B     		cmp	r3, #0
+ 235 002a 19D0     		beq	.L9
+  97:.\funk.c      ****         {
+  98:.\funk.c      ****             nrf24_getData(data_array);        
+ 236              		.loc 1 98 0
+ 237 002c 1048     		ldr	r0, .L11+12
+ 238 002e FFF7FEFF 		bl	nrf24_getData
+  99:.\funk.c      ****             UARTsendString("> ");
+ 239              		.loc 1 99 0
+ 240 0032 1048     		ldr	r0, .L11+16
+ 241 0034 FFF7FEFF 		bl	UARTsendString
+ 100:.\funk.c      ****             UARTsendNumber(data_array[0]);
+ 242              		.loc 1 100 0
+ 243 0038 0D4B     		ldr	r3, .L11+12
+ 244 003a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 245 003c 1846     		mov	r0, r3
+ 246 003e FFF7FEFF 		bl	UARTsendNumber
+ 101:.\funk.c      ****             UARTsendNumber(data_array[1]);
+ 247              		.loc 1 101 0
+ 248 0042 0B4B     		ldr	r3, .L11+12
+ 249 0044 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 250 0046 1846     		mov	r0, r3
+ 251 0048 FFF7FEFF 		bl	UARTsendNumber
+ 102:.\funk.c      ****             UARTsendNumber(data_array[2]);
+ 252              		.loc 1 102 0
+ 253 004c 084B     		ldr	r3, .L11+12
+ 254 004e 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 255 0050 1846     		mov	r0, r3
+ 256 0052 FFF7FEFF 		bl	UARTsendNumber
+ 103:.\funk.c      ****             UARTsendNumber(data_array[3]);
+ 257              		.loc 1 103 0
+ 258 0056 064B     		ldr	r3, .L11+12
+ 259 0058 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 260 005a 1846     		mov	r0, r3
+ 261 005c FFF7FEFF 		bl	UARTsendNumber
+ 262              	.L9:
+ 104:.\funk.c      ****         }
+ 105:.\funk.c      ****     }
+ 263              		.loc 1 105 0
+ 264 0060 DFE7     		b	.L10
+ 265              	.L12:
+ 266 0062 00BF     		.align	2
+ 267              	.L11:
+ 268 0064 50000000 		.word	.LC4
+ 269 0068 00000000 		.word	tx_address
+ 270 006c 00000000 		.word	rx_address
+ 271 0070 00000000 		.word	data_array
+ 272 0074 5C000000 		.word	.LC5
+ 273              		.cfi_endproc
+ 274              	.LFE64:
+ 275              		.size	funkRxTest, .-funkRxTest
+ 276              		.text
+ 277              	.Letext0:
+ 278              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 279              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 8
+
+
+ 280              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 281              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 282              		.section	.debug_info,"",%progbits
+ 283              	.Ldebug_info0:
+ 284 0000 54010000 		.4byte	0x154
+ 285 0004 0400     		.2byte	0x4
+ 286 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 287 000a 04       		.byte	0x4
+ 288 000b 01       		.uleb128 0x1
+ 289 000c EE000000 		.4byte	.LASF23
+ 290 0010 01       		.byte	0x1
+ 291 0011 A7000000 		.4byte	.LASF24
+ 292 0015 46000000 		.4byte	.LASF25
+ 293 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 294 001d 00000000 		.4byte	0
+ 295 0021 00000000 		.4byte	.Ldebug_line0
+ 296 0025 02       		.uleb128 0x2
+ 297 0026 01       		.byte	0x1
+ 298 0027 06       		.byte	0x6
+ 299 0028 BB010000 		.4byte	.LASF0
+ 300 002c 02       		.uleb128 0x2
+ 301 002d 01       		.byte	0x1
+ 302 002e 08       		.byte	0x8
+ 303 002f D2000000 		.4byte	.LASF1
+ 304 0033 02       		.uleb128 0x2
+ 305 0034 02       		.byte	0x2
+ 306 0035 05       		.byte	0x5
+ 307 0036 D7010000 		.4byte	.LASF2
+ 308 003a 02       		.uleb128 0x2
+ 309 003b 02       		.byte	0x2
+ 310 003c 07       		.byte	0x7
+ 311 003d 00000000 		.4byte	.LASF3
+ 312 0041 03       		.uleb128 0x3
+ 313 0042 C7010000 		.4byte	.LASF11
+ 314 0046 02       		.byte	0x2
+ 315 0047 3F       		.byte	0x3f
+ 316 0048 4C000000 		.4byte	0x4c
+ 317 004c 02       		.uleb128 0x2
+ 318 004d 04       		.byte	0x4
+ 319 004e 05       		.byte	0x5
+ 320 004f E5000000 		.4byte	.LASF4
+ 321 0053 02       		.uleb128 0x2
+ 322 0054 04       		.byte	0x4
+ 323 0055 07       		.byte	0x7
+ 324 0056 83010000 		.4byte	.LASF5
+ 325 005a 02       		.uleb128 0x2
+ 326 005b 08       		.byte	0x8
+ 327 005c 05       		.byte	0x5
+ 328 005d A0010000 		.4byte	.LASF6
+ 329 0061 02       		.uleb128 0x2
+ 330 0062 08       		.byte	0x8
+ 331 0063 07       		.byte	0x7
+ 332 0064 B0000000 		.4byte	.LASF7
+ 333 0068 04       		.uleb128 0x4
+ 334 0069 04       		.byte	0x4
+ 335 006a 05       		.byte	0x5
+ 336 006b 696E7400 		.ascii	"int\000"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 9
+
+
+ 337 006f 02       		.uleb128 0x2
+ 338 0070 04       		.byte	0x4
+ 339 0071 07       		.byte	0x7
+ 340 0072 13000000 		.4byte	.LASF8
+ 341 0076 02       		.uleb128 0x2
+ 342 0077 04       		.byte	0x4
+ 343 0078 07       		.byte	0x7
+ 344 0079 E9010000 		.4byte	.LASF9
+ 345 007d 02       		.uleb128 0x2
+ 346 007e 01       		.byte	0x1
+ 347 007f 08       		.byte	0x8
+ 348 0080 E0000000 		.4byte	.LASF10
+ 349 0084 03       		.uleb128 0x3
+ 350 0085 E1010000 		.4byte	.LASF12
+ 351 0089 03       		.byte	0x3
+ 352 008a 2C       		.byte	0x2c
+ 353 008b 41000000 		.4byte	0x41
+ 354 008f 05       		.uleb128 0x5
+ 355 0090 A1000000 		.4byte	.LASF13
+ 356 0094 04       		.byte	0x4
+ 357 0095 3801     		.2byte	0x138
+ 358 0097 2C000000 		.4byte	0x2c
+ 359 009b 02       		.uleb128 0x2
+ 360 009c 04       		.byte	0x4
+ 361 009d 04       		.byte	0x4
+ 362 009e D1010000 		.4byte	.LASF14
+ 363 00a2 02       		.uleb128 0x2
+ 364 00a3 08       		.byte	0x8
+ 365 00a4 04       		.byte	0x4
+ 366 00a5 7C010000 		.4byte	.LASF15
+ 367 00a9 06       		.uleb128 0x6
+ 368 00aa 8F000000 		.4byte	0x8f
+ 369 00ae B9000000 		.4byte	0xb9
+ 370 00b2 07       		.uleb128 0x7
+ 371 00b3 76000000 		.4byte	0x76
+ 372 00b7 03       		.byte	0x3
+ 373 00b8 00       		.byte	0
+ 374 00b9 08       		.uleb128 0x8
+ 375 00ba 3B000000 		.4byte	.LASF16
+ 376 00be 01       		.byte	0x1
+ 377 00bf 19       		.byte	0x19
+ 378 00c0 68000000 		.4byte	0x68
+ 379 00c4 00000000 		.4byte	.LFB63
+ 380 00c8 CC000000 		.4byte	.LFE63-.LFB63
+ 381 00cc 01       		.uleb128 0x1
+ 382 00cd 9C       		.byte	0x9c
+ 383 00ce 08       		.uleb128 0x8
+ 384 00cf C7000000 		.4byte	.LASF17
+ 385 00d3 01       		.byte	0x1
+ 386 00d4 51       		.byte	0x51
+ 387 00d5 68000000 		.4byte	0x68
+ 388 00d9 00000000 		.4byte	.LFB64
+ 389 00dd 78000000 		.4byte	.LFE64-.LFB64
+ 390 00e1 01       		.uleb128 0x1
+ 391 00e2 9C       		.byte	0x9c
+ 392 00e3 09       		.uleb128 0x9
+ 393 00e4 AE010000 		.4byte	.LASF18
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 10
+
+
+ 394 00e8 05       		.byte	0x5
+ 395 00e9 5506     		.2byte	0x655
+ 396 00eb EF000000 		.4byte	0xef
+ 397 00ef 0A       		.uleb128 0xa
+ 398 00f0 84000000 		.4byte	0x84
+ 399 00f4 0B       		.uleb128 0xb
+ 400 00f5 2B000000 		.4byte	.LASF19
+ 401 00f9 01       		.byte	0x1
+ 402 00fa 13       		.byte	0x13
+ 403 00fb 8F000000 		.4byte	0x8f
+ 404 00ff 05       		.uleb128 0x5
+ 405 0100 03       		.byte	0x3
+ 406 0101 00000000 		.4byte	temp
+ 407 0105 0C       		.uleb128 0xc
+ 408 0106 7100     		.ascii	"q\000"
+ 409 0108 01       		.byte	0x1
+ 410 0109 14       		.byte	0x14
+ 411 010a 8F000000 		.4byte	0x8f
+ 412 010e 05       		.uleb128 0x5
+ 413 010f 03       		.byte	0x3
+ 414 0110 00000000 		.4byte	q
+ 415 0114 0B       		.uleb128 0xb
+ 416 0115 30000000 		.4byte	.LASF20
+ 417 0119 01       		.byte	0x1
+ 418 011a 15       		.byte	0x15
+ 419 011b A9000000 		.4byte	0xa9
+ 420 011f 05       		.uleb128 0x5
+ 421 0120 03       		.byte	0x3
+ 422 0121 00000000 		.4byte	data_array
+ 423 0125 06       		.uleb128 0x6
+ 424 0126 8F000000 		.4byte	0x8f
+ 425 012a 35010000 		.4byte	0x135
+ 426 012e 07       		.uleb128 0x7
+ 427 012f 76000000 		.4byte	0x76
+ 428 0133 04       		.byte	0x4
+ 429 0134 00       		.byte	0
+ 430 0135 0B       		.uleb128 0xb
+ 431 0136 95010000 		.4byte	.LASF21
+ 432 013a 01       		.byte	0x1
+ 433 013b 16       		.byte	0x16
+ 434 013c 25010000 		.4byte	0x125
+ 435 0140 05       		.uleb128 0x5
+ 436 0141 03       		.byte	0x3
+ 437 0142 00000000 		.4byte	tx_address
+ 438 0146 0B       		.uleb128 0xb
+ 439 0147 20000000 		.4byte	.LASF22
+ 440 014b 01       		.byte	0x1
+ 441 014c 17       		.byte	0x17
+ 442 014d 25010000 		.4byte	0x125
+ 443 0151 05       		.uleb128 0x5
+ 444 0152 03       		.byte	0x3
+ 445 0153 00000000 		.4byte	rx_address
+ 446 0157 00       		.byte	0
+ 447              		.section	.debug_abbrev,"",%progbits
+ 448              	.Ldebug_abbrev0:
+ 449 0000 01       		.uleb128 0x1
+ 450 0001 11       		.uleb128 0x11
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 11
+
+
+ 451 0002 01       		.byte	0x1
+ 452 0003 25       		.uleb128 0x25
+ 453 0004 0E       		.uleb128 0xe
+ 454 0005 13       		.uleb128 0x13
+ 455 0006 0B       		.uleb128 0xb
+ 456 0007 03       		.uleb128 0x3
+ 457 0008 0E       		.uleb128 0xe
+ 458 0009 1B       		.uleb128 0x1b
+ 459 000a 0E       		.uleb128 0xe
+ 460 000b 55       		.uleb128 0x55
+ 461 000c 17       		.uleb128 0x17
+ 462 000d 11       		.uleb128 0x11
+ 463 000e 01       		.uleb128 0x1
+ 464 000f 10       		.uleb128 0x10
+ 465 0010 17       		.uleb128 0x17
+ 466 0011 00       		.byte	0
+ 467 0012 00       		.byte	0
+ 468 0013 02       		.uleb128 0x2
+ 469 0014 24       		.uleb128 0x24
+ 470 0015 00       		.byte	0
+ 471 0016 0B       		.uleb128 0xb
+ 472 0017 0B       		.uleb128 0xb
+ 473 0018 3E       		.uleb128 0x3e
+ 474 0019 0B       		.uleb128 0xb
+ 475 001a 03       		.uleb128 0x3
+ 476 001b 0E       		.uleb128 0xe
+ 477 001c 00       		.byte	0
+ 478 001d 00       		.byte	0
+ 479 001e 03       		.uleb128 0x3
+ 480 001f 16       		.uleb128 0x16
+ 481 0020 00       		.byte	0
+ 482 0021 03       		.uleb128 0x3
+ 483 0022 0E       		.uleb128 0xe
+ 484 0023 3A       		.uleb128 0x3a
+ 485 0024 0B       		.uleb128 0xb
+ 486 0025 3B       		.uleb128 0x3b
+ 487 0026 0B       		.uleb128 0xb
+ 488 0027 49       		.uleb128 0x49
+ 489 0028 13       		.uleb128 0x13
+ 490 0029 00       		.byte	0
+ 491 002a 00       		.byte	0
+ 492 002b 04       		.uleb128 0x4
+ 493 002c 24       		.uleb128 0x24
+ 494 002d 00       		.byte	0
+ 495 002e 0B       		.uleb128 0xb
+ 496 002f 0B       		.uleb128 0xb
+ 497 0030 3E       		.uleb128 0x3e
+ 498 0031 0B       		.uleb128 0xb
+ 499 0032 03       		.uleb128 0x3
+ 500 0033 08       		.uleb128 0x8
+ 501 0034 00       		.byte	0
+ 502 0035 00       		.byte	0
+ 503 0036 05       		.uleb128 0x5
+ 504 0037 16       		.uleb128 0x16
+ 505 0038 00       		.byte	0
+ 506 0039 03       		.uleb128 0x3
+ 507 003a 0E       		.uleb128 0xe
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 12
+
+
+ 508 003b 3A       		.uleb128 0x3a
+ 509 003c 0B       		.uleb128 0xb
+ 510 003d 3B       		.uleb128 0x3b
+ 511 003e 05       		.uleb128 0x5
+ 512 003f 49       		.uleb128 0x49
+ 513 0040 13       		.uleb128 0x13
+ 514 0041 00       		.byte	0
+ 515 0042 00       		.byte	0
+ 516 0043 06       		.uleb128 0x6
+ 517 0044 01       		.uleb128 0x1
+ 518 0045 01       		.byte	0x1
+ 519 0046 49       		.uleb128 0x49
+ 520 0047 13       		.uleb128 0x13
+ 521 0048 01       		.uleb128 0x1
+ 522 0049 13       		.uleb128 0x13
+ 523 004a 00       		.byte	0
+ 524 004b 00       		.byte	0
+ 525 004c 07       		.uleb128 0x7
+ 526 004d 21       		.uleb128 0x21
+ 527 004e 00       		.byte	0
+ 528 004f 49       		.uleb128 0x49
+ 529 0050 13       		.uleb128 0x13
+ 530 0051 2F       		.uleb128 0x2f
+ 531 0052 0B       		.uleb128 0xb
+ 532 0053 00       		.byte	0
+ 533 0054 00       		.byte	0
+ 534 0055 08       		.uleb128 0x8
+ 535 0056 2E       		.uleb128 0x2e
+ 536 0057 00       		.byte	0
+ 537 0058 3F       		.uleb128 0x3f
+ 538 0059 19       		.uleb128 0x19
+ 539 005a 03       		.uleb128 0x3
+ 540 005b 0E       		.uleb128 0xe
+ 541 005c 3A       		.uleb128 0x3a
+ 542 005d 0B       		.uleb128 0xb
+ 543 005e 3B       		.uleb128 0x3b
+ 544 005f 0B       		.uleb128 0xb
+ 545 0060 49       		.uleb128 0x49
+ 546 0061 13       		.uleb128 0x13
+ 547 0062 11       		.uleb128 0x11
+ 548 0063 01       		.uleb128 0x1
+ 549 0064 12       		.uleb128 0x12
+ 550 0065 06       		.uleb128 0x6
+ 551 0066 40       		.uleb128 0x40
+ 552 0067 18       		.uleb128 0x18
+ 553 0068 9642     		.uleb128 0x2116
+ 554 006a 19       		.uleb128 0x19
+ 555 006b 00       		.byte	0
+ 556 006c 00       		.byte	0
+ 557 006d 09       		.uleb128 0x9
+ 558 006e 34       		.uleb128 0x34
+ 559 006f 00       		.byte	0
+ 560 0070 03       		.uleb128 0x3
+ 561 0071 0E       		.uleb128 0xe
+ 562 0072 3A       		.uleb128 0x3a
+ 563 0073 0B       		.uleb128 0xb
+ 564 0074 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 13
+
+
+ 565 0075 05       		.uleb128 0x5
+ 566 0076 49       		.uleb128 0x49
+ 567 0077 13       		.uleb128 0x13
+ 568 0078 3F       		.uleb128 0x3f
+ 569 0079 19       		.uleb128 0x19
+ 570 007a 3C       		.uleb128 0x3c
+ 571 007b 19       		.uleb128 0x19
+ 572 007c 00       		.byte	0
+ 573 007d 00       		.byte	0
+ 574 007e 0A       		.uleb128 0xa
+ 575 007f 35       		.uleb128 0x35
+ 576 0080 00       		.byte	0
+ 577 0081 49       		.uleb128 0x49
+ 578 0082 13       		.uleb128 0x13
+ 579 0083 00       		.byte	0
+ 580 0084 00       		.byte	0
+ 581 0085 0B       		.uleb128 0xb
+ 582 0086 34       		.uleb128 0x34
+ 583 0087 00       		.byte	0
+ 584 0088 03       		.uleb128 0x3
+ 585 0089 0E       		.uleb128 0xe
+ 586 008a 3A       		.uleb128 0x3a
+ 587 008b 0B       		.uleb128 0xb
+ 588 008c 3B       		.uleb128 0x3b
+ 589 008d 0B       		.uleb128 0xb
+ 590 008e 49       		.uleb128 0x49
+ 591 008f 13       		.uleb128 0x13
+ 592 0090 3F       		.uleb128 0x3f
+ 593 0091 19       		.uleb128 0x19
+ 594 0092 02       		.uleb128 0x2
+ 595 0093 18       		.uleb128 0x18
+ 596 0094 00       		.byte	0
+ 597 0095 00       		.byte	0
+ 598 0096 0C       		.uleb128 0xc
+ 599 0097 34       		.uleb128 0x34
+ 600 0098 00       		.byte	0
+ 601 0099 03       		.uleb128 0x3
+ 602 009a 08       		.uleb128 0x8
+ 603 009b 3A       		.uleb128 0x3a
+ 604 009c 0B       		.uleb128 0xb
+ 605 009d 3B       		.uleb128 0x3b
+ 606 009e 0B       		.uleb128 0xb
+ 607 009f 49       		.uleb128 0x49
+ 608 00a0 13       		.uleb128 0x13
+ 609 00a1 3F       		.uleb128 0x3f
+ 610 00a2 19       		.uleb128 0x19
+ 611 00a3 02       		.uleb128 0x2
+ 612 00a4 18       		.uleb128 0x18
+ 613 00a5 00       		.byte	0
+ 614 00a6 00       		.byte	0
+ 615 00a7 00       		.byte	0
+ 616              		.section	.debug_aranges,"",%progbits
+ 617 0000 24000000 		.4byte	0x24
+ 618 0004 0200     		.2byte	0x2
+ 619 0006 00000000 		.4byte	.Ldebug_info0
+ 620 000a 04       		.byte	0x4
+ 621 000b 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 14
+
+
+ 622 000c 0000     		.2byte	0
+ 623 000e 0000     		.2byte	0
+ 624 0010 00000000 		.4byte	.LFB63
+ 625 0014 CC000000 		.4byte	.LFE63-.LFB63
+ 626 0018 00000000 		.4byte	.LFB64
+ 627 001c 78000000 		.4byte	.LFE64-.LFB64
+ 628 0020 00000000 		.4byte	0
+ 629 0024 00000000 		.4byte	0
+ 630              		.section	.debug_ranges,"",%progbits
+ 631              	.Ldebug_ranges0:
+ 632 0000 00000000 		.4byte	.LFB63
+ 633 0004 CC000000 		.4byte	.LFE63
+ 634 0008 00000000 		.4byte	.LFB64
+ 635 000c 78000000 		.4byte	.LFE64
+ 636 0010 00000000 		.4byte	0
+ 637 0014 00000000 		.4byte	0
+ 638              		.section	.debug_line,"",%progbits
+ 639              	.Ldebug_line0:
+ 640 0000 98010000 		.section	.debug_str,"MS",%progbits,1
+ 640      02004901 
+ 640      00000201 
+ 640      FB0E0D00 
+ 640      01010101 
+ 641              	.LASF3:
+ 642 0000 73686F72 		.ascii	"short unsigned int\000"
+ 642      7420756E 
+ 642      7369676E 
+ 642      65642069 
+ 642      6E7400
+ 643              	.LASF8:
+ 644 0013 756E7369 		.ascii	"unsigned int\000"
+ 644      676E6564 
+ 644      20696E74 
+ 644      00
+ 645              	.LASF22:
+ 646 0020 72785F61 		.ascii	"rx_address\000"
+ 646      64647265 
+ 646      737300
+ 647              	.LASF19:
+ 648 002b 74656D70 		.ascii	"temp\000"
+ 648      00
+ 649              	.LASF20:
+ 650 0030 64617461 		.ascii	"data_array\000"
+ 650      5F617272 
+ 650      617900
+ 651              	.LASF16:
+ 652 003b 66756E6B 		.ascii	"funkTxTest\000"
+ 652      54785465 
+ 652      737400
+ 653              	.LASF25:
+ 654 0046 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 654      73657273 
+ 654      5C4C756B 
+ 654      61732043 
+ 654      72657574 
+ 655 0074 65445350 		.ascii	"eDSPPSoC-I2C\\PSoC5_SPI_Master_CapSense.cydsn\000"
+ 655      50536F43 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 15
+
+
+ 655      2D493243 
+ 655      5C50536F 
+ 655      43355F53 
+ 656              	.LASF13:
+ 657 00a1 75696E74 		.ascii	"uint8\000"
+ 657      3800
+ 658              	.LASF24:
+ 659 00a7 2E5C6675 		.ascii	".\\funk.c\000"
+ 659      6E6B2E63 
+ 659      00
+ 660              	.LASF7:
+ 661 00b0 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 661      206C6F6E 
+ 661      6720756E 
+ 661      7369676E 
+ 661      65642069 
+ 662              	.LASF17:
+ 663 00c7 66756E6B 		.ascii	"funkRxTest\000"
+ 663      52785465 
+ 663      737400
+ 664              	.LASF1:
+ 665 00d2 756E7369 		.ascii	"unsigned char\000"
+ 665      676E6564 
+ 665      20636861 
+ 665      7200
+ 666              	.LASF10:
+ 667 00e0 63686172 		.ascii	"char\000"
+ 667      00
+ 668              	.LASF4:
+ 669 00e5 6C6F6E67 		.ascii	"long int\000"
+ 669      20696E74 
+ 669      00
+ 670              	.LASF23:
+ 671 00ee 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 671      4320342E 
+ 671      392E3320 
+ 671      32303135 
+ 671      30333033 
+ 672 0121 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 672      20726576 
+ 672      6973696F 
+ 672      6E203232 
+ 672      31323230 
+ 673 0154 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 673      66756E63 
+ 673      74696F6E 
+ 673      2D736563 
+ 673      74696F6E 
+ 674              	.LASF15:
+ 675 017c 646F7562 		.ascii	"double\000"
+ 675      6C6500
+ 676              	.LASF5:
+ 677 0183 6C6F6E67 		.ascii	"long unsigned int\000"
+ 677      20756E73 
+ 677      69676E65 
+ 677      6420696E 
+ 677      7400
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cccDohTz.s 			page 16
+
+
+ 678              	.LASF21:
+ 679 0195 74785F61 		.ascii	"tx_address\000"
+ 679      64647265 
+ 679      737300
+ 680              	.LASF6:
+ 681 01a0 6C6F6E67 		.ascii	"long long int\000"
+ 681      206C6F6E 
+ 681      6720696E 
+ 681      7400
+ 682              	.LASF18:
+ 683 01ae 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 683      52784275 
+ 683      66666572 
+ 683      00
+ 684              	.LASF0:
+ 685 01bb 7369676E 		.ascii	"signed char\000"
+ 685      65642063 
+ 685      68617200 
+ 686              	.LASF11:
+ 687 01c7 5F5F696E 		.ascii	"__int32_t\000"
+ 687      7433325F 
+ 687      7400
+ 688              	.LASF14:
+ 689 01d1 666C6F61 		.ascii	"float\000"
+ 689      7400
+ 690              	.LASF2:
+ 691 01d7 73686F72 		.ascii	"short int\000"
+ 691      7420696E 
+ 691      7400
+ 692              	.LASF12:
+ 693 01e1 696E7433 		.ascii	"int32_t\000"
+ 693      325F7400 
+ 694              	.LASF9:
+ 695 01e9 73697A65 		.ascii	"sizetype\000"
+ 695      74797065 
+ 695      00
+ 696              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
