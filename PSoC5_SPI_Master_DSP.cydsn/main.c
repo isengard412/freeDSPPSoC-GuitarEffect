@@ -11,21 +11,6 @@
 
 #include "main.h"
 
-/* receive interrupt */
-CY_ISR(IRQ_handler)
-{
-    LED_Write(1);
-    uint8 target[32];
-    NRF24L01readRXpayload(32,&target[0]);
-    CyDelay(500);
-    LED_Write(0);
-    int i;
-    for(i=0;i<32;i++)
-    {
-        UARTsendNumber(target[i]);
-    }
-    
-}
 
 /*******************************************************************************
 * Function Name: main
@@ -43,10 +28,6 @@ CY_ISR(IRQ_handler)
 *******************************************************************************/
 int main()
 {
-    /* Configuring IRQ RX interrupt */
-    Funk_RX_interrupt_StartEx(IRQ_handler);
-    Funk_RX_interrupt_SetPriority(3u);
-    Funk_RX_interrupt_Stop();
     /* Enable Global interrupts */
     CyGlobalIntEnable;
     /*Activating UART */
@@ -54,29 +35,32 @@ int main()
     /* Initializing DSP */
     DSPinit();
     /* Activating I2S Communication */
-    I2Sinit();
-    /* Activating RX transciver */
-    NRF24L01initRX();
-    Funk_RX_interrupt_Start();
-    
-    
+    //I2Sinit();
+    //i2s input
+    //DSPi2sInput(1);
+    /* Activatind PSoC Communication */
+    SPISinit();
     
     /***** Initialization completed *****/
     
+    //generated input
     DSPi2sInput(0);
-    //uint16 out;
-    //uint32 pitch=0x00000000;
+    DSPpitch(0u);
+
     
     for(;;)
     {
-//        pitch=0x00155555;
-//        DSPpitch(pitch);
-//        CyDelay(500);
-//        pitch=0xFFEAAAAB;
-//        DSPpitch(pitch);
-        CyDelay(500);
-        UARTsendString("bla");
-        
+//        /* Wert zwischen +-34953 */
+//        int32 i;
+//        for(i=0;i<=34953;i+=3495)
+//        {
+//            DSPpitch(i);
+//            CyDelay(250);
+//            DSPpitch(-i);
+//            CyDelay(250);
+//        }
+        LED_Write(!LED_Read());
+        UARTsendNumber(SPISreadNumber());
         
 
 

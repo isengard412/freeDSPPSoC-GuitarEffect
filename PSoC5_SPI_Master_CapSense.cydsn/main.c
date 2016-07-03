@@ -11,23 +11,20 @@
 
 #include "main.h"
 
-uint8 TX_textpayload[32] = {0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11,0xFF,0x11};
-
-/* receive interrupt */
-CY_ISR(IRQ_handler)
-{
-    LED_Write(1);
-    uint8 target[32];
-    NRF24L01readRXpayload(32,&target[0]);
-    CyDelay(500);
-    LED_Write(0);
-    int i;
-    for(i=0;i<32;i++)
-    {
-        UARTsendNumber(target[i]);
-    }
-    
-}
+//int main()
+//{
+//    //Tuning
+//    CYGlobalIntEnable;
+//    CapSense_1_TunerStart();
+//    /*All widgets are enabled by default except proximity widgets. Proximity
+//    widgets must be manually enabled as their long scan time is incompatible
+//    with the fast response required of other widget types.
+//    */
+//    while(1)
+//    {
+//    CapSense_1_TunerComm();
+//    }
+//}
 
 /*******************************************************************************
 * Function Name: main
@@ -45,39 +42,27 @@ CY_ISR(IRQ_handler)
 *******************************************************************************/
 int main()
 {
-    
-    /* Configuring IRQ RX interrupt */
-    Funk_RX_interrupt_StartEx(IRQ_handler);
-    Funk_RX_interrupt_SetPriority(3u);
-    Funk_RX_interrupt_Stop();
+
     /* Enable Global interrupts */
     CyGlobalIntEnable;
     /*Activating UART */
-    UARTinit();
-    /* Activating RX transciver */
-    //NRF24L01initTX();
-    //Funk_RX_interrupt_Start();
-    
-    VDAC8_1_Start();
+    //UARTinit();
     CapSenseInit();
-    funkTxTest();
+    SPIinit();
     /***** Initialization completed *****/
     
-    int32 pos = 30000;
+    uint32 pos = 30000;
     
     for(;;)
     {
 
-        CyDelay(50);
-        NRF24L01writeTXpayload(32,&TX_textpayload[0]);
         LED_Write(!LED_Read());
         /* Next command to be written */
         pos = CapSense_Refresh();
-        if(pos!=-1){
-            UARTsendNumber((uint8)(((uint32)pos) >> 0));
+        if(pos!=0xFFFFFFFF){
+            //UARTsendNumber((uint8)pos);
+            SPIsendNumber((uint8)pos);
         }
-        
-        
 
 
     }  /* End of forever loop */

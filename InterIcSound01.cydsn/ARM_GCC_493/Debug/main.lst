@@ -1,0 +1,957 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"main.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.bss
+  19              	txDmaChan:
+  20 0000 00       		.space	1
+  21 0001 000000   		.align	2
+  22              	txDmaTd:
+  23 0004 00       		.space	1
+  24              		.global	txBuff
+  25 0005 000000   		.data
+  26              		.align	2
+  27              		.type	txBuff, %object
+  28              		.size	txBuff, 4
+  29              	txBuff:
+  30 0000 CA       		.byte	-54
+  31 0001 FE       		.byte	-2
+  32 0002 FA       		.byte	-6
+  33 0003 CE       		.byte	-50
+  34              		.section	.text.main,"ax",%progbits
+  35              		.align	2
+  36              		.global	main
+  37              		.thumb
+  38              		.thumb_func
+  39              		.type	main, %function
+  40              	main:
+  41              	.LFB63:
+  42              		.file 1 ".\\main.c"
+   1:.\main.c      **** /*******************************************************************************
+   2:.\main.c      **** * File Name: main.c
+   3:.\main.c      **** *
+   4:.\main.c      **** * Version: 2.0
+   5:.\main.c      **** *
+   6:.\main.c      **** * Description:
+   7:.\main.c      **** *  This is the source code for the example project of the Inter-IC Sound Bus
+   8:.\main.c      **** * (I2S) component.
+   9:.\main.c      **** *
+  10:.\main.c      **** *  Parameters used:
+  11:.\main.c      **** *   Direction:          Tx and Rx
+  12:.\main.c      **** *   WordSelect:         64 bits
+  13:.\main.c      **** *   DataBits:           16 bits
+  14:.\main.c      **** *   DataInterleaving:   Interleaved
+  15:.\main.c      **** *   DMA Request:        Tx and Rx
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 2
+
+
+  16:.\main.c      **** *   Rx clip detection:  Enabled
+  17:.\main.c      **** *
+  18:.\main.c      **** *  I2S data transfers with a loopback. Tx data is sent from the memory to
+  19:.\main.c      **** *  the Tx FIFO using TxDMA. The data is transmitted on the Tx direction and
+  20:.\main.c      **** *  is received on the Rx direction.
+  21:.\main.c      **** *  RxDMA transfers the data from Rx FIFO to the SRAM buffer.
+  22:.\main.c      **** *  Received data is  displayed on the LCD. 
+  23:.\main.c      **** *  Pressing SW1 on the DVK increments the value of the first element in the
+  24:.\main.c      **** *  transmit buffer. If the value crosses the negative and positive clipping
+  25:.\main.c      **** *  thresholds, the LED1 is turned on.
+  26:.\main.c      **** *
+  27:.\main.c      **** ********************************************************************************
+  28:.\main.c      **** * Copyright 2012-2014, Cypress Semiconductor Corporation. All rights reserved.
+  29:.\main.c      **** * This software is owned by Cypress Semiconductor Corporation and is protected
+  30:.\main.c      **** * by and subject to worldwide patent and copyright laws and treaties.
+  31:.\main.c      **** * Therefore, you may use this software only as provided in the license agreement
+  32:.\main.c      **** * accompanying the software package from which you obtained this software.
+  33:.\main.c      **** * CYPRESS AND ITS SUPPLIERS MAKE NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  34:.\main.c      **** * WITH REGARD TO THIS SOFTWARE, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT,
+  35:.\main.c      **** * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  36:.\main.c      **** *******************************************************************************/
+  37:.\main.c      **** 
+  38:.\main.c      **** #include <project.h>
+  39:.\main.c      **** 
+  40:.\main.c      **** #define BUFFER_SIZE                 (4u)
+  41:.\main.c      **** #define	BUTTON_DEBOUNCE_COUNT_MAX	(30u)
+  42:.\main.c      **** #define	USERIO_DISPLAY_REFRESH      (100u)
+  43:.\main.c      **** 
+  44:.\main.c      **** /* DMA Configuration for RxDMA */
+  45:.\main.c      **** #define RxDMA_BYTES_PER_BURST       (1u)
+  46:.\main.c      **** #define RxDMA_REQUEST_PER_BURST     (1u)
+  47:.\main.c      **** #define RxDMA_SRC_BASE              (CYDEV_PERIPH_BASE)
+  48:.\main.c      **** #define RxDMA_DST_BASE              (CYDEV_SRAM_BASE)
+  49:.\main.c      **** 
+  50:.\main.c      **** /* DMA Configuration for TxDMA */
+  51:.\main.c      **** #define TxDMA_BYTES_PER_BURST       (1u)
+  52:.\main.c      **** #define TxDMA_REQUEST_PER_BURST     (1u)
+  53:.\main.c      **** #define TxDMA_SRC_BASE              (CYDEV_SRAM_BASE)
+  54:.\main.c      **** #define TxDMA_DST_BASE              (CYDEV_PERIPH_BASE)
+  55:.\main.c      **** 
+  56:.\main.c      **** /* Function prototypes */
+  57:.\main.c      **** static void DmaTxConfiguration(void);
+  58:.\main.c      **** 
+  59:.\main.c      **** /* Variable declarations for RxDMA and TxDMA */
+  60:.\main.c      **** static uint8 txDmaChan;
+  61:.\main.c      **** static uint8 txDmaTd[1u];
+  62:.\main.c      **** 
+  63:.\main.c      **** 
+  64:.\main.c      **** /* Data to be transmitted by Tx */
+  65:.\main.c      **** uint8 txBuff[BUFFER_SIZE] = {0xCAu, 0xFEu, 0xFAu, 0xCEu};
+  66:.\main.c      **** 
+  67:.\main.c      **** 
+  68:.\main.c      **** /*******************************************************************************
+  69:.\main.c      **** * Function Name: main
+  70:.\main.c      **** ********************************************************************************
+  71:.\main.c      **** *
+  72:.\main.c      **** * Summary:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 3
+
+
+  73:.\main.c      **** *  The main function performs the following tasks:
+  74:.\main.c      **** *   1. Starts all components
+  75:.\main.c      **** *   2. Configures the DMA transfer for the Rx and Tx directions
+  76:.\main.c      **** *   3. Enables Rx and Tx directions
+  77:.\main.c      **** *   4. Scans for a button event and increment the first element of txBuff[] if
+  78:.\main.c      **** *      the button was pressed
+  79:.\main.c      **** *   5. Prints out the received data onto the LCD with a user defined refresh
+  80:.\main.c      **** *      rate
+  81:.\main.c      **** *   
+  82:.\main.c      **** * Parameters:
+  83:.\main.c      **** *  None.
+  84:.\main.c      **** *
+  85:.\main.c      **** * Return:
+  86:.\main.c      **** *  None.
+  87:.\main.c      **** *
+  88:.\main.c      **** *******************************************************************************/
+  89:.\main.c      **** int main()
+  90:.\main.c      **** {   
+  43              		.loc 1 90 0
+  44              		.cfi_startproc
+  45              		@ args = 0, pretend = 0, frame = 8
+  46              		@ frame_needed = 1, uses_anonymous_args = 0
+  47 0000 80B5     		push	{r7, lr}
+  48              		.cfi_def_cfa_offset 8
+  49              		.cfi_offset 7, -8
+  50              		.cfi_offset 14, -4
+  51 0002 82B0     		sub	sp, sp, #8
+  52              		.cfi_def_cfa_offset 16
+  53 0004 00AF     		add	r7, sp, #0
+  54              		.cfi_def_cfa_register 7
+  91:.\main.c      ****     uint8 refreshRate = USERIO_DISPLAY_REFRESH;
+  55              		.loc 1 91 0
+  56 0006 6423     		movs	r3, #100
+  57 0008 FB71     		strb	r3, [r7, #7]
+  92:.\main.c      **** 
+  93:.\main.c      **** 
+  94:.\main.c      ****     I2S_1_Start();
+  58              		.loc 1 94 0
+  59 000a FFF7FEFF 		bl	I2S_1_Start
+  95:.\main.c      ****     
+  96:.\main.c      ****     /* Configure DMAs for each direction */ 
+  97:.\main.c      ****     DmaTxConfiguration();
+  60              		.loc 1 97 0
+  61 000e FFF7FEFF 		bl	DmaTxConfiguration
+  98:.\main.c      **** 
+  99:.\main.c      **** 
+ 100:.\main.c      ****     while(0u != (I2S_1_ReadTxStatus() & I2S_1_TX_FIFO_0_NOT_FULL))
+  62              		.loc 1 100 0
+  63 0012 00BF     		nop
+  64              	.L2:
+  65              		.loc 1 100 0 is_stmt 0 discriminator 1
+  66 0014 134B     		ldr	r3, .L7
+  67 0016 1B78     		ldrb	r3, [r3]
+  68 0018 DBB2     		uxtb	r3, r3
+  69 001a 03F00203 		and	r3, r3, #2
+  70 001e 002B     		cmp	r3, #0
+  71 0020 F8D1     		bne	.L2
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 4
+
+
+ 101:.\main.c      ****     {
+ 102:.\main.c      ****         /* Wait for TxDMA to fill Tx FIFO */
+ 103:.\main.c      ****     }
+ 104:.\main.c      ****     CyDelayUs(1);
+  72              		.loc 1 104 0 is_stmt 1
+  73 0022 0120     		movs	r0, #1
+  74 0024 FFF7FEFF 		bl	CyDelayUs
+ 105:.\main.c      ****     I2S_1_EnableTx();   /* Enable Tx direction */
+  75              		.loc 1 105 0
+  76 0028 FFF7FEFF 		bl	I2S_1_EnableTx
+  77              	.L6:
+ 106:.\main.c      ****    
+ 107:.\main.c      ****     for(;;)
+ 108:.\main.c      ****     {
+ 109:.\main.c      ****         /* Execute following tasks once every millisecond */
+ 110:.\main.c      ****         CyDelay(1u);
+  78              		.loc 1 110 0
+  79 002c 0120     		movs	r0, #1
+  80 002e FFF7FEFF 		bl	CyDelay
+ 111:.\main.c      **** 
+ 112:.\main.c      **** 
+ 113:.\main.c      ****         if(0u != refreshRate)
+  81              		.loc 1 113 0
+  82 0032 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+  83 0034 002B     		cmp	r3, #0
+  84 0036 03D0     		beq	.L3
+ 114:.\main.c      ****         {
+ 115:.\main.c      ****             refreshRate--;
+  85              		.loc 1 115 0
+  86 0038 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+  87 003a 013B     		subs	r3, r3, #1
+  88 003c FB71     		strb	r3, [r7, #7]
+  89 003e 0FE0     		b	.L4
+  90              	.L3:
+ 116:.\main.c      ****         }
+ 117:.\main.c      ****         else
+ 118:.\main.c      ****         {
+ 119:.\main.c      ****             refreshRate = USERIO_DISPLAY_REFRESH;
+  91              		.loc 1 119 0
+  92 0040 6423     		movs	r3, #100
+  93 0042 FB71     		strb	r3, [r7, #7]
+ 120:.\main.c      **** 
+ 121:.\main.c      ****             /* If SW1 has been pressed, increment the first byte of Tx buffer */
+ 122:.\main.c      ****             if(txBuff[0u]<255)
+  94              		.loc 1 122 0
+  95 0044 084B     		ldr	r3, .L7+4
+  96 0046 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  97 0048 FF2B     		cmp	r3, #255
+  98 004a 06D0     		beq	.L5
+ 123:.\main.c      ****             {
+ 124:.\main.c      ****                 txBuff[0u]++;
+  99              		.loc 1 124 0
+ 100 004c 064B     		ldr	r3, .L7+4
+ 101 004e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 102 0050 0133     		adds	r3, r3, #1
+ 103 0052 DAB2     		uxtb	r2, r3
+ 104 0054 044B     		ldr	r3, .L7+4
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 5
+
+
+ 105 0056 1A70     		strb	r2, [r3]
+ 106 0058 02E0     		b	.L4
+ 107              	.L5:
+ 125:.\main.c      ****             }
+ 126:.\main.c      ****             else
+ 127:.\main.c      ****             {
+ 128:.\main.c      ****                 txBuff[0u]=0;
+ 108              		.loc 1 128 0
+ 109 005a 034B     		ldr	r3, .L7+4
+ 110 005c 0022     		movs	r2, #0
+ 111 005e 1A70     		strb	r2, [r3]
+ 112              	.L4:
+ 129:.\main.c      ****             }
+ 130:.\main.c      ****         }
+ 131:.\main.c      ****     }
+ 113              		.loc 1 131 0
+ 114 0060 E4E7     		b	.L6
+ 115              	.L8:
+ 116 0062 00BF     		.align	2
+ 117              	.L7:
+ 118 0064 62640040 		.word	1073767522
+ 119 0068 00000000 		.word	txBuff
+ 120              		.cfi_endproc
+ 121              	.LFE63:
+ 122              		.size	main, .-main
+ 123              		.section	.text.DmaTxConfiguration,"ax",%progbits
+ 124              		.align	2
+ 125              		.thumb
+ 126              		.thumb_func
+ 127              		.type	DmaTxConfiguration, %function
+ 128              	DmaTxConfiguration:
+ 129              	.LFB64:
+ 132:.\main.c      **** }
+ 133:.\main.c      **** 
+ 134:.\main.c      **** 
+ 135:.\main.c      **** /*******************************************************************************
+ 136:.\main.c      **** * Function Name: DmaTxConfiguration
+ 137:.\main.c      **** ********************************************************************************
+ 138:.\main.c      **** *
+ 139:.\main.c      **** * Summary:
+ 140:.\main.c      **** *  Configures the DMA transfer for the Tx direction.
+ 141:.\main.c      **** *   
+ 142:.\main.c      **** * Parameters:
+ 143:.\main.c      **** *  None.
+ 144:.\main.c      **** *
+ 145:.\main.c      **** * Return:
+ 146:.\main.c      **** *  None.
+ 147:.\main.c      **** *
+ 148:.\main.c      **** *******************************************************************************/
+ 149:.\main.c      **** void DmaTxConfiguration(void)
+ 150:.\main.c      **** {
+ 130              		.loc 1 150 0
+ 131              		.cfi_startproc
+ 132              		@ args = 0, pretend = 0, frame = 0
+ 133              		@ frame_needed = 1, uses_anonymous_args = 0
+ 134 0000 80B5     		push	{r7, lr}
+ 135              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 6
+
+
+ 136              		.cfi_offset 7, -8
+ 137              		.cfi_offset 14, -4
+ 138 0002 00AF     		add	r7, sp, #0
+ 139              		.cfi_def_cfa_register 7
+ 151:.\main.c      ****      /* Tx DMA Config
+ 152:.\main.c      ****     * Init DMA, 1 byte bursts, each burst requires a request
+ 153:.\main.c      ****     */ 
+ 154:.\main.c      ****     txDmaChan = TxDMA_DmaInitialize(TxDMA_BYTES_PER_BURST, TxDMA_REQUEST_PER_BURST, 
+ 140              		.loc 1 154 0
+ 141 0004 0120     		movs	r0, #1
+ 142 0006 0121     		movs	r1, #1
+ 143 0008 41F6FF72 		movw	r2, #8191
+ 144 000c 4FF48043 		mov	r3, #16384
+ 145 0010 FFF7FEFF 		bl	TxDMA_DmaInitialize
+ 146 0014 0346     		mov	r3, r0
+ 147 0016 1A46     		mov	r2, r3
+ 148 0018 154B     		ldr	r3, .L10
+ 149 001a 1A70     		strb	r2, [r3]
+ 155:.\main.c      ****                                     HI16(TxDMA_SRC_BASE), HI16(TxDMA_DST_BASE));
+ 156:.\main.c      **** 
+ 157:.\main.c      ****     txDmaTd[0u] = CyDmaTdAllocate();
+ 150              		.loc 1 157 0
+ 151 001c FFF7FEFF 		bl	CyDmaTdAllocate
+ 152 0020 0346     		mov	r3, r0
+ 153 0022 1A46     		mov	r2, r3
+ 154 0024 134B     		ldr	r3, .L10+4
+ 155 0026 1A70     		strb	r2, [r3]
+ 158:.\main.c      **** 
+ 159:.\main.c      ****     /* Configure this Td chain as follows:
+ 160:.\main.c      ****     *  - The TD is looping on itself
+ 161:.\main.c      ****     *  - Increment the source address, but not the destination address   
+ 162:.\main.c      ****     */
+ 163:.\main.c      ****     CyDmaTdSetConfiguration(txDmaTd[0u], BUFFER_SIZE, txDmaTd[0u], TD_INC_SRC_ADR);
+ 156              		.loc 1 163 0
+ 157 0028 124B     		ldr	r3, .L10+4
+ 158 002a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 159 002c 114B     		ldr	r3, .L10+4
+ 160 002e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 161 0030 1046     		mov	r0, r2
+ 162 0032 0421     		movs	r1, #4
+ 163 0034 1A46     		mov	r2, r3
+ 164 0036 0123     		movs	r3, #1
+ 165 0038 FFF7FEFF 		bl	CyDmaTdSetConfiguration
+ 164:.\main.c      ****     
+ 165:.\main.c      ****     /* From the memory to the I2S */
+ 166:.\main.c      ****     CyDmaTdSetAddress(txDmaTd[0u], LO16((uint32)txBuff), LO16((uint32)I2S_1_TX_CH0_F0_PTR));
+ 166              		.loc 1 166 0
+ 167 003c 0D4B     		ldr	r3, .L10+4
+ 168 003e 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 169 0040 0D4B     		ldr	r3, .L10+8
+ 170 0042 9BB2     		uxth	r3, r3
+ 171 0044 1046     		mov	r0, r2
+ 172 0046 1946     		mov	r1, r3
+ 173 0048 46F24242 		movw	r2, #25666
+ 174 004c FFF7FEFF 		bl	CyDmaTdSetAddress
+ 167:.\main.c      **** 
+ 168:.\main.c      ****     /* Associate the TD with the channel */
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 7
+
+
+ 169:.\main.c      ****     CyDmaChSetInitialTd(txDmaChan, txDmaTd[0u]);
+ 175              		.loc 1 169 0
+ 176 0050 074B     		ldr	r3, .L10
+ 177 0052 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 178 0054 074B     		ldr	r3, .L10+4
+ 179 0056 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 180 0058 1046     		mov	r0, r2
+ 181 005a 1946     		mov	r1, r3
+ 182 005c FFF7FEFF 		bl	CyDmaChSetInitialTd
+ 170:.\main.c      **** 
+ 171:.\main.c      ****     /* Enable the channel */
+ 172:.\main.c      ****     CyDmaChEnable(txDmaChan, 1u);
+ 183              		.loc 1 172 0
+ 184 0060 034B     		ldr	r3, .L10
+ 185 0062 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 186 0064 1846     		mov	r0, r3
+ 187 0066 0121     		movs	r1, #1
+ 188 0068 FFF7FEFF 		bl	CyDmaChEnable
+ 173:.\main.c      **** }
+ 189              		.loc 1 173 0
+ 190 006c 80BD     		pop	{r7, pc}
+ 191              	.L11:
+ 192 006e 00BF     		.align	2
+ 193              	.L10:
+ 194 0070 00000000 		.word	txDmaChan
+ 195 0074 04000000 		.word	txDmaTd
+ 196 0078 00000000 		.word	txBuff
+ 197              		.cfi_endproc
+ 198              	.LFE64:
+ 199              		.size	DmaTxConfiguration, .-DmaTxConfiguration
+ 200              		.text
+ 201              	.Letext0:
+ 202              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 203              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 204              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 205              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 206              		.section	.debug_info,"",%progbits
+ 207              	.Ldebug_info0:
+ 208 0000 6C010000 		.4byte	0x16c
+ 209 0004 0400     		.2byte	0x4
+ 210 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 211 000a 04       		.byte	0x4
+ 212 000b 01       		.uleb128 0x1
+ 213 000c 08010000 		.4byte	.LASF24
+ 214 0010 01       		.byte	0x1
+ 215 0011 96010000 		.4byte	.LASF25
+ 216 0015 27000000 		.4byte	.LASF26
+ 217 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 218 001d 00000000 		.4byte	0
+ 219 0021 00000000 		.4byte	.Ldebug_line0
+ 220 0025 02       		.uleb128 0x2
+ 221 0026 01       		.byte	0x1
+ 222 0027 06       		.byte	0x6
+ 223 0028 BC010000 		.4byte	.LASF0
+ 224 002c 02       		.uleb128 0x2
+ 225 002d 01       		.byte	0x1
+ 226 002e 08       		.byte	0x8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 8
+
+
+ 227 002f F0000000 		.4byte	.LASF1
+ 228 0033 02       		.uleb128 0x2
+ 229 0034 02       		.byte	0x2
+ 230 0035 05       		.byte	0x5
+ 231 0036 D9010000 		.4byte	.LASF2
+ 232 003a 02       		.uleb128 0x2
+ 233 003b 02       		.byte	0x2
+ 234 003c 07       		.byte	0x7
+ 235 003d BC000000 		.4byte	.LASF3
+ 236 0041 03       		.uleb128 0x3
+ 237 0042 C8010000 		.4byte	.LASF9
+ 238 0046 02       		.byte	0x2
+ 239 0047 3F       		.byte	0x3f
+ 240 0048 4C000000 		.4byte	0x4c
+ 241 004c 02       		.uleb128 0x2
+ 242 004d 04       		.byte	0x4
+ 243 004e 05       		.byte	0x5
+ 244 004f A6010000 		.4byte	.LASF4
+ 245 0053 02       		.uleb128 0x2
+ 246 0054 04       		.byte	0x4
+ 247 0055 07       		.byte	0x7
+ 248 0056 89000000 		.4byte	.LASF5
+ 249 005a 02       		.uleb128 0x2
+ 250 005b 08       		.byte	0x8
+ 251 005c 05       		.byte	0x5
+ 252 005d 00000000 		.4byte	.LASF6
+ 253 0061 02       		.uleb128 0x2
+ 254 0062 08       		.byte	0x8
+ 255 0063 07       		.byte	0x7
+ 256 0064 9B000000 		.4byte	.LASF7
+ 257 0068 04       		.uleb128 0x4
+ 258 0069 04       		.byte	0x4
+ 259 006a 05       		.byte	0x5
+ 260 006b 696E7400 		.ascii	"int\000"
+ 261 006f 02       		.uleb128 0x2
+ 262 0070 04       		.byte	0x4
+ 263 0071 07       		.byte	0x7
+ 264 0072 15000000 		.4byte	.LASF8
+ 265 0076 03       		.uleb128 0x3
+ 266 0077 EA010000 		.4byte	.LASF10
+ 267 007b 03       		.byte	0x3
+ 268 007c 2C       		.byte	0x2c
+ 269 007d 41000000 		.4byte	0x41
+ 270 0081 05       		.uleb128 0x5
+ 271 0082 83000000 		.4byte	.LASF11
+ 272 0086 04       		.byte	0x4
+ 273 0087 9201     		.2byte	0x192
+ 274 0089 2C000000 		.4byte	0x2c
+ 275 008d 05       		.uleb128 0x5
+ 276 008e E3010000 		.4byte	.LASF12
+ 277 0092 04       		.byte	0x4
+ 278 0093 9301     		.2byte	0x193
+ 279 0095 3A000000 		.4byte	0x3a
+ 280 0099 05       		.uleb128 0x5
+ 281 009a 0E000000 		.4byte	.LASF13
+ 282 009e 04       		.byte	0x4
+ 283 009f 9401     		.2byte	0x194
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 9
+
+
+ 284 00a1 53000000 		.4byte	0x53
+ 285 00a5 02       		.uleb128 0x2
+ 286 00a6 04       		.byte	0x4
+ 287 00a7 04       		.byte	0x4
+ 288 00a8 CF000000 		.4byte	.LASF14
+ 289 00ac 02       		.uleb128 0x2
+ 290 00ad 08       		.byte	0x8
+ 291 00ae 04       		.byte	0x4
+ 292 00af 9F010000 		.4byte	.LASF15
+ 293 00b3 02       		.uleb128 0x2
+ 294 00b4 01       		.byte	0x1
+ 295 00b5 08       		.byte	0x8
+ 296 00b6 FE000000 		.4byte	.LASF16
+ 297 00ba 05       		.uleb128 0x5
+ 298 00bb 03010000 		.4byte	.LASF17
+ 299 00bf 04       		.byte	0x4
+ 300 00c0 3C02     		.2byte	0x23c
+ 301 00c2 C6000000 		.4byte	0xc6
+ 302 00c6 06       		.uleb128 0x6
+ 303 00c7 81000000 		.4byte	0x81
+ 304 00cb 02       		.uleb128 0x2
+ 305 00cc 04       		.byte	0x4
+ 306 00cd 07       		.byte	0x7
+ 307 00ce F2010000 		.4byte	.LASF18
+ 308 00d2 07       		.uleb128 0x7
+ 309 00d3 81000000 		.4byte	0x81
+ 310 00d7 E2000000 		.4byte	0xe2
+ 311 00db 08       		.uleb128 0x8
+ 312 00dc CB000000 		.4byte	0xcb
+ 313 00e0 03       		.byte	0x3
+ 314 00e1 00       		.byte	0
+ 315 00e2 09       		.uleb128 0x9
+ 316 00e3 22000000 		.4byte	.LASF27
+ 317 00e7 01       		.byte	0x1
+ 318 00e8 59       		.byte	0x59
+ 319 00e9 68000000 		.4byte	0x68
+ 320 00ed 00000000 		.4byte	.LFB63
+ 321 00f1 6C000000 		.4byte	.LFE63-.LFB63
+ 322 00f5 01       		.uleb128 0x1
+ 323 00f6 9C       		.byte	0x9c
+ 324 00f7 0A010000 		.4byte	0x10a
+ 325 00fb 0A       		.uleb128 0xa
+ 326 00fc 77000000 		.4byte	.LASF19
+ 327 0100 01       		.byte	0x1
+ 328 0101 5B       		.byte	0x5b
+ 329 0102 81000000 		.4byte	0x81
+ 330 0106 02       		.uleb128 0x2
+ 331 0107 91       		.byte	0x91
+ 332 0108 77       		.sleb128 -9
+ 333 0109 00       		.byte	0
+ 334 010a 0B       		.uleb128 0xb
+ 335 010b DD000000 		.4byte	.LASF28
+ 336 010f 01       		.byte	0x1
+ 337 0110 95       		.byte	0x95
+ 338 0111 00000000 		.4byte	.LFB64
+ 339 0115 7C000000 		.4byte	.LFE64-.LFB64
+ 340 0119 01       		.uleb128 0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 10
+
+
+ 341 011a 9C       		.byte	0x9c
+ 342 011b 0A       		.uleb128 0xa
+ 343 011c B2000000 		.4byte	.LASF20
+ 344 0120 01       		.byte	0x1
+ 345 0121 3C       		.byte	0x3c
+ 346 0122 81000000 		.4byte	0x81
+ 347 0126 05       		.uleb128 0x5
+ 348 0127 03       		.byte	0x3
+ 349 0128 00000000 		.4byte	txDmaChan
+ 350 012c 07       		.uleb128 0x7
+ 351 012d 81000000 		.4byte	0x81
+ 352 0131 3C010000 		.4byte	0x13c
+ 353 0135 08       		.uleb128 0x8
+ 354 0136 CB000000 		.4byte	0xcb
+ 355 013a 00       		.byte	0
+ 356 013b 00       		.byte	0
+ 357 013c 0A       		.uleb128 0xa
+ 358 013d D5000000 		.4byte	.LASF21
+ 359 0141 01       		.byte	0x1
+ 360 0142 3D       		.byte	0x3d
+ 361 0143 2C010000 		.4byte	0x12c
+ 362 0147 05       		.uleb128 0x5
+ 363 0148 03       		.byte	0x3
+ 364 0149 04000000 		.4byte	txDmaTd
+ 365 014d 0C       		.uleb128 0xc
+ 366 014e AF010000 		.4byte	.LASF22
+ 367 0152 05       		.byte	0x5
+ 368 0153 9606     		.2byte	0x696
+ 369 0155 59010000 		.4byte	0x159
+ 370 0159 06       		.uleb128 0x6
+ 371 015a 76000000 		.4byte	0x76
+ 372 015e 0D       		.uleb128 0xd
+ 373 015f D2010000 		.4byte	.LASF23
+ 374 0163 01       		.byte	0x1
+ 375 0164 41       		.byte	0x41
+ 376 0165 D2000000 		.4byte	0xd2
+ 377 0169 05       		.uleb128 0x5
+ 378 016a 03       		.byte	0x3
+ 379 016b 00000000 		.4byte	txBuff
+ 380 016f 00       		.byte	0
+ 381              		.section	.debug_abbrev,"",%progbits
+ 382              	.Ldebug_abbrev0:
+ 383 0000 01       		.uleb128 0x1
+ 384 0001 11       		.uleb128 0x11
+ 385 0002 01       		.byte	0x1
+ 386 0003 25       		.uleb128 0x25
+ 387 0004 0E       		.uleb128 0xe
+ 388 0005 13       		.uleb128 0x13
+ 389 0006 0B       		.uleb128 0xb
+ 390 0007 03       		.uleb128 0x3
+ 391 0008 0E       		.uleb128 0xe
+ 392 0009 1B       		.uleb128 0x1b
+ 393 000a 0E       		.uleb128 0xe
+ 394 000b 55       		.uleb128 0x55
+ 395 000c 17       		.uleb128 0x17
+ 396 000d 11       		.uleb128 0x11
+ 397 000e 01       		.uleb128 0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 11
+
+
+ 398 000f 10       		.uleb128 0x10
+ 399 0010 17       		.uleb128 0x17
+ 400 0011 00       		.byte	0
+ 401 0012 00       		.byte	0
+ 402 0013 02       		.uleb128 0x2
+ 403 0014 24       		.uleb128 0x24
+ 404 0015 00       		.byte	0
+ 405 0016 0B       		.uleb128 0xb
+ 406 0017 0B       		.uleb128 0xb
+ 407 0018 3E       		.uleb128 0x3e
+ 408 0019 0B       		.uleb128 0xb
+ 409 001a 03       		.uleb128 0x3
+ 410 001b 0E       		.uleb128 0xe
+ 411 001c 00       		.byte	0
+ 412 001d 00       		.byte	0
+ 413 001e 03       		.uleb128 0x3
+ 414 001f 16       		.uleb128 0x16
+ 415 0020 00       		.byte	0
+ 416 0021 03       		.uleb128 0x3
+ 417 0022 0E       		.uleb128 0xe
+ 418 0023 3A       		.uleb128 0x3a
+ 419 0024 0B       		.uleb128 0xb
+ 420 0025 3B       		.uleb128 0x3b
+ 421 0026 0B       		.uleb128 0xb
+ 422 0027 49       		.uleb128 0x49
+ 423 0028 13       		.uleb128 0x13
+ 424 0029 00       		.byte	0
+ 425 002a 00       		.byte	0
+ 426 002b 04       		.uleb128 0x4
+ 427 002c 24       		.uleb128 0x24
+ 428 002d 00       		.byte	0
+ 429 002e 0B       		.uleb128 0xb
+ 430 002f 0B       		.uleb128 0xb
+ 431 0030 3E       		.uleb128 0x3e
+ 432 0031 0B       		.uleb128 0xb
+ 433 0032 03       		.uleb128 0x3
+ 434 0033 08       		.uleb128 0x8
+ 435 0034 00       		.byte	0
+ 436 0035 00       		.byte	0
+ 437 0036 05       		.uleb128 0x5
+ 438 0037 16       		.uleb128 0x16
+ 439 0038 00       		.byte	0
+ 440 0039 03       		.uleb128 0x3
+ 441 003a 0E       		.uleb128 0xe
+ 442 003b 3A       		.uleb128 0x3a
+ 443 003c 0B       		.uleb128 0xb
+ 444 003d 3B       		.uleb128 0x3b
+ 445 003e 05       		.uleb128 0x5
+ 446 003f 49       		.uleb128 0x49
+ 447 0040 13       		.uleb128 0x13
+ 448 0041 00       		.byte	0
+ 449 0042 00       		.byte	0
+ 450 0043 06       		.uleb128 0x6
+ 451 0044 35       		.uleb128 0x35
+ 452 0045 00       		.byte	0
+ 453 0046 49       		.uleb128 0x49
+ 454 0047 13       		.uleb128 0x13
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 12
+
+
+ 455 0048 00       		.byte	0
+ 456 0049 00       		.byte	0
+ 457 004a 07       		.uleb128 0x7
+ 458 004b 01       		.uleb128 0x1
+ 459 004c 01       		.byte	0x1
+ 460 004d 49       		.uleb128 0x49
+ 461 004e 13       		.uleb128 0x13
+ 462 004f 01       		.uleb128 0x1
+ 463 0050 13       		.uleb128 0x13
+ 464 0051 00       		.byte	0
+ 465 0052 00       		.byte	0
+ 466 0053 08       		.uleb128 0x8
+ 467 0054 21       		.uleb128 0x21
+ 468 0055 00       		.byte	0
+ 469 0056 49       		.uleb128 0x49
+ 470 0057 13       		.uleb128 0x13
+ 471 0058 2F       		.uleb128 0x2f
+ 472 0059 0B       		.uleb128 0xb
+ 473 005a 00       		.byte	0
+ 474 005b 00       		.byte	0
+ 475 005c 09       		.uleb128 0x9
+ 476 005d 2E       		.uleb128 0x2e
+ 477 005e 01       		.byte	0x1
+ 478 005f 3F       		.uleb128 0x3f
+ 479 0060 19       		.uleb128 0x19
+ 480 0061 03       		.uleb128 0x3
+ 481 0062 0E       		.uleb128 0xe
+ 482 0063 3A       		.uleb128 0x3a
+ 483 0064 0B       		.uleb128 0xb
+ 484 0065 3B       		.uleb128 0x3b
+ 485 0066 0B       		.uleb128 0xb
+ 486 0067 49       		.uleb128 0x49
+ 487 0068 13       		.uleb128 0x13
+ 488 0069 11       		.uleb128 0x11
+ 489 006a 01       		.uleb128 0x1
+ 490 006b 12       		.uleb128 0x12
+ 491 006c 06       		.uleb128 0x6
+ 492 006d 40       		.uleb128 0x40
+ 493 006e 18       		.uleb128 0x18
+ 494 006f 9642     		.uleb128 0x2116
+ 495 0071 19       		.uleb128 0x19
+ 496 0072 01       		.uleb128 0x1
+ 497 0073 13       		.uleb128 0x13
+ 498 0074 00       		.byte	0
+ 499 0075 00       		.byte	0
+ 500 0076 0A       		.uleb128 0xa
+ 501 0077 34       		.uleb128 0x34
+ 502 0078 00       		.byte	0
+ 503 0079 03       		.uleb128 0x3
+ 504 007a 0E       		.uleb128 0xe
+ 505 007b 3A       		.uleb128 0x3a
+ 506 007c 0B       		.uleb128 0xb
+ 507 007d 3B       		.uleb128 0x3b
+ 508 007e 0B       		.uleb128 0xb
+ 509 007f 49       		.uleb128 0x49
+ 510 0080 13       		.uleb128 0x13
+ 511 0081 02       		.uleb128 0x2
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 13
+
+
+ 512 0082 18       		.uleb128 0x18
+ 513 0083 00       		.byte	0
+ 514 0084 00       		.byte	0
+ 515 0085 0B       		.uleb128 0xb
+ 516 0086 2E       		.uleb128 0x2e
+ 517 0087 00       		.byte	0
+ 518 0088 03       		.uleb128 0x3
+ 519 0089 0E       		.uleb128 0xe
+ 520 008a 3A       		.uleb128 0x3a
+ 521 008b 0B       		.uleb128 0xb
+ 522 008c 3B       		.uleb128 0x3b
+ 523 008d 0B       		.uleb128 0xb
+ 524 008e 27       		.uleb128 0x27
+ 525 008f 19       		.uleb128 0x19
+ 526 0090 11       		.uleb128 0x11
+ 527 0091 01       		.uleb128 0x1
+ 528 0092 12       		.uleb128 0x12
+ 529 0093 06       		.uleb128 0x6
+ 530 0094 40       		.uleb128 0x40
+ 531 0095 18       		.uleb128 0x18
+ 532 0096 9642     		.uleb128 0x2116
+ 533 0098 19       		.uleb128 0x19
+ 534 0099 00       		.byte	0
+ 535 009a 00       		.byte	0
+ 536 009b 0C       		.uleb128 0xc
+ 537 009c 34       		.uleb128 0x34
+ 538 009d 00       		.byte	0
+ 539 009e 03       		.uleb128 0x3
+ 540 009f 0E       		.uleb128 0xe
+ 541 00a0 3A       		.uleb128 0x3a
+ 542 00a1 0B       		.uleb128 0xb
+ 543 00a2 3B       		.uleb128 0x3b
+ 544 00a3 05       		.uleb128 0x5
+ 545 00a4 49       		.uleb128 0x49
+ 546 00a5 13       		.uleb128 0x13
+ 547 00a6 3F       		.uleb128 0x3f
+ 548 00a7 19       		.uleb128 0x19
+ 549 00a8 3C       		.uleb128 0x3c
+ 550 00a9 19       		.uleb128 0x19
+ 551 00aa 00       		.byte	0
+ 552 00ab 00       		.byte	0
+ 553 00ac 0D       		.uleb128 0xd
+ 554 00ad 34       		.uleb128 0x34
+ 555 00ae 00       		.byte	0
+ 556 00af 03       		.uleb128 0x3
+ 557 00b0 0E       		.uleb128 0xe
+ 558 00b1 3A       		.uleb128 0x3a
+ 559 00b2 0B       		.uleb128 0xb
+ 560 00b3 3B       		.uleb128 0x3b
+ 561 00b4 0B       		.uleb128 0xb
+ 562 00b5 49       		.uleb128 0x49
+ 563 00b6 13       		.uleb128 0x13
+ 564 00b7 3F       		.uleb128 0x3f
+ 565 00b8 19       		.uleb128 0x19
+ 566 00b9 02       		.uleb128 0x2
+ 567 00ba 18       		.uleb128 0x18
+ 568 00bb 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 14
+
+
+ 569 00bc 00       		.byte	0
+ 570 00bd 00       		.byte	0
+ 571              		.section	.debug_aranges,"",%progbits
+ 572 0000 24000000 		.4byte	0x24
+ 573 0004 0200     		.2byte	0x2
+ 574 0006 00000000 		.4byte	.Ldebug_info0
+ 575 000a 04       		.byte	0x4
+ 576 000b 00       		.byte	0
+ 577 000c 0000     		.2byte	0
+ 578 000e 0000     		.2byte	0
+ 579 0010 00000000 		.4byte	.LFB63
+ 580 0014 6C000000 		.4byte	.LFE63-.LFB63
+ 581 0018 00000000 		.4byte	.LFB64
+ 582 001c 7C000000 		.4byte	.LFE64-.LFB64
+ 583 0020 00000000 		.4byte	0
+ 584 0024 00000000 		.4byte	0
+ 585              		.section	.debug_ranges,"",%progbits
+ 586              	.Ldebug_ranges0:
+ 587 0000 00000000 		.4byte	.LFB63
+ 588 0004 6C000000 		.4byte	.LFE63
+ 589 0008 00000000 		.4byte	.LFB64
+ 590 000c 7C000000 		.4byte	.LFE64
+ 591 0010 00000000 		.4byte	0
+ 592 0014 00000000 		.4byte	0
+ 593              		.section	.debug_line,"",%progbits
+ 594              	.Ldebug_line0:
+ 595 0000 8B010000 		.section	.debug_str,"MS",%progbits,1
+ 595      02004901 
+ 595      00000201 
+ 595      FB0E0D00 
+ 595      01010101 
+ 596              	.LASF6:
+ 597 0000 6C6F6E67 		.ascii	"long long int\000"
+ 597      206C6F6E 
+ 597      6720696E 
+ 597      7400
+ 598              	.LASF13:
+ 599 000e 75696E74 		.ascii	"uint32\000"
+ 599      333200
+ 600              	.LASF8:
+ 601 0015 756E7369 		.ascii	"unsigned int\000"
+ 601      676E6564 
+ 601      20696E74 
+ 601      00
+ 602              	.LASF27:
+ 603 0022 6D61696E 		.ascii	"main\000"
+ 603      00
+ 604              	.LASF26:
+ 605 0027 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 605      73657273 
+ 605      5C4C756B 
+ 605      61732043 
+ 605      72657574 
+ 606 0055 65445350 		.ascii	"eDSPPSoC-I2C\\InterIcSound01.cydsn\000"
+ 606      50536F43 
+ 606      2D493243 
+ 606      5C496E74 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 15
+
+
+ 606      65724963 
+ 607              	.LASF19:
+ 608 0077 72656672 		.ascii	"refreshRate\000"
+ 608      65736852 
+ 608      61746500 
+ 609              	.LASF11:
+ 610 0083 75696E74 		.ascii	"uint8\000"
+ 610      3800
+ 611              	.LASF5:
+ 612 0089 6C6F6E67 		.ascii	"long unsigned int\000"
+ 612      20756E73 
+ 612      69676E65 
+ 612      6420696E 
+ 612      7400
+ 613              	.LASF7:
+ 614 009b 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 614      206C6F6E 
+ 614      6720756E 
+ 614      7369676E 
+ 614      65642069 
+ 615              	.LASF20:
+ 616 00b2 7478446D 		.ascii	"txDmaChan\000"
+ 616      61436861 
+ 616      6E00
+ 617              	.LASF3:
+ 618 00bc 73686F72 		.ascii	"short unsigned int\000"
+ 618      7420756E 
+ 618      7369676E 
+ 618      65642069 
+ 618      6E7400
+ 619              	.LASF14:
+ 620 00cf 666C6F61 		.ascii	"float\000"
+ 620      7400
+ 621              	.LASF21:
+ 622 00d5 7478446D 		.ascii	"txDmaTd\000"
+ 622      61546400 
+ 623              	.LASF28:
+ 624 00dd 446D6154 		.ascii	"DmaTxConfiguration\000"
+ 624      78436F6E 
+ 624      66696775 
+ 624      72617469 
+ 624      6F6E00
+ 625              	.LASF1:
+ 626 00f0 756E7369 		.ascii	"unsigned char\000"
+ 626      676E6564 
+ 626      20636861 
+ 626      7200
+ 627              	.LASF16:
+ 628 00fe 63686172 		.ascii	"char\000"
+ 628      00
+ 629              	.LASF17:
+ 630 0103 72656738 		.ascii	"reg8\000"
+ 630      00
+ 631              	.LASF24:
+ 632 0108 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 632      4320342E 
+ 632      392E3320 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccuiiMNK.s 			page 16
+
+
+ 632      32303135 
+ 632      30333033 
+ 633 013b 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 633      20726576 
+ 633      6973696F 
+ 633      6E203232 
+ 633      31323230 
+ 634 016e 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 634      66756E63 
+ 634      74696F6E 
+ 634      2D736563 
+ 634      74696F6E 
+ 635              	.LASF25:
+ 636 0196 2E5C6D61 		.ascii	".\\main.c\000"
+ 636      696E2E63 
+ 636      00
+ 637              	.LASF15:
+ 638 019f 646F7562 		.ascii	"double\000"
+ 638      6C6500
+ 639              	.LASF4:
+ 640 01a6 6C6F6E67 		.ascii	"long int\000"
+ 640      20696E74 
+ 640      00
+ 641              	.LASF22:
+ 642 01af 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 642      52784275 
+ 642      66666572 
+ 642      00
+ 643              	.LASF0:
+ 644 01bc 7369676E 		.ascii	"signed char\000"
+ 644      65642063 
+ 644      68617200 
+ 645              	.LASF9:
+ 646 01c8 5F5F696E 		.ascii	"__int32_t\000"
+ 646      7433325F 
+ 646      7400
+ 647              	.LASF23:
+ 648 01d2 74784275 		.ascii	"txBuff\000"
+ 648      666600
+ 649              	.LASF2:
+ 650 01d9 73686F72 		.ascii	"short int\000"
+ 650      7420696E 
+ 650      7400
+ 651              	.LASF12:
+ 652 01e3 75696E74 		.ascii	"uint16\000"
+ 652      313600
+ 653              	.LASF10:
+ 654 01ea 696E7433 		.ascii	"int32_t\000"
+ 654      325F7400 
+ 655              	.LASF18:
+ 656 01f2 73697A65 		.ascii	"sizetype\000"
+ 656      74797065 
+ 656      00
+ 657              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

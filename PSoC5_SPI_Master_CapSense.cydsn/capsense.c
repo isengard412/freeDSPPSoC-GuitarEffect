@@ -76,6 +76,7 @@ void CapSense_Button0(void)
     if (CapSense_1_CheckIsWidgetActive(CapSense_1_BUTTON0__BTN))
     {
         //is pressed
+        UARTsendString("Button 0\n");
     }
     else
     {
@@ -89,6 +90,7 @@ void CapSense_Button1(void)
     if (CapSense_1_CheckIsWidgetActive(CapSense_1_BUTTON1__BTN))
     {
         //is pressed
+        UARTsendString("Button 1\n");
     }
     else
     {
@@ -102,6 +104,7 @@ void CapSense_Button2(void)
     if (CapSense_1_CheckIsWidgetActive(CapSense_1_BUTTON2__BTN))
     {
         //is pressed
+        UARTsendString("Button 2\n");
     }
     else
     {

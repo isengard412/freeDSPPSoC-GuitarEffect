@@ -13,6 +13,7 @@
 #define CY_I2S_H
 
 #include <project.h>
+#include "dsp.h" //remove later!
 
 #if defined (__GNUC__)
     /* Add an explicit reference to the floating point printf library */
@@ -20,6 +21,17 @@
     /* This is not linked in by default with the newlib-nano library. */
     asm (".global _printf_float");
 #endif
+
+#define BUFFER_SIZE                 (496u)//(248u)
+
+/* DMA Configuration for TxDMA */
+#define TxDMA_BYTES_PER_BURST       (1u)
+#define TxDMA_REQUEST_PER_BURST     (1u)
+#define TxDMA_SRC_BASE              (CYDEV_SRAM_BASE)
+#define TxDMA_DST_BASE              (CYDEV_PERIPH_BASE)
+
+
+
 
 
 /*******************************************************************************
@@ -37,57 +49,9 @@
 *
 *******************************************************************************/
 void I2Sinit();
+void I2Stest();
 
-/*******************************************************************************
-* Function Name: DSPisReady
-********************************************************************************
-*
-* Summary:
-*  Sending data to DSP
-*
-* Parameters:
-*  None.
-*
-* Return:
-*  uint8 ready
-*
-*******************************************************************************/
-//uint8 DSPisReady();
-
-/*******************************************************************************
-* Function Name: DSPwrite
-********************************************************************************
-*
-* Summary:
-*  Sending data to DSP
-*
-* Parameters:
-*  uint8  chipaddress + R/(not W)
-*  uint16 address
-*  uint8  data
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
-//void DSPwrite(uint16 address,uint8* data, uint16 datasize);
-
-/*******************************************************************************
-* Function Name: DSPwriteWord32
-********************************************************************************
-*
-* Summary:
-*  Sending word of data to DSP
-*
-* Parameters:
-*  uint16 address
-*  uint16 word of data
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
-//void DSPwriteWord32(uint16 address,uint32 data);
+void DmaTxConfiguration(void);
 
 #endif /* (CY_I2S_H) */
 

@@ -39,8 +39,8 @@
 #define SERIAL_OUTPUT       0xF180
 #define SERIAL_OUTPUT_END   0xF197
 
-/* Volume Registers */
-#define VOLADDRESS          0x0026
+/* SDATA Registers */
+#define SDATA_IN_1          0xF204
 #define SLEWADDRESS         0x0027
 
 /* [] END OF FILE */

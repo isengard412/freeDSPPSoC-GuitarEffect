@@ -125,18 +125,18 @@ uint8 CYXDATA * const CYCODE CapSense_1_csTable[] = {
 };
 
 const uint8 CYCODE CapSense_1_idacSettings[] = {
-    43u,41u,48u,49u,41u,38u,34u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,
+    20u,180u,48u,49u,41u,38u,34u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,200u,20u,
 };
 
 const uint8 CYCODE CapSense_1_widgetResolution[] = {
     CapSense_1_PWM_RESOLUTION_10_BITS,
-    CapSense_1_PWM_RESOLUTION_10_BITS,
-    CapSense_1_PWM_RESOLUTION_10_BITS,
-    CapSense_1_PWM_RESOLUTION_10_BITS,
+    CapSense_1_PWM_RESOLUTION_8_BITS,
+    CapSense_1_PWM_RESOLUTION_8_BITS,
+    CapSense_1_PWM_RESOLUTION_8_BITS,
 };
 
 uint8 CapSense_1_analogSwitchDivider[CapSense_1_TOTAL_SCANSLOT_COUNT] = {
-    2u, 2u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 2u, 
+    5u, 5u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 3u, 5u, 
 };
 
 const uint8 CYCODE CapSense_1_widgetNumber[] = {

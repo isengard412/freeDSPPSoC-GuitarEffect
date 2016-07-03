@@ -62,10 +62,10 @@ void CapSense_1_TunerStart(void)
         CapSense_1_InitializeAllBaselines();
         
         /* Start EzI2C, clears buf pointers */
-        EZI2C_Start();
+        EzI2C_Start();
         
         /* Setup EzI2C buffers */
-        EZI2C_SetBuffer1(sizeof(CapSense_1_mailboxesComm), sizeof(CapSense_1_mailboxesComm),
+        EzI2C_SetBuffer1(sizeof(CapSense_1_mailboxesComm), sizeof(CapSense_1_mailboxesComm),
                                         (void *) &CapSense_1_mailboxesComm);
         
         /* Starts scan all enabled sensors */
@@ -112,13 +112,13 @@ void CapSense_1_TunerComm(void)
             CapSense_1_PostMessage(&CapSense_1_mailboxesComm.csdMailbox);
 
             /* Enable EZI2C interrupts, after scan complete */
-            EZI2C_EnableInt();
+            EzI2C_EnableInt();
 
             while((CapSense_1_mailboxesComm.csdMailbox.type != CapSense_1_TYPE_ID) || \
-                  ((EZI2C_GetActivity() & EZI2C_STATUS_BUSY) != 0u)){}
+                  ((EzI2C_GetActivity() & EzI2C_STATUS_BUSY) != 0u)){}
             
             /* Disable EZI2C interrupts, while scanning */
-            EZI2C_DisableInt();
+            EzI2C_DisableInt();
             
             /* Start scan all sensors */
             CapSense_1_ScanEnabledWidgets();

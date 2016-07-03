@@ -14,9 +14,8 @@
 
 #include <project.h>
 #include "uart.h"
-//#include "nrf24l01.h"
 #include "capsense.h"
-#include "funk.h"
+#include "spimaster.h"
 
 #endif /* (CY_MAIN_H) */
 

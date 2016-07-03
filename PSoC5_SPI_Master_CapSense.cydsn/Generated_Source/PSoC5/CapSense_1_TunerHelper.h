@@ -22,7 +22,7 @@
 #include "CapSense_1_CSHL.h"
 #if (CapSense_1_TUNER_API_GENERATE)
     #include "CapSense_1_MBX.h"
-    #include "EZI2C.h"
+    #include "EzI2C.h"
 #endif /* (CapSense_1_TUNER_API_GENERATE) */
 
 

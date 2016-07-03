@@ -1,0 +1,1033 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"LCD_BarGraph.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	LCD_customFonts
+  19              		.section	.rodata
+  20              		.align	2
+  21              		.type	LCD_customFonts, %object
+  22              		.size	LCD_customFonts, 64
+  23              	LCD_customFonts:
+  24 0000 00       		.byte	0
+  25 0001 00       		.byte	0
+  26 0002 00       		.byte	0
+  27 0003 00       		.byte	0
+  28 0004 00       		.byte	0
+  29 0005 00       		.byte	0
+  30 0006 00       		.byte	0
+  31 0007 00       		.byte	0
+  32 0008 10       		.byte	16
+  33 0009 10       		.byte	16
+  34 000a 10       		.byte	16
+  35 000b 10       		.byte	16
+  36 000c 10       		.byte	16
+  37 000d 10       		.byte	16
+  38 000e 10       		.byte	16
+  39 000f 10       		.byte	16
+  40 0010 18       		.byte	24
+  41 0011 18       		.byte	24
+  42 0012 18       		.byte	24
+  43 0013 18       		.byte	24
+  44 0014 18       		.byte	24
+  45 0015 18       		.byte	24
+  46 0016 18       		.byte	24
+  47 0017 18       		.byte	24
+  48 0018 1C       		.byte	28
+  49 0019 1C       		.byte	28
+  50 001a 1C       		.byte	28
+  51 001b 1C       		.byte	28
+  52 001c 1C       		.byte	28
+  53 001d 1C       		.byte	28
+  54 001e 1C       		.byte	28
+  55 001f 1C       		.byte	28
+  56 0020 1E       		.byte	30
+  57 0021 1E       		.byte	30
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 2
+
+
+  58 0022 1E       		.byte	30
+  59 0023 1E       		.byte	30
+  60 0024 1E       		.byte	30
+  61 0025 1E       		.byte	30
+  62 0026 1E       		.byte	30
+  63 0027 1E       		.byte	30
+  64 0028 1F       		.byte	31
+  65 0029 1F       		.byte	31
+  66 002a 1F       		.byte	31
+  67 002b 1F       		.byte	31
+  68 002c 1F       		.byte	31
+  69 002d 1F       		.byte	31
+  70 002e 1F       		.byte	31
+  71 002f 1F       		.byte	31
+  72 0030 00       		.byte	0
+  73 0031 00       		.byte	0
+  74 0032 00       		.byte	0
+  75 0033 00       		.byte	0
+  76 0034 00       		.byte	0
+  77 0035 00       		.byte	0
+  78 0036 00       		.byte	0
+  79 0037 00       		.byte	0
+  80 0038 00       		.byte	0
+  81 0039 00       		.byte	0
+  82 003a 00       		.byte	0
+  83 003b 00       		.byte	0
+  84 003c 00       		.byte	0
+  85 003d 00       		.byte	0
+  86 003e 00       		.byte	0
+  87 003f 00       		.byte	0
+  88              		.section	.text.LCD_LoadCustomFonts,"ax",%progbits
+  89              		.align	2
+  90              		.global	LCD_LoadCustomFonts
+  91              		.thumb
+  92              		.thumb_func
+  93              		.type	LCD_LoadCustomFonts, %function
+  94              	LCD_LoadCustomFonts:
+  95              	.LFB0:
+  96              		.file 1 ".\\Generated_Source\\PSoC5\\LCD_BarGraph.c"
+   1:.\Generated_Source\PSoC5/LCD_BarGraph.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * File Name: LCD_BarGraph.c
+   3:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * Version 2.20
+   4:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *
+   5:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * Description:
+   6:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  This file provides the custom character data and API for creating and using
+   7:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  bar graphs with the Character LCD component.
+   8:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *
+   9:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * Note:
+  10:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *
+  11:.\Generated_Source\PSoC5/LCD_BarGraph.c **** ********************************************************************************
+  12:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * Copyright 2008-2014, Cypress Semiconductor Corporation.  All rights reserved.
+  13:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * You may use this file only in accordance with the license, terms, conditions,
+  14:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  15:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * the software package with which this file was provided.
+  16:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *******************************************************************************/
+  17:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+  18:.\Generated_Source\PSoC5/LCD_BarGraph.c **** #include "LCD.h"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 3
+
+
+  19:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+  20:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+  21:.\Generated_Source\PSoC5/LCD_BarGraph.c **** uint8 const CYCODE LCD_customFonts[] = \
+  22:.\Generated_Source\PSoC5/LCD_BarGraph.c **** {
+  23:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /* Character LCD_CUSTOM_0   */
+  24:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     0x00u,    0x00u,    0x00u,    0x00u,    0x00u,    0x00u,    0x00u,    0x00u, \
+  25:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /* Character LCD_CUSTOM_1   */
+  26:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     0x10u,    0x10u,    0x10u,    0x10u,    0x10u,    0x10u,    0x10u,    0x10u, \
+  27:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /* Character LCD_CUSTOM_2   */
+  28:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     0x18u,    0x18u,    0x18u,    0x18u,    0x18u,    0x18u,    0x18u,    0x18u, \
+  29:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /* Character LCD_CUSTOM_3   */
+  30:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     0x1Cu,    0x1Cu,    0x1Cu,    0x1Cu,    0x1Cu,    0x1Cu,    0x1Cu,    0x1Cu, \
+  31:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /* Character LCD_CUSTOM_4   */
+  32:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     0x1Eu,    0x1Eu,    0x1Eu,    0x1Eu,    0x1Eu,    0x1Eu,    0x1Eu,    0x1Eu, \
+  33:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /* Character LCD_CUSTOM_5   */
+  34:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     0x1Fu,    0x1Fu,    0x1Fu,    0x1Fu,    0x1Fu,    0x1Fu,    0x1Fu,    0x1Fu, \
+  35:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /* Character LCD_CUSTOM_6   */
+  36:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     0x00u,    0x00u,    0x00u,    0x00u,    0x00u,    0x00u,    0x00u,    0x00u, \
+  37:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /* Character LCD_CUSTOM_7   */
+  38:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     0x00u,    0x00u,    0x00u,    0x00u,    0x00u,    0x00u,    0x00u,    0x00u \
+  39:.\Generated_Source\PSoC5/LCD_BarGraph.c **** };
+  40:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+  41:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+  42:.\Generated_Source\PSoC5/LCD_BarGraph.c **** /*******************************************************************************
+  43:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * Function Name: LCD_LoadCustomFonts
+  44:.\Generated_Source\PSoC5/LCD_BarGraph.c **** ********************************************************************************
+  45:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *
+  46:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * Summary:
+  47:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  Loads 8 custom font characters into the LCD Module for use.  Cannot use
+  48:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  characters from two different font sets at once, but font sets can be
+  49:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  switched out during runtime.
+  50:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *
+  51:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * Parameters:
+  52:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  customData:  pointer to a constant array of 64 bytes representing 8 custom
+  53:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *               font characters.
+  54:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * Return:
+  55:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  None.
+  56:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *
+  57:.\Generated_Source\PSoC5/LCD_BarGraph.c **** * Theory:
+  58:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  Prior to using this function user need to import the pointer to custom
+  59:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  font array to your project by writting the following in the source code file
+  60:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  where custom font will be used:
+  61:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *       extern uint8 const CYCODE LCD_Char_customFonts[];
+  62:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  This function is not automatically called by the Start() routine and must be
+  63:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *  called manually by the user.
+  64:.\Generated_Source\PSoC5/LCD_BarGraph.c **** *******************************************************************************/
+  65:.\Generated_Source\PSoC5/LCD_BarGraph.c **** void LCD_LoadCustomFonts(uint8 const customData[]) 
+  66:.\Generated_Source\PSoC5/LCD_BarGraph.c **** {
+  97              		.loc 1 66 0
+  98              		.cfi_startproc
+  99              		@ args = 0, pretend = 0, frame = 16
+ 100              		@ frame_needed = 1, uses_anonymous_args = 0
+ 101 0000 80B5     		push	{r7, lr}
+ 102              		.cfi_def_cfa_offset 8
+ 103              		.cfi_offset 7, -8
+ 104              		.cfi_offset 14, -4
+ 105 0002 84B0     		sub	sp, sp, #16
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 4
+
+
+ 106              		.cfi_def_cfa_offset 24
+ 107 0004 00AF     		add	r7, sp, #0
+ 108              		.cfi_def_cfa_register 7
+ 109 0006 7860     		str	r0, [r7, #4]
+  67:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     uint8 indexU8;
+  68:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+  69:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     LCD_IsReady();
+ 110              		.loc 1 69 0
+ 111 0008 FFF7FEFF 		bl	LCD_IsReady
+  70:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /* Set starting address in the LCD Module */
+  71:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /* Optionally: Read the current address to restore at a later time */
+  72:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     LCD_WriteControl(LCD_CGRAM_0);
+ 112              		.loc 1 72 0
+ 113 000c 4020     		movs	r0, #64
+ 114 000e FFF7FEFF 		bl	LCD_WriteControl
+  73:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+  74:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /* Load in the 64 bytes of CustomChar Data */
+  75:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     for(indexU8 = 0u; indexU8 < LCD_CUSTOM_CHAR_SET_LEN; indexU8++)
+ 115              		.loc 1 75 0
+ 116 0012 0023     		movs	r3, #0
+ 117 0014 FB73     		strb	r3, [r7, #15]
+ 118 0016 09E0     		b	.L2
+ 119              	.L3:
+  76:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     {
+  77:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         /* Delay between each write */
+  78:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         LCD_WriteData(customData[indexU8]);
+ 120              		.loc 1 78 0 discriminator 3
+ 121 0018 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 122 001a 7A68     		ldr	r2, [r7, #4]
+ 123 001c 1344     		add	r3, r3, r2
+ 124 001e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 125 0020 1846     		mov	r0, r3
+ 126 0022 FFF7FEFF 		bl	LCD_WriteData
+  75:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     {
+ 127              		.loc 1 75 0 discriminator 3
+ 128 0026 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 129 0028 0133     		adds	r3, r3, #1
+ 130 002a FB73     		strb	r3, [r7, #15]
+ 131              	.L2:
+  75:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     {
+ 132              		.loc 1 75 0 is_stmt 0 discriminator 1
+ 133 002c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 134 002e 3F2B     		cmp	r3, #63
+ 135 0030 F2D9     		bls	.L3
+  79:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     }
+  80:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+  81:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     LCD_IsReady();
+ 136              		.loc 1 81 0 is_stmt 1
+ 137 0032 FFF7FEFF 		bl	LCD_IsReady
+  82:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     LCD_WriteControl(LCD_DDRAM_0);
+ 138              		.loc 1 82 0
+ 139 0036 8020     		movs	r0, #128
+ 140 0038 FFF7FEFF 		bl	LCD_WriteControl
+  83:.\Generated_Source\PSoC5/LCD_BarGraph.c **** }
+ 141              		.loc 1 83 0
+ 142 003c 1037     		adds	r7, r7, #16
+ 143              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 5
+
+
+ 144 003e BD46     		mov	sp, r7
+ 145              		.cfi_def_cfa_register 13
+ 146              		@ sp needed
+ 147 0040 80BD     		pop	{r7, pc}
+ 148              		.cfi_endproc
+ 149              	.LFE0:
+ 150              		.size	LCD_LoadCustomFonts, .-LCD_LoadCustomFonts
+ 151 0042 00BF     		.section	.text.LCD_DrawHorizontalBG,"ax",%progbits
+ 152              		.align	2
+ 153              		.global	LCD_DrawHorizontalBG
+ 154              		.thumb
+ 155              		.thumb_func
+ 156              		.type	LCD_DrawHorizontalBG, %function
+ 157              	LCD_DrawHorizontalBG:
+ 158              	.LFB1:
+  84:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+  85:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+  86:.\Generated_Source\PSoC5/LCD_BarGraph.c **** #if (LCD_CUSTOM_CHAR_SET == LCD_HORIZONTAL_BG)
+  87:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+  88:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     /*******************************************************************************
+  89:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     * Function Name: LCD_DrawHorizontalBG
+  90:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     ********************************************************************************
+  91:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     *
+  92:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     * Summary:
+  93:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     *  Draws the horizontal bargraph.
+  94:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     *
+  95:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     * Parameters:
+  96:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     *  row:            The row in which the bar graph starts.
+  97:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     *  column:         The column in which the bar graph starts.
+  98:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     *  maxCharacters:  The max length of the graph in whole characters.
+  99:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     *  value:          The current length or height of the graph in pixels.
+ 100:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     *
+ 101:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     * Return:
+ 102:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     *  void.
+ 103:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     *
+ 104:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     *******************************************************************************/
+ 105:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     void LCD_DrawHorizontalBG(uint8 row, uint8 column, uint8 maxCharacters, uint8 value) \
+ 106:.\Generated_Source\PSoC5/LCD_BarGraph.c ****                                                             
+ 107:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     {
+ 159              		.loc 1 107 0
+ 160              		.cfi_startproc
+ 161              		@ args = 0, pretend = 0, frame = 16
+ 162              		@ frame_needed = 1, uses_anonymous_args = 0
+ 163 0000 90B5     		push	{r4, r7, lr}
+ 164              		.cfi_def_cfa_offset 12
+ 165              		.cfi_offset 4, -12
+ 166              		.cfi_offset 7, -8
+ 167              		.cfi_offset 14, -4
+ 168 0002 85B0     		sub	sp, sp, #20
+ 169              		.cfi_def_cfa_offset 32
+ 170 0004 00AF     		add	r7, sp, #0
+ 171              		.cfi_def_cfa_register 7
+ 172 0006 0446     		mov	r4, r0
+ 173 0008 0846     		mov	r0, r1
+ 174 000a 1146     		mov	r1, r2
+ 175 000c 1A46     		mov	r2, r3
+ 176 000e 2346     		mov	r3, r4
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 6
+
+
+ 177 0010 FB71     		strb	r3, [r7, #7]
+ 178 0012 0346     		mov	r3, r0
+ 179 0014 BB71     		strb	r3, [r7, #6]
+ 180 0016 0B46     		mov	r3, r1
+ 181 0018 7B71     		strb	r3, [r7, #5]
+ 182 001a 1346     		mov	r3, r2
+ 183 001c 3B71     		strb	r3, [r7, #4]
+ 108:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         /* 8-bit Counter */
+ 109:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         uint8 count8;
+ 110:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         uint8 fullChars;
+ 111:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         uint8 remainingPixels;
+ 112:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+ 113:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         /* Number of full characters to draw */
+ 114:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         fullChars = value / LCD_CHARACTER_WIDTH;
+ 184              		.loc 1 114 0
+ 185 001e 3B79     		ldrb	r3, [r7, #4]	@ zero_extendqisi2
+ 186 0020 234A     		ldr	r2, .L11
+ 187 0022 A2FB0323 		umull	r2, r3, r2, r3
+ 188 0026 9B08     		lsrs	r3, r3, #2
+ 189 0028 BB73     		strb	r3, [r7, #14]
+ 115:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+ 116:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         /* Number of remaining pixels to draw */
+ 117:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         remainingPixels = value % LCD_CHARACTER_WIDTH;
+ 190              		.loc 1 117 0
+ 191 002a 3A79     		ldrb	r2, [r7, #4]	@ zero_extendqisi2
+ 192 002c 204B     		ldr	r3, .L11
+ 193 002e A3FB0213 		umull	r1, r3, r3, r2
+ 194 0032 9908     		lsrs	r1, r3, #2
+ 195 0034 0B46     		mov	r3, r1
+ 196 0036 9B00     		lsls	r3, r3, #2
+ 197 0038 0B44     		add	r3, r3, r1
+ 198 003a D31A     		subs	r3, r2, r3
+ 199 003c 7B73     		strb	r3, [r7, #13]
+ 118:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+ 119:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         /* Ensure that the maximum character limit is followed. */
+ 120:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         if(fullChars >= maxCharacters)
+ 200              		.loc 1 120 0
+ 201 003e BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 202 0040 7B79     		ldrb	r3, [r7, #5]	@ zero_extendqisi2
+ 203 0042 9A42     		cmp	r2, r3
+ 204 0044 01D3     		bcc	.L5
+ 121:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         {
+ 122:.\Generated_Source\PSoC5/LCD_BarGraph.c ****             fullChars = maxCharacters;
+ 205              		.loc 1 122 0
+ 206 0046 7B79     		ldrb	r3, [r7, #5]
+ 207 0048 BB73     		strb	r3, [r7, #14]
+ 208              	.L5:
+ 123:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         }
+ 124:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+ 125:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         /* Put Cursor at start position */
+ 126:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         LCD_Position(row, column);
+ 209              		.loc 1 126 0
+ 210 004a FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 211 004c BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 212 004e 1046     		mov	r0, r2
+ 213 0050 1946     		mov	r1, r3
+ 214 0052 FFF7FEFF 		bl	LCD_Position
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 7
+
+
+ 127:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+ 128:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         /* Write full characters */
+ 129:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         for(count8 = 0u; count8 < fullChars; count8++)
+ 215              		.loc 1 129 0
+ 216 0056 0023     		movs	r3, #0
+ 217 0058 FB73     		strb	r3, [r7, #15]
+ 218 005a 05E0     		b	.L6
+ 219              	.L7:
+ 130:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         {
+ 131:.\Generated_Source\PSoC5/LCD_BarGraph.c ****             LCD_WriteData(LCD_CUSTOM_5);
+ 220              		.loc 1 131 0 discriminator 3
+ 221 005c 0520     		movs	r0, #5
+ 222 005e FFF7FEFF 		bl	LCD_WriteData
+ 129:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         {
+ 223              		.loc 1 129 0 discriminator 3
+ 224 0062 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 225 0064 0133     		adds	r3, r3, #1
+ 226 0066 FB73     		strb	r3, [r7, #15]
+ 227              	.L6:
+ 129:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         {
+ 228              		.loc 1 129 0 is_stmt 0 discriminator 1
+ 229 0068 FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 230 006a BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 231 006c 9A42     		cmp	r2, r3
+ 232 006e F5D3     		bcc	.L7
+ 132:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         }
+ 133:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+ 134:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         if(fullChars < maxCharacters)
+ 233              		.loc 1 134 0 is_stmt 1
+ 234 0070 BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 235 0072 7B79     		ldrb	r3, [r7, #5]	@ zero_extendqisi2
+ 236 0074 9A42     		cmp	r2, r3
+ 237 0076 18D2     		bcs	.L4
+ 135:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         {
+ 136:.\Generated_Source\PSoC5/LCD_BarGraph.c ****             /* Write remaining pixels */
+ 137:.\Generated_Source\PSoC5/LCD_BarGraph.c ****             LCD_WriteData(remainingPixels);
+ 238              		.loc 1 137 0
+ 239 0078 7B7B     		ldrb	r3, [r7, #13]	@ zero_extendqisi2
+ 240 007a 1846     		mov	r0, r3
+ 241 007c FFF7FEFF 		bl	LCD_WriteData
+ 138:.\Generated_Source\PSoC5/LCD_BarGraph.c **** 
+ 139:.\Generated_Source\PSoC5/LCD_BarGraph.c ****             if(fullChars < (maxCharacters - 1u))
+ 242              		.loc 1 139 0
+ 243 0080 BA7B     		ldrb	r2, [r7, #14]	@ zero_extendqisi2
+ 244 0082 7B79     		ldrb	r3, [r7, #5]	@ zero_extendqisi2
+ 245 0084 013B     		subs	r3, r3, #1
+ 246 0086 9A42     		cmp	r2, r3
+ 247 0088 0FD2     		bcs	.L4
+ 140:.\Generated_Source\PSoC5/LCD_BarGraph.c ****             {
+ 141:.\Generated_Source\PSoC5/LCD_BarGraph.c ****                 /* Fill with whitespace to end of bar graph */
+ 142:.\Generated_Source\PSoC5/LCD_BarGraph.c ****                 for(count8 = 0u; count8 < (maxCharacters - fullChars - 1u); count8++)
+ 248              		.loc 1 142 0
+ 249 008a 0023     		movs	r3, #0
+ 250 008c FB73     		strb	r3, [r7, #15]
+ 251 008e 05E0     		b	.L9
+ 252              	.L10:
+ 143:.\Generated_Source\PSoC5/LCD_BarGraph.c ****                 {
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 8
+
+
+ 144:.\Generated_Source\PSoC5/LCD_BarGraph.c ****                     LCD_WriteData(LCD_CUSTOM_0);
+ 253              		.loc 1 144 0 discriminator 3
+ 254 0090 0020     		movs	r0, #0
+ 255 0092 FFF7FEFF 		bl	LCD_WriteData
+ 142:.\Generated_Source\PSoC5/LCD_BarGraph.c ****                 {
+ 256              		.loc 1 142 0 discriminator 3
+ 257 0096 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 258 0098 0133     		adds	r3, r3, #1
+ 259 009a FB73     		strb	r3, [r7, #15]
+ 260              	.L9:
+ 142:.\Generated_Source\PSoC5/LCD_BarGraph.c ****                 {
+ 261              		.loc 1 142 0 is_stmt 0 discriminator 1
+ 262 009c FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 263 009e 7979     		ldrb	r1, [r7, #5]	@ zero_extendqisi2
+ 264 00a0 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 265 00a2 CB1A     		subs	r3, r1, r3
+ 266 00a4 013B     		subs	r3, r3, #1
+ 267 00a6 9A42     		cmp	r2, r3
+ 268 00a8 F2D3     		bcc	.L10
+ 269              	.L4:
+ 145:.\Generated_Source\PSoC5/LCD_BarGraph.c ****                 }
+ 146:.\Generated_Source\PSoC5/LCD_BarGraph.c ****             }
+ 147:.\Generated_Source\PSoC5/LCD_BarGraph.c ****         }
+ 148:.\Generated_Source\PSoC5/LCD_BarGraph.c ****     }
+ 270              		.loc 1 148 0 is_stmt 1
+ 271 00aa 1437     		adds	r7, r7, #20
+ 272              		.cfi_def_cfa_offset 12
+ 273 00ac BD46     		mov	sp, r7
+ 274              		.cfi_def_cfa_register 13
+ 275              		@ sp needed
+ 276 00ae 90BD     		pop	{r4, r7, pc}
+ 277              	.L12:
+ 278              		.align	2
+ 279              	.L11:
+ 280 00b0 CDCCCCCC 		.word	-858993459
+ 281              		.cfi_endproc
+ 282              	.LFE1:
+ 283              		.size	LCD_DrawHorizontalBG, .-LCD_DrawHorizontalBG
+ 284              		.text
+ 285              	.Letext0:
+ 286              		.file 2 ".\\Generated_Source\\PSoC5\\cytypes.h"
+ 287              		.section	.debug_info,"",%progbits
+ 288              	.Ldebug_info0:
+ 289 0000 6B010000 		.4byte	0x16b
+ 290 0004 0400     		.2byte	0x4
+ 291 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 292 000a 04       		.byte	0x4
+ 293 000b 01       		.uleb128 0x1
+ 294 000c 0D000000 		.4byte	.LASF23
+ 295 0010 01       		.byte	0x1
+ 296 0011 B5000000 		.4byte	.LASF24
+ 297 0015 46010000 		.4byte	.LASF25
+ 298 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 299 001d 00000000 		.4byte	0
+ 300 0021 00000000 		.4byte	.Ldebug_line0
+ 301 0025 02       		.uleb128 0x2
+ 302 0026 01       		.byte	0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 9
+
+
+ 303 0027 06       		.byte	0x6
+ 304 0028 24020000 		.4byte	.LASF0
+ 305 002c 02       		.uleb128 0x2
+ 306 002d 01       		.byte	0x1
+ 307 002e 08       		.byte	0x8
+ 308 002f E3000000 		.4byte	.LASF1
+ 309 0033 02       		.uleb128 0x2
+ 310 0034 02       		.byte	0x2
+ 311 0035 05       		.byte	0x5
+ 312 0036 FB010000 		.4byte	.LASF2
+ 313 003a 02       		.uleb128 0x2
+ 314 003b 02       		.byte	0x2
+ 315 003c 07       		.byte	0x7
+ 316 003d 17010000 		.4byte	.LASF3
+ 317 0041 02       		.uleb128 0x2
+ 318 0042 04       		.byte	0x4
+ 319 0043 05       		.byte	0x5
+ 320 0044 0B020000 		.4byte	.LASF4
+ 321 0048 02       		.uleb128 0x2
+ 322 0049 04       		.byte	0x4
+ 323 004a 07       		.byte	0x7
+ 324 004b F1000000 		.4byte	.LASF5
+ 325 004f 02       		.uleb128 0x2
+ 326 0050 08       		.byte	0x8
+ 327 0051 05       		.byte	0x5
+ 328 0052 DA010000 		.4byte	.LASF6
+ 329 0056 02       		.uleb128 0x2
+ 330 0057 08       		.byte	0x8
+ 331 0058 07       		.byte	0x7
+ 332 0059 AA010000 		.4byte	.LASF7
+ 333 005d 03       		.uleb128 0x3
+ 334 005e 04       		.byte	0x4
+ 335 005f 05       		.byte	0x5
+ 336 0060 696E7400 		.ascii	"int\000"
+ 337 0064 02       		.uleb128 0x2
+ 338 0065 04       		.byte	0x4
+ 339 0066 07       		.byte	0x7
+ 340 0067 9D010000 		.4byte	.LASF8
+ 341 006b 04       		.uleb128 0x4
+ 342 006c 05020000 		.4byte	.LASF26
+ 343 0070 02       		.byte	0x2
+ 344 0071 9201     		.2byte	0x192
+ 345 0073 2C000000 		.4byte	0x2c
+ 346 0077 02       		.uleb128 0x2
+ 347 0078 04       		.byte	0x4
+ 348 0079 04       		.byte	0x4
+ 349 007a DD000000 		.4byte	.LASF9
+ 350 007e 02       		.uleb128 0x2
+ 351 007f 08       		.byte	0x8
+ 352 0080 04       		.byte	0x4
+ 353 0081 3F010000 		.4byte	.LASF10
+ 354 0085 02       		.uleb128 0x2
+ 355 0086 01       		.byte	0x1
+ 356 0087 08       		.byte	0x8
+ 357 0088 E8010000 		.4byte	.LASF11
+ 358 008c 05       		.uleb128 0x5
+ 359 008d 03010000 		.4byte	.LASF12
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 10
+
+
+ 360 0091 01       		.byte	0x1
+ 361 0092 41       		.byte	0x41
+ 362 0093 00000000 		.4byte	.LFB0
+ 363 0097 42000000 		.4byte	.LFE0-.LFB0
+ 364 009b 01       		.uleb128 0x1
+ 365 009c 9C       		.byte	0x9c
+ 366 009d BE000000 		.4byte	0xbe
+ 367 00a1 06       		.uleb128 0x6
+ 368 00a2 A3000000 		.4byte	.LASF14
+ 369 00a6 01       		.byte	0x1
+ 370 00a7 41       		.byte	0x41
+ 371 00a8 BE000000 		.4byte	0xbe
+ 372 00ac 02       		.uleb128 0x2
+ 373 00ad 91       		.byte	0x91
+ 374 00ae 6C       		.sleb128 -20
+ 375 00af 07       		.uleb128 0x7
+ 376 00b0 9B000000 		.4byte	.LASF18
+ 377 00b4 01       		.byte	0x1
+ 378 00b5 43       		.byte	0x43
+ 379 00b6 6B000000 		.4byte	0x6b
+ 380 00ba 02       		.uleb128 0x2
+ 381 00bb 91       		.byte	0x91
+ 382 00bc 77       		.sleb128 -9
+ 383 00bd 00       		.byte	0
+ 384 00be 08       		.uleb128 0x8
+ 385 00bf 04       		.byte	0x4
+ 386 00c0 C4000000 		.4byte	0xc4
+ 387 00c4 09       		.uleb128 0x9
+ 388 00c5 6B000000 		.4byte	0x6b
+ 389 00c9 05       		.uleb128 0x5
+ 390 00ca 2A010000 		.4byte	.LASF13
+ 391 00ce 01       		.byte	0x1
+ 392 00cf 69       		.byte	0x69
+ 393 00d0 00000000 		.4byte	.LFB1
+ 394 00d4 B4000000 		.4byte	.LFE1-.LFB1
+ 395 00d8 01       		.uleb128 0x1
+ 396 00d9 9C       		.byte	0x9c
+ 397 00da 41010000 		.4byte	0x141
+ 398 00de 0A       		.uleb128 0xa
+ 399 00df 726F7700 		.ascii	"row\000"
+ 400 00e3 01       		.byte	0x1
+ 401 00e4 69       		.byte	0x69
+ 402 00e5 6B000000 		.4byte	0x6b
+ 403 00e9 02       		.uleb128 0x2
+ 404 00ea 91       		.byte	0x91
+ 405 00eb 67       		.sleb128 -25
+ 406 00ec 06       		.uleb128 0x6
+ 407 00ed AE000000 		.4byte	.LASF15
+ 408 00f1 01       		.byte	0x1
+ 409 00f2 69       		.byte	0x69
+ 410 00f3 6B000000 		.4byte	0x6b
+ 411 00f7 02       		.uleb128 0x2
+ 412 00f8 91       		.byte	0x91
+ 413 00f9 66       		.sleb128 -26
+ 414 00fa 06       		.uleb128 0x6
+ 415 00fb ED010000 		.4byte	.LASF16
+ 416 00ff 01       		.byte	0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 11
+
+
+ 417 0100 69       		.byte	0x69
+ 418 0101 6B000000 		.4byte	0x6b
+ 419 0105 02       		.uleb128 0x2
+ 420 0106 91       		.byte	0x91
+ 421 0107 65       		.sleb128 -27
+ 422 0108 06       		.uleb128 0x6
+ 423 0109 00000000 		.4byte	.LASF17
+ 424 010d 01       		.byte	0x1
+ 425 010e 69       		.byte	0x69
+ 426 010f 6B000000 		.4byte	0x6b
+ 427 0113 02       		.uleb128 0x2
+ 428 0114 91       		.byte	0x91
+ 429 0115 64       		.sleb128 -28
+ 430 0116 07       		.uleb128 0x7
+ 431 0117 06000000 		.4byte	.LASF19
+ 432 011b 01       		.byte	0x1
+ 433 011c 6D       		.byte	0x6d
+ 434 011d 6B000000 		.4byte	0x6b
+ 435 0121 02       		.uleb128 0x2
+ 436 0122 91       		.byte	0x91
+ 437 0123 6F       		.sleb128 -17
+ 438 0124 07       		.uleb128 0x7
+ 439 0125 30020000 		.4byte	.LASF20
+ 440 0129 01       		.byte	0x1
+ 441 012a 6E       		.byte	0x6e
+ 442 012b 6B000000 		.4byte	0x6b
+ 443 012f 02       		.uleb128 0x2
+ 444 0130 91       		.byte	0x91
+ 445 0131 6E       		.sleb128 -18
+ 446 0132 07       		.uleb128 0x7
+ 447 0133 C1010000 		.4byte	.LASF21
+ 448 0137 01       		.byte	0x1
+ 449 0138 6F       		.byte	0x6f
+ 450 0139 6B000000 		.4byte	0x6b
+ 451 013d 02       		.uleb128 0x2
+ 452 013e 91       		.byte	0x91
+ 453 013f 6D       		.sleb128 -19
+ 454 0140 00       		.byte	0
+ 455 0141 0B       		.uleb128 0xb
+ 456 0142 6B000000 		.4byte	0x6b
+ 457 0146 51010000 		.4byte	0x151
+ 458 014a 0C       		.uleb128 0xc
+ 459 014b 51010000 		.4byte	0x151
+ 460 014f 3F       		.byte	0x3f
+ 461 0150 00       		.byte	0
+ 462 0151 02       		.uleb128 0x2
+ 463 0152 04       		.byte	0x4
+ 464 0153 07       		.byte	0x7
+ 465 0154 D1010000 		.4byte	.LASF22
+ 466 0158 0D       		.uleb128 0xd
+ 467 0159 14020000 		.4byte	.LASF27
+ 468 015d 01       		.byte	0x1
+ 469 015e 15       		.byte	0x15
+ 470 015f 69010000 		.4byte	0x169
+ 471 0163 05       		.uleb128 0x5
+ 472 0164 03       		.byte	0x3
+ 473 0165 00000000 		.4byte	LCD_customFonts
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 12
+
+
+ 474 0169 09       		.uleb128 0x9
+ 475 016a 41010000 		.4byte	0x141
+ 476 016e 00       		.byte	0
+ 477              		.section	.debug_abbrev,"",%progbits
+ 478              	.Ldebug_abbrev0:
+ 479 0000 01       		.uleb128 0x1
+ 480 0001 11       		.uleb128 0x11
+ 481 0002 01       		.byte	0x1
+ 482 0003 25       		.uleb128 0x25
+ 483 0004 0E       		.uleb128 0xe
+ 484 0005 13       		.uleb128 0x13
+ 485 0006 0B       		.uleb128 0xb
+ 486 0007 03       		.uleb128 0x3
+ 487 0008 0E       		.uleb128 0xe
+ 488 0009 1B       		.uleb128 0x1b
+ 489 000a 0E       		.uleb128 0xe
+ 490 000b 55       		.uleb128 0x55
+ 491 000c 17       		.uleb128 0x17
+ 492 000d 11       		.uleb128 0x11
+ 493 000e 01       		.uleb128 0x1
+ 494 000f 10       		.uleb128 0x10
+ 495 0010 17       		.uleb128 0x17
+ 496 0011 00       		.byte	0
+ 497 0012 00       		.byte	0
+ 498 0013 02       		.uleb128 0x2
+ 499 0014 24       		.uleb128 0x24
+ 500 0015 00       		.byte	0
+ 501 0016 0B       		.uleb128 0xb
+ 502 0017 0B       		.uleb128 0xb
+ 503 0018 3E       		.uleb128 0x3e
+ 504 0019 0B       		.uleb128 0xb
+ 505 001a 03       		.uleb128 0x3
+ 506 001b 0E       		.uleb128 0xe
+ 507 001c 00       		.byte	0
+ 508 001d 00       		.byte	0
+ 509 001e 03       		.uleb128 0x3
+ 510 001f 24       		.uleb128 0x24
+ 511 0020 00       		.byte	0
+ 512 0021 0B       		.uleb128 0xb
+ 513 0022 0B       		.uleb128 0xb
+ 514 0023 3E       		.uleb128 0x3e
+ 515 0024 0B       		.uleb128 0xb
+ 516 0025 03       		.uleb128 0x3
+ 517 0026 08       		.uleb128 0x8
+ 518 0027 00       		.byte	0
+ 519 0028 00       		.byte	0
+ 520 0029 04       		.uleb128 0x4
+ 521 002a 16       		.uleb128 0x16
+ 522 002b 00       		.byte	0
+ 523 002c 03       		.uleb128 0x3
+ 524 002d 0E       		.uleb128 0xe
+ 525 002e 3A       		.uleb128 0x3a
+ 526 002f 0B       		.uleb128 0xb
+ 527 0030 3B       		.uleb128 0x3b
+ 528 0031 05       		.uleb128 0x5
+ 529 0032 49       		.uleb128 0x49
+ 530 0033 13       		.uleb128 0x13
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 13
+
+
+ 531 0034 00       		.byte	0
+ 532 0035 00       		.byte	0
+ 533 0036 05       		.uleb128 0x5
+ 534 0037 2E       		.uleb128 0x2e
+ 535 0038 01       		.byte	0x1
+ 536 0039 3F       		.uleb128 0x3f
+ 537 003a 19       		.uleb128 0x19
+ 538 003b 03       		.uleb128 0x3
+ 539 003c 0E       		.uleb128 0xe
+ 540 003d 3A       		.uleb128 0x3a
+ 541 003e 0B       		.uleb128 0xb
+ 542 003f 3B       		.uleb128 0x3b
+ 543 0040 0B       		.uleb128 0xb
+ 544 0041 27       		.uleb128 0x27
+ 545 0042 19       		.uleb128 0x19
+ 546 0043 11       		.uleb128 0x11
+ 547 0044 01       		.uleb128 0x1
+ 548 0045 12       		.uleb128 0x12
+ 549 0046 06       		.uleb128 0x6
+ 550 0047 40       		.uleb128 0x40
+ 551 0048 18       		.uleb128 0x18
+ 552 0049 9642     		.uleb128 0x2116
+ 553 004b 19       		.uleb128 0x19
+ 554 004c 01       		.uleb128 0x1
+ 555 004d 13       		.uleb128 0x13
+ 556 004e 00       		.byte	0
+ 557 004f 00       		.byte	0
+ 558 0050 06       		.uleb128 0x6
+ 559 0051 05       		.uleb128 0x5
+ 560 0052 00       		.byte	0
+ 561 0053 03       		.uleb128 0x3
+ 562 0054 0E       		.uleb128 0xe
+ 563 0055 3A       		.uleb128 0x3a
+ 564 0056 0B       		.uleb128 0xb
+ 565 0057 3B       		.uleb128 0x3b
+ 566 0058 0B       		.uleb128 0xb
+ 567 0059 49       		.uleb128 0x49
+ 568 005a 13       		.uleb128 0x13
+ 569 005b 02       		.uleb128 0x2
+ 570 005c 18       		.uleb128 0x18
+ 571 005d 00       		.byte	0
+ 572 005e 00       		.byte	0
+ 573 005f 07       		.uleb128 0x7
+ 574 0060 34       		.uleb128 0x34
+ 575 0061 00       		.byte	0
+ 576 0062 03       		.uleb128 0x3
+ 577 0063 0E       		.uleb128 0xe
+ 578 0064 3A       		.uleb128 0x3a
+ 579 0065 0B       		.uleb128 0xb
+ 580 0066 3B       		.uleb128 0x3b
+ 581 0067 0B       		.uleb128 0xb
+ 582 0068 49       		.uleb128 0x49
+ 583 0069 13       		.uleb128 0x13
+ 584 006a 02       		.uleb128 0x2
+ 585 006b 18       		.uleb128 0x18
+ 586 006c 00       		.byte	0
+ 587 006d 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 14
+
+
+ 588 006e 08       		.uleb128 0x8
+ 589 006f 0F       		.uleb128 0xf
+ 590 0070 00       		.byte	0
+ 591 0071 0B       		.uleb128 0xb
+ 592 0072 0B       		.uleb128 0xb
+ 593 0073 49       		.uleb128 0x49
+ 594 0074 13       		.uleb128 0x13
+ 595 0075 00       		.byte	0
+ 596 0076 00       		.byte	0
+ 597 0077 09       		.uleb128 0x9
+ 598 0078 26       		.uleb128 0x26
+ 599 0079 00       		.byte	0
+ 600 007a 49       		.uleb128 0x49
+ 601 007b 13       		.uleb128 0x13
+ 602 007c 00       		.byte	0
+ 603 007d 00       		.byte	0
+ 604 007e 0A       		.uleb128 0xa
+ 605 007f 05       		.uleb128 0x5
+ 606 0080 00       		.byte	0
+ 607 0081 03       		.uleb128 0x3
+ 608 0082 08       		.uleb128 0x8
+ 609 0083 3A       		.uleb128 0x3a
+ 610 0084 0B       		.uleb128 0xb
+ 611 0085 3B       		.uleb128 0x3b
+ 612 0086 0B       		.uleb128 0xb
+ 613 0087 49       		.uleb128 0x49
+ 614 0088 13       		.uleb128 0x13
+ 615 0089 02       		.uleb128 0x2
+ 616 008a 18       		.uleb128 0x18
+ 617 008b 00       		.byte	0
+ 618 008c 00       		.byte	0
+ 619 008d 0B       		.uleb128 0xb
+ 620 008e 01       		.uleb128 0x1
+ 621 008f 01       		.byte	0x1
+ 622 0090 49       		.uleb128 0x49
+ 623 0091 13       		.uleb128 0x13
+ 624 0092 01       		.uleb128 0x1
+ 625 0093 13       		.uleb128 0x13
+ 626 0094 00       		.byte	0
+ 627 0095 00       		.byte	0
+ 628 0096 0C       		.uleb128 0xc
+ 629 0097 21       		.uleb128 0x21
+ 630 0098 00       		.byte	0
+ 631 0099 49       		.uleb128 0x49
+ 632 009a 13       		.uleb128 0x13
+ 633 009b 2F       		.uleb128 0x2f
+ 634 009c 0B       		.uleb128 0xb
+ 635 009d 00       		.byte	0
+ 636 009e 00       		.byte	0
+ 637 009f 0D       		.uleb128 0xd
+ 638 00a0 34       		.uleb128 0x34
+ 639 00a1 00       		.byte	0
+ 640 00a2 03       		.uleb128 0x3
+ 641 00a3 0E       		.uleb128 0xe
+ 642 00a4 3A       		.uleb128 0x3a
+ 643 00a5 0B       		.uleb128 0xb
+ 644 00a6 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 15
+
+
+ 645 00a7 0B       		.uleb128 0xb
+ 646 00a8 49       		.uleb128 0x49
+ 647 00a9 13       		.uleb128 0x13
+ 648 00aa 3F       		.uleb128 0x3f
+ 649 00ab 19       		.uleb128 0x19
+ 650 00ac 02       		.uleb128 0x2
+ 651 00ad 18       		.uleb128 0x18
+ 652 00ae 00       		.byte	0
+ 653 00af 00       		.byte	0
+ 654 00b0 00       		.byte	0
+ 655              		.section	.debug_aranges,"",%progbits
+ 656 0000 24000000 		.4byte	0x24
+ 657 0004 0200     		.2byte	0x2
+ 658 0006 00000000 		.4byte	.Ldebug_info0
+ 659 000a 04       		.byte	0x4
+ 660 000b 00       		.byte	0
+ 661 000c 0000     		.2byte	0
+ 662 000e 0000     		.2byte	0
+ 663 0010 00000000 		.4byte	.LFB0
+ 664 0014 42000000 		.4byte	.LFE0-.LFB0
+ 665 0018 00000000 		.4byte	.LFB1
+ 666 001c B4000000 		.4byte	.LFE1-.LFB1
+ 667 0020 00000000 		.4byte	0
+ 668 0024 00000000 		.4byte	0
+ 669              		.section	.debug_ranges,"",%progbits
+ 670              	.Ldebug_ranges0:
+ 671 0000 00000000 		.4byte	.LFB0
+ 672 0004 42000000 		.4byte	.LFE0
+ 673 0008 00000000 		.4byte	.LFB1
+ 674 000c B4000000 		.4byte	.LFE1
+ 675 0010 00000000 		.4byte	0
+ 676 0014 00000000 		.4byte	0
+ 677              		.section	.debug_line,"",%progbits
+ 678              	.Ldebug_line0:
+ 679 0000 B5000000 		.section	.debug_str,"MS",%progbits,1
+ 679      02004B00 
+ 679      00000201 
+ 679      FB0E0D00 
+ 679      01010101 
+ 680              	.LASF17:
+ 681 0000 76616C75 		.ascii	"value\000"
+ 681      6500
+ 682              	.LASF19:
+ 683 0006 636F756E 		.ascii	"count8\000"
+ 683      743800
+ 684              	.LASF23:
+ 685 000d 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 685      4320342E 
+ 685      392E3320 
+ 685      32303135 
+ 685      30333033 
+ 686 0040 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 686      20726576 
+ 686      6973696F 
+ 686      6E203232 
+ 686      31323230 
+ 687 0073 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 16
+
+
+ 687      66756E63 
+ 687      74696F6E 
+ 687      2D736563 
+ 687      74696F6E 
+ 688              	.LASF18:
+ 689 009b 696E6465 		.ascii	"indexU8\000"
+ 689      78553800 
+ 690              	.LASF14:
+ 691 00a3 63757374 		.ascii	"customData\000"
+ 691      6F6D4461 
+ 691      746100
+ 692              	.LASF15:
+ 693 00ae 636F6C75 		.ascii	"column\000"
+ 693      6D6E00
+ 694              	.LASF24:
+ 695 00b5 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\LCD_BarGraph.c\000"
+ 695      6E657261 
+ 695      7465645F 
+ 695      536F7572 
+ 695      63655C50 
+ 696              	.LASF9:
+ 697 00dd 666C6F61 		.ascii	"float\000"
+ 697      7400
+ 698              	.LASF1:
+ 699 00e3 756E7369 		.ascii	"unsigned char\000"
+ 699      676E6564 
+ 699      20636861 
+ 699      7200
+ 700              	.LASF5:
+ 701 00f1 6C6F6E67 		.ascii	"long unsigned int\000"
+ 701      20756E73 
+ 701      69676E65 
+ 701      6420696E 
+ 701      7400
+ 702              	.LASF12:
+ 703 0103 4C43445F 		.ascii	"LCD_LoadCustomFonts\000"
+ 703      4C6F6164 
+ 703      43757374 
+ 703      6F6D466F 
+ 703      6E747300 
+ 704              	.LASF3:
+ 705 0117 73686F72 		.ascii	"short unsigned int\000"
+ 705      7420756E 
+ 705      7369676E 
+ 705      65642069 
+ 705      6E7400
+ 706              	.LASF13:
+ 707 012a 4C43445F 		.ascii	"LCD_DrawHorizontalBG\000"
+ 707      44726177 
+ 707      486F7269 
+ 707      7A6F6E74 
+ 707      616C4247 
+ 708              	.LASF10:
+ 709 013f 646F7562 		.ascii	"double\000"
+ 709      6C6500
+ 710              	.LASF25:
+ 711 0146 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 17
+
+
+ 711      73657273 
+ 711      5C4C756B 
+ 711      61732043 
+ 711      72657574 
+ 712 0174 65445350 		.ascii	"eDSPPSoC-I2C\\CapSense_CSD_Design02.cydsn\000"
+ 712      50536F43 
+ 712      2D493243 
+ 712      5C436170 
+ 712      53656E73 
+ 713              	.LASF8:
+ 714 019d 756E7369 		.ascii	"unsigned int\000"
+ 714      676E6564 
+ 714      20696E74 
+ 714      00
+ 715              	.LASF7:
+ 716 01aa 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 716      206C6F6E 
+ 716      6720756E 
+ 716      7369676E 
+ 716      65642069 
+ 717              	.LASF21:
+ 718 01c1 72656D61 		.ascii	"remainingPixels\000"
+ 718      696E696E 
+ 718      67506978 
+ 718      656C7300 
+ 719              	.LASF22:
+ 720 01d1 73697A65 		.ascii	"sizetype\000"
+ 720      74797065 
+ 720      00
+ 721              	.LASF6:
+ 722 01da 6C6F6E67 		.ascii	"long long int\000"
+ 722      206C6F6E 
+ 722      6720696E 
+ 722      7400
+ 723              	.LASF11:
+ 724 01e8 63686172 		.ascii	"char\000"
+ 724      00
+ 725              	.LASF16:
+ 726 01ed 6D617843 		.ascii	"maxCharacters\000"
+ 726      68617261 
+ 726      63746572 
+ 726      7300
+ 727              	.LASF2:
+ 728 01fb 73686F72 		.ascii	"short int\000"
+ 728      7420696E 
+ 728      7400
+ 729              	.LASF26:
+ 730 0205 75696E74 		.ascii	"uint8\000"
+ 730      3800
+ 731              	.LASF4:
+ 732 020b 6C6F6E67 		.ascii	"long int\000"
+ 732      20696E74 
+ 732      00
+ 733              	.LASF27:
+ 734 0214 4C43445F 		.ascii	"LCD_customFonts\000"
+ 734      63757374 
+ 734      6F6D466F 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccvPKFt2.s 			page 18
+
+
+ 734      6E747300 
+ 735              	.LASF0:
+ 736 0224 7369676E 		.ascii	"signed char\000"
+ 736      65642063 
+ 736      68617200 
+ 737              	.LASF20:
+ 738 0230 66756C6C 		.ascii	"fullChars\000"
+ 738      43686172 
+ 738      7300
+ 739              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

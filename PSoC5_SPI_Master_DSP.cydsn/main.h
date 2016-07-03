@@ -16,7 +16,7 @@
 #include "uart.h"
 #include "dsp.h"
 #include "i2s.h"
-#include "nrf24l01.h"
+#include "spislave.h"
 
 #endif /* (CY_MAIN_H) */
 

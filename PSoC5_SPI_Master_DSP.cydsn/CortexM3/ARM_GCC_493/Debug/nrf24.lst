@@ -1,0 +1,3434 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"nrf24.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.comm	payload_len,1,1
+  19              		.section	.text.nrf24_init,"ax",%progbits
+  20              		.align	2
+  21              		.global	nrf24_init
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	nrf24_init, %function
+  25              	nrf24_init:
+  26              	.LFB63:
+  27              		.file 1 ".\\nrf24.c"
+   1:.\nrf24.c     **** /*
+   2:.\nrf24.c     **** * ----------------------------------------------------------------------------
+   3:.\nrf24.c     **** * â€œTHE COFFEEWARE LICENSEâ€ (Revision 1):
+   4:.\nrf24.c     **** * <ihsan@kehribar.me> wrote this file. As long as you retain this notice you
+   5:.\nrf24.c     **** * can do whatever you want with this stuff. If we meet some day, and you think
+   6:.\nrf24.c     **** * this stuff is worth it, you can buy me a coffee in return.
+   7:.\nrf24.c     **** * -----------------------------------------------------------------------------
+   8:.\nrf24.c     **** * This library is based on this library: 
+   9:.\nrf24.c     **** *   https://github.com/aaronds/arduino-nrf24l01
+  10:.\nrf24.c     **** * Which is based on this library: 
+  11:.\nrf24.c     **** *   http://www.tinkerer.eu/AVRLib/nRF24L01
+  12:.\nrf24.c     **** * -----------------------------------------------------------------------------
+  13:.\nrf24.c     **** */
+  14:.\nrf24.c     **** #include "nrf24.h"
+  15:.\nrf24.c     **** 
+  16:.\nrf24.c     **** uint8_t payload_len;
+  17:.\nrf24.c     **** 
+  18:.\nrf24.c     **** /* init the hardware pins */
+  19:.\nrf24.c     **** void nrf24_init() 
+  20:.\nrf24.c     **** {
+  28              		.loc 1 20 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32 0000 80B5     		push	{r7, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 7, -8
+  35              		.cfi_offset 14, -4
+  36 0002 00AF     		add	r7, sp, #0
+  37              		.cfi_def_cfa_register 7
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 2
+
+
+  21:.\nrf24.c     ****     //SPIM_Funk_Start();
+  22:.\nrf24.c     ****     nrf24_ce_digitalWrite(LOW);
+  38              		.loc 1 22 0
+  39 0004 0020     		movs	r0, #0
+  40 0006 FFF7FEFF 		bl	nrf24_ce_digitalWrite
+  23:.\nrf24.c     ****     nrf24_csn_digitalWrite(HIGH);    
+  41              		.loc 1 23 0
+  42 000a 0120     		movs	r0, #1
+  43 000c FFF7FEFF 		bl	nrf24_csn_digitalWrite
+  24:.\nrf24.c     **** }
+  44              		.loc 1 24 0
+  45 0010 80BD     		pop	{r7, pc}
+  46              		.cfi_endproc
+  47              	.LFE63:
+  48              		.size	nrf24_init, .-nrf24_init
+  49 0012 00BF     		.section	.text.nrf24_config,"ax",%progbits
+  50              		.align	2
+  51              		.global	nrf24_config
+  52              		.thumb
+  53              		.thumb_func
+  54              		.type	nrf24_config, %function
+  55              	nrf24_config:
+  56              	.LFB64:
+  25:.\nrf24.c     **** 
+  26:.\nrf24.c     **** /* configure the module */
+  27:.\nrf24.c     **** void nrf24_config(uint8_t channel, uint8_t pay_length)
+  28:.\nrf24.c     **** {
+  57              		.loc 1 28 0
+  58              		.cfi_startproc
+  59              		@ args = 0, pretend = 0, frame = 8
+  60              		@ frame_needed = 1, uses_anonymous_args = 0
+  61 0000 80B5     		push	{r7, lr}
+  62              		.cfi_def_cfa_offset 8
+  63              		.cfi_offset 7, -8
+  64              		.cfi_offset 14, -4
+  65 0002 82B0     		sub	sp, sp, #8
+  66              		.cfi_def_cfa_offset 16
+  67 0004 00AF     		add	r7, sp, #0
+  68              		.cfi_def_cfa_register 7
+  69 0006 0346     		mov	r3, r0
+  70 0008 0A46     		mov	r2, r1
+  71 000a FB71     		strb	r3, [r7, #7]
+  72 000c 1346     		mov	r3, r2
+  73 000e BB71     		strb	r3, [r7, #6]
+  29:.\nrf24.c     ****     /* Use static payload length ... */
+  30:.\nrf24.c     ****     payload_len = pay_length;
+  74              		.loc 1 30 0
+  75 0010 1F4A     		ldr	r2, .L3
+  76 0012 BB79     		ldrb	r3, [r7, #6]
+  77 0014 1370     		strb	r3, [r2]
+  31:.\nrf24.c     **** 
+  32:.\nrf24.c     ****     // Set RF channel
+  33:.\nrf24.c     ****     nrf24_configRegister(RF_CH,channel);
+  78              		.loc 1 33 0
+  79 0016 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+  80 0018 0520     		movs	r0, #5
+  81 001a 1946     		mov	r1, r3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 3
+
+
+  82 001c FFF7FEFF 		bl	nrf24_configRegister
+  34:.\nrf24.c     **** 
+  35:.\nrf24.c     ****     // Set length of incoming payload 
+  36:.\nrf24.c     ****     nrf24_configRegister(RX_PW_P0, 0x00); // Auto-ACK pipe ...
+  83              		.loc 1 36 0
+  84 0020 1120     		movs	r0, #17
+  85 0022 0021     		movs	r1, #0
+  86 0024 FFF7FEFF 		bl	nrf24_configRegister
+  37:.\nrf24.c     ****     nrf24_configRegister(RX_PW_P1, payload_len); // Data payload pipe
+  87              		.loc 1 37 0
+  88 0028 194B     		ldr	r3, .L3
+  89 002a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  90 002c 1220     		movs	r0, #18
+  91 002e 1946     		mov	r1, r3
+  92 0030 FFF7FEFF 		bl	nrf24_configRegister
+  38:.\nrf24.c     ****     nrf24_configRegister(RX_PW_P2, 0x00); // Pipe not used 
+  93              		.loc 1 38 0
+  94 0034 1320     		movs	r0, #19
+  95 0036 0021     		movs	r1, #0
+  96 0038 FFF7FEFF 		bl	nrf24_configRegister
+  39:.\nrf24.c     ****     nrf24_configRegister(RX_PW_P3, 0x00); // Pipe not used 
+  97              		.loc 1 39 0
+  98 003c 1420     		movs	r0, #20
+  99 003e 0021     		movs	r1, #0
+ 100 0040 FFF7FEFF 		bl	nrf24_configRegister
+  40:.\nrf24.c     ****     nrf24_configRegister(RX_PW_P4, 0x00); // Pipe not used 
+ 101              		.loc 1 40 0
+ 102 0044 1520     		movs	r0, #21
+ 103 0046 0021     		movs	r1, #0
+ 104 0048 FFF7FEFF 		bl	nrf24_configRegister
+  41:.\nrf24.c     ****     nrf24_configRegister(RX_PW_P5, 0x00); // Pipe not used 
+ 105              		.loc 1 41 0
+ 106 004c 1620     		movs	r0, #22
+ 107 004e 0021     		movs	r1, #0
+ 108 0050 FFF7FEFF 		bl	nrf24_configRegister
+  42:.\nrf24.c     **** 
+  43:.\nrf24.c     ****     // 1 Mbps, TX gain: 0dbm
+  44:.\nrf24.c     ****     nrf24_configRegister(RF_SETUP, (0<<RF_DR)|((0x03)<<RF_PWR));
+ 109              		.loc 1 44 0
+ 110 0054 0620     		movs	r0, #6
+ 111 0056 0621     		movs	r1, #6
+ 112 0058 FFF7FEFF 		bl	nrf24_configRegister
+  45:.\nrf24.c     **** 
+  46:.\nrf24.c     ****     // CRC enable, 1 byte CRC length
+  47:.\nrf24.c     ****     nrf24_configRegister(CONFIG,nrf24_CONFIG);
+ 113              		.loc 1 47 0
+ 114 005c 0020     		movs	r0, #0
+ 115 005e 0821     		movs	r1, #8
+ 116 0060 FFF7FEFF 		bl	nrf24_configRegister
+  48:.\nrf24.c     **** 
+  49:.\nrf24.c     ****     // Auto Acknowledgment
+  50:.\nrf24.c     ****     nrf24_configRegister(EN_AA,(1<<ENAA_P0)|(1<<ENAA_P1)|(0<<ENAA_P2)|(0<<ENAA_P3)|(0<<ENAA_P4)|(0<
+ 117              		.loc 1 50 0
+ 118 0064 0120     		movs	r0, #1
+ 119 0066 0321     		movs	r1, #3
+ 120 0068 FFF7FEFF 		bl	nrf24_configRegister
+  51:.\nrf24.c     **** 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 4
+
+
+  52:.\nrf24.c     ****     // Enable RX addresses
+  53:.\nrf24.c     ****     nrf24_configRegister(EN_RXADDR,(1<<ERX_P0)|(1<<ERX_P1)|(0<<ERX_P2)|(0<<ERX_P3)|(0<<ERX_P4)|(0<<
+ 121              		.loc 1 53 0
+ 122 006c 0220     		movs	r0, #2
+ 123 006e 0321     		movs	r1, #3
+ 124 0070 FFF7FEFF 		bl	nrf24_configRegister
+  54:.\nrf24.c     **** 
+  55:.\nrf24.c     ****     // Auto retransmit delay: 1000 us and Up to 15 retransmit trials
+  56:.\nrf24.c     ****     nrf24_configRegister(SETUP_RETR,(0x04<<ARD)|(0x0F<<ARC));
+ 125              		.loc 1 56 0
+ 126 0074 0420     		movs	r0, #4
+ 127 0076 4F21     		movs	r1, #79
+ 128 0078 FFF7FEFF 		bl	nrf24_configRegister
+  57:.\nrf24.c     **** 
+  58:.\nrf24.c     ****     // Dynamic length configurations: No dynamic length
+  59:.\nrf24.c     ****     nrf24_configRegister(DYNPD,(0<<DPL_P0)|(0<<DPL_P1)|(0<<DPL_P2)|(0<<DPL_P3)|(0<<DPL_P4)|(0<<DPL_
+ 129              		.loc 1 59 0
+ 130 007c 1C20     		movs	r0, #28
+ 131 007e 0021     		movs	r1, #0
+ 132 0080 FFF7FEFF 		bl	nrf24_configRegister
+  60:.\nrf24.c     **** 
+  61:.\nrf24.c     ****     // Start listening
+  62:.\nrf24.c     ****     nrf24_powerUpRx();
+ 133              		.loc 1 62 0
+ 134 0084 FFF7FEFF 		bl	nrf24_powerUpRx
+  63:.\nrf24.c     **** }
+ 135              		.loc 1 63 0
+ 136 0088 0837     		adds	r7, r7, #8
+ 137              		.cfi_def_cfa_offset 8
+ 138 008a BD46     		mov	sp, r7
+ 139              		.cfi_def_cfa_register 13
+ 140              		@ sp needed
+ 141 008c 80BD     		pop	{r7, pc}
+ 142              	.L4:
+ 143 008e 00BF     		.align	2
+ 144              	.L3:
+ 145 0090 00000000 		.word	payload_len
+ 146              		.cfi_endproc
+ 147              	.LFE64:
+ 148              		.size	nrf24_config, .-nrf24_config
+ 149              		.section	.text.nrf24_rx_address,"ax",%progbits
+ 150              		.align	2
+ 151              		.global	nrf24_rx_address
+ 152              		.thumb
+ 153              		.thumb_func
+ 154              		.type	nrf24_rx_address, %function
+ 155              	nrf24_rx_address:
+ 156              	.LFB65:
+  64:.\nrf24.c     **** 
+  65:.\nrf24.c     **** /* Set the RX address */
+  66:.\nrf24.c     **** void nrf24_rx_address(uint8_t * adr) 
+  67:.\nrf24.c     **** {
+ 157              		.loc 1 67 0
+ 158              		.cfi_startproc
+ 159              		@ args = 0, pretend = 0, frame = 8
+ 160              		@ frame_needed = 1, uses_anonymous_args = 0
+ 161 0000 80B5     		push	{r7, lr}
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 5
+
+
+ 162              		.cfi_def_cfa_offset 8
+ 163              		.cfi_offset 7, -8
+ 164              		.cfi_offset 14, -4
+ 165 0002 82B0     		sub	sp, sp, #8
+ 166              		.cfi_def_cfa_offset 16
+ 167 0004 00AF     		add	r7, sp, #0
+ 168              		.cfi_def_cfa_register 7
+ 169 0006 7860     		str	r0, [r7, #4]
+  68:.\nrf24.c     ****     nrf24_ce_digitalWrite(LOW);
+ 170              		.loc 1 68 0
+ 171 0008 0020     		movs	r0, #0
+ 172 000a FFF7FEFF 		bl	nrf24_ce_digitalWrite
+  69:.\nrf24.c     ****     nrf24_writeRegister(RX_ADDR_P1,adr,nrf24_ADDR_LEN);
+ 173              		.loc 1 69 0
+ 174 000e 0B20     		movs	r0, #11
+ 175 0010 7968     		ldr	r1, [r7, #4]
+ 176 0012 0522     		movs	r2, #5
+ 177 0014 FFF7FEFF 		bl	nrf24_writeRegister
+  70:.\nrf24.c     ****     nrf24_ce_digitalWrite(HIGH);
+ 178              		.loc 1 70 0
+ 179 0018 0120     		movs	r0, #1
+ 180 001a FFF7FEFF 		bl	nrf24_ce_digitalWrite
+  71:.\nrf24.c     **** }
+ 181              		.loc 1 71 0
+ 182 001e 0837     		adds	r7, r7, #8
+ 183              		.cfi_def_cfa_offset 8
+ 184 0020 BD46     		mov	sp, r7
+ 185              		.cfi_def_cfa_register 13
+ 186              		@ sp needed
+ 187 0022 80BD     		pop	{r7, pc}
+ 188              		.cfi_endproc
+ 189              	.LFE65:
+ 190              		.size	nrf24_rx_address, .-nrf24_rx_address
+ 191              		.section	.text.nrf24_payload_length,"ax",%progbits
+ 192              		.align	2
+ 193              		.global	nrf24_payload_length
+ 194              		.thumb
+ 195              		.thumb_func
+ 196              		.type	nrf24_payload_length, %function
+ 197              	nrf24_payload_length:
+ 198              	.LFB66:
+  72:.\nrf24.c     **** 
+  73:.\nrf24.c     **** /* Returns the payload length */
+  74:.\nrf24.c     **** uint8_t nrf24_payload_length()
+  75:.\nrf24.c     **** {
+ 199              		.loc 1 75 0
+ 200              		.cfi_startproc
+ 201              		@ args = 0, pretend = 0, frame = 0
+ 202              		@ frame_needed = 1, uses_anonymous_args = 0
+ 203              		@ link register save eliminated.
+ 204 0000 80B4     		push	{r7}
+ 205              		.cfi_def_cfa_offset 4
+ 206              		.cfi_offset 7, -4
+ 207 0002 00AF     		add	r7, sp, #0
+ 208              		.cfi_def_cfa_register 7
+  76:.\nrf24.c     ****     return payload_len;
+ 209              		.loc 1 76 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 6
+
+
+ 210 0004 034B     		ldr	r3, .L8
+ 211 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  77:.\nrf24.c     **** }
+ 212              		.loc 1 77 0
+ 213 0008 1846     		mov	r0, r3
+ 214 000a BD46     		mov	sp, r7
+ 215              		.cfi_def_cfa_register 13
+ 216              		@ sp needed
+ 217 000c 5DF8047B 		ldr	r7, [sp], #4
+ 218              		.cfi_restore 7
+ 219              		.cfi_def_cfa_offset 0
+ 220 0010 7047     		bx	lr
+ 221              	.L9:
+ 222 0012 00BF     		.align	2
+ 223              	.L8:
+ 224 0014 00000000 		.word	payload_len
+ 225              		.cfi_endproc
+ 226              	.LFE66:
+ 227              		.size	nrf24_payload_length, .-nrf24_payload_length
+ 228              		.section	.text.nrf24_tx_address,"ax",%progbits
+ 229              		.align	2
+ 230              		.global	nrf24_tx_address
+ 231              		.thumb
+ 232              		.thumb_func
+ 233              		.type	nrf24_tx_address, %function
+ 234              	nrf24_tx_address:
+ 235              	.LFB67:
+  78:.\nrf24.c     **** 
+  79:.\nrf24.c     **** /* Set the TX address */
+  80:.\nrf24.c     **** void nrf24_tx_address(uint8_t* adr)
+  81:.\nrf24.c     **** {
+ 236              		.loc 1 81 0
+ 237              		.cfi_startproc
+ 238              		@ args = 0, pretend = 0, frame = 8
+ 239              		@ frame_needed = 1, uses_anonymous_args = 0
+ 240 0000 80B5     		push	{r7, lr}
+ 241              		.cfi_def_cfa_offset 8
+ 242              		.cfi_offset 7, -8
+ 243              		.cfi_offset 14, -4
+ 244 0002 82B0     		sub	sp, sp, #8
+ 245              		.cfi_def_cfa_offset 16
+ 246 0004 00AF     		add	r7, sp, #0
+ 247              		.cfi_def_cfa_register 7
+ 248 0006 7860     		str	r0, [r7, #4]
+  82:.\nrf24.c     ****     /* RX_ADDR_P0 must be set to the sending addr for auto ack to work. */
+  83:.\nrf24.c     ****     nrf24_writeRegister(RX_ADDR_P0,adr,nrf24_ADDR_LEN);
+ 249              		.loc 1 83 0
+ 250 0008 0A20     		movs	r0, #10
+ 251 000a 7968     		ldr	r1, [r7, #4]
+ 252 000c 0522     		movs	r2, #5
+ 253 000e FFF7FEFF 		bl	nrf24_writeRegister
+  84:.\nrf24.c     ****     nrf24_writeRegister(TX_ADDR,adr,nrf24_ADDR_LEN);
+ 254              		.loc 1 84 0
+ 255 0012 1020     		movs	r0, #16
+ 256 0014 7968     		ldr	r1, [r7, #4]
+ 257 0016 0522     		movs	r2, #5
+ 258 0018 FFF7FEFF 		bl	nrf24_writeRegister
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 7
+
+
+  85:.\nrf24.c     **** }
+ 259              		.loc 1 85 0
+ 260 001c 0837     		adds	r7, r7, #8
+ 261              		.cfi_def_cfa_offset 8
+ 262 001e BD46     		mov	sp, r7
+ 263              		.cfi_def_cfa_register 13
+ 264              		@ sp needed
+ 265 0020 80BD     		pop	{r7, pc}
+ 266              		.cfi_endproc
+ 267              	.LFE67:
+ 268              		.size	nrf24_tx_address, .-nrf24_tx_address
+ 269 0022 00BF     		.section	.text.nrf24_dataReady,"ax",%progbits
+ 270              		.align	2
+ 271              		.global	nrf24_dataReady
+ 272              		.thumb
+ 273              		.thumb_func
+ 274              		.type	nrf24_dataReady, %function
+ 275              	nrf24_dataReady:
+ 276              	.LFB68:
+  86:.\nrf24.c     **** 
+  87:.\nrf24.c     **** /* Checks if data is available for reading */
+  88:.\nrf24.c     **** /* Returns 1 if data is ready ... */
+  89:.\nrf24.c     **** uint8_t nrf24_dataReady() 
+  90:.\nrf24.c     **** {
+ 277              		.loc 1 90 0
+ 278              		.cfi_startproc
+ 279              		@ args = 0, pretend = 0, frame = 8
+ 280              		@ frame_needed = 1, uses_anonymous_args = 0
+ 281 0000 80B5     		push	{r7, lr}
+ 282              		.cfi_def_cfa_offset 8
+ 283              		.cfi_offset 7, -8
+ 284              		.cfi_offset 14, -4
+ 285 0002 82B0     		sub	sp, sp, #8
+ 286              		.cfi_def_cfa_offset 16
+ 287 0004 00AF     		add	r7, sp, #0
+ 288              		.cfi_def_cfa_register 7
+  91:.\nrf24.c     ****     // See note in getData() function - just checking RX_DR isn't good enough
+  92:.\nrf24.c     ****     uint8_t status = nrf24_getStatus();
+ 289              		.loc 1 92 0
+ 290 0006 FFF7FEFF 		bl	nrf24_getStatus
+ 291 000a 0346     		mov	r3, r0
+ 292 000c FB71     		strb	r3, [r7, #7]
+  93:.\nrf24.c     **** 
+  94:.\nrf24.c     ****     // We can short circuit on RX_DR, but if it's not set, we still need
+  95:.\nrf24.c     ****     // to check the FIFO for any pending packets
+  96:.\nrf24.c     ****     if ( status & (1 << RX_DR) ) 
+ 293              		.loc 1 96 0
+ 294 000e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 295 0010 03F04003 		and	r3, r3, #64
+ 296 0014 002B     		cmp	r3, #0
+ 297 0016 01D0     		beq	.L12
+  97:.\nrf24.c     ****     {
+  98:.\nrf24.c     ****         return 1;
+ 298              		.loc 1 98 0
+ 299 0018 0123     		movs	r3, #1
+ 300 001a 07E0     		b	.L13
+ 301              	.L12:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 8
+
+
+  99:.\nrf24.c     ****     }
+ 100:.\nrf24.c     **** 
+ 101:.\nrf24.c     ****     return !nrf24_rxFifoEmpty();;
+ 302              		.loc 1 101 0
+ 303 001c FFF7FEFF 		bl	nrf24_rxFifoEmpty
+ 304 0020 0346     		mov	r3, r0
+ 305 0022 002B     		cmp	r3, #0
+ 306 0024 0CBF     		ite	eq
+ 307 0026 0123     		moveq	r3, #1
+ 308 0028 0023     		movne	r3, #0
+ 309 002a DBB2     		uxtb	r3, r3
+ 310              	.L13:
+ 102:.\nrf24.c     **** }
+ 311              		.loc 1 102 0
+ 312 002c 1846     		mov	r0, r3
+ 313 002e 0837     		adds	r7, r7, #8
+ 314              		.cfi_def_cfa_offset 8
+ 315 0030 BD46     		mov	sp, r7
+ 316              		.cfi_def_cfa_register 13
+ 317              		@ sp needed
+ 318 0032 80BD     		pop	{r7, pc}
+ 319              		.cfi_endproc
+ 320              	.LFE68:
+ 321              		.size	nrf24_dataReady, .-nrf24_dataReady
+ 322              		.section	.text.nrf24_rxFifoEmpty,"ax",%progbits
+ 323              		.align	2
+ 324              		.global	nrf24_rxFifoEmpty
+ 325              		.thumb
+ 326              		.thumb_func
+ 327              		.type	nrf24_rxFifoEmpty, %function
+ 328              	nrf24_rxFifoEmpty:
+ 329              	.LFB69:
+ 103:.\nrf24.c     **** 
+ 104:.\nrf24.c     **** /* Checks if receive FIFO is empty or not */
+ 105:.\nrf24.c     **** uint8_t nrf24_rxFifoEmpty()
+ 106:.\nrf24.c     **** {
+ 330              		.loc 1 106 0
+ 331              		.cfi_startproc
+ 332              		@ args = 0, pretend = 0, frame = 8
+ 333              		@ frame_needed = 1, uses_anonymous_args = 0
+ 334 0000 80B5     		push	{r7, lr}
+ 335              		.cfi_def_cfa_offset 8
+ 336              		.cfi_offset 7, -8
+ 337              		.cfi_offset 14, -4
+ 338 0002 82B0     		sub	sp, sp, #8
+ 339              		.cfi_def_cfa_offset 16
+ 340 0004 00AF     		add	r7, sp, #0
+ 341              		.cfi_def_cfa_register 7
+ 107:.\nrf24.c     ****     uint8_t fifoStatus;
+ 108:.\nrf24.c     **** 
+ 109:.\nrf24.c     ****     nrf24_readRegister(FIFO_STATUS,&fifoStatus,1);
+ 342              		.loc 1 109 0
+ 343 0006 FB1D     		adds	r3, r7, #7
+ 344 0008 1720     		movs	r0, #23
+ 345 000a 1946     		mov	r1, r3
+ 346 000c 0122     		movs	r2, #1
+ 347 000e FFF7FEFF 		bl	nrf24_readRegister
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 9
+
+
+ 110:.\nrf24.c     ****     
+ 111:.\nrf24.c     ****     return (fifoStatus & (1 << RX_EMPTY));
+ 348              		.loc 1 111 0
+ 349 0012 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 350 0014 03F00103 		and	r3, r3, #1
+ 351 0018 DBB2     		uxtb	r3, r3
+ 112:.\nrf24.c     **** }
+ 352              		.loc 1 112 0
+ 353 001a 1846     		mov	r0, r3
+ 354 001c 0837     		adds	r7, r7, #8
+ 355              		.cfi_def_cfa_offset 8
+ 356 001e BD46     		mov	sp, r7
+ 357              		.cfi_def_cfa_register 13
+ 358              		@ sp needed
+ 359 0020 80BD     		pop	{r7, pc}
+ 360              		.cfi_endproc
+ 361              	.LFE69:
+ 362              		.size	nrf24_rxFifoEmpty, .-nrf24_rxFifoEmpty
+ 363 0022 00BF     		.section	.text.nrf24_payloadLength,"ax",%progbits
+ 364              		.align	2
+ 365              		.global	nrf24_payloadLength
+ 366              		.thumb
+ 367              		.thumb_func
+ 368              		.type	nrf24_payloadLength, %function
+ 369              	nrf24_payloadLength:
+ 370              	.LFB70:
+ 113:.\nrf24.c     **** 
+ 114:.\nrf24.c     **** /* Returns the length of data waiting in the RX fifo */
+ 115:.\nrf24.c     **** uint8_t nrf24_payloadLength()
+ 116:.\nrf24.c     **** {
+ 371              		.loc 1 116 0
+ 372              		.cfi_startproc
+ 373              		@ args = 0, pretend = 0, frame = 8
+ 374              		@ frame_needed = 1, uses_anonymous_args = 0
+ 375 0000 80B5     		push	{r7, lr}
+ 376              		.cfi_def_cfa_offset 8
+ 377              		.cfi_offset 7, -8
+ 378              		.cfi_offset 14, -4
+ 379 0002 82B0     		sub	sp, sp, #8
+ 380              		.cfi_def_cfa_offset 16
+ 381 0004 00AF     		add	r7, sp, #0
+ 382              		.cfi_def_cfa_register 7
+ 117:.\nrf24.c     ****     uint8_t status;
+ 118:.\nrf24.c     ****     nrf24_csn_digitalWrite(LOW);
+ 383              		.loc 1 118 0
+ 384 0006 0020     		movs	r0, #0
+ 385 0008 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 119:.\nrf24.c     ****     spi_transfer(R_RX_PL_WID);
+ 386              		.loc 1 119 0
+ 387 000c 6020     		movs	r0, #96
+ 388 000e FFF7FEFF 		bl	spi_transfer
+ 120:.\nrf24.c     ****     status = spi_transfer(0x00);
+ 389              		.loc 1 120 0
+ 390 0012 0020     		movs	r0, #0
+ 391 0014 FFF7FEFF 		bl	spi_transfer
+ 392 0018 0346     		mov	r3, r0
+ 393 001a FB71     		strb	r3, [r7, #7]
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 10
+
+
+ 121:.\nrf24.c     ****     nrf24_csn_digitalWrite(HIGH);
+ 394              		.loc 1 121 0
+ 395 001c 0120     		movs	r0, #1
+ 396 001e FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 122:.\nrf24.c     ****     return status;
+ 397              		.loc 1 122 0
+ 398 0022 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 123:.\nrf24.c     **** }
+ 399              		.loc 1 123 0
+ 400 0024 1846     		mov	r0, r3
+ 401 0026 0837     		adds	r7, r7, #8
+ 402              		.cfi_def_cfa_offset 8
+ 403 0028 BD46     		mov	sp, r7
+ 404              		.cfi_def_cfa_register 13
+ 405              		@ sp needed
+ 406 002a 80BD     		pop	{r7, pc}
+ 407              		.cfi_endproc
+ 408              	.LFE70:
+ 409              		.size	nrf24_payloadLength, .-nrf24_payloadLength
+ 410              		.section	.text.nrf24_getData,"ax",%progbits
+ 411              		.align	2
+ 412              		.global	nrf24_getData
+ 413              		.thumb
+ 414              		.thumb_func
+ 415              		.type	nrf24_getData, %function
+ 416              	nrf24_getData:
+ 417              	.LFB71:
+ 124:.\nrf24.c     **** 
+ 125:.\nrf24.c     **** /* Reads payload bytes into data array */
+ 126:.\nrf24.c     **** void nrf24_getData(uint8_t* data) 
+ 127:.\nrf24.c     **** {
+ 418              		.loc 1 127 0
+ 419              		.cfi_startproc
+ 420              		@ args = 0, pretend = 0, frame = 8
+ 421              		@ frame_needed = 1, uses_anonymous_args = 0
+ 422 0000 80B5     		push	{r7, lr}
+ 423              		.cfi_def_cfa_offset 8
+ 424              		.cfi_offset 7, -8
+ 425              		.cfi_offset 14, -4
+ 426 0002 82B0     		sub	sp, sp, #8
+ 427              		.cfi_def_cfa_offset 16
+ 428 0004 00AF     		add	r7, sp, #0
+ 429              		.cfi_def_cfa_register 7
+ 430 0006 7860     		str	r0, [r7, #4]
+ 128:.\nrf24.c     ****     /* Pull down chip select */
+ 129:.\nrf24.c     ****     nrf24_csn_digitalWrite(LOW);                               
+ 431              		.loc 1 129 0
+ 432 0008 0020     		movs	r0, #0
+ 433 000a FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 130:.\nrf24.c     **** 
+ 131:.\nrf24.c     ****     /* Send cmd to read rx payload */
+ 132:.\nrf24.c     ****     spi_transfer( R_RX_PAYLOAD );
+ 434              		.loc 1 132 0
+ 435 000e 6120     		movs	r0, #97
+ 436 0010 FFF7FEFF 		bl	spi_transfer
+ 133:.\nrf24.c     ****     
+ 134:.\nrf24.c     ****     /* Read payload */
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 11
+
+
+ 135:.\nrf24.c     ****     nrf24_transferSync(data,data,payload_len);
+ 437              		.loc 1 135 0
+ 438 0014 084B     		ldr	r3, .L19
+ 439 0016 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 440 0018 7868     		ldr	r0, [r7, #4]
+ 441 001a 7968     		ldr	r1, [r7, #4]
+ 442 001c 1A46     		mov	r2, r3
+ 443 001e FFF7FEFF 		bl	nrf24_transferSync
+ 136:.\nrf24.c     ****     
+ 137:.\nrf24.c     ****     /* Pull up chip select */
+ 138:.\nrf24.c     ****     nrf24_csn_digitalWrite(HIGH);
+ 444              		.loc 1 138 0
+ 445 0022 0120     		movs	r0, #1
+ 446 0024 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 139:.\nrf24.c     **** 
+ 140:.\nrf24.c     ****     /* Reset status register */
+ 141:.\nrf24.c     ****     nrf24_configRegister(STATUS,(1<<RX_DR));   
+ 447              		.loc 1 141 0
+ 448 0028 0720     		movs	r0, #7
+ 449 002a 4021     		movs	r1, #64
+ 450 002c FFF7FEFF 		bl	nrf24_configRegister
+ 142:.\nrf24.c     **** }
+ 451              		.loc 1 142 0
+ 452 0030 0837     		adds	r7, r7, #8
+ 453              		.cfi_def_cfa_offset 8
+ 454 0032 BD46     		mov	sp, r7
+ 455              		.cfi_def_cfa_register 13
+ 456              		@ sp needed
+ 457 0034 80BD     		pop	{r7, pc}
+ 458              	.L20:
+ 459 0036 00BF     		.align	2
+ 460              	.L19:
+ 461 0038 00000000 		.word	payload_len
+ 462              		.cfi_endproc
+ 463              	.LFE71:
+ 464              		.size	nrf24_getData, .-nrf24_getData
+ 465              		.section	.text.nrf24_retransmissionCount,"ax",%progbits
+ 466              		.align	2
+ 467              		.global	nrf24_retransmissionCount
+ 468              		.thumb
+ 469              		.thumb_func
+ 470              		.type	nrf24_retransmissionCount, %function
+ 471              	nrf24_retransmissionCount:
+ 472              	.LFB72:
+ 143:.\nrf24.c     **** 
+ 144:.\nrf24.c     **** /* Returns the number of retransmissions occured for the last message */
+ 145:.\nrf24.c     **** uint8_t nrf24_retransmissionCount()
+ 146:.\nrf24.c     **** {
+ 473              		.loc 1 146 0
+ 474              		.cfi_startproc
+ 475              		@ args = 0, pretend = 0, frame = 8
+ 476              		@ frame_needed = 1, uses_anonymous_args = 0
+ 477 0000 80B5     		push	{r7, lr}
+ 478              		.cfi_def_cfa_offset 8
+ 479              		.cfi_offset 7, -8
+ 480              		.cfi_offset 14, -4
+ 481 0002 82B0     		sub	sp, sp, #8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 12
+
+
+ 482              		.cfi_def_cfa_offset 16
+ 483 0004 00AF     		add	r7, sp, #0
+ 484              		.cfi_def_cfa_register 7
+ 147:.\nrf24.c     ****     uint8_t rv;
+ 148:.\nrf24.c     ****     nrf24_readRegister(OBSERVE_TX,&rv,1);
+ 485              		.loc 1 148 0
+ 486 0006 FB1D     		adds	r3, r7, #7
+ 487 0008 0820     		movs	r0, #8
+ 488 000a 1946     		mov	r1, r3
+ 489 000c 0122     		movs	r2, #1
+ 490 000e FFF7FEFF 		bl	nrf24_readRegister
+ 149:.\nrf24.c     ****     rv = rv & 0x0F;
+ 491              		.loc 1 149 0
+ 492 0012 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 493 0014 03F00F03 		and	r3, r3, #15
+ 494 0018 DBB2     		uxtb	r3, r3
+ 495 001a FB71     		strb	r3, [r7, #7]
+ 150:.\nrf24.c     ****     return rv;
+ 496              		.loc 1 150 0
+ 497 001c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 151:.\nrf24.c     **** }
+ 498              		.loc 1 151 0
+ 499 001e 1846     		mov	r0, r3
+ 500 0020 0837     		adds	r7, r7, #8
+ 501              		.cfi_def_cfa_offset 8
+ 502 0022 BD46     		mov	sp, r7
+ 503              		.cfi_def_cfa_register 13
+ 504              		@ sp needed
+ 505 0024 80BD     		pop	{r7, pc}
+ 506              		.cfi_endproc
+ 507              	.LFE72:
+ 508              		.size	nrf24_retransmissionCount, .-nrf24_retransmissionCount
+ 509 0026 00BF     		.section	.text.nrf24_send,"ax",%progbits
+ 510              		.align	2
+ 511              		.global	nrf24_send
+ 512              		.thumb
+ 513              		.thumb_func
+ 514              		.type	nrf24_send, %function
+ 515              	nrf24_send:
+ 516              	.LFB73:
+ 152:.\nrf24.c     **** 
+ 153:.\nrf24.c     **** // Sends a data package to the default address. Be sure to send the correct
+ 154:.\nrf24.c     **** // amount of bytes as configured as payload on the receiver.
+ 155:.\nrf24.c     **** void nrf24_send(uint8_t* value) 
+ 156:.\nrf24.c     **** {    
+ 517              		.loc 1 156 0
+ 518              		.cfi_startproc
+ 519              		@ args = 0, pretend = 0, frame = 8
+ 520              		@ frame_needed = 1, uses_anonymous_args = 0
+ 521 0000 80B5     		push	{r7, lr}
+ 522              		.cfi_def_cfa_offset 8
+ 523              		.cfi_offset 7, -8
+ 524              		.cfi_offset 14, -4
+ 525 0002 82B0     		sub	sp, sp, #8
+ 526              		.cfi_def_cfa_offset 16
+ 527 0004 00AF     		add	r7, sp, #0
+ 528              		.cfi_def_cfa_register 7
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 13
+
+
+ 529 0006 7860     		str	r0, [r7, #4]
+ 157:.\nrf24.c     ****     /* Go to Standby-I first */
+ 158:.\nrf24.c     ****     nrf24_ce_digitalWrite(LOW);
+ 530              		.loc 1 158 0
+ 531 0008 0020     		movs	r0, #0
+ 532 000a FFF7FEFF 		bl	nrf24_ce_digitalWrite
+ 159:.\nrf24.c     ****      
+ 160:.\nrf24.c     ****     /* Set to transmitter mode , Power up if needed */
+ 161:.\nrf24.c     ****     nrf24_powerUpTx();
+ 533              		.loc 1 161 0
+ 534 000e FFF7FEFF 		bl	nrf24_powerUpTx
+ 162:.\nrf24.c     **** 
+ 163:.\nrf24.c     ****     /* Do we really need to flush TX fifo each time ? */
+ 164:.\nrf24.c     ****     #if 1
+ 165:.\nrf24.c     ****         /* Pull down chip select */
+ 166:.\nrf24.c     ****         nrf24_csn_digitalWrite(LOW);           
+ 535              		.loc 1 166 0
+ 536 0012 0020     		movs	r0, #0
+ 537 0014 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 167:.\nrf24.c     **** 
+ 168:.\nrf24.c     ****         /* Write cmd to flush transmit FIFO */
+ 169:.\nrf24.c     ****         spi_transfer(FLUSH_TX);     
+ 538              		.loc 1 169 0
+ 539 0018 E120     		movs	r0, #225
+ 540 001a FFF7FEFF 		bl	spi_transfer
+ 170:.\nrf24.c     **** 
+ 171:.\nrf24.c     ****         /* Pull up chip select */
+ 172:.\nrf24.c     ****         nrf24_csn_digitalWrite(HIGH);                    
+ 541              		.loc 1 172 0
+ 542 001e 0120     		movs	r0, #1
+ 543 0020 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 173:.\nrf24.c     ****     #endif 
+ 174:.\nrf24.c     **** 
+ 175:.\nrf24.c     ****     /* Pull down chip select */
+ 176:.\nrf24.c     ****     nrf24_csn_digitalWrite(LOW);
+ 544              		.loc 1 176 0
+ 545 0024 0020     		movs	r0, #0
+ 546 0026 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 177:.\nrf24.c     **** 
+ 178:.\nrf24.c     ****     /* Write cmd to write payload */
+ 179:.\nrf24.c     ****     spi_transfer(W_TX_PAYLOAD);
+ 547              		.loc 1 179 0
+ 548 002a A020     		movs	r0, #160
+ 549 002c FFF7FEFF 		bl	spi_transfer
+ 180:.\nrf24.c     **** 
+ 181:.\nrf24.c     ****     /* Write payload */
+ 182:.\nrf24.c     ****     nrf24_transmitSync(value,payload_len);   
+ 550              		.loc 1 182 0
+ 551 0030 074B     		ldr	r3, .L24
+ 552 0032 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 553 0034 7868     		ldr	r0, [r7, #4]
+ 554 0036 1946     		mov	r1, r3
+ 555 0038 FFF7FEFF 		bl	nrf24_transmitSync
+ 183:.\nrf24.c     **** 
+ 184:.\nrf24.c     ****     /* Pull up chip select */
+ 185:.\nrf24.c     ****     nrf24_csn_digitalWrite(HIGH);
+ 556              		.loc 1 185 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 14
+
+
+ 557 003c 0120     		movs	r0, #1
+ 558 003e FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 186:.\nrf24.c     **** 
+ 187:.\nrf24.c     ****     /* Start the transmission */
+ 188:.\nrf24.c     ****     nrf24_ce_digitalWrite(HIGH);    
+ 559              		.loc 1 188 0
+ 560 0042 0120     		movs	r0, #1
+ 561 0044 FFF7FEFF 		bl	nrf24_ce_digitalWrite
+ 189:.\nrf24.c     **** }
+ 562              		.loc 1 189 0
+ 563 0048 0837     		adds	r7, r7, #8
+ 564              		.cfi_def_cfa_offset 8
+ 565 004a BD46     		mov	sp, r7
+ 566              		.cfi_def_cfa_register 13
+ 567              		@ sp needed
+ 568 004c 80BD     		pop	{r7, pc}
+ 569              	.L25:
+ 570 004e 00BF     		.align	2
+ 571              	.L24:
+ 572 0050 00000000 		.word	payload_len
+ 573              		.cfi_endproc
+ 574              	.LFE73:
+ 575              		.size	nrf24_send, .-nrf24_send
+ 576              		.section	.text.nrf24_isSending,"ax",%progbits
+ 577              		.align	2
+ 578              		.global	nrf24_isSending
+ 579              		.thumb
+ 580              		.thumb_func
+ 581              		.type	nrf24_isSending, %function
+ 582              	nrf24_isSending:
+ 583              	.LFB74:
+ 190:.\nrf24.c     **** 
+ 191:.\nrf24.c     **** uint8_t nrf24_isSending()
+ 192:.\nrf24.c     **** {
+ 584              		.loc 1 192 0
+ 585              		.cfi_startproc
+ 586              		@ args = 0, pretend = 0, frame = 8
+ 587              		@ frame_needed = 1, uses_anonymous_args = 0
+ 588 0000 80B5     		push	{r7, lr}
+ 589              		.cfi_def_cfa_offset 8
+ 590              		.cfi_offset 7, -8
+ 591              		.cfi_offset 14, -4
+ 592 0002 82B0     		sub	sp, sp, #8
+ 593              		.cfi_def_cfa_offset 16
+ 594 0004 00AF     		add	r7, sp, #0
+ 595              		.cfi_def_cfa_register 7
+ 193:.\nrf24.c     ****     uint8_t status;
+ 194:.\nrf24.c     **** 
+ 195:.\nrf24.c     ****     /* read the current status */
+ 196:.\nrf24.c     ****     status = nrf24_getStatus();
+ 596              		.loc 1 196 0
+ 597 0006 FFF7FEFF 		bl	nrf24_getStatus
+ 598 000a 0346     		mov	r3, r0
+ 599 000c FB71     		strb	r3, [r7, #7]
+ 197:.\nrf24.c     ****                 
+ 198:.\nrf24.c     ****     /* if sending successful (TX_DS) or max retries exceded (MAX_RT). */
+ 199:.\nrf24.c     ****     if((status & ((1 << TX_DS)  | (1 << MAX_RT))))
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 15
+
+
+ 600              		.loc 1 199 0
+ 601 000e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 602 0010 03F03003 		and	r3, r3, #48
+ 603 0014 002B     		cmp	r3, #0
+ 604 0016 01D0     		beq	.L27
+ 200:.\nrf24.c     ****     {        
+ 201:.\nrf24.c     ****         return 0; /* false */
+ 605              		.loc 1 201 0
+ 606 0018 0023     		movs	r3, #0
+ 607 001a 00E0     		b	.L28
+ 608              	.L27:
+ 202:.\nrf24.c     ****     }
+ 203:.\nrf24.c     **** 
+ 204:.\nrf24.c     ****     return 1; /* true */
+ 609              		.loc 1 204 0
+ 610 001c 0123     		movs	r3, #1
+ 611              	.L28:
+ 205:.\nrf24.c     **** 
+ 206:.\nrf24.c     **** }
+ 612              		.loc 1 206 0
+ 613 001e 1846     		mov	r0, r3
+ 614 0020 0837     		adds	r7, r7, #8
+ 615              		.cfi_def_cfa_offset 8
+ 616 0022 BD46     		mov	sp, r7
+ 617              		.cfi_def_cfa_register 13
+ 618              		@ sp needed
+ 619 0024 80BD     		pop	{r7, pc}
+ 620              		.cfi_endproc
+ 621              	.LFE74:
+ 622              		.size	nrf24_isSending, .-nrf24_isSending
+ 623 0026 00BF     		.section	.text.nrf24_getStatus,"ax",%progbits
+ 624              		.align	2
+ 625              		.global	nrf24_getStatus
+ 626              		.thumb
+ 627              		.thumb_func
+ 628              		.type	nrf24_getStatus, %function
+ 629              	nrf24_getStatus:
+ 630              	.LFB75:
+ 207:.\nrf24.c     **** 
+ 208:.\nrf24.c     **** uint8_t nrf24_getStatus()
+ 209:.\nrf24.c     **** {
+ 631              		.loc 1 209 0
+ 632              		.cfi_startproc
+ 633              		@ args = 0, pretend = 0, frame = 8
+ 634              		@ frame_needed = 1, uses_anonymous_args = 0
+ 635 0000 80B5     		push	{r7, lr}
+ 636              		.cfi_def_cfa_offset 8
+ 637              		.cfi_offset 7, -8
+ 638              		.cfi_offset 14, -4
+ 639 0002 82B0     		sub	sp, sp, #8
+ 640              		.cfi_def_cfa_offset 16
+ 641 0004 00AF     		add	r7, sp, #0
+ 642              		.cfi_def_cfa_register 7
+ 210:.\nrf24.c     ****     uint8_t rv;
+ 211:.\nrf24.c     ****     nrf24_csn_digitalWrite(LOW);
+ 643              		.loc 1 211 0
+ 644 0006 0020     		movs	r0, #0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 16
+
+
+ 645 0008 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 212:.\nrf24.c     ****     rv = spi_transfer(NOP);
+ 646              		.loc 1 212 0
+ 647 000c FF20     		movs	r0, #255
+ 648 000e FFF7FEFF 		bl	spi_transfer
+ 649 0012 0346     		mov	r3, r0
+ 650 0014 FB71     		strb	r3, [r7, #7]
+ 213:.\nrf24.c     ****     nrf24_csn_digitalWrite(HIGH);
+ 651              		.loc 1 213 0
+ 652 0016 0120     		movs	r0, #1
+ 653 0018 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 214:.\nrf24.c     ****     return rv;
+ 654              		.loc 1 214 0
+ 655 001c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 215:.\nrf24.c     **** }
+ 656              		.loc 1 215 0
+ 657 001e 1846     		mov	r0, r3
+ 658 0020 0837     		adds	r7, r7, #8
+ 659              		.cfi_def_cfa_offset 8
+ 660 0022 BD46     		mov	sp, r7
+ 661              		.cfi_def_cfa_register 13
+ 662              		@ sp needed
+ 663 0024 80BD     		pop	{r7, pc}
+ 664              		.cfi_endproc
+ 665              	.LFE75:
+ 666              		.size	nrf24_getStatus, .-nrf24_getStatus
+ 667 0026 00BF     		.section	.text.nrf24_lastMessageStatus,"ax",%progbits
+ 668              		.align	2
+ 669              		.global	nrf24_lastMessageStatus
+ 670              		.thumb
+ 671              		.thumb_func
+ 672              		.type	nrf24_lastMessageStatus, %function
+ 673              	nrf24_lastMessageStatus:
+ 674              	.LFB76:
+ 216:.\nrf24.c     **** 
+ 217:.\nrf24.c     **** uint8_t nrf24_lastMessageStatus()
+ 218:.\nrf24.c     **** {
+ 675              		.loc 1 218 0
+ 676              		.cfi_startproc
+ 677              		@ args = 0, pretend = 0, frame = 8
+ 678              		@ frame_needed = 1, uses_anonymous_args = 0
+ 679 0000 80B5     		push	{r7, lr}
+ 680              		.cfi_def_cfa_offset 8
+ 681              		.cfi_offset 7, -8
+ 682              		.cfi_offset 14, -4
+ 683 0002 82B0     		sub	sp, sp, #8
+ 684              		.cfi_def_cfa_offset 16
+ 685 0004 00AF     		add	r7, sp, #0
+ 686              		.cfi_def_cfa_register 7
+ 219:.\nrf24.c     ****     uint8_t rv;
+ 220:.\nrf24.c     **** 
+ 221:.\nrf24.c     ****     rv = nrf24_getStatus();
+ 687              		.loc 1 221 0
+ 688 0006 FFF7FEFF 		bl	nrf24_getStatus
+ 689 000a 0346     		mov	r3, r0
+ 690 000c FB71     		strb	r3, [r7, #7]
+ 222:.\nrf24.c     **** 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 17
+
+
+ 223:.\nrf24.c     ****     /* Transmission went OK */
+ 224:.\nrf24.c     ****     if((rv & ((1 << TX_DS))))
+ 691              		.loc 1 224 0
+ 692 000e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 693 0010 03F02003 		and	r3, r3, #32
+ 694 0014 002B     		cmp	r3, #0
+ 695 0016 01D0     		beq	.L32
+ 225:.\nrf24.c     ****     {
+ 226:.\nrf24.c     ****         return NRF24_TRANSMISSON_OK;
+ 696              		.loc 1 226 0
+ 697 0018 0023     		movs	r3, #0
+ 698 001a 07E0     		b	.L33
+ 699              	.L32:
+ 227:.\nrf24.c     ****     }
+ 228:.\nrf24.c     ****     /* Maximum retransmission count is reached */
+ 229:.\nrf24.c     ****     /* Last message probably went missing ... */
+ 230:.\nrf24.c     ****     else if((rv & ((1 << MAX_RT))))
+ 700              		.loc 1 230 0
+ 701 001c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 702 001e 03F01003 		and	r3, r3, #16
+ 703 0022 002B     		cmp	r3, #0
+ 704 0024 01D0     		beq	.L34
+ 231:.\nrf24.c     ****     {
+ 232:.\nrf24.c     ****         return NRF24_MESSAGE_LOST;
+ 705              		.loc 1 232 0
+ 706 0026 0123     		movs	r3, #1
+ 707 0028 00E0     		b	.L33
+ 708              	.L34:
+ 233:.\nrf24.c     ****     }  
+ 234:.\nrf24.c     ****     /* Probably still sending ... */
+ 235:.\nrf24.c     ****     else
+ 236:.\nrf24.c     ****     {
+ 237:.\nrf24.c     ****         return 0xFF;
+ 709              		.loc 1 237 0
+ 710 002a FF23     		movs	r3, #255
+ 711              	.L33:
+ 238:.\nrf24.c     ****     }
+ 239:.\nrf24.c     **** }
+ 712              		.loc 1 239 0
+ 713 002c 1846     		mov	r0, r3
+ 714 002e 0837     		adds	r7, r7, #8
+ 715              		.cfi_def_cfa_offset 8
+ 716 0030 BD46     		mov	sp, r7
+ 717              		.cfi_def_cfa_register 13
+ 718              		@ sp needed
+ 719 0032 80BD     		pop	{r7, pc}
+ 720              		.cfi_endproc
+ 721              	.LFE76:
+ 722              		.size	nrf24_lastMessageStatus, .-nrf24_lastMessageStatus
+ 723              		.section	.text.nrf24_powerUpRx,"ax",%progbits
+ 724              		.align	2
+ 725              		.global	nrf24_powerUpRx
+ 726              		.thumb
+ 727              		.thumb_func
+ 728              		.type	nrf24_powerUpRx, %function
+ 729              	nrf24_powerUpRx:
+ 730              	.LFB77:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 18
+
+
+ 240:.\nrf24.c     **** 
+ 241:.\nrf24.c     **** void nrf24_powerUpRx()
+ 242:.\nrf24.c     **** {     
+ 731              		.loc 1 242 0
+ 732              		.cfi_startproc
+ 733              		@ args = 0, pretend = 0, frame = 0
+ 734              		@ frame_needed = 1, uses_anonymous_args = 0
+ 735 0000 80B5     		push	{r7, lr}
+ 736              		.cfi_def_cfa_offset 8
+ 737              		.cfi_offset 7, -8
+ 738              		.cfi_offset 14, -4
+ 739 0002 00AF     		add	r7, sp, #0
+ 740              		.cfi_def_cfa_register 7
+ 243:.\nrf24.c     ****     nrf24_csn_digitalWrite(LOW);
+ 741              		.loc 1 243 0
+ 742 0004 0020     		movs	r0, #0
+ 743 0006 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 244:.\nrf24.c     ****     spi_transfer(FLUSH_RX);
+ 744              		.loc 1 244 0
+ 745 000a E220     		movs	r0, #226
+ 746 000c FFF7FEFF 		bl	spi_transfer
+ 245:.\nrf24.c     ****     nrf24_csn_digitalWrite(HIGH);
+ 747              		.loc 1 245 0
+ 748 0010 0120     		movs	r0, #1
+ 749 0012 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 246:.\nrf24.c     **** 
+ 247:.\nrf24.c     ****     nrf24_configRegister(STATUS,(1<<RX_DR)|(1<<TX_DS)|(1<<MAX_RT)); 
+ 750              		.loc 1 247 0
+ 751 0016 0720     		movs	r0, #7
+ 752 0018 7021     		movs	r1, #112
+ 753 001a FFF7FEFF 		bl	nrf24_configRegister
+ 248:.\nrf24.c     **** 
+ 249:.\nrf24.c     ****     nrf24_ce_digitalWrite(LOW);    
+ 754              		.loc 1 249 0
+ 755 001e 0020     		movs	r0, #0
+ 756 0020 FFF7FEFF 		bl	nrf24_ce_digitalWrite
+ 250:.\nrf24.c     ****     nrf24_configRegister(CONFIG,nrf24_CONFIG|((1<<PWR_UP)|(1<<PRIM_RX)));    
+ 757              		.loc 1 250 0
+ 758 0024 0020     		movs	r0, #0
+ 759 0026 0B21     		movs	r1, #11
+ 760 0028 FFF7FEFF 		bl	nrf24_configRegister
+ 251:.\nrf24.c     ****     nrf24_ce_digitalWrite(HIGH);
+ 761              		.loc 1 251 0
+ 762 002c 0120     		movs	r0, #1
+ 763 002e FFF7FEFF 		bl	nrf24_ce_digitalWrite
+ 252:.\nrf24.c     **** }
+ 764              		.loc 1 252 0
+ 765 0032 80BD     		pop	{r7, pc}
+ 766              		.cfi_endproc
+ 767              	.LFE77:
+ 768              		.size	nrf24_powerUpRx, .-nrf24_powerUpRx
+ 769              		.section	.text.nrf24_powerUpTx,"ax",%progbits
+ 770              		.align	2
+ 771              		.global	nrf24_powerUpTx
+ 772              		.thumb
+ 773              		.thumb_func
+ 774              		.type	nrf24_powerUpTx, %function
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 19
+
+
+ 775              	nrf24_powerUpTx:
+ 776              	.LFB78:
+ 253:.\nrf24.c     **** 
+ 254:.\nrf24.c     **** void nrf24_powerUpTx()
+ 255:.\nrf24.c     **** {
+ 777              		.loc 1 255 0
+ 778              		.cfi_startproc
+ 779              		@ args = 0, pretend = 0, frame = 0
+ 780              		@ frame_needed = 1, uses_anonymous_args = 0
+ 781 0000 80B5     		push	{r7, lr}
+ 782              		.cfi_def_cfa_offset 8
+ 783              		.cfi_offset 7, -8
+ 784              		.cfi_offset 14, -4
+ 785 0002 00AF     		add	r7, sp, #0
+ 786              		.cfi_def_cfa_register 7
+ 256:.\nrf24.c     ****     nrf24_configRegister(STATUS,(1<<RX_DR)|(1<<TX_DS)|(1<<MAX_RT)); 
+ 787              		.loc 1 256 0
+ 788 0004 0720     		movs	r0, #7
+ 789 0006 7021     		movs	r1, #112
+ 790 0008 FFF7FEFF 		bl	nrf24_configRegister
+ 257:.\nrf24.c     **** 
+ 258:.\nrf24.c     ****     nrf24_configRegister(CONFIG,nrf24_CONFIG|((1<<PWR_UP)|(0<<PRIM_RX)));
+ 791              		.loc 1 258 0
+ 792 000c 0020     		movs	r0, #0
+ 793 000e 0A21     		movs	r1, #10
+ 794 0010 FFF7FEFF 		bl	nrf24_configRegister
+ 259:.\nrf24.c     **** }
+ 795              		.loc 1 259 0
+ 796 0014 80BD     		pop	{r7, pc}
+ 797              		.cfi_endproc
+ 798              	.LFE78:
+ 799              		.size	nrf24_powerUpTx, .-nrf24_powerUpTx
+ 800 0016 00BF     		.section	.text.nrf24_powerDown,"ax",%progbits
+ 801              		.align	2
+ 802              		.global	nrf24_powerDown
+ 803              		.thumb
+ 804              		.thumb_func
+ 805              		.type	nrf24_powerDown, %function
+ 806              	nrf24_powerDown:
+ 807              	.LFB79:
+ 260:.\nrf24.c     **** 
+ 261:.\nrf24.c     **** void nrf24_powerDown()
+ 262:.\nrf24.c     **** {
+ 808              		.loc 1 262 0
+ 809              		.cfi_startproc
+ 810              		@ args = 0, pretend = 0, frame = 0
+ 811              		@ frame_needed = 1, uses_anonymous_args = 0
+ 812 0000 80B5     		push	{r7, lr}
+ 813              		.cfi_def_cfa_offset 8
+ 814              		.cfi_offset 7, -8
+ 815              		.cfi_offset 14, -4
+ 816 0002 00AF     		add	r7, sp, #0
+ 817              		.cfi_def_cfa_register 7
+ 263:.\nrf24.c     ****     nrf24_ce_digitalWrite(LOW);
+ 818              		.loc 1 263 0
+ 819 0004 0020     		movs	r0, #0
+ 820 0006 FFF7FEFF 		bl	nrf24_ce_digitalWrite
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 20
+
+
+ 264:.\nrf24.c     ****     nrf24_configRegister(CONFIG,nrf24_CONFIG);
+ 821              		.loc 1 264 0
+ 822 000a 0020     		movs	r0, #0
+ 823 000c 0821     		movs	r1, #8
+ 824 000e FFF7FEFF 		bl	nrf24_configRegister
+ 265:.\nrf24.c     **** }
+ 825              		.loc 1 265 0
+ 826 0012 80BD     		pop	{r7, pc}
+ 827              		.cfi_endproc
+ 828              	.LFE79:
+ 829              		.size	nrf24_powerDown, .-nrf24_powerDown
+ 830              		.section	.text.spi_transfer,"ax",%progbits
+ 831              		.align	2
+ 832              		.global	spi_transfer
+ 833              		.thumb
+ 834              		.thumb_func
+ 835              		.type	spi_transfer, %function
+ 836              	spi_transfer:
+ 837              	.LFB80:
+ 266:.\nrf24.c     **** 
+ 267:.\nrf24.c     **** /* software spi routine */
+ 268:.\nrf24.c     **** uint8_t spi_transfer(uint8_t tx)
+ 269:.\nrf24.c     **** {
+ 838              		.loc 1 269 0
+ 839              		.cfi_startproc
+ 840              		@ args = 0, pretend = 0, frame = 16
+ 841              		@ frame_needed = 1, uses_anonymous_args = 0
+ 842 0000 80B5     		push	{r7, lr}
+ 843              		.cfi_def_cfa_offset 8
+ 844              		.cfi_offset 7, -8
+ 845              		.cfi_offset 14, -4
+ 846 0002 84B0     		sub	sp, sp, #16
+ 847              		.cfi_def_cfa_offset 24
+ 848 0004 00AF     		add	r7, sp, #0
+ 849              		.cfi_def_cfa_register 7
+ 850 0006 0346     		mov	r3, r0
+ 851 0008 FB71     		strb	r3, [r7, #7]
+ 270:.\nrf24.c     ****     uint8_t i = 0;
+ 852              		.loc 1 270 0
+ 853 000a 0023     		movs	r3, #0
+ 854 000c FB73     		strb	r3, [r7, #15]
+ 271:.\nrf24.c     ****     uint8_t rx = 0;    
+ 855              		.loc 1 271 0
+ 856 000e 0023     		movs	r3, #0
+ 857 0010 BB73     		strb	r3, [r7, #14]
+ 272:.\nrf24.c     **** 
+ 273:.\nrf24.c     ****     nrf24_sck_digitalWrite(LOW);
+ 858              		.loc 1 273 0
+ 859 0012 0020     		movs	r0, #0
+ 860 0014 FFF7FEFF 		bl	nrf24_sck_digitalWrite
+ 274:.\nrf24.c     **** 
+ 275:.\nrf24.c     ****     for(i=0;i<8;i++)
+ 861              		.loc 1 275 0
+ 862 0018 0023     		movs	r3, #0
+ 863 001a FB73     		strb	r3, [r7, #15]
+ 864 001c 25E0     		b	.L39
+ 865              	.L43:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 21
+
+
+ 276:.\nrf24.c     ****     {
+ 277:.\nrf24.c     **** 
+ 278:.\nrf24.c     ****         if(tx & (1<<(7-i)))
+ 866              		.loc 1 278 0
+ 867 001e FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 868 0020 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 869 0022 C3F10703 		rsb	r3, r3, #7
+ 870 0026 42FA03F3 		asr	r3, r2, r3
+ 871 002a 03F00103 		and	r3, r3, #1
+ 872 002e 002B     		cmp	r3, #0
+ 873 0030 03D0     		beq	.L40
+ 279:.\nrf24.c     ****         {
+ 280:.\nrf24.c     ****             nrf24_mosi_digitalWrite(HIGH);            
+ 874              		.loc 1 280 0
+ 875 0032 0120     		movs	r0, #1
+ 876 0034 FFF7FEFF 		bl	nrf24_mosi_digitalWrite
+ 877 0038 02E0     		b	.L41
+ 878              	.L40:
+ 281:.\nrf24.c     ****         }
+ 282:.\nrf24.c     ****         else
+ 283:.\nrf24.c     ****         {
+ 284:.\nrf24.c     ****             nrf24_mosi_digitalWrite(LOW);
+ 879              		.loc 1 284 0
+ 880 003a 0020     		movs	r0, #0
+ 881 003c FFF7FEFF 		bl	nrf24_mosi_digitalWrite
+ 882              	.L41:
+ 285:.\nrf24.c     ****         }
+ 286:.\nrf24.c     **** 
+ 287:.\nrf24.c     ****         nrf24_sck_digitalWrite(HIGH);        
+ 883              		.loc 1 287 0
+ 884 0040 0120     		movs	r0, #1
+ 885 0042 FFF7FEFF 		bl	nrf24_sck_digitalWrite
+ 288:.\nrf24.c     **** 
+ 289:.\nrf24.c     ****         rx = rx << 1;
+ 886              		.loc 1 289 0
+ 887 0046 BB7B     		ldrb	r3, [r7, #14]
+ 888 0048 5B00     		lsls	r3, r3, #1
+ 889 004a BB73     		strb	r3, [r7, #14]
+ 290:.\nrf24.c     ****         if(nrf24_miso_digitalRead())
+ 890              		.loc 1 290 0
+ 891 004c FFF7FEFF 		bl	nrf24_miso_digitalRead
+ 892 0050 0346     		mov	r3, r0
+ 893 0052 002B     		cmp	r3, #0
+ 894 0054 03D0     		beq	.L42
+ 291:.\nrf24.c     ****         {
+ 292:.\nrf24.c     ****             rx |= 0x01;
+ 895              		.loc 1 292 0
+ 896 0056 BB7B     		ldrb	r3, [r7, #14]
+ 897 0058 43F00103 		orr	r3, r3, #1
+ 898 005c BB73     		strb	r3, [r7, #14]
+ 899              	.L42:
+ 293:.\nrf24.c     ****         }
+ 294:.\nrf24.c     **** 
+ 295:.\nrf24.c     ****         nrf24_sck_digitalWrite(LOW);                
+ 900              		.loc 1 295 0 discriminator 2
+ 901 005e 0020     		movs	r0, #0
+ 902 0060 FFF7FEFF 		bl	nrf24_sck_digitalWrite
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 22
+
+
+ 275:.\nrf24.c     ****     {
+ 903              		.loc 1 275 0 discriminator 2
+ 904 0064 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 905 0066 0133     		adds	r3, r3, #1
+ 906 0068 FB73     		strb	r3, [r7, #15]
+ 907              	.L39:
+ 275:.\nrf24.c     ****     {
+ 908              		.loc 1 275 0 is_stmt 0 discriminator 1
+ 909 006a FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 910 006c 072B     		cmp	r3, #7
+ 911 006e D6D9     		bls	.L43
+ 296:.\nrf24.c     **** 
+ 297:.\nrf24.c     ****     }
+ 298:.\nrf24.c     ****     
+ 299:.\nrf24.c     **** 
+ 300:.\nrf24.c     ****     return rx;
+ 912              		.loc 1 300 0 is_stmt 1
+ 913 0070 BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+ 301:.\nrf24.c     **** }
+ 914              		.loc 1 301 0
+ 915 0072 1846     		mov	r0, r3
+ 916 0074 1037     		adds	r7, r7, #16
+ 917              		.cfi_def_cfa_offset 8
+ 918 0076 BD46     		mov	sp, r7
+ 919              		.cfi_def_cfa_register 13
+ 920              		@ sp needed
+ 921 0078 80BD     		pop	{r7, pc}
+ 922              		.cfi_endproc
+ 923              	.LFE80:
+ 924              		.size	spi_transfer, .-spi_transfer
+ 925 007a 00BF     		.section	.text.nrf24_transferSync,"ax",%progbits
+ 926              		.align	2
+ 927              		.global	nrf24_transferSync
+ 928              		.thumb
+ 929              		.thumb_func
+ 930              		.type	nrf24_transferSync, %function
+ 931              	nrf24_transferSync:
+ 932              	.LFB81:
+ 302:.\nrf24.c     **** 
+ 303:.\nrf24.c     **** /* send and receive multiple bytes over SPI */
+ 304:.\nrf24.c     **** void nrf24_transferSync(uint8_t* dataout,uint8_t* datain,uint8_t len)
+ 305:.\nrf24.c     **** {
+ 933              		.loc 1 305 0
+ 934              		.cfi_startproc
+ 935              		@ args = 0, pretend = 0, frame = 24
+ 936              		@ frame_needed = 1, uses_anonymous_args = 0
+ 937 0000 90B5     		push	{r4, r7, lr}
+ 938              		.cfi_def_cfa_offset 12
+ 939              		.cfi_offset 4, -12
+ 940              		.cfi_offset 7, -8
+ 941              		.cfi_offset 14, -4
+ 942 0002 87B0     		sub	sp, sp, #28
+ 943              		.cfi_def_cfa_offset 40
+ 944 0004 00AF     		add	r7, sp, #0
+ 945              		.cfi_def_cfa_register 7
+ 946 0006 F860     		str	r0, [r7, #12]
+ 947 0008 B960     		str	r1, [r7, #8]
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 23
+
+
+ 948 000a 1346     		mov	r3, r2
+ 949 000c FB71     		strb	r3, [r7, #7]
+ 306:.\nrf24.c     ****     uint8_t i;
+ 307:.\nrf24.c     **** 
+ 308:.\nrf24.c     ****     for(i=0;i<len;i++)
+ 950              		.loc 1 308 0
+ 951 000e 0023     		movs	r3, #0
+ 952 0010 FB75     		strb	r3, [r7, #23]
+ 953 0012 0EE0     		b	.L46
+ 954              	.L47:
+ 309:.\nrf24.c     ****     {
+ 310:.\nrf24.c     ****         datain[i] = spi_transfer(dataout[i]);
+ 955              		.loc 1 310 0 discriminator 3
+ 956 0014 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 957 0016 BA68     		ldr	r2, [r7, #8]
+ 958 0018 D418     		adds	r4, r2, r3
+ 959 001a FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 960 001c FA68     		ldr	r2, [r7, #12]
+ 961 001e 1344     		add	r3, r3, r2
+ 962 0020 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 963 0022 1846     		mov	r0, r3
+ 964 0024 FFF7FEFF 		bl	spi_transfer
+ 965 0028 0346     		mov	r3, r0
+ 966 002a 2370     		strb	r3, [r4]
+ 308:.\nrf24.c     ****     {
+ 967              		.loc 1 308 0 discriminator 3
+ 968 002c FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 969 002e 0133     		adds	r3, r3, #1
+ 970 0030 FB75     		strb	r3, [r7, #23]
+ 971              	.L46:
+ 308:.\nrf24.c     ****     {
+ 972              		.loc 1 308 0 is_stmt 0 discriminator 1
+ 973 0032 FA7D     		ldrb	r2, [r7, #23]	@ zero_extendqisi2
+ 974 0034 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 975 0036 9A42     		cmp	r2, r3
+ 976 0038 ECD3     		bcc	.L47
+ 311:.\nrf24.c     ****     }
+ 312:.\nrf24.c     **** 
+ 313:.\nrf24.c     **** }
+ 977              		.loc 1 313 0 is_stmt 1
+ 978 003a 1C37     		adds	r7, r7, #28
+ 979              		.cfi_def_cfa_offset 12
+ 980 003c BD46     		mov	sp, r7
+ 981              		.cfi_def_cfa_register 13
+ 982              		@ sp needed
+ 983 003e 90BD     		pop	{r4, r7, pc}
+ 984              		.cfi_endproc
+ 985              	.LFE81:
+ 986              		.size	nrf24_transferSync, .-nrf24_transferSync
+ 987              		.section	.text.nrf24_transmitSync,"ax",%progbits
+ 988              		.align	2
+ 989              		.global	nrf24_transmitSync
+ 990              		.thumb
+ 991              		.thumb_func
+ 992              		.type	nrf24_transmitSync, %function
+ 993              	nrf24_transmitSync:
+ 994              	.LFB82:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 24
+
+
+ 314:.\nrf24.c     **** 
+ 315:.\nrf24.c     **** /* send multiple bytes over SPI */
+ 316:.\nrf24.c     **** void nrf24_transmitSync(uint8_t* dataout,uint8_t len)
+ 317:.\nrf24.c     **** {
+ 995              		.loc 1 317 0
+ 996              		.cfi_startproc
+ 997              		@ args = 0, pretend = 0, frame = 16
+ 998              		@ frame_needed = 1, uses_anonymous_args = 0
+ 999 0000 80B5     		push	{r7, lr}
+ 1000              		.cfi_def_cfa_offset 8
+ 1001              		.cfi_offset 7, -8
+ 1002              		.cfi_offset 14, -4
+ 1003 0002 84B0     		sub	sp, sp, #16
+ 1004              		.cfi_def_cfa_offset 24
+ 1005 0004 00AF     		add	r7, sp, #0
+ 1006              		.cfi_def_cfa_register 7
+ 1007 0006 7860     		str	r0, [r7, #4]
+ 1008 0008 0B46     		mov	r3, r1
+ 1009 000a FB70     		strb	r3, [r7, #3]
+ 318:.\nrf24.c     ****     uint8_t i;
+ 319:.\nrf24.c     ****     
+ 320:.\nrf24.c     ****     for(i=0;i<len;i++)
+ 1010              		.loc 1 320 0
+ 1011 000c 0023     		movs	r3, #0
+ 1012 000e FB73     		strb	r3, [r7, #15]
+ 1013 0010 09E0     		b	.L49
+ 1014              	.L50:
+ 321:.\nrf24.c     ****     {
+ 322:.\nrf24.c     ****         spi_transfer(dataout[i]);
+ 1015              		.loc 1 322 0 discriminator 3
+ 1016 0012 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1017 0014 7A68     		ldr	r2, [r7, #4]
+ 1018 0016 1344     		add	r3, r3, r2
+ 1019 0018 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1020 001a 1846     		mov	r0, r3
+ 1021 001c FFF7FEFF 		bl	spi_transfer
+ 320:.\nrf24.c     ****     {
+ 1022              		.loc 1 320 0 discriminator 3
+ 1023 0020 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 1024 0022 0133     		adds	r3, r3, #1
+ 1025 0024 FB73     		strb	r3, [r7, #15]
+ 1026              	.L49:
+ 320:.\nrf24.c     ****     {
+ 1027              		.loc 1 320 0 is_stmt 0 discriminator 1
+ 1028 0026 FA7B     		ldrb	r2, [r7, #15]	@ zero_extendqisi2
+ 1029 0028 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 1030 002a 9A42     		cmp	r2, r3
+ 1031 002c F1D3     		bcc	.L50
+ 323:.\nrf24.c     ****     }
+ 324:.\nrf24.c     **** 
+ 325:.\nrf24.c     **** }
+ 1032              		.loc 1 325 0 is_stmt 1
+ 1033 002e 1037     		adds	r7, r7, #16
+ 1034              		.cfi_def_cfa_offset 8
+ 1035 0030 BD46     		mov	sp, r7
+ 1036              		.cfi_def_cfa_register 13
+ 1037              		@ sp needed
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 25
+
+
+ 1038 0032 80BD     		pop	{r7, pc}
+ 1039              		.cfi_endproc
+ 1040              	.LFE82:
+ 1041              		.size	nrf24_transmitSync, .-nrf24_transmitSync
+ 1042              		.section	.text.nrf24_configRegister,"ax",%progbits
+ 1043              		.align	2
+ 1044              		.global	nrf24_configRegister
+ 1045              		.thumb
+ 1046              		.thumb_func
+ 1047              		.type	nrf24_configRegister, %function
+ 1048              	nrf24_configRegister:
+ 1049              	.LFB83:
+ 326:.\nrf24.c     **** 
+ 327:.\nrf24.c     **** /* Clocks only one byte into the given nrf24 register */
+ 328:.\nrf24.c     **** void nrf24_configRegister(uint8_t reg, uint8_t value)
+ 329:.\nrf24.c     **** {
+ 1050              		.loc 1 329 0
+ 1051              		.cfi_startproc
+ 1052              		@ args = 0, pretend = 0, frame = 8
+ 1053              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1054 0000 80B5     		push	{r7, lr}
+ 1055              		.cfi_def_cfa_offset 8
+ 1056              		.cfi_offset 7, -8
+ 1057              		.cfi_offset 14, -4
+ 1058 0002 82B0     		sub	sp, sp, #8
+ 1059              		.cfi_def_cfa_offset 16
+ 1060 0004 00AF     		add	r7, sp, #0
+ 1061              		.cfi_def_cfa_register 7
+ 1062 0006 0346     		mov	r3, r0
+ 1063 0008 0A46     		mov	r2, r1
+ 1064 000a FB71     		strb	r3, [r7, #7]
+ 1065 000c 1346     		mov	r3, r2
+ 1066 000e BB71     		strb	r3, [r7, #6]
+ 330:.\nrf24.c     ****     nrf24_csn_digitalWrite(LOW);
+ 1067              		.loc 1 330 0
+ 1068 0010 0020     		movs	r0, #0
+ 1069 0012 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 331:.\nrf24.c     ****     spi_transfer(W_REGISTER | (REGISTER_MASK & reg));
+ 1070              		.loc 1 331 0
+ 1071 0016 FB79     		ldrb	r3, [r7, #7]
+ 1072 0018 03F01F03 		and	r3, r3, #31
+ 1073 001c DBB2     		uxtb	r3, r3
+ 1074 001e 43F02003 		orr	r3, r3, #32
+ 1075 0022 DBB2     		uxtb	r3, r3
+ 1076 0024 1846     		mov	r0, r3
+ 1077 0026 FFF7FEFF 		bl	spi_transfer
+ 332:.\nrf24.c     ****     spi_transfer(value);
+ 1078              		.loc 1 332 0
+ 1079 002a BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1080 002c 1846     		mov	r0, r3
+ 1081 002e FFF7FEFF 		bl	spi_transfer
+ 333:.\nrf24.c     ****     nrf24_csn_digitalWrite(HIGH);
+ 1082              		.loc 1 333 0
+ 1083 0032 0120     		movs	r0, #1
+ 1084 0034 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 334:.\nrf24.c     **** }
+ 1085              		.loc 1 334 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 26
+
+
+ 1086 0038 0837     		adds	r7, r7, #8
+ 1087              		.cfi_def_cfa_offset 8
+ 1088 003a BD46     		mov	sp, r7
+ 1089              		.cfi_def_cfa_register 13
+ 1090              		@ sp needed
+ 1091 003c 80BD     		pop	{r7, pc}
+ 1092              		.cfi_endproc
+ 1093              	.LFE83:
+ 1094              		.size	nrf24_configRegister, .-nrf24_configRegister
+ 1095 003e 00BF     		.section	.text.nrf24_readRegister,"ax",%progbits
+ 1096              		.align	2
+ 1097              		.global	nrf24_readRegister
+ 1098              		.thumb
+ 1099              		.thumb_func
+ 1100              		.type	nrf24_readRegister, %function
+ 1101              	nrf24_readRegister:
+ 1102              	.LFB84:
+ 335:.\nrf24.c     **** 
+ 336:.\nrf24.c     **** /* Read single register from nrf24 */
+ 337:.\nrf24.c     **** void nrf24_readRegister(uint8_t reg, uint8_t* value, uint8_t len)
+ 338:.\nrf24.c     **** {
+ 1103              		.loc 1 338 0
+ 1104              		.cfi_startproc
+ 1105              		@ args = 0, pretend = 0, frame = 8
+ 1106              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1107 0000 80B5     		push	{r7, lr}
+ 1108              		.cfi_def_cfa_offset 8
+ 1109              		.cfi_offset 7, -8
+ 1110              		.cfi_offset 14, -4
+ 1111 0002 82B0     		sub	sp, sp, #8
+ 1112              		.cfi_def_cfa_offset 16
+ 1113 0004 00AF     		add	r7, sp, #0
+ 1114              		.cfi_def_cfa_register 7
+ 1115 0006 0346     		mov	r3, r0
+ 1116 0008 3960     		str	r1, [r7]
+ 1117 000a FB71     		strb	r3, [r7, #7]
+ 1118 000c 1346     		mov	r3, r2
+ 1119 000e BB71     		strb	r3, [r7, #6]
+ 339:.\nrf24.c     ****     nrf24_csn_digitalWrite(LOW);
+ 1120              		.loc 1 339 0
+ 1121 0010 0020     		movs	r0, #0
+ 1122 0012 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 340:.\nrf24.c     ****     spi_transfer(R_REGISTER | (REGISTER_MASK & reg));
+ 1123              		.loc 1 340 0
+ 1124 0016 FB79     		ldrb	r3, [r7, #7]
+ 1125 0018 03F01F03 		and	r3, r3, #31
+ 1126 001c DBB2     		uxtb	r3, r3
+ 1127 001e 1846     		mov	r0, r3
+ 1128 0020 FFF7FEFF 		bl	spi_transfer
+ 341:.\nrf24.c     ****     nrf24_transferSync(value,value,len);
+ 1129              		.loc 1 341 0
+ 1130 0024 BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1131 0026 3868     		ldr	r0, [r7]
+ 1132 0028 3968     		ldr	r1, [r7]
+ 1133 002a 1A46     		mov	r2, r3
+ 1134 002c FFF7FEFF 		bl	nrf24_transferSync
+ 342:.\nrf24.c     ****     nrf24_csn_digitalWrite(HIGH);
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 27
+
+
+ 1135              		.loc 1 342 0
+ 1136 0030 0120     		movs	r0, #1
+ 1137 0032 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 343:.\nrf24.c     **** }
+ 1138              		.loc 1 343 0
+ 1139 0036 0837     		adds	r7, r7, #8
+ 1140              		.cfi_def_cfa_offset 8
+ 1141 0038 BD46     		mov	sp, r7
+ 1142              		.cfi_def_cfa_register 13
+ 1143              		@ sp needed
+ 1144 003a 80BD     		pop	{r7, pc}
+ 1145              		.cfi_endproc
+ 1146              	.LFE84:
+ 1147              		.size	nrf24_readRegister, .-nrf24_readRegister
+ 1148              		.section	.text.nrf24_writeRegister,"ax",%progbits
+ 1149              		.align	2
+ 1150              		.global	nrf24_writeRegister
+ 1151              		.thumb
+ 1152              		.thumb_func
+ 1153              		.type	nrf24_writeRegister, %function
+ 1154              	nrf24_writeRegister:
+ 1155              	.LFB85:
+ 344:.\nrf24.c     **** 
+ 345:.\nrf24.c     **** /* Write to a single register of nrf24 */
+ 346:.\nrf24.c     **** void nrf24_writeRegister(uint8_t reg, uint8_t* value, uint8_t len) 
+ 347:.\nrf24.c     **** {
+ 1156              		.loc 1 347 0
+ 1157              		.cfi_startproc
+ 1158              		@ args = 0, pretend = 0, frame = 8
+ 1159              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1160 0000 80B5     		push	{r7, lr}
+ 1161              		.cfi_def_cfa_offset 8
+ 1162              		.cfi_offset 7, -8
+ 1163              		.cfi_offset 14, -4
+ 1164 0002 82B0     		sub	sp, sp, #8
+ 1165              		.cfi_def_cfa_offset 16
+ 1166 0004 00AF     		add	r7, sp, #0
+ 1167              		.cfi_def_cfa_register 7
+ 1168 0006 0346     		mov	r3, r0
+ 1169 0008 3960     		str	r1, [r7]
+ 1170 000a FB71     		strb	r3, [r7, #7]
+ 1171 000c 1346     		mov	r3, r2
+ 1172 000e BB71     		strb	r3, [r7, #6]
+ 348:.\nrf24.c     ****     nrf24_csn_digitalWrite(LOW);
+ 1173              		.loc 1 348 0
+ 1174 0010 0020     		movs	r0, #0
+ 1175 0012 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 349:.\nrf24.c     ****     spi_transfer(W_REGISTER | (REGISTER_MASK & reg));
+ 1176              		.loc 1 349 0
+ 1177 0016 FB79     		ldrb	r3, [r7, #7]
+ 1178 0018 03F01F03 		and	r3, r3, #31
+ 1179 001c DBB2     		uxtb	r3, r3
+ 1180 001e 43F02003 		orr	r3, r3, #32
+ 1181 0022 DBB2     		uxtb	r3, r3
+ 1182 0024 1846     		mov	r0, r3
+ 1183 0026 FFF7FEFF 		bl	spi_transfer
+ 350:.\nrf24.c     ****     nrf24_transmitSync(value,len);
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 28
+
+
+ 1184              		.loc 1 350 0
+ 1185 002a BB79     		ldrb	r3, [r7, #6]	@ zero_extendqisi2
+ 1186 002c 3868     		ldr	r0, [r7]
+ 1187 002e 1946     		mov	r1, r3
+ 1188 0030 FFF7FEFF 		bl	nrf24_transmitSync
+ 351:.\nrf24.c     ****     nrf24_csn_digitalWrite(HIGH);
+ 1189              		.loc 1 351 0
+ 1190 0034 0120     		movs	r0, #1
+ 1191 0036 FFF7FEFF 		bl	nrf24_csn_digitalWrite
+ 352:.\nrf24.c     **** }
+ 1192              		.loc 1 352 0
+ 1193 003a 0837     		adds	r7, r7, #8
+ 1194              		.cfi_def_cfa_offset 8
+ 1195 003c BD46     		mov	sp, r7
+ 1196              		.cfi_def_cfa_register 13
+ 1197              		@ sp needed
+ 1198 003e 80BD     		pop	{r7, pc}
+ 1199              		.cfi_endproc
+ 1200              	.LFE85:
+ 1201              		.size	nrf24_writeRegister, .-nrf24_writeRegister
+ 1202              		.section	.text.nrf24_ce_digitalWrite,"ax",%progbits
+ 1203              		.align	2
+ 1204              		.global	nrf24_ce_digitalWrite
+ 1205              		.thumb
+ 1206              		.thumb_func
+ 1207              		.type	nrf24_ce_digitalWrite, %function
+ 1208              	nrf24_ce_digitalWrite:
+ 1209              	.LFB86:
+ 353:.\nrf24.c     **** 
+ 354:.\nrf24.c     **** //Hardware specific functions
+ 355:.\nrf24.c     **** void nrf24_ce_digitalWrite(uint8_t state)
+ 356:.\nrf24.c     **** {
+ 1210              		.loc 1 356 0
+ 1211              		.cfi_startproc
+ 1212              		@ args = 0, pretend = 0, frame = 8
+ 1213              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1214 0000 80B5     		push	{r7, lr}
+ 1215              		.cfi_def_cfa_offset 8
+ 1216              		.cfi_offset 7, -8
+ 1217              		.cfi_offset 14, -4
+ 1218 0002 82B0     		sub	sp, sp, #8
+ 1219              		.cfi_def_cfa_offset 16
+ 1220 0004 00AF     		add	r7, sp, #0
+ 1221              		.cfi_def_cfa_register 7
+ 1222 0006 0346     		mov	r3, r0
+ 1223 0008 FB71     		strb	r3, [r7, #7]
+ 357:.\nrf24.c     ****     CE_Funk_Write(state);
+ 1224              		.loc 1 357 0
+ 1225 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1226 000c 1846     		mov	r0, r3
+ 1227 000e FFF7FEFF 		bl	CE_Funk_Write
+ 358:.\nrf24.c     **** }
+ 1228              		.loc 1 358 0
+ 1229 0012 0837     		adds	r7, r7, #8
+ 1230              		.cfi_def_cfa_offset 8
+ 1231 0014 BD46     		mov	sp, r7
+ 1232              		.cfi_def_cfa_register 13
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 29
+
+
+ 1233              		@ sp needed
+ 1234 0016 80BD     		pop	{r7, pc}
+ 1235              		.cfi_endproc
+ 1236              	.LFE86:
+ 1237              		.size	nrf24_ce_digitalWrite, .-nrf24_ce_digitalWrite
+ 1238              		.section	.text.nrf24_csn_digitalWrite,"ax",%progbits
+ 1239              		.align	2
+ 1240              		.global	nrf24_csn_digitalWrite
+ 1241              		.thumb
+ 1242              		.thumb_func
+ 1243              		.type	nrf24_csn_digitalWrite, %function
+ 1244              	nrf24_csn_digitalWrite:
+ 1245              	.LFB87:
+ 359:.\nrf24.c     **** 
+ 360:.\nrf24.c     **** void nrf24_csn_digitalWrite(uint8_t state)
+ 361:.\nrf24.c     **** {
+ 1246              		.loc 1 361 0
+ 1247              		.cfi_startproc
+ 1248              		@ args = 0, pretend = 0, frame = 8
+ 1249              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1250 0000 80B5     		push	{r7, lr}
+ 1251              		.cfi_def_cfa_offset 8
+ 1252              		.cfi_offset 7, -8
+ 1253              		.cfi_offset 14, -4
+ 1254 0002 82B0     		sub	sp, sp, #8
+ 1255              		.cfi_def_cfa_offset 16
+ 1256 0004 00AF     		add	r7, sp, #0
+ 1257              		.cfi_def_cfa_register 7
+ 1258 0006 0346     		mov	r3, r0
+ 1259 0008 FB71     		strb	r3, [r7, #7]
+ 362:.\nrf24.c     ****     SS_Funk_Write(state);
+ 1260              		.loc 1 362 0
+ 1261 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1262 000c 1846     		mov	r0, r3
+ 1263 000e FFF7FEFF 		bl	SS_Funk_Write
+ 363:.\nrf24.c     **** }
+ 1264              		.loc 1 363 0
+ 1265 0012 0837     		adds	r7, r7, #8
+ 1266              		.cfi_def_cfa_offset 8
+ 1267 0014 BD46     		mov	sp, r7
+ 1268              		.cfi_def_cfa_register 13
+ 1269              		@ sp needed
+ 1270 0016 80BD     		pop	{r7, pc}
+ 1271              		.cfi_endproc
+ 1272              	.LFE87:
+ 1273              		.size	nrf24_csn_digitalWrite, .-nrf24_csn_digitalWrite
+ 1274              		.section	.text.nrf24_sck_digitalWrite,"ax",%progbits
+ 1275              		.align	2
+ 1276              		.global	nrf24_sck_digitalWrite
+ 1277              		.thumb
+ 1278              		.thumb_func
+ 1279              		.type	nrf24_sck_digitalWrite, %function
+ 1280              	nrf24_sck_digitalWrite:
+ 1281              	.LFB88:
+ 364:.\nrf24.c     **** 
+ 365:.\nrf24.c     **** void nrf24_sck_digitalWrite(uint8_t state)
+ 366:.\nrf24.c     **** {
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 30
+
+
+ 1282              		.loc 1 366 0
+ 1283              		.cfi_startproc
+ 1284              		@ args = 0, pretend = 0, frame = 8
+ 1285              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1286 0000 80B5     		push	{r7, lr}
+ 1287              		.cfi_def_cfa_offset 8
+ 1288              		.cfi_offset 7, -8
+ 1289              		.cfi_offset 14, -4
+ 1290 0002 82B0     		sub	sp, sp, #8
+ 1291              		.cfi_def_cfa_offset 16
+ 1292 0004 00AF     		add	r7, sp, #0
+ 1293              		.cfi_def_cfa_register 7
+ 1294 0006 0346     		mov	r3, r0
+ 1295 0008 FB71     		strb	r3, [r7, #7]
+ 367:.\nrf24.c     ****     SCLK_Funk_Write(state);
+ 1296              		.loc 1 367 0
+ 1297 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1298 000c 1846     		mov	r0, r3
+ 1299 000e FFF7FEFF 		bl	SCLK_Funk_Write
+ 368:.\nrf24.c     **** }
+ 1300              		.loc 1 368 0
+ 1301 0012 0837     		adds	r7, r7, #8
+ 1302              		.cfi_def_cfa_offset 8
+ 1303 0014 BD46     		mov	sp, r7
+ 1304              		.cfi_def_cfa_register 13
+ 1305              		@ sp needed
+ 1306 0016 80BD     		pop	{r7, pc}
+ 1307              		.cfi_endproc
+ 1308              	.LFE88:
+ 1309              		.size	nrf24_sck_digitalWrite, .-nrf24_sck_digitalWrite
+ 1310              		.section	.text.nrf24_mosi_digitalWrite,"ax",%progbits
+ 1311              		.align	2
+ 1312              		.global	nrf24_mosi_digitalWrite
+ 1313              		.thumb
+ 1314              		.thumb_func
+ 1315              		.type	nrf24_mosi_digitalWrite, %function
+ 1316              	nrf24_mosi_digitalWrite:
+ 1317              	.LFB89:
+ 369:.\nrf24.c     **** 
+ 370:.\nrf24.c     **** void nrf24_mosi_digitalWrite(uint8_t state)
+ 371:.\nrf24.c     **** {
+ 1318              		.loc 1 371 0
+ 1319              		.cfi_startproc
+ 1320              		@ args = 0, pretend = 0, frame = 8
+ 1321              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1322 0000 80B5     		push	{r7, lr}
+ 1323              		.cfi_def_cfa_offset 8
+ 1324              		.cfi_offset 7, -8
+ 1325              		.cfi_offset 14, -4
+ 1326 0002 82B0     		sub	sp, sp, #8
+ 1327              		.cfi_def_cfa_offset 16
+ 1328 0004 00AF     		add	r7, sp, #0
+ 1329              		.cfi_def_cfa_register 7
+ 1330 0006 0346     		mov	r3, r0
+ 1331 0008 FB71     		strb	r3, [r7, #7]
+ 372:.\nrf24.c     ****     MOSI_Funk_Write(state);
+ 1332              		.loc 1 372 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 31
+
+
+ 1333 000a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 1334 000c 1846     		mov	r0, r3
+ 1335 000e FFF7FEFF 		bl	MOSI_Funk_Write
+ 373:.\nrf24.c     **** }
+ 1336              		.loc 1 373 0
+ 1337 0012 0837     		adds	r7, r7, #8
+ 1338              		.cfi_def_cfa_offset 8
+ 1339 0014 BD46     		mov	sp, r7
+ 1340              		.cfi_def_cfa_register 13
+ 1341              		@ sp needed
+ 1342 0016 80BD     		pop	{r7, pc}
+ 1343              		.cfi_endproc
+ 1344              	.LFE89:
+ 1345              		.size	nrf24_mosi_digitalWrite, .-nrf24_mosi_digitalWrite
+ 1346              		.section	.text.nrf24_miso_digitalRead,"ax",%progbits
+ 1347              		.align	2
+ 1348              		.global	nrf24_miso_digitalRead
+ 1349              		.thumb
+ 1350              		.thumb_func
+ 1351              		.type	nrf24_miso_digitalRead, %function
+ 1352              	nrf24_miso_digitalRead:
+ 1353              	.LFB90:
+ 374:.\nrf24.c     **** 
+ 375:.\nrf24.c     **** uint8_t nrf24_miso_digitalRead()
+ 376:.\nrf24.c     **** {
+ 1354              		.loc 1 376 0
+ 1355              		.cfi_startproc
+ 1356              		@ args = 0, pretend = 0, frame = 0
+ 1357              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1358 0000 80B5     		push	{r7, lr}
+ 1359              		.cfi_def_cfa_offset 8
+ 1360              		.cfi_offset 7, -8
+ 1361              		.cfi_offset 14, -4
+ 1362 0002 00AF     		add	r7, sp, #0
+ 1363              		.cfi_def_cfa_register 7
+ 377:.\nrf24.c     ****     return MISO_Funk_Read();
+ 1364              		.loc 1 377 0
+ 1365 0004 FFF7FEFF 		bl	MISO_Funk_Read
+ 1366 0008 0346     		mov	r3, r0
+ 378:.\nrf24.c     **** }
+ 1367              		.loc 1 378 0
+ 1368 000a 1846     		mov	r0, r3
+ 1369 000c 80BD     		pop	{r7, pc}
+ 1370              		.cfi_endproc
+ 1371              	.LFE90:
+ 1372              		.size	nrf24_miso_digitalRead, .-nrf24_miso_digitalRead
+ 1373 000e 00BF     		.text
+ 1374              	.Letext0:
+ 1375              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 1376              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 1377              		.file 4 "Generated_Source\\PSoC5/core_cm3.h"
+ 1378              		.section	.debug_info,"",%progbits
+ 1379              	.Ldebug_info0:
+ 1380 0000 4B050000 		.4byte	0x54b
+ 1381 0004 0400     		.2byte	0x4
+ 1382 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1383 000a 04       		.byte	0x4
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 32
+
+
+ 1384 000b 01       		.uleb128 0x1
+ 1385 000c 19010000 		.4byte	.LASF55
+ 1386 0010 01       		.byte	0x1
+ 1387 0011 F5020000 		.4byte	.LASF56
+ 1388 0015 99000000 		.4byte	.LASF57
+ 1389 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1390 001d 00000000 		.4byte	0
+ 1391 0021 00000000 		.4byte	.Ldebug_line0
+ 1392 0025 02       		.uleb128 0x2
+ 1393 0026 01       		.byte	0x1
+ 1394 0027 06       		.byte	0x6
+ 1395 0028 5B020000 		.4byte	.LASF0
+ 1396 002c 03       		.uleb128 0x3
+ 1397 002d 9B020000 		.4byte	.LASF4
+ 1398 0031 02       		.byte	0x2
+ 1399 0032 1D       		.byte	0x1d
+ 1400 0033 37000000 		.4byte	0x37
+ 1401 0037 02       		.uleb128 0x2
+ 1402 0038 01       		.byte	0x1
+ 1403 0039 08       		.byte	0x8
+ 1404 003a 1B020000 		.4byte	.LASF1
+ 1405 003e 02       		.uleb128 0x2
+ 1406 003f 02       		.byte	0x2
+ 1407 0040 05       		.byte	0x5
+ 1408 0041 26000000 		.4byte	.LASF2
+ 1409 0045 02       		.uleb128 0x2
+ 1410 0046 02       		.byte	0x2
+ 1411 0047 07       		.byte	0x7
+ 1412 0048 C5020000 		.4byte	.LASF3
+ 1413 004c 03       		.uleb128 0x3
+ 1414 004d 93030000 		.4byte	.LASF5
+ 1415 0051 02       		.byte	0x2
+ 1416 0052 3F       		.byte	0x3f
+ 1417 0053 57000000 		.4byte	0x57
+ 1418 0057 02       		.uleb128 0x2
+ 1419 0058 04       		.byte	0x4
+ 1420 0059 05       		.byte	0x5
+ 1421 005a E4020000 		.4byte	.LASF6
+ 1422 005e 02       		.uleb128 0x2
+ 1423 005f 04       		.byte	0x4
+ 1424 0060 07       		.byte	0x7
+ 1425 0061 36030000 		.4byte	.LASF7
+ 1426 0065 02       		.uleb128 0x2
+ 1427 0066 08       		.byte	0x8
+ 1428 0067 05       		.byte	0x5
+ 1429 0068 0B010000 		.4byte	.LASF8
+ 1430 006c 02       		.uleb128 0x2
+ 1431 006d 08       		.byte	0x8
+ 1432 006e 07       		.byte	0x7
+ 1433 006f 67020000 		.4byte	.LASF9
+ 1434 0073 04       		.uleb128 0x4
+ 1435 0074 04       		.byte	0x4
+ 1436 0075 05       		.byte	0x5
+ 1437 0076 696E7400 		.ascii	"int\000"
+ 1438 007a 02       		.uleb128 0x2
+ 1439 007b 04       		.byte	0x4
+ 1440 007c 07       		.byte	0x7
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 33
+
+
+ 1441 007d 7E020000 		.4byte	.LASF10
+ 1442 0081 03       		.uleb128 0x3
+ 1443 0082 5A000000 		.4byte	.LASF11
+ 1444 0086 03       		.byte	0x3
+ 1445 0087 15       		.byte	0x15
+ 1446 0088 2C000000 		.4byte	0x2c
+ 1447 008c 03       		.uleb128 0x3
+ 1448 008d ED020000 		.4byte	.LASF12
+ 1449 0091 03       		.byte	0x3
+ 1450 0092 2C       		.byte	0x2c
+ 1451 0093 4C000000 		.4byte	0x4c
+ 1452 0097 02       		.uleb128 0x2
+ 1453 0098 04       		.byte	0x4
+ 1454 0099 04       		.byte	0x4
+ 1455 009a EF000000 		.4byte	.LASF13
+ 1456 009e 02       		.uleb128 0x2
+ 1457 009f 08       		.byte	0x8
+ 1458 00a0 04       		.byte	0x4
+ 1459 00a1 48030000 		.4byte	.LASF14
+ 1460 00a5 02       		.uleb128 0x2
+ 1461 00a6 01       		.byte	0x1
+ 1462 00a7 08       		.byte	0x8
+ 1463 00a8 DF020000 		.4byte	.LASF15
+ 1464 00ac 02       		.uleb128 0x2
+ 1465 00ad 04       		.byte	0x4
+ 1466 00ae 07       		.byte	0x7
+ 1467 00af 30000000 		.4byte	.LASF16
+ 1468 00b3 05       		.uleb128 0x5
+ 1469 00b4 39000000 		.4byte	.LASF35
+ 1470 00b8 01       		.byte	0x1
+ 1471 00b9 13       		.byte	0x13
+ 1472 00ba 00000000 		.4byte	.LFB63
+ 1473 00be 12000000 		.4byte	.LFE63-.LFB63
+ 1474 00c2 01       		.uleb128 0x1
+ 1475 00c3 9C       		.byte	0x9c
+ 1476 00c4 06       		.uleb128 0x6
+ 1477 00c5 B8020000 		.4byte	.LASF19
+ 1478 00c9 01       		.byte	0x1
+ 1479 00ca 1B       		.byte	0x1b
+ 1480 00cb 00000000 		.4byte	.LFB64
+ 1481 00cf 94000000 		.4byte	.LFE64-.LFB64
+ 1482 00d3 01       		.uleb128 0x1
+ 1483 00d4 9C       		.byte	0x9c
+ 1484 00d5 F6000000 		.4byte	0xf6
+ 1485 00d9 07       		.uleb128 0x7
+ 1486 00da 16030000 		.4byte	.LASF17
+ 1487 00de 01       		.byte	0x1
+ 1488 00df 1B       		.byte	0x1b
+ 1489 00e0 81000000 		.4byte	0x81
+ 1490 00e4 02       		.uleb128 0x2
+ 1491 00e5 91       		.byte	0x91
+ 1492 00e6 77       		.sleb128 -9
+ 1493 00e7 07       		.uleb128 0x7
+ 1494 00e8 FC010000 		.4byte	.LASF18
+ 1495 00ec 01       		.byte	0x1
+ 1496 00ed 1B       		.byte	0x1b
+ 1497 00ee 81000000 		.4byte	0x81
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 34
+
+
+ 1498 00f2 02       		.uleb128 0x2
+ 1499 00f3 91       		.byte	0x91
+ 1500 00f4 76       		.sleb128 -10
+ 1501 00f5 00       		.byte	0
+ 1502 00f6 06       		.uleb128 0x6
+ 1503 00f7 EB030000 		.4byte	.LASF20
+ 1504 00fb 01       		.byte	0x1
+ 1505 00fc 42       		.byte	0x42
+ 1506 00fd 00000000 		.4byte	.LFB65
+ 1507 0101 24000000 		.4byte	.LFE65-.LFB65
+ 1508 0105 01       		.uleb128 0x1
+ 1509 0106 9C       		.byte	0x9c
+ 1510 0107 1A010000 		.4byte	0x11a
+ 1511 010b 08       		.uleb128 0x8
+ 1512 010c 61647200 		.ascii	"adr\000"
+ 1513 0110 01       		.byte	0x1
+ 1514 0111 42       		.byte	0x42
+ 1515 0112 1A010000 		.4byte	0x11a
+ 1516 0116 02       		.uleb128 0x2
+ 1517 0117 91       		.byte	0x91
+ 1518 0118 74       		.sleb128 -12
+ 1519 0119 00       		.byte	0
+ 1520 011a 09       		.uleb128 0x9
+ 1521 011b 04       		.byte	0x4
+ 1522 011c 81000000 		.4byte	0x81
+ 1523 0120 0A       		.uleb128 0xa
+ 1524 0121 00000000 		.4byte	.LASF51
+ 1525 0125 01       		.byte	0x1
+ 1526 0126 4A       		.byte	0x4a
+ 1527 0127 81000000 		.4byte	0x81
+ 1528 012b 00000000 		.4byte	.LFB66
+ 1529 012f 18000000 		.4byte	.LFE66-.LFB66
+ 1530 0133 01       		.uleb128 0x1
+ 1531 0134 9C       		.byte	0x9c
+ 1532 0135 06       		.uleb128 0x6
+ 1533 0136 4F030000 		.4byte	.LASF21
+ 1534 013a 01       		.byte	0x1
+ 1535 013b 50       		.byte	0x50
+ 1536 013c 00000000 		.4byte	.LFB67
+ 1537 0140 22000000 		.4byte	.LFE67-.LFB67
+ 1538 0144 01       		.uleb128 0x1
+ 1539 0145 9C       		.byte	0x9c
+ 1540 0146 59010000 		.4byte	0x159
+ 1541 014a 08       		.uleb128 0x8
+ 1542 014b 61647200 		.ascii	"adr\000"
+ 1543 014f 01       		.byte	0x1
+ 1544 0150 50       		.byte	0x50
+ 1545 0151 1A010000 		.4byte	0x11a
+ 1546 0155 02       		.uleb128 0x2
+ 1547 0156 91       		.byte	0x91
+ 1548 0157 74       		.sleb128 -12
+ 1549 0158 00       		.byte	0
+ 1550 0159 0B       		.uleb128 0xb
+ 1551 015a A7010000 		.4byte	.LASF22
+ 1552 015e 01       		.byte	0x1
+ 1553 015f 59       		.byte	0x59
+ 1554 0160 81000000 		.4byte	0x81
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 35
+
+
+ 1555 0164 00000000 		.4byte	.LFB68
+ 1556 0168 34000000 		.4byte	.LFE68-.LFB68
+ 1557 016c 01       		.uleb128 0x1
+ 1558 016d 9C       		.byte	0x9c
+ 1559 016e 81010000 		.4byte	0x181
+ 1560 0172 0C       		.uleb128 0xc
+ 1561 0173 D8020000 		.4byte	.LASF24
+ 1562 0177 01       		.byte	0x1
+ 1563 0178 5C       		.byte	0x5c
+ 1564 0179 81000000 		.4byte	0x81
+ 1565 017d 02       		.uleb128 0x2
+ 1566 017e 91       		.byte	0x91
+ 1567 017f 77       		.sleb128 -9
+ 1568 0180 00       		.byte	0
+ 1569 0181 0B       		.uleb128 0xb
+ 1570 0182 D2010000 		.4byte	.LASF23
+ 1571 0186 01       		.byte	0x1
+ 1572 0187 69       		.byte	0x69
+ 1573 0188 81000000 		.4byte	0x81
+ 1574 018c 00000000 		.4byte	.LFB69
+ 1575 0190 22000000 		.4byte	.LFE69-.LFB69
+ 1576 0194 01       		.uleb128 0x1
+ 1577 0195 9C       		.byte	0x9c
+ 1578 0196 A9010000 		.4byte	0x1a9
+ 1579 019a 0C       		.uleb128 0xc
+ 1580 019b 86000000 		.4byte	.LASF25
+ 1581 019f 01       		.byte	0x1
+ 1582 01a0 6B       		.byte	0x6b
+ 1583 01a1 81000000 		.4byte	0x81
+ 1584 01a5 02       		.uleb128 0x2
+ 1585 01a6 91       		.byte	0x91
+ 1586 01a7 77       		.sleb128 -9
+ 1587 01a8 00       		.byte	0
+ 1588 01a9 0B       		.uleb128 0xb
+ 1589 01aa 07020000 		.4byte	.LASF26
+ 1590 01ae 01       		.byte	0x1
+ 1591 01af 73       		.byte	0x73
+ 1592 01b0 81000000 		.4byte	0x81
+ 1593 01b4 00000000 		.4byte	.LFB70
+ 1594 01b8 2C000000 		.4byte	.LFE70-.LFB70
+ 1595 01bc 01       		.uleb128 0x1
+ 1596 01bd 9C       		.byte	0x9c
+ 1597 01be D1010000 		.4byte	0x1d1
+ 1598 01c2 0C       		.uleb128 0xc
+ 1599 01c3 D8020000 		.4byte	.LASF24
+ 1600 01c7 01       		.byte	0x1
+ 1601 01c8 75       		.byte	0x75
+ 1602 01c9 81000000 		.4byte	0x81
+ 1603 01cd 02       		.uleb128 0x2
+ 1604 01ce 91       		.byte	0x91
+ 1605 01cf 77       		.sleb128 -9
+ 1606 01d0 00       		.byte	0
+ 1607 01d1 06       		.uleb128 0x6
+ 1608 01d2 B7010000 		.4byte	.LASF27
+ 1609 01d6 01       		.byte	0x1
+ 1610 01d7 7E       		.byte	0x7e
+ 1611 01d8 00000000 		.4byte	.LFB71
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 36
+
+
+ 1612 01dc 3C000000 		.4byte	.LFE71-.LFB71
+ 1613 01e0 01       		.uleb128 0x1
+ 1614 01e1 9C       		.byte	0x9c
+ 1615 01e2 F5010000 		.4byte	0x1f5
+ 1616 01e6 07       		.uleb128 0x7
+ 1617 01e7 1E030000 		.4byte	.LASF28
+ 1618 01eb 01       		.byte	0x1
+ 1619 01ec 7E       		.byte	0x7e
+ 1620 01ed 1A010000 		.4byte	0x11a
+ 1621 01f1 02       		.uleb128 0x2
+ 1622 01f2 91       		.byte	0x91
+ 1623 01f3 74       		.sleb128 -12
+ 1624 01f4 00       		.byte	0
+ 1625 01f5 0B       		.uleb128 0xb
+ 1626 01f6 41020000 		.4byte	.LASF29
+ 1627 01fa 01       		.byte	0x1
+ 1628 01fb 91       		.byte	0x91
+ 1629 01fc 81000000 		.4byte	0x81
+ 1630 0200 00000000 		.4byte	.LFB72
+ 1631 0204 26000000 		.4byte	.LFE72-.LFB72
+ 1632 0208 01       		.uleb128 0x1
+ 1633 0209 9C       		.byte	0x9c
+ 1634 020a 1C020000 		.4byte	0x21c
+ 1635 020e 0D       		.uleb128 0xd
+ 1636 020f 727600   		.ascii	"rv\000"
+ 1637 0212 01       		.byte	0x1
+ 1638 0213 93       		.byte	0x93
+ 1639 0214 81000000 		.4byte	0x81
+ 1640 0218 02       		.uleb128 0x2
+ 1641 0219 91       		.byte	0x91
+ 1642 021a 77       		.sleb128 -9
+ 1643 021b 00       		.byte	0
+ 1644 021c 06       		.uleb128 0x6
+ 1645 021d 15000000 		.4byte	.LASF30
+ 1646 0221 01       		.byte	0x1
+ 1647 0222 9B       		.byte	0x9b
+ 1648 0223 00000000 		.4byte	.LFB73
+ 1649 0227 54000000 		.4byte	.LFE73-.LFB73
+ 1650 022b 01       		.uleb128 0x1
+ 1651 022c 9C       		.byte	0x9c
+ 1652 022d 40020000 		.4byte	0x240
+ 1653 0231 07       		.uleb128 0x7
+ 1654 0232 54000000 		.4byte	.LASF31
+ 1655 0236 01       		.byte	0x1
+ 1656 0237 9B       		.byte	0x9b
+ 1657 0238 1A010000 		.4byte	0x11a
+ 1658 023c 02       		.uleb128 0x2
+ 1659 023d 91       		.byte	0x91
+ 1660 023e 74       		.sleb128 -12
+ 1661 023f 00       		.byte	0
+ 1662 0240 0B       		.uleb128 0xb
+ 1663 0241 8B020000 		.4byte	.LASF32
+ 1664 0245 01       		.byte	0x1
+ 1665 0246 BF       		.byte	0xbf
+ 1666 0247 81000000 		.4byte	0x81
+ 1667 024b 00000000 		.4byte	.LFB74
+ 1668 024f 26000000 		.4byte	.LFE74-.LFB74
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 37
+
+
+ 1669 0253 01       		.uleb128 0x1
+ 1670 0254 9C       		.byte	0x9c
+ 1671 0255 68020000 		.4byte	0x268
+ 1672 0259 0C       		.uleb128 0xc
+ 1673 025a D8020000 		.4byte	.LASF24
+ 1674 025e 01       		.byte	0x1
+ 1675 025f C1       		.byte	0xc1
+ 1676 0260 81000000 		.4byte	0x81
+ 1677 0264 02       		.uleb128 0x2
+ 1678 0265 91       		.byte	0x91
+ 1679 0266 77       		.sleb128 -9
+ 1680 0267 00       		.byte	0
+ 1681 0268 0B       		.uleb128 0xb
+ 1682 0269 44000000 		.4byte	.LASF33
+ 1683 026d 01       		.byte	0x1
+ 1684 026e D0       		.byte	0xd0
+ 1685 026f 81000000 		.4byte	0x81
+ 1686 0273 00000000 		.4byte	.LFB75
+ 1687 0277 26000000 		.4byte	.LFE75-.LFB75
+ 1688 027b 01       		.uleb128 0x1
+ 1689 027c 9C       		.byte	0x9c
+ 1690 027d 8F020000 		.4byte	0x28f
+ 1691 0281 0D       		.uleb128 0xd
+ 1692 0282 727600   		.ascii	"rv\000"
+ 1693 0285 01       		.byte	0x1
+ 1694 0286 D2       		.byte	0xd2
+ 1695 0287 81000000 		.4byte	0x81
+ 1696 028b 02       		.uleb128 0x2
+ 1697 028c 91       		.byte	0x91
+ 1698 028d 77       		.sleb128 -9
+ 1699 028e 00       		.byte	0
+ 1700 028f 0B       		.uleb128 0xb
+ 1701 0290 29020000 		.4byte	.LASF34
+ 1702 0294 01       		.byte	0x1
+ 1703 0295 D9       		.byte	0xd9
+ 1704 0296 81000000 		.4byte	0x81
+ 1705 029a 00000000 		.4byte	.LFB76
+ 1706 029e 34000000 		.4byte	.LFE76-.LFB76
+ 1707 02a2 01       		.uleb128 0x1
+ 1708 02a3 9C       		.byte	0x9c
+ 1709 02a4 B6020000 		.4byte	0x2b6
+ 1710 02a8 0D       		.uleb128 0xd
+ 1711 02a9 727600   		.ascii	"rv\000"
+ 1712 02ac 01       		.byte	0x1
+ 1713 02ad DB       		.byte	0xdb
+ 1714 02ae 81000000 		.4byte	0x81
+ 1715 02b2 02       		.uleb128 0x2
+ 1716 02b3 91       		.byte	0x91
+ 1717 02b4 77       		.sleb128 -9
+ 1718 02b5 00       		.byte	0
+ 1719 02b6 05       		.uleb128 0x5
+ 1720 02b7 76000000 		.4byte	.LASF36
+ 1721 02bb 01       		.byte	0x1
+ 1722 02bc F1       		.byte	0xf1
+ 1723 02bd 00000000 		.4byte	.LFB77
+ 1724 02c1 34000000 		.4byte	.LFE77-.LFB77
+ 1725 02c5 01       		.uleb128 0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 38
+
+
+ 1726 02c6 9C       		.byte	0x9c
+ 1727 02c7 05       		.uleb128 0x5
+ 1728 02c8 73030000 		.4byte	.LASF37
+ 1729 02cc 01       		.byte	0x1
+ 1730 02cd FE       		.byte	0xfe
+ 1731 02ce 00000000 		.4byte	.LFB78
+ 1732 02d2 16000000 		.4byte	.LFE78-.LFB78
+ 1733 02d6 01       		.uleb128 0x1
+ 1734 02d7 9C       		.byte	0x9c
+ 1735 02d8 0E       		.uleb128 0xe
+ 1736 02d9 83030000 		.4byte	.LASF38
+ 1737 02dd 01       		.byte	0x1
+ 1738 02de 0501     		.2byte	0x105
+ 1739 02e0 00000000 		.4byte	.LFB79
+ 1740 02e4 14000000 		.4byte	.LFE79-.LFB79
+ 1741 02e8 01       		.uleb128 0x1
+ 1742 02e9 9C       		.byte	0x9c
+ 1743 02ea 0F       		.uleb128 0xf
+ 1744 02eb C5010000 		.4byte	.LASF58
+ 1745 02ef 01       		.byte	0x1
+ 1746 02f0 0C01     		.2byte	0x10c
+ 1747 02f2 81000000 		.4byte	0x81
+ 1748 02f6 00000000 		.4byte	.LFB80
+ 1749 02fa 7A000000 		.4byte	.LFE80-.LFB80
+ 1750 02fe 01       		.uleb128 0x1
+ 1751 02ff 9C       		.byte	0x9c
+ 1752 0300 2E030000 		.4byte	0x32e
+ 1753 0304 10       		.uleb128 0x10
+ 1754 0305 747800   		.ascii	"tx\000"
+ 1755 0308 01       		.byte	0x1
+ 1756 0309 0C01     		.2byte	0x10c
+ 1757 030b 81000000 		.4byte	0x81
+ 1758 030f 02       		.uleb128 0x2
+ 1759 0310 91       		.byte	0x91
+ 1760 0311 6F       		.sleb128 -17
+ 1761 0312 11       		.uleb128 0x11
+ 1762 0313 6900     		.ascii	"i\000"
+ 1763 0315 01       		.byte	0x1
+ 1764 0316 0E01     		.2byte	0x10e
+ 1765 0318 81000000 		.4byte	0x81
+ 1766 031c 02       		.uleb128 0x2
+ 1767 031d 91       		.byte	0x91
+ 1768 031e 77       		.sleb128 -9
+ 1769 031f 11       		.uleb128 0x11
+ 1770 0320 727800   		.ascii	"rx\000"
+ 1771 0323 01       		.byte	0x1
+ 1772 0324 0F01     		.2byte	0x10f
+ 1773 0326 81000000 		.4byte	0x81
+ 1774 032a 02       		.uleb128 0x2
+ 1775 032b 91       		.byte	0x91
+ 1776 032c 76       		.sleb128 -10
+ 1777 032d 00       		.byte	0
+ 1778 032e 12       		.uleb128 0x12
+ 1779 032f 60030000 		.4byte	.LASF39
+ 1780 0333 01       		.byte	0x1
+ 1781 0334 3001     		.2byte	0x130
+ 1782 0336 00000000 		.4byte	.LFB81
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 39
+
+
+ 1783 033a 40000000 		.4byte	.LFE81-.LFB81
+ 1784 033e 01       		.uleb128 0x1
+ 1785 033f 9C       		.byte	0x9c
+ 1786 0340 7F030000 		.4byte	0x37f
+ 1787 0344 13       		.uleb128 0x13
+ 1788 0345 91000000 		.4byte	.LASF40
+ 1789 0349 01       		.byte	0x1
+ 1790 034a 3001     		.2byte	0x130
+ 1791 034c 1A010000 		.4byte	0x11a
+ 1792 0350 02       		.uleb128 0x2
+ 1793 0351 91       		.byte	0x91
+ 1794 0352 64       		.sleb128 -28
+ 1795 0353 13       		.uleb128 0x13
+ 1796 0354 E4030000 		.4byte	.LASF41
+ 1797 0358 01       		.byte	0x1
+ 1798 0359 3001     		.2byte	0x130
+ 1799 035b 1A010000 		.4byte	0x11a
+ 1800 035f 02       		.uleb128 0x2
+ 1801 0360 91       		.byte	0x91
+ 1802 0361 60       		.sleb128 -32
+ 1803 0362 10       		.uleb128 0x10
+ 1804 0363 6C656E00 		.ascii	"len\000"
+ 1805 0367 01       		.byte	0x1
+ 1806 0368 3001     		.2byte	0x130
+ 1807 036a 81000000 		.4byte	0x81
+ 1808 036e 02       		.uleb128 0x2
+ 1809 036f 91       		.byte	0x91
+ 1810 0370 5F       		.sleb128 -33
+ 1811 0371 11       		.uleb128 0x11
+ 1812 0372 6900     		.ascii	"i\000"
+ 1813 0374 01       		.byte	0x1
+ 1814 0375 3201     		.2byte	0x132
+ 1815 0377 81000000 		.4byte	0x81
+ 1816 037b 02       		.uleb128 0x2
+ 1817 037c 91       		.byte	0x91
+ 1818 037d 6F       		.sleb128 -17
+ 1819 037e 00       		.byte	0
+ 1820 037f 12       		.uleb128 0x12
+ 1821 0380 23030000 		.4byte	.LASF42
+ 1822 0384 01       		.byte	0x1
+ 1823 0385 3C01     		.2byte	0x13c
+ 1824 0387 00000000 		.4byte	.LFB82
+ 1825 038b 34000000 		.4byte	.LFE82-.LFB82
+ 1826 038f 01       		.uleb128 0x1
+ 1827 0390 9C       		.byte	0x9c
+ 1828 0391 C1030000 		.4byte	0x3c1
+ 1829 0395 13       		.uleb128 0x13
+ 1830 0396 91000000 		.4byte	.LASF40
+ 1831 039a 01       		.byte	0x1
+ 1832 039b 3C01     		.2byte	0x13c
+ 1833 039d 1A010000 		.4byte	0x11a
+ 1834 03a1 02       		.uleb128 0x2
+ 1835 03a2 91       		.byte	0x91
+ 1836 03a3 6C       		.sleb128 -20
+ 1837 03a4 10       		.uleb128 0x10
+ 1838 03a5 6C656E00 		.ascii	"len\000"
+ 1839 03a9 01       		.byte	0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 40
+
+
+ 1840 03aa 3C01     		.2byte	0x13c
+ 1841 03ac 81000000 		.4byte	0x81
+ 1842 03b0 02       		.uleb128 0x2
+ 1843 03b1 91       		.byte	0x91
+ 1844 03b2 6B       		.sleb128 -21
+ 1845 03b3 11       		.uleb128 0x11
+ 1846 03b4 6900     		.ascii	"i\000"
+ 1847 03b6 01       		.byte	0x1
+ 1848 03b7 3E01     		.2byte	0x13e
+ 1849 03b9 81000000 		.4byte	0x81
+ 1850 03bd 02       		.uleb128 0x2
+ 1851 03be 91       		.byte	0x91
+ 1852 03bf 77       		.sleb128 -9
+ 1853 03c0 00       		.byte	0
+ 1854 03c1 12       		.uleb128 0x12
+ 1855 03c2 FC030000 		.4byte	.LASF43
+ 1856 03c6 01       		.byte	0x1
+ 1857 03c7 4801     		.2byte	0x148
+ 1858 03c9 00000000 		.4byte	.LFB83
+ 1859 03cd 3E000000 		.4byte	.LFE83-.LFB83
+ 1860 03d1 01       		.uleb128 0x1
+ 1861 03d2 9C       		.byte	0x9c
+ 1862 03d3 F6030000 		.4byte	0x3f6
+ 1863 03d7 10       		.uleb128 0x10
+ 1864 03d8 72656700 		.ascii	"reg\000"
+ 1865 03dc 01       		.byte	0x1
+ 1866 03dd 4801     		.2byte	0x148
+ 1867 03df 81000000 		.4byte	0x81
+ 1868 03e3 02       		.uleb128 0x2
+ 1869 03e4 91       		.byte	0x91
+ 1870 03e5 77       		.sleb128 -9
+ 1871 03e6 13       		.uleb128 0x13
+ 1872 03e7 54000000 		.4byte	.LASF31
+ 1873 03eb 01       		.byte	0x1
+ 1874 03ec 4801     		.2byte	0x148
+ 1875 03ee 81000000 		.4byte	0x81
+ 1876 03f2 02       		.uleb128 0x2
+ 1877 03f3 91       		.byte	0x91
+ 1878 03f4 76       		.sleb128 -10
+ 1879 03f5 00       		.byte	0
+ 1880 03f6 12       		.uleb128 0x12
+ 1881 03f7 A5020000 		.4byte	.LASF44
+ 1882 03fb 01       		.byte	0x1
+ 1883 03fc 5101     		.2byte	0x151
+ 1884 03fe 00000000 		.4byte	.LFB84
+ 1885 0402 3C000000 		.4byte	.LFE84-.LFB84
+ 1886 0406 01       		.uleb128 0x1
+ 1887 0407 9C       		.byte	0x9c
+ 1888 0408 3A040000 		.4byte	0x43a
+ 1889 040c 10       		.uleb128 0x10
+ 1890 040d 72656700 		.ascii	"reg\000"
+ 1891 0411 01       		.byte	0x1
+ 1892 0412 5101     		.2byte	0x151
+ 1893 0414 81000000 		.4byte	0x81
+ 1894 0418 02       		.uleb128 0x2
+ 1895 0419 91       		.byte	0x91
+ 1896 041a 77       		.sleb128 -9
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 41
+
+
+ 1897 041b 13       		.uleb128 0x13
+ 1898 041c 54000000 		.4byte	.LASF31
+ 1899 0420 01       		.byte	0x1
+ 1900 0421 5101     		.2byte	0x151
+ 1901 0423 1A010000 		.4byte	0x11a
+ 1902 0427 02       		.uleb128 0x2
+ 1903 0428 91       		.byte	0x91
+ 1904 0429 70       		.sleb128 -16
+ 1905 042a 10       		.uleb128 0x10
+ 1906 042b 6C656E00 		.ascii	"len\000"
+ 1907 042f 01       		.byte	0x1
+ 1908 0430 5101     		.2byte	0x151
+ 1909 0432 81000000 		.4byte	0x81
+ 1910 0436 02       		.uleb128 0x2
+ 1911 0437 91       		.byte	0x91
+ 1912 0438 76       		.sleb128 -10
+ 1913 0439 00       		.byte	0
+ 1914 043a 12       		.uleb128 0x12
+ 1915 043b 62000000 		.4byte	.LASF45
+ 1916 043f 01       		.byte	0x1
+ 1917 0440 5A01     		.2byte	0x15a
+ 1918 0442 00000000 		.4byte	.LFB85
+ 1919 0446 40000000 		.4byte	.LFE85-.LFB85
+ 1920 044a 01       		.uleb128 0x1
+ 1921 044b 9C       		.byte	0x9c
+ 1922 044c 7E040000 		.4byte	0x47e
+ 1923 0450 10       		.uleb128 0x10
+ 1924 0451 72656700 		.ascii	"reg\000"
+ 1925 0455 01       		.byte	0x1
+ 1926 0456 5A01     		.2byte	0x15a
+ 1927 0458 81000000 		.4byte	0x81
+ 1928 045c 02       		.uleb128 0x2
+ 1929 045d 91       		.byte	0x91
+ 1930 045e 77       		.sleb128 -9
+ 1931 045f 13       		.uleb128 0x13
+ 1932 0460 54000000 		.4byte	.LASF31
+ 1933 0464 01       		.byte	0x1
+ 1934 0465 5A01     		.2byte	0x15a
+ 1935 0467 1A010000 		.4byte	0x11a
+ 1936 046b 02       		.uleb128 0x2
+ 1937 046c 91       		.byte	0x91
+ 1938 046d 70       		.sleb128 -16
+ 1939 046e 10       		.uleb128 0x10
+ 1940 046f 6C656E00 		.ascii	"len\000"
+ 1941 0473 01       		.byte	0x1
+ 1942 0474 5A01     		.2byte	0x15a
+ 1943 0476 81000000 		.4byte	0x81
+ 1944 047a 02       		.uleb128 0x2
+ 1945 047b 91       		.byte	0x91
+ 1946 047c 76       		.sleb128 -10
+ 1947 047d 00       		.byte	0
+ 1948 047e 12       		.uleb128 0x12
+ 1949 047f F5000000 		.4byte	.LASF46
+ 1950 0483 01       		.byte	0x1
+ 1951 0484 6301     		.2byte	0x163
+ 1952 0486 00000000 		.4byte	.LFB86
+ 1953 048a 18000000 		.4byte	.LFE86-.LFB86
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 42
+
+
+ 1954 048e 01       		.uleb128 0x1
+ 1955 048f 9C       		.byte	0x9c
+ 1956 0490 A4040000 		.4byte	0x4a4
+ 1957 0494 13       		.uleb128 0x13
+ 1958 0495 20000000 		.4byte	.LASF47
+ 1959 0499 01       		.byte	0x1
+ 1960 049a 6301     		.2byte	0x163
+ 1961 049c 81000000 		.4byte	0x81
+ 1962 04a0 02       		.uleb128 0x2
+ 1963 04a1 91       		.byte	0x91
+ 1964 04a2 77       		.sleb128 -9
+ 1965 04a3 00       		.byte	0
+ 1966 04a4 12       		.uleb128 0x12
+ 1967 04a5 B4030000 		.4byte	.LASF48
+ 1968 04a9 01       		.byte	0x1
+ 1969 04aa 6801     		.2byte	0x168
+ 1970 04ac 00000000 		.4byte	.LFB87
+ 1971 04b0 18000000 		.4byte	.LFE87-.LFB87
+ 1972 04b4 01       		.uleb128 0x1
+ 1973 04b5 9C       		.byte	0x9c
+ 1974 04b6 CA040000 		.4byte	0x4ca
+ 1975 04ba 13       		.uleb128 0x13
+ 1976 04bb 20000000 		.4byte	.LASF47
+ 1977 04bf 01       		.byte	0x1
+ 1978 04c0 6801     		.2byte	0x168
+ 1979 04c2 81000000 		.4byte	0x81
+ 1980 04c6 02       		.uleb128 0x2
+ 1981 04c7 91       		.byte	0x91
+ 1982 04c8 77       		.sleb128 -9
+ 1983 04c9 00       		.byte	0
+ 1984 04ca 12       		.uleb128 0x12
+ 1985 04cb FF020000 		.4byte	.LASF49
+ 1986 04cf 01       		.byte	0x1
+ 1987 04d0 6D01     		.2byte	0x16d
+ 1988 04d2 00000000 		.4byte	.LFB88
+ 1989 04d6 18000000 		.4byte	.LFE88-.LFB88
+ 1990 04da 01       		.uleb128 0x1
+ 1991 04db 9C       		.byte	0x9c
+ 1992 04dc F0040000 		.4byte	0x4f0
+ 1993 04e0 13       		.uleb128 0x13
+ 1994 04e1 20000000 		.4byte	.LASF47
+ 1995 04e5 01       		.byte	0x1
+ 1996 04e6 6D01     		.2byte	0x16d
+ 1997 04e8 81000000 		.4byte	0x81
+ 1998 04ec 02       		.uleb128 0x2
+ 1999 04ed 91       		.byte	0x91
+ 2000 04ee 77       		.sleb128 -9
+ 2001 04ef 00       		.byte	0
+ 2002 04f0 12       		.uleb128 0x12
+ 2003 04f1 E4010000 		.4byte	.LASF50
+ 2004 04f5 01       		.byte	0x1
+ 2005 04f6 7201     		.2byte	0x172
+ 2006 04f8 00000000 		.4byte	.LFB89
+ 2007 04fc 18000000 		.4byte	.LFE89-.LFB89
+ 2008 0500 01       		.uleb128 0x1
+ 2009 0501 9C       		.byte	0x9c
+ 2010 0502 16050000 		.4byte	0x516
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 43
+
+
+ 2011 0506 13       		.uleb128 0x13
+ 2012 0507 20000000 		.4byte	.LASF47
+ 2013 050b 01       		.byte	0x1
+ 2014 050c 7201     		.2byte	0x172
+ 2015 050e 81000000 		.4byte	0x81
+ 2016 0512 02       		.uleb128 0x2
+ 2017 0513 91       		.byte	0x91
+ 2018 0514 77       		.sleb128 -9
+ 2019 0515 00       		.byte	0
+ 2020 0516 14       		.uleb128 0x14
+ 2021 0517 9D030000 		.4byte	.LASF52
+ 2022 051b 01       		.byte	0x1
+ 2023 051c 7701     		.2byte	0x177
+ 2024 051e 81000000 		.4byte	0x81
+ 2025 0522 00000000 		.4byte	.LFB90
+ 2026 0526 0E000000 		.4byte	.LFE90-.LFB90
+ 2027 052a 01       		.uleb128 0x1
+ 2028 052b 9C       		.byte	0x9c
+ 2029 052c 15       		.uleb128 0x15
+ 2030 052d D7030000 		.4byte	.LASF53
+ 2031 0531 04       		.byte	0x4
+ 2032 0532 5506     		.2byte	0x655
+ 2033 0534 38050000 		.4byte	0x538
+ 2034 0538 16       		.uleb128 0x16
+ 2035 0539 8C000000 		.4byte	0x8c
+ 2036 053d 17       		.uleb128 0x17
+ 2037 053e CB030000 		.4byte	.LASF54
+ 2038 0542 01       		.byte	0x1
+ 2039 0543 10       		.byte	0x10
+ 2040 0544 81000000 		.4byte	0x81
+ 2041 0548 05       		.uleb128 0x5
+ 2042 0549 03       		.byte	0x3
+ 2043 054a 00000000 		.4byte	payload_len
+ 2044 054e 00       		.byte	0
+ 2045              		.section	.debug_abbrev,"",%progbits
+ 2046              	.Ldebug_abbrev0:
+ 2047 0000 01       		.uleb128 0x1
+ 2048 0001 11       		.uleb128 0x11
+ 2049 0002 01       		.byte	0x1
+ 2050 0003 25       		.uleb128 0x25
+ 2051 0004 0E       		.uleb128 0xe
+ 2052 0005 13       		.uleb128 0x13
+ 2053 0006 0B       		.uleb128 0xb
+ 2054 0007 03       		.uleb128 0x3
+ 2055 0008 0E       		.uleb128 0xe
+ 2056 0009 1B       		.uleb128 0x1b
+ 2057 000a 0E       		.uleb128 0xe
+ 2058 000b 55       		.uleb128 0x55
+ 2059 000c 17       		.uleb128 0x17
+ 2060 000d 11       		.uleb128 0x11
+ 2061 000e 01       		.uleb128 0x1
+ 2062 000f 10       		.uleb128 0x10
+ 2063 0010 17       		.uleb128 0x17
+ 2064 0011 00       		.byte	0
+ 2065 0012 00       		.byte	0
+ 2066 0013 02       		.uleb128 0x2
+ 2067 0014 24       		.uleb128 0x24
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 44
+
+
+ 2068 0015 00       		.byte	0
+ 2069 0016 0B       		.uleb128 0xb
+ 2070 0017 0B       		.uleb128 0xb
+ 2071 0018 3E       		.uleb128 0x3e
+ 2072 0019 0B       		.uleb128 0xb
+ 2073 001a 03       		.uleb128 0x3
+ 2074 001b 0E       		.uleb128 0xe
+ 2075 001c 00       		.byte	0
+ 2076 001d 00       		.byte	0
+ 2077 001e 03       		.uleb128 0x3
+ 2078 001f 16       		.uleb128 0x16
+ 2079 0020 00       		.byte	0
+ 2080 0021 03       		.uleb128 0x3
+ 2081 0022 0E       		.uleb128 0xe
+ 2082 0023 3A       		.uleb128 0x3a
+ 2083 0024 0B       		.uleb128 0xb
+ 2084 0025 3B       		.uleb128 0x3b
+ 2085 0026 0B       		.uleb128 0xb
+ 2086 0027 49       		.uleb128 0x49
+ 2087 0028 13       		.uleb128 0x13
+ 2088 0029 00       		.byte	0
+ 2089 002a 00       		.byte	0
+ 2090 002b 04       		.uleb128 0x4
+ 2091 002c 24       		.uleb128 0x24
+ 2092 002d 00       		.byte	0
+ 2093 002e 0B       		.uleb128 0xb
+ 2094 002f 0B       		.uleb128 0xb
+ 2095 0030 3E       		.uleb128 0x3e
+ 2096 0031 0B       		.uleb128 0xb
+ 2097 0032 03       		.uleb128 0x3
+ 2098 0033 08       		.uleb128 0x8
+ 2099 0034 00       		.byte	0
+ 2100 0035 00       		.byte	0
+ 2101 0036 05       		.uleb128 0x5
+ 2102 0037 2E       		.uleb128 0x2e
+ 2103 0038 00       		.byte	0
+ 2104 0039 3F       		.uleb128 0x3f
+ 2105 003a 19       		.uleb128 0x19
+ 2106 003b 03       		.uleb128 0x3
+ 2107 003c 0E       		.uleb128 0xe
+ 2108 003d 3A       		.uleb128 0x3a
+ 2109 003e 0B       		.uleb128 0xb
+ 2110 003f 3B       		.uleb128 0x3b
+ 2111 0040 0B       		.uleb128 0xb
+ 2112 0041 11       		.uleb128 0x11
+ 2113 0042 01       		.uleb128 0x1
+ 2114 0043 12       		.uleb128 0x12
+ 2115 0044 06       		.uleb128 0x6
+ 2116 0045 40       		.uleb128 0x40
+ 2117 0046 18       		.uleb128 0x18
+ 2118 0047 9642     		.uleb128 0x2116
+ 2119 0049 19       		.uleb128 0x19
+ 2120 004a 00       		.byte	0
+ 2121 004b 00       		.byte	0
+ 2122 004c 06       		.uleb128 0x6
+ 2123 004d 2E       		.uleb128 0x2e
+ 2124 004e 01       		.byte	0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 45
+
+
+ 2125 004f 3F       		.uleb128 0x3f
+ 2126 0050 19       		.uleb128 0x19
+ 2127 0051 03       		.uleb128 0x3
+ 2128 0052 0E       		.uleb128 0xe
+ 2129 0053 3A       		.uleb128 0x3a
+ 2130 0054 0B       		.uleb128 0xb
+ 2131 0055 3B       		.uleb128 0x3b
+ 2132 0056 0B       		.uleb128 0xb
+ 2133 0057 27       		.uleb128 0x27
+ 2134 0058 19       		.uleb128 0x19
+ 2135 0059 11       		.uleb128 0x11
+ 2136 005a 01       		.uleb128 0x1
+ 2137 005b 12       		.uleb128 0x12
+ 2138 005c 06       		.uleb128 0x6
+ 2139 005d 40       		.uleb128 0x40
+ 2140 005e 18       		.uleb128 0x18
+ 2141 005f 9642     		.uleb128 0x2116
+ 2142 0061 19       		.uleb128 0x19
+ 2143 0062 01       		.uleb128 0x1
+ 2144 0063 13       		.uleb128 0x13
+ 2145 0064 00       		.byte	0
+ 2146 0065 00       		.byte	0
+ 2147 0066 07       		.uleb128 0x7
+ 2148 0067 05       		.uleb128 0x5
+ 2149 0068 00       		.byte	0
+ 2150 0069 03       		.uleb128 0x3
+ 2151 006a 0E       		.uleb128 0xe
+ 2152 006b 3A       		.uleb128 0x3a
+ 2153 006c 0B       		.uleb128 0xb
+ 2154 006d 3B       		.uleb128 0x3b
+ 2155 006e 0B       		.uleb128 0xb
+ 2156 006f 49       		.uleb128 0x49
+ 2157 0070 13       		.uleb128 0x13
+ 2158 0071 02       		.uleb128 0x2
+ 2159 0072 18       		.uleb128 0x18
+ 2160 0073 00       		.byte	0
+ 2161 0074 00       		.byte	0
+ 2162 0075 08       		.uleb128 0x8
+ 2163 0076 05       		.uleb128 0x5
+ 2164 0077 00       		.byte	0
+ 2165 0078 03       		.uleb128 0x3
+ 2166 0079 08       		.uleb128 0x8
+ 2167 007a 3A       		.uleb128 0x3a
+ 2168 007b 0B       		.uleb128 0xb
+ 2169 007c 3B       		.uleb128 0x3b
+ 2170 007d 0B       		.uleb128 0xb
+ 2171 007e 49       		.uleb128 0x49
+ 2172 007f 13       		.uleb128 0x13
+ 2173 0080 02       		.uleb128 0x2
+ 2174 0081 18       		.uleb128 0x18
+ 2175 0082 00       		.byte	0
+ 2176 0083 00       		.byte	0
+ 2177 0084 09       		.uleb128 0x9
+ 2178 0085 0F       		.uleb128 0xf
+ 2179 0086 00       		.byte	0
+ 2180 0087 0B       		.uleb128 0xb
+ 2181 0088 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 46
+
+
+ 2182 0089 49       		.uleb128 0x49
+ 2183 008a 13       		.uleb128 0x13
+ 2184 008b 00       		.byte	0
+ 2185 008c 00       		.byte	0
+ 2186 008d 0A       		.uleb128 0xa
+ 2187 008e 2E       		.uleb128 0x2e
+ 2188 008f 00       		.byte	0
+ 2189 0090 3F       		.uleb128 0x3f
+ 2190 0091 19       		.uleb128 0x19
+ 2191 0092 03       		.uleb128 0x3
+ 2192 0093 0E       		.uleb128 0xe
+ 2193 0094 3A       		.uleb128 0x3a
+ 2194 0095 0B       		.uleb128 0xb
+ 2195 0096 3B       		.uleb128 0x3b
+ 2196 0097 0B       		.uleb128 0xb
+ 2197 0098 49       		.uleb128 0x49
+ 2198 0099 13       		.uleb128 0x13
+ 2199 009a 11       		.uleb128 0x11
+ 2200 009b 01       		.uleb128 0x1
+ 2201 009c 12       		.uleb128 0x12
+ 2202 009d 06       		.uleb128 0x6
+ 2203 009e 40       		.uleb128 0x40
+ 2204 009f 18       		.uleb128 0x18
+ 2205 00a0 9742     		.uleb128 0x2117
+ 2206 00a2 19       		.uleb128 0x19
+ 2207 00a3 00       		.byte	0
+ 2208 00a4 00       		.byte	0
+ 2209 00a5 0B       		.uleb128 0xb
+ 2210 00a6 2E       		.uleb128 0x2e
+ 2211 00a7 01       		.byte	0x1
+ 2212 00a8 3F       		.uleb128 0x3f
+ 2213 00a9 19       		.uleb128 0x19
+ 2214 00aa 03       		.uleb128 0x3
+ 2215 00ab 0E       		.uleb128 0xe
+ 2216 00ac 3A       		.uleb128 0x3a
+ 2217 00ad 0B       		.uleb128 0xb
+ 2218 00ae 3B       		.uleb128 0x3b
+ 2219 00af 0B       		.uleb128 0xb
+ 2220 00b0 49       		.uleb128 0x49
+ 2221 00b1 13       		.uleb128 0x13
+ 2222 00b2 11       		.uleb128 0x11
+ 2223 00b3 01       		.uleb128 0x1
+ 2224 00b4 12       		.uleb128 0x12
+ 2225 00b5 06       		.uleb128 0x6
+ 2226 00b6 40       		.uleb128 0x40
+ 2227 00b7 18       		.uleb128 0x18
+ 2228 00b8 9642     		.uleb128 0x2116
+ 2229 00ba 19       		.uleb128 0x19
+ 2230 00bb 01       		.uleb128 0x1
+ 2231 00bc 13       		.uleb128 0x13
+ 2232 00bd 00       		.byte	0
+ 2233 00be 00       		.byte	0
+ 2234 00bf 0C       		.uleb128 0xc
+ 2235 00c0 34       		.uleb128 0x34
+ 2236 00c1 00       		.byte	0
+ 2237 00c2 03       		.uleb128 0x3
+ 2238 00c3 0E       		.uleb128 0xe
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 47
+
+
+ 2239 00c4 3A       		.uleb128 0x3a
+ 2240 00c5 0B       		.uleb128 0xb
+ 2241 00c6 3B       		.uleb128 0x3b
+ 2242 00c7 0B       		.uleb128 0xb
+ 2243 00c8 49       		.uleb128 0x49
+ 2244 00c9 13       		.uleb128 0x13
+ 2245 00ca 02       		.uleb128 0x2
+ 2246 00cb 18       		.uleb128 0x18
+ 2247 00cc 00       		.byte	0
+ 2248 00cd 00       		.byte	0
+ 2249 00ce 0D       		.uleb128 0xd
+ 2250 00cf 34       		.uleb128 0x34
+ 2251 00d0 00       		.byte	0
+ 2252 00d1 03       		.uleb128 0x3
+ 2253 00d2 08       		.uleb128 0x8
+ 2254 00d3 3A       		.uleb128 0x3a
+ 2255 00d4 0B       		.uleb128 0xb
+ 2256 00d5 3B       		.uleb128 0x3b
+ 2257 00d6 0B       		.uleb128 0xb
+ 2258 00d7 49       		.uleb128 0x49
+ 2259 00d8 13       		.uleb128 0x13
+ 2260 00d9 02       		.uleb128 0x2
+ 2261 00da 18       		.uleb128 0x18
+ 2262 00db 00       		.byte	0
+ 2263 00dc 00       		.byte	0
+ 2264 00dd 0E       		.uleb128 0xe
+ 2265 00de 2E       		.uleb128 0x2e
+ 2266 00df 00       		.byte	0
+ 2267 00e0 3F       		.uleb128 0x3f
+ 2268 00e1 19       		.uleb128 0x19
+ 2269 00e2 03       		.uleb128 0x3
+ 2270 00e3 0E       		.uleb128 0xe
+ 2271 00e4 3A       		.uleb128 0x3a
+ 2272 00e5 0B       		.uleb128 0xb
+ 2273 00e6 3B       		.uleb128 0x3b
+ 2274 00e7 05       		.uleb128 0x5
+ 2275 00e8 11       		.uleb128 0x11
+ 2276 00e9 01       		.uleb128 0x1
+ 2277 00ea 12       		.uleb128 0x12
+ 2278 00eb 06       		.uleb128 0x6
+ 2279 00ec 40       		.uleb128 0x40
+ 2280 00ed 18       		.uleb128 0x18
+ 2281 00ee 9642     		.uleb128 0x2116
+ 2282 00f0 19       		.uleb128 0x19
+ 2283 00f1 00       		.byte	0
+ 2284 00f2 00       		.byte	0
+ 2285 00f3 0F       		.uleb128 0xf
+ 2286 00f4 2E       		.uleb128 0x2e
+ 2287 00f5 01       		.byte	0x1
+ 2288 00f6 3F       		.uleb128 0x3f
+ 2289 00f7 19       		.uleb128 0x19
+ 2290 00f8 03       		.uleb128 0x3
+ 2291 00f9 0E       		.uleb128 0xe
+ 2292 00fa 3A       		.uleb128 0x3a
+ 2293 00fb 0B       		.uleb128 0xb
+ 2294 00fc 3B       		.uleb128 0x3b
+ 2295 00fd 05       		.uleb128 0x5
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 48
+
+
+ 2296 00fe 27       		.uleb128 0x27
+ 2297 00ff 19       		.uleb128 0x19
+ 2298 0100 49       		.uleb128 0x49
+ 2299 0101 13       		.uleb128 0x13
+ 2300 0102 11       		.uleb128 0x11
+ 2301 0103 01       		.uleb128 0x1
+ 2302 0104 12       		.uleb128 0x12
+ 2303 0105 06       		.uleb128 0x6
+ 2304 0106 40       		.uleb128 0x40
+ 2305 0107 18       		.uleb128 0x18
+ 2306 0108 9642     		.uleb128 0x2116
+ 2307 010a 19       		.uleb128 0x19
+ 2308 010b 01       		.uleb128 0x1
+ 2309 010c 13       		.uleb128 0x13
+ 2310 010d 00       		.byte	0
+ 2311 010e 00       		.byte	0
+ 2312 010f 10       		.uleb128 0x10
+ 2313 0110 05       		.uleb128 0x5
+ 2314 0111 00       		.byte	0
+ 2315 0112 03       		.uleb128 0x3
+ 2316 0113 08       		.uleb128 0x8
+ 2317 0114 3A       		.uleb128 0x3a
+ 2318 0115 0B       		.uleb128 0xb
+ 2319 0116 3B       		.uleb128 0x3b
+ 2320 0117 05       		.uleb128 0x5
+ 2321 0118 49       		.uleb128 0x49
+ 2322 0119 13       		.uleb128 0x13
+ 2323 011a 02       		.uleb128 0x2
+ 2324 011b 18       		.uleb128 0x18
+ 2325 011c 00       		.byte	0
+ 2326 011d 00       		.byte	0
+ 2327 011e 11       		.uleb128 0x11
+ 2328 011f 34       		.uleb128 0x34
+ 2329 0120 00       		.byte	0
+ 2330 0121 03       		.uleb128 0x3
+ 2331 0122 08       		.uleb128 0x8
+ 2332 0123 3A       		.uleb128 0x3a
+ 2333 0124 0B       		.uleb128 0xb
+ 2334 0125 3B       		.uleb128 0x3b
+ 2335 0126 05       		.uleb128 0x5
+ 2336 0127 49       		.uleb128 0x49
+ 2337 0128 13       		.uleb128 0x13
+ 2338 0129 02       		.uleb128 0x2
+ 2339 012a 18       		.uleb128 0x18
+ 2340 012b 00       		.byte	0
+ 2341 012c 00       		.byte	0
+ 2342 012d 12       		.uleb128 0x12
+ 2343 012e 2E       		.uleb128 0x2e
+ 2344 012f 01       		.byte	0x1
+ 2345 0130 3F       		.uleb128 0x3f
+ 2346 0131 19       		.uleb128 0x19
+ 2347 0132 03       		.uleb128 0x3
+ 2348 0133 0E       		.uleb128 0xe
+ 2349 0134 3A       		.uleb128 0x3a
+ 2350 0135 0B       		.uleb128 0xb
+ 2351 0136 3B       		.uleb128 0x3b
+ 2352 0137 05       		.uleb128 0x5
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 49
+
+
+ 2353 0138 27       		.uleb128 0x27
+ 2354 0139 19       		.uleb128 0x19
+ 2355 013a 11       		.uleb128 0x11
+ 2356 013b 01       		.uleb128 0x1
+ 2357 013c 12       		.uleb128 0x12
+ 2358 013d 06       		.uleb128 0x6
+ 2359 013e 40       		.uleb128 0x40
+ 2360 013f 18       		.uleb128 0x18
+ 2361 0140 9642     		.uleb128 0x2116
+ 2362 0142 19       		.uleb128 0x19
+ 2363 0143 01       		.uleb128 0x1
+ 2364 0144 13       		.uleb128 0x13
+ 2365 0145 00       		.byte	0
+ 2366 0146 00       		.byte	0
+ 2367 0147 13       		.uleb128 0x13
+ 2368 0148 05       		.uleb128 0x5
+ 2369 0149 00       		.byte	0
+ 2370 014a 03       		.uleb128 0x3
+ 2371 014b 0E       		.uleb128 0xe
+ 2372 014c 3A       		.uleb128 0x3a
+ 2373 014d 0B       		.uleb128 0xb
+ 2374 014e 3B       		.uleb128 0x3b
+ 2375 014f 05       		.uleb128 0x5
+ 2376 0150 49       		.uleb128 0x49
+ 2377 0151 13       		.uleb128 0x13
+ 2378 0152 02       		.uleb128 0x2
+ 2379 0153 18       		.uleb128 0x18
+ 2380 0154 00       		.byte	0
+ 2381 0155 00       		.byte	0
+ 2382 0156 14       		.uleb128 0x14
+ 2383 0157 2E       		.uleb128 0x2e
+ 2384 0158 00       		.byte	0
+ 2385 0159 3F       		.uleb128 0x3f
+ 2386 015a 19       		.uleb128 0x19
+ 2387 015b 03       		.uleb128 0x3
+ 2388 015c 0E       		.uleb128 0xe
+ 2389 015d 3A       		.uleb128 0x3a
+ 2390 015e 0B       		.uleb128 0xb
+ 2391 015f 3B       		.uleb128 0x3b
+ 2392 0160 05       		.uleb128 0x5
+ 2393 0161 49       		.uleb128 0x49
+ 2394 0162 13       		.uleb128 0x13
+ 2395 0163 11       		.uleb128 0x11
+ 2396 0164 01       		.uleb128 0x1
+ 2397 0165 12       		.uleb128 0x12
+ 2398 0166 06       		.uleb128 0x6
+ 2399 0167 40       		.uleb128 0x40
+ 2400 0168 18       		.uleb128 0x18
+ 2401 0169 9642     		.uleb128 0x2116
+ 2402 016b 19       		.uleb128 0x19
+ 2403 016c 00       		.byte	0
+ 2404 016d 00       		.byte	0
+ 2405 016e 15       		.uleb128 0x15
+ 2406 016f 34       		.uleb128 0x34
+ 2407 0170 00       		.byte	0
+ 2408 0171 03       		.uleb128 0x3
+ 2409 0172 0E       		.uleb128 0xe
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 50
+
+
+ 2410 0173 3A       		.uleb128 0x3a
+ 2411 0174 0B       		.uleb128 0xb
+ 2412 0175 3B       		.uleb128 0x3b
+ 2413 0176 05       		.uleb128 0x5
+ 2414 0177 49       		.uleb128 0x49
+ 2415 0178 13       		.uleb128 0x13
+ 2416 0179 3F       		.uleb128 0x3f
+ 2417 017a 19       		.uleb128 0x19
+ 2418 017b 3C       		.uleb128 0x3c
+ 2419 017c 19       		.uleb128 0x19
+ 2420 017d 00       		.byte	0
+ 2421 017e 00       		.byte	0
+ 2422 017f 16       		.uleb128 0x16
+ 2423 0180 35       		.uleb128 0x35
+ 2424 0181 00       		.byte	0
+ 2425 0182 49       		.uleb128 0x49
+ 2426 0183 13       		.uleb128 0x13
+ 2427 0184 00       		.byte	0
+ 2428 0185 00       		.byte	0
+ 2429 0186 17       		.uleb128 0x17
+ 2430 0187 34       		.uleb128 0x34
+ 2431 0188 00       		.byte	0
+ 2432 0189 03       		.uleb128 0x3
+ 2433 018a 0E       		.uleb128 0xe
+ 2434 018b 3A       		.uleb128 0x3a
+ 2435 018c 0B       		.uleb128 0xb
+ 2436 018d 3B       		.uleb128 0x3b
+ 2437 018e 0B       		.uleb128 0xb
+ 2438 018f 49       		.uleb128 0x49
+ 2439 0190 13       		.uleb128 0x13
+ 2440 0191 3F       		.uleb128 0x3f
+ 2441 0192 19       		.uleb128 0x19
+ 2442 0193 02       		.uleb128 0x2
+ 2443 0194 18       		.uleb128 0x18
+ 2444 0195 00       		.byte	0
+ 2445 0196 00       		.byte	0
+ 2446 0197 00       		.byte	0
+ 2447              		.section	.debug_aranges,"",%progbits
+ 2448 0000 F4000000 		.4byte	0xf4
+ 2449 0004 0200     		.2byte	0x2
+ 2450 0006 00000000 		.4byte	.Ldebug_info0
+ 2451 000a 04       		.byte	0x4
+ 2452 000b 00       		.byte	0
+ 2453 000c 0000     		.2byte	0
+ 2454 000e 0000     		.2byte	0
+ 2455 0010 00000000 		.4byte	.LFB63
+ 2456 0014 12000000 		.4byte	.LFE63-.LFB63
+ 2457 0018 00000000 		.4byte	.LFB64
+ 2458 001c 94000000 		.4byte	.LFE64-.LFB64
+ 2459 0020 00000000 		.4byte	.LFB65
+ 2460 0024 24000000 		.4byte	.LFE65-.LFB65
+ 2461 0028 00000000 		.4byte	.LFB66
+ 2462 002c 18000000 		.4byte	.LFE66-.LFB66
+ 2463 0030 00000000 		.4byte	.LFB67
+ 2464 0034 22000000 		.4byte	.LFE67-.LFB67
+ 2465 0038 00000000 		.4byte	.LFB68
+ 2466 003c 34000000 		.4byte	.LFE68-.LFB68
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 51
+
+
+ 2467 0040 00000000 		.4byte	.LFB69
+ 2468 0044 22000000 		.4byte	.LFE69-.LFB69
+ 2469 0048 00000000 		.4byte	.LFB70
+ 2470 004c 2C000000 		.4byte	.LFE70-.LFB70
+ 2471 0050 00000000 		.4byte	.LFB71
+ 2472 0054 3C000000 		.4byte	.LFE71-.LFB71
+ 2473 0058 00000000 		.4byte	.LFB72
+ 2474 005c 26000000 		.4byte	.LFE72-.LFB72
+ 2475 0060 00000000 		.4byte	.LFB73
+ 2476 0064 54000000 		.4byte	.LFE73-.LFB73
+ 2477 0068 00000000 		.4byte	.LFB74
+ 2478 006c 26000000 		.4byte	.LFE74-.LFB74
+ 2479 0070 00000000 		.4byte	.LFB75
+ 2480 0074 26000000 		.4byte	.LFE75-.LFB75
+ 2481 0078 00000000 		.4byte	.LFB76
+ 2482 007c 34000000 		.4byte	.LFE76-.LFB76
+ 2483 0080 00000000 		.4byte	.LFB77
+ 2484 0084 34000000 		.4byte	.LFE77-.LFB77
+ 2485 0088 00000000 		.4byte	.LFB78
+ 2486 008c 16000000 		.4byte	.LFE78-.LFB78
+ 2487 0090 00000000 		.4byte	.LFB79
+ 2488 0094 14000000 		.4byte	.LFE79-.LFB79
+ 2489 0098 00000000 		.4byte	.LFB80
+ 2490 009c 7A000000 		.4byte	.LFE80-.LFB80
+ 2491 00a0 00000000 		.4byte	.LFB81
+ 2492 00a4 40000000 		.4byte	.LFE81-.LFB81
+ 2493 00a8 00000000 		.4byte	.LFB82
+ 2494 00ac 34000000 		.4byte	.LFE82-.LFB82
+ 2495 00b0 00000000 		.4byte	.LFB83
+ 2496 00b4 3E000000 		.4byte	.LFE83-.LFB83
+ 2497 00b8 00000000 		.4byte	.LFB84
+ 2498 00bc 3C000000 		.4byte	.LFE84-.LFB84
+ 2499 00c0 00000000 		.4byte	.LFB85
+ 2500 00c4 40000000 		.4byte	.LFE85-.LFB85
+ 2501 00c8 00000000 		.4byte	.LFB86
+ 2502 00cc 18000000 		.4byte	.LFE86-.LFB86
+ 2503 00d0 00000000 		.4byte	.LFB87
+ 2504 00d4 18000000 		.4byte	.LFE87-.LFB87
+ 2505 00d8 00000000 		.4byte	.LFB88
+ 2506 00dc 18000000 		.4byte	.LFE88-.LFB88
+ 2507 00e0 00000000 		.4byte	.LFB89
+ 2508 00e4 18000000 		.4byte	.LFE89-.LFB89
+ 2509 00e8 00000000 		.4byte	.LFB90
+ 2510 00ec 0E000000 		.4byte	.LFE90-.LFB90
+ 2511 00f0 00000000 		.4byte	0
+ 2512 00f4 00000000 		.4byte	0
+ 2513              		.section	.debug_ranges,"",%progbits
+ 2514              	.Ldebug_ranges0:
+ 2515 0000 00000000 		.4byte	.LFB63
+ 2516 0004 12000000 		.4byte	.LFE63
+ 2517 0008 00000000 		.4byte	.LFB64
+ 2518 000c 94000000 		.4byte	.LFE64
+ 2519 0010 00000000 		.4byte	.LFB65
+ 2520 0014 24000000 		.4byte	.LFE65
+ 2521 0018 00000000 		.4byte	.LFB66
+ 2522 001c 18000000 		.4byte	.LFE66
+ 2523 0020 00000000 		.4byte	.LFB67
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 52
+
+
+ 2524 0024 22000000 		.4byte	.LFE67
+ 2525 0028 00000000 		.4byte	.LFB68
+ 2526 002c 34000000 		.4byte	.LFE68
+ 2527 0030 00000000 		.4byte	.LFB69
+ 2528 0034 22000000 		.4byte	.LFE69
+ 2529 0038 00000000 		.4byte	.LFB70
+ 2530 003c 2C000000 		.4byte	.LFE70
+ 2531 0040 00000000 		.4byte	.LFB71
+ 2532 0044 3C000000 		.4byte	.LFE71
+ 2533 0048 00000000 		.4byte	.LFB72
+ 2534 004c 26000000 		.4byte	.LFE72
+ 2535 0050 00000000 		.4byte	.LFB73
+ 2536 0054 54000000 		.4byte	.LFE73
+ 2537 0058 00000000 		.4byte	.LFB74
+ 2538 005c 26000000 		.4byte	.LFE74
+ 2539 0060 00000000 		.4byte	.LFB75
+ 2540 0064 26000000 		.4byte	.LFE75
+ 2541 0068 00000000 		.4byte	.LFB76
+ 2542 006c 34000000 		.4byte	.LFE76
+ 2543 0070 00000000 		.4byte	.LFB77
+ 2544 0074 34000000 		.4byte	.LFE77
+ 2545 0078 00000000 		.4byte	.LFB78
+ 2546 007c 16000000 		.4byte	.LFE78
+ 2547 0080 00000000 		.4byte	.LFB79
+ 2548 0084 14000000 		.4byte	.LFE79
+ 2549 0088 00000000 		.4byte	.LFB80
+ 2550 008c 7A000000 		.4byte	.LFE80
+ 2551 0090 00000000 		.4byte	.LFB81
+ 2552 0094 40000000 		.4byte	.LFE81
+ 2553 0098 00000000 		.4byte	.LFB82
+ 2554 009c 34000000 		.4byte	.LFE82
+ 2555 00a0 00000000 		.4byte	.LFB83
+ 2556 00a4 3E000000 		.4byte	.LFE83
+ 2557 00a8 00000000 		.4byte	.LFB84
+ 2558 00ac 3C000000 		.4byte	.LFE84
+ 2559 00b0 00000000 		.4byte	.LFB85
+ 2560 00b4 40000000 		.4byte	.LFE85
+ 2561 00b8 00000000 		.4byte	.LFB86
+ 2562 00bc 18000000 		.4byte	.LFE86
+ 2563 00c0 00000000 		.4byte	.LFB87
+ 2564 00c4 18000000 		.4byte	.LFE87
+ 2565 00c8 00000000 		.4byte	.LFB88
+ 2566 00cc 18000000 		.4byte	.LFE88
+ 2567 00d0 00000000 		.4byte	.LFB89
+ 2568 00d4 18000000 		.4byte	.LFE89
+ 2569 00d8 00000000 		.4byte	.LFB90
+ 2570 00dc 0E000000 		.4byte	.LFE90
+ 2571 00e0 00000000 		.4byte	0
+ 2572 00e4 00000000 		.4byte	0
+ 2573              		.section	.debug_line,"",%progbits
+ 2574              	.Ldebug_line0:
+ 2575 0000 C0030000 		.section	.debug_str,"MS",%progbits,1
+ 2575      02003D01 
+ 2575      00000201 
+ 2575      FB0E0D00 
+ 2575      01010101 
+ 2576              	.LASF51:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 53
+
+
+ 2577 0000 6E726632 		.ascii	"nrf24_payload_length\000"
+ 2577      345F7061 
+ 2577      796C6F61 
+ 2577      645F6C65 
+ 2577      6E677468 
+ 2578              	.LASF30:
+ 2579 0015 6E726632 		.ascii	"nrf24_send\000"
+ 2579      345F7365 
+ 2579      6E6400
+ 2580              	.LASF47:
+ 2581 0020 73746174 		.ascii	"state\000"
+ 2581      6500
+ 2582              	.LASF2:
+ 2583 0026 73686F72 		.ascii	"short int\000"
+ 2583      7420696E 
+ 2583      7400
+ 2584              	.LASF16:
+ 2585 0030 73697A65 		.ascii	"sizetype\000"
+ 2585      74797065 
+ 2585      00
+ 2586              	.LASF35:
+ 2587 0039 6E726632 		.ascii	"nrf24_init\000"
+ 2587      345F696E 
+ 2587      697400
+ 2588              	.LASF33:
+ 2589 0044 6E726632 		.ascii	"nrf24_getStatus\000"
+ 2589      345F6765 
+ 2589      74537461 
+ 2589      74757300 
+ 2590              	.LASF31:
+ 2591 0054 76616C75 		.ascii	"value\000"
+ 2591      6500
+ 2592              	.LASF11:
+ 2593 005a 75696E74 		.ascii	"uint8_t\000"
+ 2593      385F7400 
+ 2594              	.LASF45:
+ 2595 0062 6E726632 		.ascii	"nrf24_writeRegister\000"
+ 2595      345F7772 
+ 2595      69746552 
+ 2595      65676973 
+ 2595      74657200 
+ 2596              	.LASF36:
+ 2597 0076 6E726632 		.ascii	"nrf24_powerUpRx\000"
+ 2597      345F706F 
+ 2597      77657255 
+ 2597      70527800 
+ 2598              	.LASF25:
+ 2599 0086 6669666F 		.ascii	"fifoStatus\000"
+ 2599      53746174 
+ 2599      757300
+ 2600              	.LASF40:
+ 2601 0091 64617461 		.ascii	"dataout\000"
+ 2601      6F757400 
+ 2602              	.LASF57:
+ 2603 0099 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 2603      73657273 
+ 2603      5C4C756B 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 54
+
+
+ 2603      61732043 
+ 2603      72657574 
+ 2604 00c7 65445350 		.ascii	"eDSPPSoC-I2C\\PSoC5_SPI_Master_DSP.cydsn\000"
+ 2604      50536F43 
+ 2604      2D493243 
+ 2604      5C50536F 
+ 2604      43355F53 
+ 2605              	.LASF13:
+ 2606 00ef 666C6F61 		.ascii	"float\000"
+ 2606      7400
+ 2607              	.LASF46:
+ 2608 00f5 6E726632 		.ascii	"nrf24_ce_digitalWrite\000"
+ 2608      345F6365 
+ 2608      5F646967 
+ 2608      6974616C 
+ 2608      57726974 
+ 2609              	.LASF8:
+ 2610 010b 6C6F6E67 		.ascii	"long long int\000"
+ 2610      206C6F6E 
+ 2610      6720696E 
+ 2610      7400
+ 2611              	.LASF55:
+ 2612 0119 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 2612      4320342E 
+ 2612      392E3320 
+ 2612      32303135 
+ 2612      30333033 
+ 2613 014c 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 2613      20726576 
+ 2613      6973696F 
+ 2613      6E203232 
+ 2613      31323230 
+ 2614 017f 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 2614      66756E63 
+ 2614      74696F6E 
+ 2614      2D736563 
+ 2614      74696F6E 
+ 2615              	.LASF22:
+ 2616 01a7 6E726632 		.ascii	"nrf24_dataReady\000"
+ 2616      345F6461 
+ 2616      74615265 
+ 2616      61647900 
+ 2617              	.LASF27:
+ 2618 01b7 6E726632 		.ascii	"nrf24_getData\000"
+ 2618      345F6765 
+ 2618      74446174 
+ 2618      6100
+ 2619              	.LASF58:
+ 2620 01c5 7370695F 		.ascii	"spi_transfer\000"
+ 2620      7472616E 
+ 2620      73666572 
+ 2620      00
+ 2621              	.LASF23:
+ 2622 01d2 6E726632 		.ascii	"nrf24_rxFifoEmpty\000"
+ 2622      345F7278 
+ 2622      4669666F 
+ 2622      456D7074 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 55
+
+
+ 2622      7900
+ 2623              	.LASF50:
+ 2624 01e4 6E726632 		.ascii	"nrf24_mosi_digitalWrite\000"
+ 2624      345F6D6F 
+ 2624      73695F64 
+ 2624      69676974 
+ 2624      616C5772 
+ 2625              	.LASF18:
+ 2626 01fc 7061795F 		.ascii	"pay_length\000"
+ 2626      6C656E67 
+ 2626      746800
+ 2627              	.LASF26:
+ 2628 0207 6E726632 		.ascii	"nrf24_payloadLength\000"
+ 2628      345F7061 
+ 2628      796C6F61 
+ 2628      644C656E 
+ 2628      67746800 
+ 2629              	.LASF1:
+ 2630 021b 756E7369 		.ascii	"unsigned char\000"
+ 2630      676E6564 
+ 2630      20636861 
+ 2630      7200
+ 2631              	.LASF34:
+ 2632 0229 6E726632 		.ascii	"nrf24_lastMessageStatus\000"
+ 2632      345F6C61 
+ 2632      73744D65 
+ 2632      73736167 
+ 2632      65537461 
+ 2633              	.LASF29:
+ 2634 0241 6E726632 		.ascii	"nrf24_retransmissionCount\000"
+ 2634      345F7265 
+ 2634      7472616E 
+ 2634      736D6973 
+ 2634      73696F6E 
+ 2635              	.LASF0:
+ 2636 025b 7369676E 		.ascii	"signed char\000"
+ 2636      65642063 
+ 2636      68617200 
+ 2637              	.LASF9:
+ 2638 0267 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2638      206C6F6E 
+ 2638      6720756E 
+ 2638      7369676E 
+ 2638      65642069 
+ 2639              	.LASF10:
+ 2640 027e 756E7369 		.ascii	"unsigned int\000"
+ 2640      676E6564 
+ 2640      20696E74 
+ 2640      00
+ 2641              	.LASF32:
+ 2642 028b 6E726632 		.ascii	"nrf24_isSending\000"
+ 2642      345F6973 
+ 2642      53656E64 
+ 2642      696E6700 
+ 2643              	.LASF4:
+ 2644 029b 5F5F7569 		.ascii	"__uint8_t\000"
+ 2644      6E74385F 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 56
+
+
+ 2644      7400
+ 2645              	.LASF44:
+ 2646 02a5 6E726632 		.ascii	"nrf24_readRegister\000"
+ 2646      345F7265 
+ 2646      61645265 
+ 2646      67697374 
+ 2646      657200
+ 2647              	.LASF19:
+ 2648 02b8 6E726632 		.ascii	"nrf24_config\000"
+ 2648      345F636F 
+ 2648      6E666967 
+ 2648      00
+ 2649              	.LASF3:
+ 2650 02c5 73686F72 		.ascii	"short unsigned int\000"
+ 2650      7420756E 
+ 2650      7369676E 
+ 2650      65642069 
+ 2650      6E7400
+ 2651              	.LASF24:
+ 2652 02d8 73746174 		.ascii	"status\000"
+ 2652      757300
+ 2653              	.LASF15:
+ 2654 02df 63686172 		.ascii	"char\000"
+ 2654      00
+ 2655              	.LASF6:
+ 2656 02e4 6C6F6E67 		.ascii	"long int\000"
+ 2656      20696E74 
+ 2656      00
+ 2657              	.LASF12:
+ 2658 02ed 696E7433 		.ascii	"int32_t\000"
+ 2658      325F7400 
+ 2659              	.LASF56:
+ 2660 02f5 2E5C6E72 		.ascii	".\\nrf24.c\000"
+ 2660      6632342E 
+ 2660      6300
+ 2661              	.LASF49:
+ 2662 02ff 6E726632 		.ascii	"nrf24_sck_digitalWrite\000"
+ 2662      345F7363 
+ 2662      6B5F6469 
+ 2662      67697461 
+ 2662      6C577269 
+ 2663              	.LASF17:
+ 2664 0316 6368616E 		.ascii	"channel\000"
+ 2664      6E656C00 
+ 2665              	.LASF28:
+ 2666 031e 64617461 		.ascii	"data\000"
+ 2666      00
+ 2667              	.LASF42:
+ 2668 0323 6E726632 		.ascii	"nrf24_transmitSync\000"
+ 2668      345F7472 
+ 2668      616E736D 
+ 2668      69745379 
+ 2668      6E6300
+ 2669              	.LASF7:
+ 2670 0336 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2670      20756E73 
+ 2670      69676E65 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 57
+
+
+ 2670      6420696E 
+ 2670      7400
+ 2671              	.LASF14:
+ 2672 0348 646F7562 		.ascii	"double\000"
+ 2672      6C6500
+ 2673              	.LASF21:
+ 2674 034f 6E726632 		.ascii	"nrf24_tx_address\000"
+ 2674      345F7478 
+ 2674      5F616464 
+ 2674      72657373 
+ 2674      00
+ 2675              	.LASF39:
+ 2676 0360 6E726632 		.ascii	"nrf24_transferSync\000"
+ 2676      345F7472 
+ 2676      616E7366 
+ 2676      65725379 
+ 2676      6E6300
+ 2677              	.LASF37:
+ 2678 0373 6E726632 		.ascii	"nrf24_powerUpTx\000"
+ 2678      345F706F 
+ 2678      77657255 
+ 2678      70547800 
+ 2679              	.LASF38:
+ 2680 0383 6E726632 		.ascii	"nrf24_powerDown\000"
+ 2680      345F706F 
+ 2680      77657244 
+ 2680      6F776E00 
+ 2681              	.LASF5:
+ 2682 0393 5F5F696E 		.ascii	"__int32_t\000"
+ 2682      7433325F 
+ 2682      7400
+ 2683              	.LASF52:
+ 2684 039d 6E726632 		.ascii	"nrf24_miso_digitalRead\000"
+ 2684      345F6D69 
+ 2684      736F5F64 
+ 2684      69676974 
+ 2684      616C5265 
+ 2685              	.LASF48:
+ 2686 03b4 6E726632 		.ascii	"nrf24_csn_digitalWrite\000"
+ 2686      345F6373 
+ 2686      6E5F6469 
+ 2686      67697461 
+ 2686      6C577269 
+ 2687              	.LASF54:
+ 2688 03cb 7061796C 		.ascii	"payload_len\000"
+ 2688      6F61645F 
+ 2688      6C656E00 
+ 2689              	.LASF53:
+ 2690 03d7 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2690      52784275 
+ 2690      66666572 
+ 2690      00
+ 2691              	.LASF41:
+ 2692 03e4 64617461 		.ascii	"datain\000"
+ 2692      696E00
+ 2693              	.LASF20:
+ 2694 03eb 6E726632 		.ascii	"nrf24_rx_address\000"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc7jd9Vm.s 			page 58
+
+
+ 2694      345F7278 
+ 2694      5F616464 
+ 2694      72657373 
+ 2694      00
+ 2695              	.LASF43:
+ 2696 03fc 6E726632 		.ascii	"nrf24_configRegister\000"
+ 2696      345F636F 
+ 2696      6E666967 
+ 2696      52656769 
+ 2696      73746572 
+ 2697              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

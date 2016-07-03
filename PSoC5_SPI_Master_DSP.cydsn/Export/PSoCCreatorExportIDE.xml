@@ -7,7 +7,7 @@
       <Tool Name="prebuild" Command="" Options="" />
       <Tool Name="assembler" Command="arm-none-eabi-as.exe" Options="-mcpu=cortex-m3 -mthumb -I. -IGenerated_Source\PSoC5 -alh=${OutputDir}/${CompileFile}.lst -g" />
       <Tool Name="compiler" Command="arm-none-eabi-gcc.exe" Options="-mcpu=cortex-m3 -mthumb -Wno-main -I. -IGenerated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -Wall -ffunction-sections -O0 -ffat-lto-objects" />
-      <Tool Name="linker" Command="arm-none-eabi-gcc.exe" Options="-mcpu=cortex-m3 -mthumb -g -ffunction-sections -O0 -L Generated_Source\PSoC5 -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections" />
+      <Tool Name="linker" Command="arm-none-eabi-gcc.exe" Options="-mcpu=cortex-m3 -mthumb -g -ffunction-sections -O0 -ffat-lto-objects -L Generated_Source\PSoC5 -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T Generated_Source\PSoC5\cm3gcc.ld -specs=nano.specs -Wl,--gc-sections" />
       <Tool Name="postbuild" Command="" Options="" />
     </Toolchain>
     <Toolchain Name="ARM MDK Generic" Selected="False">
@@ -25,7 +25,7 @@
       <Tool Name="postbuild" Command="" Options="" />
     </Toolchain>
   </Toolchains>
-  <Project Name="PSoC5_SPI_Master_DSP" Path="C:\Users\Lukas Creutzburg\Documents\GitHub\freeDSPPSoC-I2C\PSoC5_SPI_Master_DSP.cydsn" Version="5.30" Type="Normal">
+  <Project Name="PSoC5_SPI_Master_DSP" Path="C:\Users\Lukas Creutzburg\Documents\GitHub\freeDSPPSoC-I2C\PSoC5_SPI_Master_DSP.cydsn" Version="5.40" Type="Normal">
     <CMSIS_SVD_File>PSoC5_SPI_Master_DSP.svd</CMSIS_SVD_File>
     <Datasheet />
     <LinkerFiles>
@@ -41,7 +41,7 @@
           <File BuildType="BUILD" Toolchain="">.\spimaster.c</File>
           <File BuildType="BUILD" Toolchain="">.\dsp.c</File>
           <File BuildType="BUILD" Toolchain="">.\i2s.c</File>
-          <File BuildType="BUILD" Toolchain="">.\nrf24l01.c</File>
+          <File BuildType="BUILD" Toolchain="">.\spislave.c</File>
           <File BuildType="BUILD" Toolchain="">.\cyapicallbacks.h</File>
           <File BuildType="BUILD" Toolchain="">.\main.h</File>
           <File BuildType="BUILD" Toolchain="">.\uart.h</File>
@@ -49,10 +49,12 @@
           <File BuildType="BUILD" Toolchain="">.\dsp.h</File>
           <File BuildType="BUILD" Toolchain="">.\ADAU1452Registers.h</File>
           <File BuildType="BUILD" Toolchain="">.\i2s.h</File>
-          <File BuildType="BUILD" Toolchain="">.\nrf24l01.h</File>
           <File BuildType="BUILD" Toolchain="">.\DSP_program.h</File>
           <File BuildType="BUILD" Toolchain="">.\DSP_dm0.h</File>
           <File BuildType="BUILD" Toolchain="">.\DSP_dm1.h</File>
+          <File BuildType="BUILD" Toolchain="">.\sine.h</File>
+          <File BuildType="BUILD" Toolchain="">.\rect.h</File>
+          <File BuildType="BUILD" Toolchain="">.\spislave.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\Lukas Creutzburg\Documents\GitHub\freeDSPPSoC-I2C\PSoC5_SPI_Master_DSP.cydsn\Generated_Source\PSoC5">
@@ -119,6 +121,8 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\core_cmInstr.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Cm3Iar.icf</File>
           <File BuildType="BUILD" Toolchain="ARM IAR Generic">.\Generated_Source\PSoC5\CyBootAsmIar.s</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\cmsis_armcc.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\cmsis_gcc.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\project.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\USBUART.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\USBUART.h</File>
@@ -160,36 +164,37 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\I2S_1_PVT.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\I2S_Clock.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\I2S_Clock.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MISO_Funk_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MISO_Funk.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MISO_Funk.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MOSI_Funk_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MOSI_Funk.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MOSI_Funk.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SCLK_Funk_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SCLK_Funk.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SCLK_Funk.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SPIM_Funk.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SPIM_Funk.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SPIM_Funk_PM.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SPIM_Funk_INT.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SPIM_Funk_PVT.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SS_Funk_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SS_Funk.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SS_Funk.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Clock_1.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Clock_1.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\IRQ_Funk_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\IRQ_Funk.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\IRQ_Funk.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\CE_Funk_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\CE_Funk.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\CE_Funk.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Funk_RX_interrupt.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Funk_RX_interrupt.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\LED_aliases.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\LED.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\LED.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\TxDMA_dma.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\TxDMA_dma.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MISO_S_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MISO_S.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MISO_S.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MOSI_S_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MOSI_S.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\MOSI_S.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SCLK_S_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SCLK_S.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SCLK_S.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SPIS.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SPIS.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SPIS_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SPIS_INT.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SPIS_BOOT.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SPIS_PVT.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SS_S_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SS_S.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SS_S.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Clock_SPISlave.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Clock_SPISlave.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Get_state_Pin_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Get_state_Pin.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Get_state_Pin.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Ready_Pin_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Ready_Pin.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Ready_Pin.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\Lukas Creutzburg\Documents\GitHub\freeDSPPSoC-I2C\PSoC5_SPI_Master_DSP.cydsn\Export\ARM_GCC_Generic">
@@ -225,7 +230,16 @@
       <Folder BuildType="EXCLUDE" Path=".\CortexM0">
         <Files Root="C:\Users\Lukas Creutzburg\Documents\GitHub\freeDSPPSoC-I2C\PSoC5_SPI_Master_DSP.cydsn" />
       </Folder>
+      <Folder BuildType="EXCLUDE" Path=".\CortexM0p">
+        <Files Root="C:\Users\Lukas Creutzburg\Documents\GitHub\freeDSPPSoC-I2C\PSoC5_SPI_Master_DSP.cydsn" />
+      </Folder>
       <Folder BuildType="EXCLUDE" Path=".\CortexM3">
+        <Files Root="C:\Users\Lukas Creutzburg\Documents\GitHub\freeDSPPSoC-I2C\PSoC5_SPI_Master_DSP.cydsn" />
+      </Folder>
+      <Folder BuildType="EXCLUDE" Path=".\CortexM4">
+        <Files Root="C:\Users\Lukas Creutzburg\Documents\GitHub\freeDSPPSoC-I2C\PSoC5_SPI_Master_DSP.cydsn" />
+      </Folder>
+      <Folder BuildType="EXCLUDE" Path=".\CortexM7">
         <Files Root="C:\Users\Lukas Creutzburg\Documents\GitHub\freeDSPPSoC-I2C\PSoC5_SPI_Master_DSP.cydsn" />
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\Generated_Source\PSoC3">

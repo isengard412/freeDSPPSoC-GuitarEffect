@@ -98,7 +98,8 @@ void DSPinit()
     /* Serial Port Control */
     DSPwriteWord16(0xF200,0x0102);
     CyDelay(1);
-    DSPwriteWord16(0xF204,0x2102);
+    //0b    001-LRCLK1   001-BCLK1   0-LRCLKMODE   0-LRCLKPOL   0-BCLKPOL   01-WORDLENGTH   00-MSBPOS   000-32bitcycles64bitframes
+    DSPwriteWord16(SDATA_IN_1,0b0010010001000000);
     CyDelay(1);
     DSPwriteWord16(0xF208,0x0102);
     CyDelay(1);
@@ -263,7 +264,7 @@ void DSPi2sInput(uint8 active)
 
 void DSPpitch(uint32 pitch)
 {
-    /* Wert zwischen 0x00008889 und 0xFFFF7777 */
+    /* Wert zwischen +-34953 */
     DSPsafeLoad(0x0059,pitch);
 }
 

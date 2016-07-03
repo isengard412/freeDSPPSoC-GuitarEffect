@@ -27,7 +27,7 @@
 ***************************************/
 
 #define I2S_1_DIRECTION              (2u)
-#define I2S_1_WORD_SELECT            (32u)
+#define I2S_1_WORD_SELECT            (64u)
 #define I2S_1_DYNAMIC_BIT_RESOLUTION (0u == 1u)
 #define I2S_1_RX_DATA_INTERLEAVING   (1u)
 #define I2S_1_TX_DATA_INTERLEAVING   (1u)
