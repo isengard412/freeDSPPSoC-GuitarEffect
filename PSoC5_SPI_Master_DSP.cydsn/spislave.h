@@ -98,7 +98,7 @@ void SPISsendArray(uint8* numbers,uint16 numberOfbytes);
 *  uint8 received
 *
 *******************************************************************************/
-uint8 SPISreadNumber();
+uint8 SPISreadNumber(uint8 waiting);
 
 /*******************************************************************************
 * Function Name: SPIreadFinished

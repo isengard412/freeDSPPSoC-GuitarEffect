@@ -13,7 +13,6 @@
 #define CY_MAIN_H
 
 #include <project.h>
-#include "uart.h"
 #include "dsp.h"
 #include "i2s.h"
 #include "spislave.h"

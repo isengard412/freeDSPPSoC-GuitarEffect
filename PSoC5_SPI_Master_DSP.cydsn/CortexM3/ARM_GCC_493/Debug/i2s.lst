@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
 
 
    1              		.syntax unified
@@ -25,18 +25,44 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 1
   22              		.global _printf_float
   23              		.global _printf_float
   24              		.thumb
-  25              		.comm	txBuff,1984,4
-  26              		.comm	txDmaChan,4,4
-  27              		.comm	txDmaTd,4,4
-  28              		.section	.text.I2Sinit,"ax",%progbits
-  29              		.align	2
-  30              		.global	I2Sinit
-  31              		.thumb
-  32              		.thumb_func
-  33              		.type	I2Sinit, %function
-  34              	I2Sinit:
-  35              	.LFB63:
-  36              		.file 1 ".\\i2s.c"
+  25              		.comm	soundBuffer,480,4
+  26              		.global	outIndex
+  27              		.bss
+  28              		.align	1
+  29              		.type	outIndex, %object
+  30              		.size	outIndex, 2
+  31              	outIndex:
+  32 0000 0000     		.space	2
+  33              		.global	inIndex
+  34              		.align	1
+  35              		.type	inIndex, %object
+  36              		.size	inIndex, 2
+  37              	inIndex:
+  38 0002 0000     		.space	2
+  39              		.global	syncDma
+  40              		.type	syncDma, %object
+  41              		.size	syncDma, 1
+  42              	syncDma:
+  43 0004 00       		.space	1
+  44              		.global	syncDmaCounter
+  45              		.type	syncDmaCounter, %object
+  46              		.size	syncDmaCounter, 1
+  47              	syncDmaCounter:
+  48 0005 00       		.space	1
+  49              		.comm	TxOutDmaCh,1,1
+  50              		.comm	TxOutDmaTd,10,4
+  51              		.section	.text.TxDmaDone,"ax",%progbits
+  52              		.align	2
+  53              		.global	TxDmaDone
+  54              		.thumb
+  55              		.thumb_func
+  56              		.type	TxDmaDone, %function
+  57              	TxDmaDone:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 2
+
+
+  58              	.LFB63:
+  59              		.file 1 ".\\i2s.c"
    1:.\i2s.c       **** /*******************************************************************************
    2:.\i2s.c       **** * File Name: i2s.c
    3:.\i2s.c       **** *
@@ -51,923 +77,1491 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 1
   12:.\i2s.c       **** 
   13:.\i2s.c       **** #include "i2s.h"
   14:.\i2s.c       **** 
-  15:.\i2s.c       **** /* Data to be transmitted by Tx */
-  16:.\i2s.c       **** uint32 txBuff[BUFFER_SIZE];
-  17:.\i2s.c       **** 
-  18:.\i2s.c       **** /* Variable declarations for TxDMA */
-  19:.\i2s.c       **** uint32 txDmaChan;
-  20:.\i2s.c       **** uint32 txDmaTd[1u];
-  21:.\i2s.c       **** 
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 2
+  15:.\i2s.c       **** /* Circular buffer for audio stream. */
+  16:.\i2s.c       **** uint8 soundBuffer[BUFFER_SIZE];
+  17:.\i2s.c       **** volatile uint16 outIndex = 0u;
+  18:.\i2s.c       **** volatile uint16 inIndex  = 0u;
+  19:.\i2s.c       **** 
+  20:.\i2s.c       **** /* Variables used to manage DMA. */
+  21:.\i2s.c       **** volatile uint8 syncDma = 0u;
+  22:.\i2s.c       **** volatile uint8 syncDmaCounter = 0u;
+  23:.\i2s.c       **** 
+  24:.\i2s.c       **** /* Variable declarations for TxoutDMA. */
+  25:.\i2s.c       **** uint8 TxOutDmaCh;
+  26:.\i2s.c       **** uint8 TxOutDmaTd[NUM_OF_BUFFERS];
+  27:.\i2s.c       **** 
+  28:.\i2s.c       **** CY_ISR(TxDmaDone)
+  29:.\i2s.c       **** {
+  60              		.loc 1 29 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 0
+  63              		@ frame_needed = 1, uses_anonymous_args = 0
+  64 0000 80B5     		push	{r7, lr}
+  65              		.cfi_def_cfa_offset 8
+  66              		.cfi_offset 7, -8
+  67              		.cfi_offset 14, -4
+  68 0002 00AF     		add	r7, sp, #0
+  69              		.cfi_def_cfa_register 7
+  30:.\i2s.c       ****     /* Move to next buffer location and adjust to be within buffer size. */
+  31:.\i2s.c       ****     ++outIndex;
+  70              		.loc 1 31 0
+  71 0004 134B     		ldr	r3, .L5
+  72 0006 1B88     		ldrh	r3, [r3]	@ movhi
+  73 0008 9BB2     		uxth	r3, r3
+  74 000a 0133     		adds	r3, r3, #1
+  75 000c 9AB2     		uxth	r2, r3
+  76 000e 114B     		ldr	r3, .L5
+  77 0010 1A80     		strh	r2, [r3]	@ movhi
+  32:.\i2s.c       ****     outIndex = (outIndex >= NUM_OF_BUFFERS) ? 0u : outIndex;
+  78              		.loc 1 32 0
+  79 0012 104B     		ldr	r3, .L5
+  80 0014 1B88     		ldrh	r3, [r3]	@ movhi
+  81 0016 9BB2     		uxth	r3, r3
+  82 0018 092B     		cmp	r3, #9
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 3
 
 
-  22:.\i2s.c       **** 
-  23:.\i2s.c       **** void I2Sinit()
-  24:.\i2s.c       **** {
-  37              		.loc 1 24 0
-  38              		.cfi_startproc
-  39              		@ args = 0, pretend = 0, frame = 8
-  40              		@ frame_needed = 1, uses_anonymous_args = 0
-  41 0000 80B5     		push	{r7, lr}
-  42              		.cfi_def_cfa_offset 8
-  43              		.cfi_offset 7, -8
-  44              		.cfi_offset 14, -4
-  45 0002 82B0     		sub	sp, sp, #8
-  46              		.cfi_def_cfa_offset 16
-  47 0004 00AF     		add	r7, sp, #0
-  48              		.cfi_def_cfa_register 7
-  25:.\i2s.c       ****     int i;
-  26:.\i2s.c       ****     for(i=0;i<255;i++){
-  49              		.loc 1 26 0
-  50 0006 0023     		movs	r3, #0
-  51 0008 7B60     		str	r3, [r7, #4]
-  52 000a 08E0     		b	.L2
-  53              	.L3:
-  27:.\i2s.c       ****         txBuff[i]=(uint32)(0xFFFFFFFF);
-  54              		.loc 1 27 0 discriminator 3
-  55 000c 184A     		ldr	r2, .L7
-  56 000e 7B68     		ldr	r3, [r7, #4]
-  57 0010 4FF0FF31 		mov	r1, #-1
-  58 0014 42F82310 		str	r1, [r2, r3, lsl #2]
-  26:.\i2s.c       ****         txBuff[i]=(uint32)(0xFFFFFFFF);
-  59              		.loc 1 26 0 discriminator 3
-  60 0018 7B68     		ldr	r3, [r7, #4]
-  61 001a 0133     		adds	r3, r3, #1
-  62 001c 7B60     		str	r3, [r7, #4]
-  63              	.L2:
-  26:.\i2s.c       ****         txBuff[i]=(uint32)(0xFFFFFFFF);
-  64              		.loc 1 26 0 is_stmt 0 discriminator 1
-  65 001e 7B68     		ldr	r3, [r7, #4]
-  66 0020 FE2B     		cmp	r3, #254
-  67 0022 F3DD     		ble	.L3
-  28:.\i2s.c       ****     }
-  29:.\i2s.c       ****     for(i=255;i<496;i++){
-  68              		.loc 1 29 0 is_stmt 1
-  69 0024 FF23     		movs	r3, #255
-  70 0026 7B60     		str	r3, [r7, #4]
-  71 0028 07E0     		b	.L4
-  72              	.L5:
-  30:.\i2s.c       ****         txBuff[i]=(uint32)(0x00000000);
-  73              		.loc 1 30 0 discriminator 3
-  74 002a 114A     		ldr	r2, .L7
-  75 002c 7B68     		ldr	r3, [r7, #4]
-  76 002e 0021     		movs	r1, #0
-  77 0030 42F82310 		str	r1, [r2, r3, lsl #2]
-  29:.\i2s.c       ****         txBuff[i]=(uint32)(0x00000000);
-  78              		.loc 1 29 0 discriminator 3
-  79 0034 7B68     		ldr	r3, [r7, #4]
-  80 0036 0133     		adds	r3, r3, #1
-  81 0038 7B60     		str	r3, [r7, #4]
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 3
+  83 001a 03D8     		bhi	.L2
+  84              		.loc 1 32 0 is_stmt 0 discriminator 1
+  85 001c 0D4B     		ldr	r3, .L5
+  86 001e 1B88     		ldrh	r3, [r3]	@ movhi
+  87 0020 9BB2     		uxth	r3, r3
+  88 0022 00E0     		b	.L3
+  89              	.L2:
+  90              		.loc 1 32 0 discriminator 2
+  91 0024 0023     		movs	r3, #0
+  92              	.L3:
+  93              		.loc 1 32 0 discriminator 4
+  94 0026 0B4A     		ldr	r2, .L5
+  95 0028 1380     		strh	r3, [r2]	@ movhi
+  33:.\i2s.c       **** 
+  34:.\i2s.c       ****     if (outIndex == inIndex)
+  96              		.loc 1 34 0 is_stmt 1 discriminator 4
+  97 002a 0A4B     		ldr	r3, .L5
+  98 002c 1B88     		ldrh	r3, [r3]	@ movhi
+  99 002e 9AB2     		uxth	r2, r3
+ 100 0030 094B     		ldr	r3, .L5+4
+ 101 0032 1B88     		ldrh	r3, [r3]	@ movhi
+ 102 0034 9BB2     		uxth	r3, r3
+ 103 0036 9A42     		cmp	r2, r3
+ 104 0038 0AD1     		bne	.L1
+  35:.\i2s.c       ****     {
+  36:.\i2s.c       ****         /* Stop DMA operation. */
+  37:.\i2s.c       ****         CyDmaChDisable(TxOutDmaCh);
+ 105              		.loc 1 37 0
+ 106 003a 084B     		ldr	r3, .L5+8
+ 107 003c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 108 003e 1846     		mov	r0, r3
+ 109 0040 FFF7FEFF 		bl	CyDmaChDisable
+  38:.\i2s.c       **** 
+  39:.\i2s.c       ****         /* Enable underflow delayed start. */
+  40:.\i2s.c       ****         syncDma = 0u;
+ 110              		.loc 1 40 0
+ 111 0044 064B     		ldr	r3, .L5+12
+ 112 0046 0022     		movs	r2, #0
+ 113 0048 1A70     		strb	r2, [r3]
+  41:.\i2s.c       ****         syncDmaCounter = 0u;
+ 114              		.loc 1 41 0
+ 115 004a 064B     		ldr	r3, .L5+16
+ 116 004c 0022     		movs	r2, #0
+ 117 004e 1A70     		strb	r2, [r3]
+ 118              	.L1:
+  42:.\i2s.c       ****     }
+  43:.\i2s.c       **** }
+ 119              		.loc 1 43 0
+ 120 0050 80BD     		pop	{r7, pc}
+ 121              	.L6:
+ 122 0052 00BF     		.align	2
+ 123              	.L5:
+ 124 0054 00000000 		.word	outIndex
+ 125 0058 00000000 		.word	inIndex
+ 126 005c 00000000 		.word	TxOutDmaCh
+ 127 0060 00000000 		.word	syncDma
+ 128 0064 00000000 		.word	syncDmaCounter
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 4
 
 
-  82              	.L4:
-  29:.\i2s.c       ****         txBuff[i]=(uint32)(0x00000000);
-  83              		.loc 1 29 0 is_stmt 0 discriminator 1
-  84 003a 7B68     		ldr	r3, [r7, #4]
-  85 003c B3F5F87F 		cmp	r3, #496
-  86 0040 F3DB     		blt	.L5
-  31:.\i2s.c       ****     }
-  32:.\i2s.c       ****     I2S_1_Start();
-  87              		.loc 1 32 0 is_stmt 1
-  88 0042 FFF7FEFF 		bl	I2S_1_Start
-  33:.\i2s.c       ****     I2S_1_EnableTx();
-  89              		.loc 1 33 0
-  90 0046 FFF7FEFF 		bl	I2S_1_EnableTx
-  34:.\i2s.c       ****     
-  35:.\i2s.c       ****     /* Configure DMA */ 
-  36:.\i2s.c       ****     DmaTxConfiguration();
-  91              		.loc 1 36 0
-  92 004a FFF7FEFF 		bl	DmaTxConfiguration
-  37:.\i2s.c       ****     
-  38:.\i2s.c       ****     while(0u != (I2S_1_ReadTxStatus() & I2S_1_TX_FIFO_0_NOT_FULL))
-  93              		.loc 1 38 0
-  94 004e 00BF     		nop
-  95              	.L6:
-  96              		.loc 1 38 0 is_stmt 0 discriminator 1
-  97 0050 084B     		ldr	r3, .L7+4
-  98 0052 1B78     		ldrb	r3, [r3]
-  99 0054 DBB2     		uxtb	r3, r3
- 100 0056 03F00203 		and	r3, r3, #2
- 101 005a 002B     		cmp	r3, #0
- 102 005c F8D1     		bne	.L6
-  39:.\i2s.c       ****     {
-  40:.\i2s.c       ****         /* Wait for TxDMA to fill Tx FIFO */
-  41:.\i2s.c       ****     }
-  42:.\i2s.c       ****     CyDelayUs(1);
- 103              		.loc 1 42 0 is_stmt 1
- 104 005e 0120     		movs	r0, #1
- 105 0060 FFF7FEFF 		bl	CyDelayUs
-  43:.\i2s.c       ****     I2S_1_EnableTx();   /* Enable Tx direction */
- 106              		.loc 1 43 0
- 107 0064 FFF7FEFF 		bl	I2S_1_EnableTx
-  44:.\i2s.c       **** }
- 108              		.loc 1 44 0
- 109 0068 0837     		adds	r7, r7, #8
- 110              		.cfi_def_cfa_offset 8
- 111 006a BD46     		mov	sp, r7
- 112              		.cfi_def_cfa_register 13
- 113              		@ sp needed
- 114 006c 80BD     		pop	{r7, pc}
- 115              	.L8:
- 116 006e 00BF     		.align	2
- 117              	.L7:
- 118 0070 00000000 		.word	txBuff
- 119 0074 66650040 		.word	1073767782
- 120              		.cfi_endproc
- 121              	.LFE63:
- 122              		.size	I2Sinit, .-I2Sinit
- 123              		.section	.text.I2Stest,"ax",%progbits
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 4
-
-
- 124              		.align	2
- 125              		.global	I2Stest
- 126              		.thumb
- 127              		.thumb_func
- 128              		.type	I2Stest, %function
- 129              	I2Stest:
- 130              	.LFB64:
-  45:.\i2s.c       **** 
-  46:.\i2s.c       **** void I2Stest()
-  47:.\i2s.c       **** {
- 131              		.loc 1 47 0
- 132              		.cfi_startproc
- 133              		@ args = 0, pretend = 0, frame = 0
- 134              		@ frame_needed = 1, uses_anonymous_args = 0
- 135 0000 80B5     		push	{r7, lr}
- 136              		.cfi_def_cfa_offset 8
- 137              		.cfi_offset 7, -8
- 138              		.cfi_offset 14, -4
- 139 0002 00AF     		add	r7, sp, #0
- 140              		.cfi_def_cfa_register 7
-  48:.\i2s.c       ****     //CyDelay(500);
-  49:.\i2s.c       ****     //DSPi2sInput(0);
-  50:.\i2s.c       ****     CyDelay(500);
- 141              		.loc 1 50 0
- 142 0004 4FF4FA70 		mov	r0, #500
- 143 0008 FFF7FEFF 		bl	CyDelay
-  51:.\i2s.c       ****     //DSPi2sInput(1);
-  52:.\i2s.c       **** }
- 144              		.loc 1 52 0
- 145 000c 80BD     		pop	{r7, pc}
- 146              		.cfi_endproc
- 147              	.LFE64:
- 148              		.size	I2Stest, .-I2Stest
- 149 000e 00BF     		.section	.text.DmaTxConfiguration,"ax",%progbits
- 150              		.align	2
- 151              		.global	DmaTxConfiguration
- 152              		.thumb
- 153              		.thumb_func
- 154              		.type	DmaTxConfiguration, %function
- 155              	DmaTxConfiguration:
- 156              	.LFB65:
-  53:.\i2s.c       **** 
+ 129              		.cfi_endproc
+ 130              	.LFE63:
+ 131              		.size	TxDmaDone, .-TxDmaDone
+ 132              		.section	.text.I2Sinit,"ax",%progbits
+ 133              		.align	2
+ 134              		.global	I2Sinit
+ 135              		.thumb
+ 136              		.thumb_func
+ 137              		.type	I2Sinit, %function
+ 138              	I2Sinit:
+ 139              	.LFB64:
+  44:.\i2s.c       **** 
+  45:.\i2s.c       **** void I2Sinit()
+  46:.\i2s.c       **** {
+ 140              		.loc 1 46 0
+ 141              		.cfi_startproc
+ 142              		@ args = 0, pretend = 0, frame = 0
+ 143              		@ frame_needed = 1, uses_anonymous_args = 0
+ 144 0000 80B5     		push	{r7, lr}
+ 145              		.cfi_def_cfa_offset 8
+ 146              		.cfi_offset 7, -8
+ 147              		.cfi_offset 14, -4
+ 148 0002 00AF     		add	r7, sp, #0
+ 149              		.cfi_def_cfa_register 7
+  47:.\i2s.c       ****     I2S_1_Start();
+ 150              		.loc 1 47 0
+ 151 0004 FFF7FEFF 		bl	I2S_1_Start
+  48:.\i2s.c       **** 
+  49:.\i2s.c       ****     
+  50:.\i2s.c       ****     /* Configure DMA */ 
+  51:.\i2s.c       ****     DmaTxConfiguration();
+ 152              		.loc 1 51 0
+ 153 0008 FFF7FEFF 		bl	DmaTxConfiguration
+  52:.\i2s.c       ****     I2S_1_EnableTx();
+ 154              		.loc 1 52 0
+ 155 000c FFF7FEFF 		bl	I2S_1_EnableTx
+  53:.\i2s.c       **** }
+ 156              		.loc 1 53 0
+ 157 0010 80BD     		pop	{r7, pc}
+ 158              		.cfi_endproc
+ 159              	.LFE64:
+ 160              		.size	I2Sinit, .-I2Sinit
+ 161 0012 00BF     		.section	.text.I2Stest,"ax",%progbits
+ 162              		.align	2
+ 163              		.global	I2Stest
+ 164              		.thumb
+ 165              		.thumb_func
+ 166              		.type	I2Stest, %function
+ 167              	I2Stest:
+ 168              	.LFB65:
   54:.\i2s.c       **** 
-  55:.\i2s.c       **** void DmaTxConfiguration(void)
+  55:.\i2s.c       **** void I2Stest()
   56:.\i2s.c       **** {
- 157              		.loc 1 56 0
- 158              		.cfi_startproc
- 159              		@ args = 0, pretend = 0, frame = 0
- 160              		@ frame_needed = 1, uses_anonymous_args = 0
- 161 0000 80B5     		push	{r7, lr}
- 162              		.cfi_def_cfa_offset 8
- 163              		.cfi_offset 7, -8
- 164              		.cfi_offset 14, -4
- 165 0002 00AF     		add	r7, sp, #0
- 166              		.cfi_def_cfa_register 7
-  57:.\i2s.c       ****     /* Tx DMA Config
-  58:.\i2s.c       ****     * Init DMA, 1 byte bursts, each burst requires a request
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 5
+ 169              		.loc 1 56 0
+ 170              		.cfi_startproc
+ 171              		@ args = 0, pretend = 0, frame = 0
+ 172              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 5
 
 
-  59:.\i2s.c       ****     */ 
-  60:.\i2s.c       ****     txDmaChan = TxDMA_DmaInitialize(TxDMA_BYTES_PER_BURST, TxDMA_REQUEST_PER_BURST, 
- 167              		.loc 1 60 0
- 168 0004 0120     		movs	r0, #1
- 169 0006 0121     		movs	r1, #1
- 170 0008 41F6FF72 		movw	r2, #8191
- 171 000c 4FF48043 		mov	r3, #16384
- 172 0010 FFF7FEFF 		bl	TxDMA_DmaInitialize
- 173 0014 0346     		mov	r3, r0
- 174 0016 1A46     		mov	r2, r3
- 175 0018 184B     		ldr	r3, .L11
- 176 001a 1A60     		str	r2, [r3]
-  61:.\i2s.c       ****                                     HI16(TxDMA_SRC_BASE), HI16(TxDMA_DST_BASE));
-  62:.\i2s.c       **** 
-  63:.\i2s.c       ****     txDmaTd[0u] = CyDmaTdAllocate();
- 177              		.loc 1 63 0
- 178 001c FFF7FEFF 		bl	CyDmaTdAllocate
- 179 0020 0346     		mov	r3, r0
- 180 0022 1A46     		mov	r2, r3
- 181 0024 164B     		ldr	r3, .L11+4
- 182 0026 1A60     		str	r2, [r3]
-  64:.\i2s.c       **** 
-  65:.\i2s.c       ****     /* Configure this Td chain as follows:
-  66:.\i2s.c       ****     *  - The TD is looping on itself
-  67:.\i2s.c       ****     *  - Increment the source address, but not the destination address   
-  68:.\i2s.c       ****     */
-  69:.\i2s.c       ****     CyDmaTdSetConfiguration(txDmaTd[0u], BUFFER_SIZE, txDmaTd[0u], TD_INC_SRC_ADR);
- 183              		.loc 1 69 0
- 184 0028 154B     		ldr	r3, .L11+4
- 185 002a 1B68     		ldr	r3, [r3]
- 186 002c DAB2     		uxtb	r2, r3
- 187 002e 144B     		ldr	r3, .L11+4
- 188 0030 1B68     		ldr	r3, [r3]
- 189 0032 DBB2     		uxtb	r3, r3
- 190 0034 1046     		mov	r0, r2
- 191 0036 4FF4F871 		mov	r1, #496
- 192 003a 1A46     		mov	r2, r3
- 193 003c 0123     		movs	r3, #1
- 194 003e FFF7FEFF 		bl	CyDmaTdSetConfiguration
-  70:.\i2s.c       ****     
-  71:.\i2s.c       ****     /* From the memory to the I2S */
-  72:.\i2s.c       ****     CyDmaTdSetAddress(txDmaTd[0u], LO16((uint32)txBuff), LO16((uint32)I2S_1_TX_CH0_F0_PTR));
- 195              		.loc 1 72 0
- 196 0042 0F4B     		ldr	r3, .L11+4
- 197 0044 1B68     		ldr	r3, [r3]
- 198 0046 DAB2     		uxtb	r2, r3
- 199 0048 0E4B     		ldr	r3, .L11+8
- 200 004a 9BB2     		uxth	r3, r3
- 201 004c 1046     		mov	r0, r2
- 202 004e 1946     		mov	r1, r3
- 203 0050 46F24652 		movw	r2, #25926
- 204 0054 FFF7FEFF 		bl	CyDmaTdSetAddress
+ 173              		@ link register save eliminated.
+ 174 0000 80B4     		push	{r7}
+ 175              		.cfi_def_cfa_offset 4
+ 176              		.cfi_offset 7, -4
+ 177 0002 00AF     		add	r7, sp, #0
+ 178              		.cfi_def_cfa_register 7
+  57:.\i2s.c       **** //not yet implemented!
+  58:.\i2s.c       **** }
+ 179              		.loc 1 58 0
+ 180 0004 BD46     		mov	sp, r7
+ 181              		.cfi_def_cfa_register 13
+ 182              		@ sp needed
+ 183 0006 5DF8047B 		ldr	r7, [sp], #4
+ 184              		.cfi_restore 7
+ 185              		.cfi_def_cfa_offset 0
+ 186 000a 7047     		bx	lr
+ 187              		.cfi_endproc
+ 188              	.LFE65:
+ 189              		.size	I2Stest, .-I2Stest
+ 190              		.section	.text.DmaTxConfiguration,"ax",%progbits
+ 191              		.align	2
+ 192              		.global	DmaTxConfiguration
+ 193              		.thumb
+ 194              		.thumb_func
+ 195              		.type	DmaTxConfiguration, %function
+ 196              	DmaTxConfiguration:
+ 197              	.LFB66:
+  59:.\i2s.c       **** 
+  60:.\i2s.c       **** 
+  61:.\i2s.c       **** void DmaTxConfiguration(void)
+  62:.\i2s.c       **** {
+ 198              		.loc 1 62 0
+ 199              		.cfi_startproc
+ 200              		@ args = 0, pretend = 0, frame = 8
+ 201              		@ frame_needed = 1, uses_anonymous_args = 0
+ 202 0000 90B5     		push	{r4, r7, lr}
+ 203              		.cfi_def_cfa_offset 12
+ 204              		.cfi_offset 4, -12
+ 205              		.cfi_offset 7, -8
+ 206              		.cfi_offset 14, -4
+ 207 0002 83B0     		sub	sp, sp, #12
+ 208              		.cfi_def_cfa_offset 24
+ 209 0004 00AF     		add	r7, sp, #0
+ 210              		.cfi_def_cfa_register 7
+  63:.\i2s.c       ****     uint8 i;
+  64:.\i2s.c       ****     /* Initialize DMA channel. */
+  65:.\i2s.c       ****     TxOutDmaCh = TxDma_DmaInitialize(TX_DMA_BYTES_PER_BURST, TX_DMA_REQUEST_PER_BURST,
+  66:.\i2s.c       ****                                             HI16(TX_DMA_SRC_BASE), HI16(TX_DMA_DST_BASE));
+ 211              		.loc 1 66 0
+ 212 0006 324B     		ldr	r3, .L16
+ 213 0008 1B0C     		lsrs	r3, r3, #16
+  65:.\i2s.c       ****                                             HI16(TX_DMA_SRC_BASE), HI16(TX_DMA_DST_BASE));
+ 214              		.loc 1 65 0
+ 215 000a 9BB2     		uxth	r3, r3
+ 216 000c 0120     		movs	r0, #1
+ 217 000e 0121     		movs	r1, #1
+ 218 0010 1A46     		mov	r2, r3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 6
+
+
+ 219 0012 4FF48043 		mov	r3, #16384
+ 220 0016 FFF7FEFF 		bl	TxDma_DmaInitialize
+ 221 001a 0346     		mov	r3, r0
+ 222 001c 1A46     		mov	r2, r3
+ 223 001e 2D4B     		ldr	r3, .L16+4
+ 224 0020 1A70     		strb	r2, [r3]
+  67:.\i2s.c       **** 
+  68:.\i2s.c       ****     /* Allocate transfer descriptors for each buffer chunk. */
+  69:.\i2s.c       ****     for (i = 0u; i < NUM_OF_BUFFERS; ++i)
+ 225              		.loc 1 69 0
+ 226 0022 0023     		movs	r3, #0
+ 227 0024 FB71     		strb	r3, [r7, #7]
+ 228 0026 09E0     		b	.L10
+ 229              	.L11:
+  70:.\i2s.c       ****     {
+  71:.\i2s.c       ****         TxOutDmaTd[i] = CyDmaTdAllocate();
+ 230              		.loc 1 71 0 discriminator 3
+ 231 0028 FC79     		ldrb	r4, [r7, #7]	@ zero_extendqisi2
+ 232 002a FFF7FEFF 		bl	CyDmaTdAllocate
+ 233 002e 0346     		mov	r3, r0
+ 234 0030 1A46     		mov	r2, r3
+ 235 0032 294B     		ldr	r3, .L16+8
+ 236 0034 1A55     		strb	r2, [r3, r4]
+  69:.\i2s.c       ****     {
+ 237              		.loc 1 69 0 discriminator 3
+ 238 0036 FB79     		ldrb	r3, [r7, #7]
+ 239 0038 0133     		adds	r3, r3, #1
+ 240 003a FB71     		strb	r3, [r7, #7]
+ 241              	.L10:
+  69:.\i2s.c       ****     {
+ 242              		.loc 1 69 0 is_stmt 0 discriminator 1
+ 243 003c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 244 003e 092B     		cmp	r3, #9
+ 245 0040 F2D9     		bls	.L11
+  72:.\i2s.c       ****     }
   73:.\i2s.c       **** 
-  74:.\i2s.c       ****     /* Associate the TD with the channel */
-  75:.\i2s.c       ****     CyDmaChSetInitialTd(txDmaChan, txDmaTd[0u]);
- 205              		.loc 1 75 0
- 206 0058 084B     		ldr	r3, .L11
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 6
+  74:.\i2s.c       ****     /* Configure DMA transfer descriptors. */
+  75:.\i2s.c       ****     for (i = 0u; i < (NUM_OF_BUFFERS - 1u); ++i)
+ 246              		.loc 1 75 0 is_stmt 1
+ 247 0042 0023     		movs	r3, #0
+ 248 0044 FB71     		strb	r3, [r7, #7]
+ 249 0046 0FE0     		b	.L12
+ 250              	.L13:
+  76:.\i2s.c       ****     {
+  77:.\i2s.c       ****         /* Chain current and next DMA transfer descriptors to be in row. */
+  78:.\i2s.c       ****         CyDmaTdSetConfiguration(TxOutDmaTd[i], TRANSFER_SIZE, TxOutDmaTd[i + 1u],
+ 251              		.loc 1 78 0 discriminator 3
+ 252 0048 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 253 004a 234A     		ldr	r2, .L16+8
+ 254 004c D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
+ 255 004e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 256 0050 0133     		adds	r3, r3, #1
+ 257 0052 214A     		ldr	r2, .L16+8
+ 258 0054 D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+ 259 0056 0846     		mov	r0, r1
+ 260 0058 3021     		movs	r1, #48
+ 261 005a 1A46     		mov	r2, r3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 7
 
 
- 207 005a 1B68     		ldr	r3, [r3]
- 208 005c DAB2     		uxtb	r2, r3
- 209 005e 084B     		ldr	r3, .L11+4
- 210 0060 1B68     		ldr	r3, [r3]
- 211 0062 DBB2     		uxtb	r3, r3
- 212 0064 1046     		mov	r0, r2
- 213 0066 1946     		mov	r1, r3
- 214 0068 FFF7FEFF 		bl	CyDmaChSetInitialTd
-  76:.\i2s.c       **** 
-  77:.\i2s.c       ****     /* Enable the channel */
-  78:.\i2s.c       ****     CyDmaChEnable(txDmaChan, 1u);
- 215              		.loc 1 78 0
- 216 006c 034B     		ldr	r3, .L11
- 217 006e 1B68     		ldr	r3, [r3]
- 218 0070 DBB2     		uxtb	r3, r3
- 219 0072 1846     		mov	r0, r3
- 220 0074 0121     		movs	r1, #1
- 221 0076 FFF7FEFF 		bl	CyDmaChEnable
-  79:.\i2s.c       **** }
- 222              		.loc 1 79 0
- 223 007a 80BD     		pop	{r7, pc}
- 224              	.L12:
- 225              		.align	2
- 226              	.L11:
- 227 007c 00000000 		.word	txDmaChan
- 228 0080 00000000 		.word	txDmaTd
- 229 0084 00000000 		.word	txBuff
- 230              		.cfi_endproc
- 231              	.LFE65:
- 232              		.size	DmaTxConfiguration, .-DmaTxConfiguration
- 233              		.text
- 234              	.Letext0:
- 235              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
- 236              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
- 237              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
- 238              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
- 239              		.file 6 ".\\spimaster.h"
- 240              		.section	.debug_info,"",%progbits
- 241              	.Ldebug_info0:
- 242 0000 AA010000 		.4byte	0x1aa
- 243 0004 0400     		.2byte	0x4
- 244 0006 00000000 		.4byte	.Ldebug_abbrev0
- 245 000a 04       		.byte	0x4
- 246 000b 01       		.uleb128 0x1
- 247 000c 68000000 		.4byte	.LASF25
- 248 0010 01       		.byte	0x1
- 249 0011 63010000 		.4byte	.LASF26
- 250 0015 08000000 		.4byte	.LASF27
- 251 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 252 001d 00000000 		.4byte	0
- 253 0021 00000000 		.4byte	.Ldebug_line0
- 254 0025 02       		.uleb128 0x2
- 255 0026 01       		.byte	0x1
- 256 0027 06       		.byte	0x6
- 257 0028 01020000 		.4byte	.LASF0
- 258 002c 02       		.uleb128 0x2
- 259 002d 01       		.byte	0x1
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 7
+ 262 005c 0123     		movs	r3, #1
+ 263 005e FFF7FEFF 		bl	CyDmaTdSetConfiguration
+  75:.\i2s.c       ****     {
+ 264              		.loc 1 75 0 discriminator 3
+ 265 0062 FB79     		ldrb	r3, [r7, #7]
+ 266 0064 0133     		adds	r3, r3, #1
+ 267 0066 FB71     		strb	r3, [r7, #7]
+ 268              	.L12:
+  75:.\i2s.c       ****     {
+ 269              		.loc 1 75 0 is_stmt 0 discriminator 1
+ 270 0068 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 271 006a 082B     		cmp	r3, #8
+ 272 006c ECD9     		bls	.L13
+  79:.\i2s.c       ****                                 TD_INC_SRC_ADR);
+  80:.\i2s.c       ****     }
+  81:.\i2s.c       ****     /* Chain last and 1st DMA transfer descriptors to make cyclic buffer. */
+  82:.\i2s.c       ****     CyDmaTdSetConfiguration(TxOutDmaTd[NUM_OF_BUFFERS - 1u], TRANSFER_SIZE, TxOutDmaTd[0u],
+ 273              		.loc 1 82 0 is_stmt 1
+ 274 006e 1A4B     		ldr	r3, .L16+8
+ 275 0070 5A7A     		ldrb	r2, [r3, #9]	@ zero_extendqisi2
+ 276 0072 194B     		ldr	r3, .L16+8
+ 277 0074 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 278 0076 1046     		mov	r0, r2
+ 279 0078 3021     		movs	r1, #48
+ 280 007a 1A46     		mov	r2, r3
+ 281 007c 0123     		movs	r3, #1
+ 282 007e FFF7FEFF 		bl	CyDmaTdSetConfiguration
+  83:.\i2s.c       ****                                 TD_INC_SRC_ADR);
+  84:.\i2s.c       **** 
+  85:.\i2s.c       **** 
+  86:.\i2s.c       ****     for (i = 0u; i < NUM_OF_BUFFERS; i++)
+ 283              		.loc 1 86 0
+ 284 0082 0023     		movs	r3, #0
+ 285 0084 FB71     		strb	r3, [r7, #7]
+ 286 0086 14E0     		b	.L14
+ 287              	.L15:
+  87:.\i2s.c       ****     {
+  88:.\i2s.c       ****         /* Set source and destination addresses. */
+  89:.\i2s.c       ****         CyDmaTdSetAddress(TxOutDmaTd[i], LO16((uint32) &soundBuffer[i * TRANSFER_SIZE]),
+ 288              		.loc 1 89 0 discriminator 3
+ 289 0088 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 290 008a 134A     		ldr	r2, .L16+8
+ 291 008c D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
+ 292 008e FA79     		ldrb	r2, [r7, #7]	@ zero_extendqisi2
+ 293 0090 1346     		mov	r3, r2
+ 294 0092 5B00     		lsls	r3, r3, #1
+ 295 0094 1344     		add	r3, r3, r2
+ 296 0096 1B01     		lsls	r3, r3, #4
+ 297 0098 1A46     		mov	r2, r3
+ 298 009a 0D4B     		ldr	r3, .L16
+ 299 009c 1344     		add	r3, r3, r2
+ 300 009e 9BB2     		uxth	r3, r3
+ 301 00a0 0846     		mov	r0, r1
+ 302 00a2 1946     		mov	r1, r3
+ 303 00a4 46F24752 		movw	r2, #25927
+ 304 00a8 FFF7FEFF 		bl	CyDmaTdSetAddress
+  86:.\i2s.c       ****     {
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 8
 
 
- 260 002e 08       		.byte	0x8
- 261 002f 0B010000 		.4byte	.LASF1
- 262 0033 02       		.uleb128 0x2
- 263 0034 02       		.byte	0x2
- 264 0035 05       		.byte	0x5
- 265 0036 D5010000 		.4byte	.LASF2
- 266 003a 02       		.uleb128 0x2
- 267 003b 02       		.byte	0x2
- 268 003c 07       		.byte	0x7
- 269 003d 35010000 		.4byte	.LASF3
- 270 0041 03       		.uleb128 0x3
- 271 0042 5E000000 		.4byte	.LASF9
- 272 0046 02       		.byte	0x2
- 273 0047 3F       		.byte	0x3f
- 274 0048 4C000000 		.4byte	0x4c
- 275 004c 02       		.uleb128 0x2
- 276 004d 04       		.byte	0x4
- 277 004e 05       		.byte	0x5
- 278 004f F8010000 		.4byte	.LASF4
- 279 0053 02       		.uleb128 0x2
- 280 0054 04       		.byte	0x4
- 281 0055 07       		.byte	0x7
- 282 0056 1E010000 		.4byte	.LASF5
- 283 005a 02       		.uleb128 0x2
- 284 005b 08       		.byte	0x8
- 285 005c 05       		.byte	0x5
- 286 005d BA010000 		.4byte	.LASF6
- 287 0061 02       		.uleb128 0x2
- 288 0062 08       		.byte	0x8
- 289 0063 07       		.byte	0x7
- 290 0064 89010000 		.4byte	.LASF7
- 291 0068 04       		.uleb128 0x4
- 292 0069 04       		.byte	0x4
- 293 006a 05       		.byte	0x5
- 294 006b 696E7400 		.ascii	"int\000"
- 295 006f 02       		.uleb128 0x2
- 296 0070 04       		.byte	0x4
- 297 0071 07       		.byte	0x7
- 298 0072 7C010000 		.4byte	.LASF8
- 299 0076 03       		.uleb128 0x3
- 300 0077 A9010000 		.4byte	.LASF10
- 301 007b 03       		.byte	0x3
- 302 007c 2C       		.byte	0x2c
- 303 007d 41000000 		.4byte	0x41
- 304 0081 05       		.uleb128 0x5
- 305 0082 DF010000 		.4byte	.LASF11
- 306 0086 04       		.byte	0x4
- 307 0087 9201     		.2byte	0x192
- 308 0089 2C000000 		.4byte	0x2c
- 309 008d 05       		.uleb128 0x5
- 310 008e 5C010000 		.4byte	.LASF12
- 311 0092 04       		.byte	0x4
- 312 0093 9301     		.2byte	0x193
- 313 0095 3A000000 		.4byte	0x3a
- 314 0099 05       		.uleb128 0x5
- 315 009a 75010000 		.4byte	.LASF13
- 316 009e 04       		.byte	0x4
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 8
+ 305              		.loc 1 86 0 discriminator 3
+ 306 00ac FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 307 00ae 0133     		adds	r3, r3, #1
+ 308 00b0 FB71     		strb	r3, [r7, #7]
+ 309              	.L14:
+  86:.\i2s.c       ****     {
+ 310              		.loc 1 86 0 is_stmt 0 discriminator 1
+ 311 00b2 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 312 00b4 092B     		cmp	r3, #9
+ 313 00b6 E7D9     		bls	.L15
+  90:.\i2s.c       ****                                            LO16((uint32) I2S_1_TX_CH0_F0_PTR));
+  91:.\i2s.c       ****     }
+  92:.\i2s.c       **** 
+  93:.\i2s.c       ****     /* Set 1st transfer descriptor to execute. */
+  94:.\i2s.c       ****     CyDmaChSetInitialTd(TxOutDmaCh, TxOutDmaTd[0u]);
+ 314              		.loc 1 94 0 is_stmt 1
+ 315 00b8 064B     		ldr	r3, .L16+4
+ 316 00ba 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 317 00bc 064B     		ldr	r3, .L16+8
+ 318 00be 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 319 00c0 1046     		mov	r0, r2
+ 320 00c2 1946     		mov	r1, r3
+ 321 00c4 FFF7FEFF 		bl	CyDmaChSetInitialTd
+  95:.\i2s.c       **** }
+ 322              		.loc 1 95 0
+ 323 00c8 0C37     		adds	r7, r7, #12
+ 324              		.cfi_def_cfa_offset 12
+ 325 00ca BD46     		mov	sp, r7
+ 326              		.cfi_def_cfa_register 13
+ 327              		@ sp needed
+ 328 00cc 90BD     		pop	{r4, r7, pc}
+ 329              	.L17:
+ 330 00ce 00BF     		.align	2
+ 331              	.L16:
+ 332 00d0 00000000 		.word	soundBuffer
+ 333 00d4 00000000 		.word	TxOutDmaCh
+ 334 00d8 00000000 		.word	TxOutDmaTd
+ 335              		.cfi_endproc
+ 336              	.LFE66:
+ 337              		.size	DmaTxConfiguration, .-DmaTxConfiguration
+ 338              		.section	.text.USBrefresh,"ax",%progbits
+ 339              		.align	2
+ 340              		.global	USBrefresh
+ 341              		.thumb
+ 342              		.thumb_func
+ 343              		.type	USBrefresh, %function
+ 344              	USBrefresh:
+ 345              	.LFB67:
+  96:.\i2s.c       **** 
+  97:.\i2s.c       **** void USBrefresh()
+  98:.\i2s.c       **** {
+ 346              		.loc 1 98 0
+ 347              		.cfi_startproc
+ 348              		@ args = 0, pretend = 0, frame = 8
+ 349              		@ frame_needed = 1, uses_anonymous_args = 0
+ 350 0000 80B5     		push	{r7, lr}
+ 351              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 9
 
 
- 317 009f 9401     		.2byte	0x194
- 318 00a1 53000000 		.4byte	0x53
- 319 00a5 02       		.uleb128 0x2
- 320 00a6 04       		.byte	0x4
- 321 00a7 04       		.byte	0x4
- 322 00a8 FE000000 		.4byte	.LASF14
- 323 00ac 02       		.uleb128 0x2
- 324 00ad 08       		.byte	0x8
- 325 00ae 04       		.byte	0x4
- 326 00af 55010000 		.4byte	.LASF15
- 327 00b3 02       		.uleb128 0x2
- 328 00b4 01       		.byte	0x1
- 329 00b5 08       		.byte	0x8
- 330 00b6 D0010000 		.4byte	.LASF16
- 331 00ba 05       		.uleb128 0x5
- 332 00bb 19010000 		.4byte	.LASF17
- 333 00bf 04       		.byte	0x4
- 334 00c0 3C02     		.2byte	0x23c
- 335 00c2 C6000000 		.4byte	0xc6
- 336 00c6 06       		.uleb128 0x6
- 337 00c7 81000000 		.4byte	0x81
- 338 00cb 02       		.uleb128 0x2
- 339 00cc 04       		.byte	0x4
- 340 00cd 07       		.byte	0x7
- 341 00ce B1010000 		.4byte	.LASF18
- 342 00d2 07       		.uleb128 0x7
- 343 00d3 F6000000 		.4byte	.LASF28
- 344 00d7 01       		.byte	0x1
- 345 00d8 17       		.byte	0x17
- 346 00d9 00000000 		.4byte	.LFB63
- 347 00dd 78000000 		.4byte	.LFE63-.LFB63
- 348 00e1 01       		.uleb128 0x1
- 349 00e2 9C       		.byte	0x9c
- 350 00e3 F4000000 		.4byte	0xf4
- 351 00e7 08       		.uleb128 0x8
- 352 00e8 6900     		.ascii	"i\000"
- 353 00ea 01       		.byte	0x1
- 354 00eb 19       		.byte	0x19
- 355 00ec 68000000 		.4byte	0x68
- 356 00f0 02       		.uleb128 0x2
- 357 00f1 91       		.byte	0x91
- 358 00f2 74       		.sleb128 -12
- 359 00f3 00       		.byte	0
- 360 00f4 09       		.uleb128 0x9
- 361 00f5 00000000 		.4byte	.LASF29
- 362 00f9 01       		.byte	0x1
- 363 00fa 2E       		.byte	0x2e
- 364 00fb 00000000 		.4byte	.LFB64
- 365 00ff 0E000000 		.4byte	.LFE64-.LFB64
- 366 0103 01       		.uleb128 0x1
- 367 0104 9C       		.byte	0x9c
- 368 0105 0A       		.uleb128 0xa
- 369 0106 E5010000 		.4byte	.LASF30
- 370 010a 01       		.byte	0x1
- 371 010b 37       		.byte	0x37
- 372 010c 00000000 		.4byte	.LFB65
- 373 0110 88000000 		.4byte	.LFE65-.LFB65
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 9
+ 352              		.cfi_offset 7, -8
+ 353              		.cfi_offset 14, -4
+ 354 0002 82B0     		sub	sp, sp, #8
+ 355              		.cfi_def_cfa_offset 16
+ 356 0004 00AF     		add	r7, sp, #0
+ 357              		.cfi_def_cfa_register 7
+  99:.\i2s.c       ****     uint8 skipNextOut = 0u;
+ 358              		.loc 1 99 0
+ 359 0006 0023     		movs	r3, #0
+ 360 0008 FB71     		strb	r3, [r7, #7]
+ 100:.\i2s.c       ****     /* Check if configuration or interface settings are changed. */
+ 101:.\i2s.c       ****     if (0u != USBFS_IsConfigurationChanged())
+ 361              		.loc 1 101 0
+ 362 000a FFF7FEFF 		bl	USBFS_IsConfigurationChanged
+ 363 000e 0346     		mov	r3, r0
+ 364 0010 002B     		cmp	r3, #0
+ 365 0012 7FD0     		beq	.L18
+ 102:.\i2s.c       ****     {
+ 103:.\i2s.c       ****         /* Check active alternate setting. */
+ 104:.\i2s.c       ****         if ((0u != USBFS_GetConfiguration()) &&
+ 366              		.loc 1 104 0
+ 367 0014 FFF7FEFF 		bl	USBFS_GetConfiguration
+ 368 0018 0346     		mov	r3, r0
+ 369 001a 002B     		cmp	r3, #0
+ 370 001c 16D0     		beq	.L20
+ 105:.\i2s.c       ****             (0u != USBFS_GetInterfaceSetting(AUDIO_INTERFACE)))
+ 371              		.loc 1 105 0 discriminator 1
+ 372 001e 0120     		movs	r0, #1
+ 373 0020 FFF7FEFF 		bl	USBFS_GetInterfaceSetting
+ 374 0024 0346     		mov	r3, r0
+ 104:.\i2s.c       ****             (0u != USBFS_GetInterfaceSetting(AUDIO_INTERFACE)))
+ 375              		.loc 1 104 0 discriminator 1
+ 376 0026 002B     		cmp	r3, #0
+ 377 0028 10D0     		beq	.L20
+ 106:.\i2s.c       ****         {
+ 107:.\i2s.c       ****             /* Alternate settings 1: Audio is streaming. */
+ 108:.\i2s.c       **** 
+ 109:.\i2s.c       ****             /* Reset variables. */
+ 110:.\i2s.c       ****             inIndex  = 0u;
+ 378              		.loc 1 110 0
+ 379 002a 3C4B     		ldr	r3, .L27
+ 380 002c 0022     		movs	r2, #0
+ 381 002e 1A80     		strh	r2, [r3]	@ movhi
+ 111:.\i2s.c       ****             outIndex = 0u;
+ 382              		.loc 1 111 0
+ 383 0030 3B4B     		ldr	r3, .L27+4
+ 384 0032 0022     		movs	r2, #0
+ 385 0034 1A80     		strh	r2, [r3]	@ movhi
+ 112:.\i2s.c       ****             syncDma  = 0u;
+ 386              		.loc 1 112 0
+ 387 0036 3B4B     		ldr	r3, .L27+8
+ 388 0038 0022     		movs	r2, #0
+ 389 003a 1A70     		strb	r2, [r3]
+ 113:.\i2s.c       ****             skipNextOut = 0u;
+ 390              		.loc 1 113 0
+ 391 003c 0023     		movs	r3, #0
+ 392 003e FB71     		strb	r3, [r7, #7]
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 10
 
 
- 374 0114 01       		.uleb128 0x1
- 375 0115 9C       		.byte	0x9c
- 376 0116 0B       		.uleb128 0xb
- 377 0117 48010000 		.4byte	.LASF19
- 378 011b 05       		.byte	0x5
- 379 011c 9606     		.2byte	0x696
- 380 011e 22010000 		.4byte	0x122
- 381 0122 06       		.uleb128 0x6
- 382 0123 76000000 		.4byte	0x76
- 383 0127 0C       		.uleb128 0xc
- 384 0128 81000000 		.4byte	0x81
- 385 012c 37010000 		.4byte	0x137
- 386 0130 0D       		.uleb128 0xd
- 387 0131 CB000000 		.4byte	0xcb
- 388 0135 3F       		.byte	0x3f
- 389 0136 00       		.byte	0
- 390 0137 0E       		.uleb128 0xe
- 391 0138 A0010000 		.4byte	.LASF20
- 392 013c 06       		.byte	0x6
- 393 013d 24       		.byte	0x24
- 394 013e 27010000 		.4byte	0x127
- 395 0142 05       		.uleb128 0x5
- 396 0143 03       		.byte	0x3
- 397 0144 00000000 		.4byte	wrBuffer
- 398 0148 0E       		.uleb128 0xe
- 399 0149 30010000 		.4byte	.LASF21
- 400 014d 06       		.byte	0x6
- 401 014e 25       		.byte	0x25
- 402 014f 81000000 		.4byte	0x81
- 403 0153 05       		.uleb128 0x5
- 404 0154 03       		.byte	0x3
- 405 0155 00000000 		.4byte	temp
- 406 0159 0C       		.uleb128 0xc
- 407 015a 99000000 		.4byte	0x99
- 408 015e 6A010000 		.4byte	0x16a
- 409 0162 0F       		.uleb128 0xf
- 410 0163 CB000000 		.4byte	0xcb
- 411 0167 EF01     		.2byte	0x1ef
- 412 0169 00       		.byte	0
- 413 016a 0E       		.uleb128 0xe
- 414 016b 04010000 		.4byte	.LASF22
- 415 016f 01       		.byte	0x1
- 416 0170 10       		.byte	0x10
- 417 0171 59010000 		.4byte	0x159
- 418 0175 05       		.uleb128 0x5
- 419 0176 03       		.byte	0x3
- 420 0177 00000000 		.4byte	txBuff
- 421 017b 0E       		.uleb128 0xe
- 422 017c 6B010000 		.4byte	.LASF23
- 423 0180 01       		.byte	0x1
- 424 0181 13       		.byte	0x13
- 425 0182 99000000 		.4byte	0x99
- 426 0186 05       		.uleb128 0x5
- 427 0187 03       		.byte	0x3
- 428 0188 00000000 		.4byte	txDmaChan
- 429 018c 0C       		.uleb128 0xc
- 430 018d 99000000 		.4byte	0x99
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 10
+ 114:.\i2s.c       ****             syncDmaCounter = 0u;
+ 393              		.loc 1 114 0
+ 394 0040 394B     		ldr	r3, .L27+12
+ 395 0042 0022     		movs	r2, #0
+ 396 0044 1A70     		strb	r2, [r3]
+ 115:.\i2s.c       **** 
+ 116:.\i2s.c       ****             /* Enable OUT endpoint to receive audio stream. */
+ 117:.\i2s.c       ****             USBFS_EnableOutEP(OUT_EP_NUM);
+ 397              		.loc 1 117 0
+ 398 0046 0220     		movs	r0, #2
+ 399 0048 FFF7FEFF 		bl	USBFS_EnableOutEP
+ 400              	.L20:
+ 118:.\i2s.c       ****     }
+ 119:.\i2s.c       **** 
+ 120:.\i2s.c       ****     if (USBFS_OUT_BUFFER_FULL == USBFS_GetEPState(OUT_EP_NUM))
+ 401              		.loc 1 120 0
+ 402 004c 0220     		movs	r0, #2
+ 403 004e FFF7FEFF 		bl	USBFS_GetEPState
+ 404 0052 0346     		mov	r3, r0
+ 405 0054 012B     		cmp	r3, #1
+ 406 0056 4AD1     		bne	.L21
+ 121:.\i2s.c       ****     {
+ 122:.\i2s.c       ****         if (0u == skipNextOut)
+ 407              		.loc 1 122 0
+ 408 0058 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 409 005a 002B     		cmp	r3, #0
+ 410 005c 38D1     		bne	.L22
+ 123:.\i2s.c       ****         {
+ 124:.\i2s.c       ****             /* Trigger DMA to copy data from OUT endpoint buffer. */
+ 125:.\i2s.c       ****             USBFS_ReadOutEP(OUT_EP_NUM, &soundBuffer[inIndex * TRANSFER_SIZE],
+ 411              		.loc 1 125 0
+ 412 005e 2F4B     		ldr	r3, .L27
+ 413 0060 1B88     		ldrh	r3, [r3]	@ movhi
+ 414 0062 9BB2     		uxth	r3, r3
+ 415 0064 1A46     		mov	r2, r3
+ 416 0066 1346     		mov	r3, r2
+ 417 0068 5B00     		lsls	r3, r3, #1
+ 418 006a 1344     		add	r3, r3, r2
+ 419 006c 1B01     		lsls	r3, r3, #4
+ 420 006e 1A46     		mov	r2, r3
+ 421 0070 2E4B     		ldr	r3, .L27+16
+ 422 0072 1344     		add	r3, r3, r2
+ 423 0074 0220     		movs	r0, #2
+ 424 0076 1946     		mov	r1, r3
+ 425 0078 3022     		movs	r2, #48
+ 426 007a FFF7FEFF 		bl	USBFS_ReadOutEP
+ 126:.\i2s.c       ****                                         TRANSFER_SIZE);
+ 127:.\i2s.c       **** 
+ 128:.\i2s.c       ****             /* Wait until DMA completes copying data from OUT endpoint buffer. */
+ 129:.\i2s.c       ****             while (USBFS_OUT_BUFFER_FULL == USBFS_GetEPState(OUT_EP_NUM))
+ 427              		.loc 1 129 0
+ 428 007e 00BF     		nop
+ 429              	.L23:
+ 430              		.loc 1 129 0 is_stmt 0 discriminator 1
+ 431 0080 0220     		movs	r0, #2
+ 432 0082 FFF7FEFF 		bl	USBFS_GetEPState
+ 433 0086 0346     		mov	r3, r0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 11
 
 
- 431 0191 9C010000 		.4byte	0x19c
- 432 0195 0D       		.uleb128 0xd
- 433 0196 CB000000 		.4byte	0xcb
- 434 019a 00       		.byte	0
- 435 019b 00       		.byte	0
- 436 019c 0E       		.uleb128 0xe
- 437 019d C8010000 		.4byte	.LASF24
- 438 01a1 01       		.byte	0x1
- 439 01a2 14       		.byte	0x14
- 440 01a3 8C010000 		.4byte	0x18c
- 441 01a7 05       		.uleb128 0x5
- 442 01a8 03       		.byte	0x3
- 443 01a9 00000000 		.4byte	txDmaTd
- 444 01ad 00       		.byte	0
- 445              		.section	.debug_abbrev,"",%progbits
- 446              	.Ldebug_abbrev0:
- 447 0000 01       		.uleb128 0x1
- 448 0001 11       		.uleb128 0x11
- 449 0002 01       		.byte	0x1
- 450 0003 25       		.uleb128 0x25
- 451 0004 0E       		.uleb128 0xe
- 452 0005 13       		.uleb128 0x13
- 453 0006 0B       		.uleb128 0xb
- 454 0007 03       		.uleb128 0x3
- 455 0008 0E       		.uleb128 0xe
- 456 0009 1B       		.uleb128 0x1b
- 457 000a 0E       		.uleb128 0xe
- 458 000b 55       		.uleb128 0x55
- 459 000c 17       		.uleb128 0x17
- 460 000d 11       		.uleb128 0x11
- 461 000e 01       		.uleb128 0x1
- 462 000f 10       		.uleb128 0x10
- 463 0010 17       		.uleb128 0x17
- 464 0011 00       		.byte	0
- 465 0012 00       		.byte	0
- 466 0013 02       		.uleb128 0x2
- 467 0014 24       		.uleb128 0x24
- 468 0015 00       		.byte	0
- 469 0016 0B       		.uleb128 0xb
- 470 0017 0B       		.uleb128 0xb
- 471 0018 3E       		.uleb128 0x3e
- 472 0019 0B       		.uleb128 0xb
- 473 001a 03       		.uleb128 0x3
- 474 001b 0E       		.uleb128 0xe
- 475 001c 00       		.byte	0
- 476 001d 00       		.byte	0
- 477 001e 03       		.uleb128 0x3
- 478 001f 16       		.uleb128 0x16
- 479 0020 00       		.byte	0
- 480 0021 03       		.uleb128 0x3
- 481 0022 0E       		.uleb128 0xe
- 482 0023 3A       		.uleb128 0x3a
- 483 0024 0B       		.uleb128 0xb
- 484 0025 3B       		.uleb128 0x3b
- 485 0026 0B       		.uleb128 0xb
- 486 0027 49       		.uleb128 0x49
- 487 0028 13       		.uleb128 0x13
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 11
+ 434 0088 012B     		cmp	r3, #1
+ 435 008a F9D0     		beq	.L23
+ 130:.\i2s.c       ****             {
+ 131:.\i2s.c       ****             }
+ 132:.\i2s.c       **** 
+ 133:.\i2s.c       ****             /* Move to the next buffer location and adjust to be within
+ 134:.\i2s.c       ****             * buffer size. Lock from DmaDone interruption.
+ 135:.\i2s.c       ****             */
+ 136:.\i2s.c       ****             DmaDone_Disable();
+ 436              		.loc 1 136 0 is_stmt 1
+ 437 008c FFF7FEFF 		bl	DmaDone_Disable
+ 137:.\i2s.c       ****             ++inIndex;
+ 438              		.loc 1 137 0
+ 439 0090 224B     		ldr	r3, .L27
+ 440 0092 1B88     		ldrh	r3, [r3]	@ movhi
+ 441 0094 9BB2     		uxth	r3, r3
+ 442 0096 0133     		adds	r3, r3, #1
+ 443 0098 9AB2     		uxth	r2, r3
+ 444 009a 204B     		ldr	r3, .L27
+ 445 009c 1A80     		strh	r2, [r3]	@ movhi
+ 138:.\i2s.c       ****             inIndex = (inIndex >= NUM_OF_BUFFERS) ? 0u : inIndex;
+ 446              		.loc 1 138 0
+ 447 009e 1F4B     		ldr	r3, .L27
+ 448 00a0 1B88     		ldrh	r3, [r3]	@ movhi
+ 449 00a2 9BB2     		uxth	r3, r3
+ 450 00a4 092B     		cmp	r3, #9
+ 451 00a6 03D8     		bhi	.L24
+ 452              		.loc 1 138 0 is_stmt 0 discriminator 1
+ 453 00a8 1C4B     		ldr	r3, .L27
+ 454 00aa 1B88     		ldrh	r3, [r3]	@ movhi
+ 455 00ac 9BB2     		uxth	r3, r3
+ 456 00ae 00E0     		b	.L25
+ 457              	.L24:
+ 458              		.loc 1 138 0 discriminator 2
+ 459 00b0 0023     		movs	r3, #0
+ 460              	.L25:
+ 461              		.loc 1 138 0 discriminator 4
+ 462 00b2 1A4A     		ldr	r2, .L27
+ 463 00b4 1380     		strh	r3, [r2]	@ movhi
+ 139:.\i2s.c       ****             DmaDone_Enable();
+ 464              		.loc 1 139 0 is_stmt 1 discriminator 4
+ 465 00b6 FFF7FEFF 		bl	DmaDone_Enable
+ 140:.\i2s.c       ****             ++syncDmaCounter;
+ 466              		.loc 1 140 0 discriminator 4
+ 467 00ba 1B4B     		ldr	r3, .L27+12
+ 468 00bc 1B78     		ldrb	r3, [r3]
+ 469 00be DBB2     		uxtb	r3, r3
+ 470 00c0 0133     		adds	r3, r3, #1
+ 471 00c2 DAB2     		uxtb	r2, r3
+ 472 00c4 184B     		ldr	r3, .L27+12
+ 473 00c6 1A70     		strb	r2, [r3]
+ 141:.\i2s.c       **** 
+ 142:.\i2s.c       ****             /* Enable OUT endpoint to receive data from host. */
+ 143:.\i2s.c       ****             USBFS_EnableOutEP(OUT_EP_NUM);
+ 474              		.loc 1 143 0 discriminator 4
+ 475 00c8 0220     		movs	r0, #2
+ 476 00ca FFF7FEFF 		bl	USBFS_EnableOutEP
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 12
 
 
- 488 0029 00       		.byte	0
- 489 002a 00       		.byte	0
- 490 002b 04       		.uleb128 0x4
- 491 002c 24       		.uleb128 0x24
- 492 002d 00       		.byte	0
- 493 002e 0B       		.uleb128 0xb
- 494 002f 0B       		.uleb128 0xb
- 495 0030 3E       		.uleb128 0x3e
- 496 0031 0B       		.uleb128 0xb
- 497 0032 03       		.uleb128 0x3
- 498 0033 08       		.uleb128 0x8
- 499 0034 00       		.byte	0
- 500 0035 00       		.byte	0
- 501 0036 05       		.uleb128 0x5
- 502 0037 16       		.uleb128 0x16
- 503 0038 00       		.byte	0
- 504 0039 03       		.uleb128 0x3
- 505 003a 0E       		.uleb128 0xe
- 506 003b 3A       		.uleb128 0x3a
- 507 003c 0B       		.uleb128 0xb
- 508 003d 3B       		.uleb128 0x3b
- 509 003e 05       		.uleb128 0x5
- 510 003f 49       		.uleb128 0x49
- 511 0040 13       		.uleb128 0x13
- 512 0041 00       		.byte	0
- 513 0042 00       		.byte	0
- 514 0043 06       		.uleb128 0x6
- 515 0044 35       		.uleb128 0x35
- 516 0045 00       		.byte	0
- 517 0046 49       		.uleb128 0x49
- 518 0047 13       		.uleb128 0x13
- 519 0048 00       		.byte	0
- 520 0049 00       		.byte	0
- 521 004a 07       		.uleb128 0x7
- 522 004b 2E       		.uleb128 0x2e
- 523 004c 01       		.byte	0x1
- 524 004d 3F       		.uleb128 0x3f
- 525 004e 19       		.uleb128 0x19
- 526 004f 03       		.uleb128 0x3
- 527 0050 0E       		.uleb128 0xe
- 528 0051 3A       		.uleb128 0x3a
- 529 0052 0B       		.uleb128 0xb
- 530 0053 3B       		.uleb128 0x3b
- 531 0054 0B       		.uleb128 0xb
- 532 0055 11       		.uleb128 0x11
- 533 0056 01       		.uleb128 0x1
- 534 0057 12       		.uleb128 0x12
- 535 0058 06       		.uleb128 0x6
- 536 0059 40       		.uleb128 0x40
- 537 005a 18       		.uleb128 0x18
- 538 005b 9642     		.uleb128 0x2116
- 539 005d 19       		.uleb128 0x19
- 540 005e 01       		.uleb128 0x1
- 541 005f 13       		.uleb128 0x13
- 542 0060 00       		.byte	0
- 543 0061 00       		.byte	0
- 544 0062 08       		.uleb128 0x8
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 12
+ 477 00ce 04E0     		b	.L26
+ 478              	.L22:
+ 144:.\i2s.c       ****         }
+ 145:.\i2s.c       ****         else
+ 146:.\i2s.c       ****         {
+ 147:.\i2s.c       ****             /* Ignore received data from host and arm OUT endpoint
+ 148:.\i2s.c       ****             * without reading if overflow is detected.
+ 149:.\i2s.c       ****             */
+ 150:.\i2s.c       ****             USBFS_EnableOutEP(OUT_EP_NUM);
+ 479              		.loc 1 150 0
+ 480 00d0 0220     		movs	r0, #2
+ 481 00d2 FFF7FEFF 		bl	USBFS_EnableOutEP
+ 151:.\i2s.c       ****             skipNextOut = 0u;
+ 482              		.loc 1 151 0
+ 483 00d6 0023     		movs	r3, #0
+ 484 00d8 FB71     		strb	r3, [r7, #7]
+ 485              	.L26:
+ 152:.\i2s.c       ****         }
+ 153:.\i2s.c       **** 
+ 154:.\i2s.c       ****         /* When internal 32-kHz clock is slower, compare to PC traffic
+ 155:.\i2s.c       ****         * then skip next transfer from PC.
+ 156:.\i2s.c       ****         */
+ 157:.\i2s.c       ****         if (outIndex == inIndex)
+ 486              		.loc 1 157 0
+ 487 00da 114B     		ldr	r3, .L27+4
+ 488 00dc 1B88     		ldrh	r3, [r3]	@ movhi
+ 489 00de 9AB2     		uxth	r2, r3
+ 490 00e0 0E4B     		ldr	r3, .L27
+ 491 00e2 1B88     		ldrh	r3, [r3]	@ movhi
+ 492 00e4 9BB2     		uxth	r3, r3
+ 493 00e6 9A42     		cmp	r2, r3
+ 494 00e8 01D1     		bne	.L21
+ 158:.\i2s.c       ****         {
+ 159:.\i2s.c       ****             skipNextOut = 1u;
+ 495              		.loc 1 159 0
+ 496 00ea 0123     		movs	r3, #1
+ 497 00ec FB71     		strb	r3, [r7, #7]
+ 498              	.L21:
+ 160:.\i2s.c       ****         }
+ 161:.\i2s.c       ****     }
+ 162:.\i2s.c       **** 
+ 163:.\i2s.c       ****     /* Enable DMA transfers when sound buffer is half-full. */
+ 164:.\i2s.c       ****     if ((0u == syncDma) && (syncDmaCounter == (NUM_OF_BUFFERS / 2u)))
+ 499              		.loc 1 164 0
+ 500 00ee 0D4B     		ldr	r3, .L27+8
+ 501 00f0 1B78     		ldrb	r3, [r3]
+ 502 00f2 DBB2     		uxtb	r3, r3
+ 503 00f4 002B     		cmp	r3, #0
+ 504 00f6 0DD1     		bne	.L18
+ 505              		.loc 1 164 0 is_stmt 0 discriminator 1
+ 506 00f8 0B4B     		ldr	r3, .L27+12
+ 507 00fa 1B78     		ldrb	r3, [r3]
+ 508 00fc DBB2     		uxtb	r3, r3
+ 509 00fe 052B     		cmp	r3, #5
+ 510 0100 08D1     		bne	.L18
+ 165:.\i2s.c       ****     {
+ 166:.\i2s.c       ****         /* Start DMA operation. */
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 13
 
 
- 545 0063 34       		.uleb128 0x34
- 546 0064 00       		.byte	0
- 547 0065 03       		.uleb128 0x3
- 548 0066 08       		.uleb128 0x8
- 549 0067 3A       		.uleb128 0x3a
- 550 0068 0B       		.uleb128 0xb
- 551 0069 3B       		.uleb128 0x3b
- 552 006a 0B       		.uleb128 0xb
- 553 006b 49       		.uleb128 0x49
- 554 006c 13       		.uleb128 0x13
- 555 006d 02       		.uleb128 0x2
- 556 006e 18       		.uleb128 0x18
- 557 006f 00       		.byte	0
- 558 0070 00       		.byte	0
- 559 0071 09       		.uleb128 0x9
- 560 0072 2E       		.uleb128 0x2e
- 561 0073 00       		.byte	0
- 562 0074 3F       		.uleb128 0x3f
- 563 0075 19       		.uleb128 0x19
- 564 0076 03       		.uleb128 0x3
- 565 0077 0E       		.uleb128 0xe
- 566 0078 3A       		.uleb128 0x3a
- 567 0079 0B       		.uleb128 0xb
- 568 007a 3B       		.uleb128 0x3b
- 569 007b 0B       		.uleb128 0xb
- 570 007c 11       		.uleb128 0x11
- 571 007d 01       		.uleb128 0x1
- 572 007e 12       		.uleb128 0x12
- 573 007f 06       		.uleb128 0x6
- 574 0080 40       		.uleb128 0x40
- 575 0081 18       		.uleb128 0x18
- 576 0082 9642     		.uleb128 0x2116
- 577 0084 19       		.uleb128 0x19
- 578 0085 00       		.byte	0
- 579 0086 00       		.byte	0
- 580 0087 0A       		.uleb128 0xa
- 581 0088 2E       		.uleb128 0x2e
- 582 0089 00       		.byte	0
- 583 008a 3F       		.uleb128 0x3f
- 584 008b 19       		.uleb128 0x19
- 585 008c 03       		.uleb128 0x3
- 586 008d 0E       		.uleb128 0xe
- 587 008e 3A       		.uleb128 0x3a
- 588 008f 0B       		.uleb128 0xb
- 589 0090 3B       		.uleb128 0x3b
- 590 0091 0B       		.uleb128 0xb
- 591 0092 27       		.uleb128 0x27
- 592 0093 19       		.uleb128 0x19
- 593 0094 11       		.uleb128 0x11
- 594 0095 01       		.uleb128 0x1
- 595 0096 12       		.uleb128 0x12
- 596 0097 06       		.uleb128 0x6
- 597 0098 40       		.uleb128 0x40
- 598 0099 18       		.uleb128 0x18
- 599 009a 9642     		.uleb128 0x2116
- 600 009c 19       		.uleb128 0x19
- 601 009d 00       		.byte	0
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 13
+ 167:.\i2s.c       ****         CyDmaChEnable(TxOutDmaCh, TX_DMA_ENABLE_PRESERVE_TD);
+ 511              		.loc 1 167 0 is_stmt 1
+ 512 0102 0B4B     		ldr	r3, .L27+20
+ 513 0104 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 514 0106 1846     		mov	r0, r3
+ 515 0108 0121     		movs	r1, #1
+ 516 010a FFF7FEFF 		bl	CyDmaChEnable
+ 168:.\i2s.c       **** 
+ 169:.\i2s.c       ****         /* Disable underflow delayed start. */
+ 170:.\i2s.c       ****         syncDma = 1u;
+ 517              		.loc 1 170 0
+ 518 010e 054B     		ldr	r3, .L27+8
+ 519 0110 0122     		movs	r2, #1
+ 520 0112 1A70     		strb	r2, [r3]
+ 521              	.L18:
+ 171:.\i2s.c       ****     }
+ 172:.\i2s.c       **** }
+ 173:.\i2s.c       **** }
+ 522              		.loc 1 173 0
+ 523 0114 0837     		adds	r7, r7, #8
+ 524              		.cfi_def_cfa_offset 8
+ 525 0116 BD46     		mov	sp, r7
+ 526              		.cfi_def_cfa_register 13
+ 527              		@ sp needed
+ 528 0118 80BD     		pop	{r7, pc}
+ 529              	.L28:
+ 530 011a 00BF     		.align	2
+ 531              	.L27:
+ 532 011c 00000000 		.word	inIndex
+ 533 0120 00000000 		.word	outIndex
+ 534 0124 00000000 		.word	syncDma
+ 535 0128 00000000 		.word	syncDmaCounter
+ 536 012c 00000000 		.word	soundBuffer
+ 537 0130 00000000 		.word	TxOutDmaCh
+ 538              		.cfi_endproc
+ 539              	.LFE67:
+ 540              		.size	USBrefresh, .-USBrefresh
+ 541              		.text
+ 542              	.Letext0:
+ 543              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 544              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 545              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 546              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 547              		.file 6 ".\\spimaster.h"
+ 548              		.section	.debug_info,"",%progbits
+ 549              	.Ldebug_info0:
+ 550 0000 28020000 		.4byte	0x228
+ 551 0004 0400     		.2byte	0x4
+ 552 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 553 000a 04       		.byte	0x4
+ 554 000b 01       		.uleb128 0x1
+ 555 000c 76000000 		.4byte	.LASF32
+ 556 0010 01       		.byte	0x1
+ 557 0011 83010000 		.4byte	.LASF33
+ 558 0015 16000000 		.4byte	.LASF34
+ 559 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 560 001d 00000000 		.4byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 14
 
 
- 602 009e 00       		.byte	0
- 603 009f 0B       		.uleb128 0xb
- 604 00a0 34       		.uleb128 0x34
- 605 00a1 00       		.byte	0
- 606 00a2 03       		.uleb128 0x3
- 607 00a3 0E       		.uleb128 0xe
- 608 00a4 3A       		.uleb128 0x3a
- 609 00a5 0B       		.uleb128 0xb
- 610 00a6 3B       		.uleb128 0x3b
- 611 00a7 05       		.uleb128 0x5
- 612 00a8 49       		.uleb128 0x49
- 613 00a9 13       		.uleb128 0x13
- 614 00aa 3F       		.uleb128 0x3f
- 615 00ab 19       		.uleb128 0x19
- 616 00ac 3C       		.uleb128 0x3c
- 617 00ad 19       		.uleb128 0x19
- 618 00ae 00       		.byte	0
- 619 00af 00       		.byte	0
- 620 00b0 0C       		.uleb128 0xc
- 621 00b1 01       		.uleb128 0x1
- 622 00b2 01       		.byte	0x1
- 623 00b3 49       		.uleb128 0x49
- 624 00b4 13       		.uleb128 0x13
- 625 00b5 01       		.uleb128 0x1
- 626 00b6 13       		.uleb128 0x13
- 627 00b7 00       		.byte	0
- 628 00b8 00       		.byte	0
- 629 00b9 0D       		.uleb128 0xd
- 630 00ba 21       		.uleb128 0x21
- 631 00bb 00       		.byte	0
- 632 00bc 49       		.uleb128 0x49
- 633 00bd 13       		.uleb128 0x13
- 634 00be 2F       		.uleb128 0x2f
- 635 00bf 0B       		.uleb128 0xb
- 636 00c0 00       		.byte	0
- 637 00c1 00       		.byte	0
- 638 00c2 0E       		.uleb128 0xe
- 639 00c3 34       		.uleb128 0x34
- 640 00c4 00       		.byte	0
- 641 00c5 03       		.uleb128 0x3
- 642 00c6 0E       		.uleb128 0xe
- 643 00c7 3A       		.uleb128 0x3a
- 644 00c8 0B       		.uleb128 0xb
- 645 00c9 3B       		.uleb128 0x3b
- 646 00ca 0B       		.uleb128 0xb
- 647 00cb 49       		.uleb128 0x49
- 648 00cc 13       		.uleb128 0x13
- 649 00cd 3F       		.uleb128 0x3f
- 650 00ce 19       		.uleb128 0x19
- 651 00cf 02       		.uleb128 0x2
- 652 00d0 18       		.uleb128 0x18
- 653 00d1 00       		.byte	0
- 654 00d2 00       		.byte	0
- 655 00d3 0F       		.uleb128 0xf
- 656 00d4 21       		.uleb128 0x21
- 657 00d5 00       		.byte	0
- 658 00d6 49       		.uleb128 0x49
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 14
+ 561 0021 00000000 		.4byte	.Ldebug_line0
+ 562 0025 02       		.uleb128 0x2
+ 563 0026 01       		.byte	0x1
+ 564 0027 06       		.byte	0x6
+ 565 0028 4B020000 		.4byte	.LASF0
+ 566 002c 02       		.uleb128 0x2
+ 567 002d 01       		.byte	0x1
+ 568 002e 08       		.byte	0x8
+ 569 002f 26010000 		.4byte	.LASF1
+ 570 0033 02       		.uleb128 0x2
+ 571 0034 02       		.byte	0x2
+ 572 0035 05       		.byte	0x5
+ 573 0036 14020000 		.4byte	.LASF2
+ 574 003a 02       		.uleb128 0x2
+ 575 003b 02       		.byte	0x2
+ 576 003c 07       		.byte	0x7
+ 577 003d 50010000 		.4byte	.LASF3
+ 578 0041 03       		.uleb128 0x3
+ 579 0042 6C000000 		.4byte	.LASF9
+ 580 0046 02       		.byte	0x2
+ 581 0047 3F       		.byte	0x3f
+ 582 0048 4C000000 		.4byte	0x4c
+ 583 004c 02       		.uleb128 0x2
+ 584 004d 04       		.byte	0x4
+ 585 004e 05       		.byte	0x5
+ 586 004f 42020000 		.4byte	.LASF4
+ 587 0053 02       		.uleb128 0x2
+ 588 0054 04       		.byte	0x4
+ 589 0055 07       		.byte	0x7
+ 590 0056 39010000 		.4byte	.LASF5
+ 591 005a 02       		.uleb128 0x2
+ 592 005b 08       		.byte	0x8
+ 593 005c 05       		.byte	0x5
+ 594 005d 00000000 		.4byte	.LASF6
+ 595 0061 02       		.uleb128 0x2
+ 596 0062 08       		.byte	0x8
+ 597 0063 07       		.byte	0x7
+ 598 0064 B0010000 		.4byte	.LASF7
+ 599 0068 04       		.uleb128 0x4
+ 600 0069 04       		.byte	0x4
+ 601 006a 05       		.byte	0x5
+ 602 006b 696E7400 		.ascii	"int\000"
+ 603 006f 02       		.uleb128 0x2
+ 604 0070 04       		.byte	0x4
+ 605 0071 07       		.byte	0x7
+ 606 0072 99010000 		.4byte	.LASF8
+ 607 0076 03       		.uleb128 0x3
+ 608 0077 E8010000 		.4byte	.LASF10
+ 609 007b 03       		.byte	0x3
+ 610 007c 2C       		.byte	0x2c
+ 611 007d 41000000 		.4byte	0x41
+ 612 0081 05       		.uleb128 0x5
+ 613 0082 1E020000 		.4byte	.LASF11
+ 614 0086 04       		.byte	0x4
+ 615 0087 9201     		.2byte	0x192
+ 616 0089 2C000000 		.4byte	0x2c
+ 617 008d 05       		.uleb128 0x5
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 15
 
 
- 659 00d7 13       		.uleb128 0x13
- 660 00d8 2F       		.uleb128 0x2f
- 661 00d9 05       		.uleb128 0x5
- 662 00da 00       		.byte	0
- 663 00db 00       		.byte	0
- 664 00dc 00       		.byte	0
- 665              		.section	.debug_aranges,"",%progbits
- 666 0000 2C000000 		.4byte	0x2c
- 667 0004 0200     		.2byte	0x2
- 668 0006 00000000 		.4byte	.Ldebug_info0
- 669 000a 04       		.byte	0x4
- 670 000b 00       		.byte	0
- 671 000c 0000     		.2byte	0
- 672 000e 0000     		.2byte	0
- 673 0010 00000000 		.4byte	.LFB63
- 674 0014 78000000 		.4byte	.LFE63-.LFB63
- 675 0018 00000000 		.4byte	.LFB64
- 676 001c 0E000000 		.4byte	.LFE64-.LFB64
- 677 0020 00000000 		.4byte	.LFB65
- 678 0024 88000000 		.4byte	.LFE65-.LFB65
- 679 0028 00000000 		.4byte	0
- 680 002c 00000000 		.4byte	0
- 681              		.section	.debug_ranges,"",%progbits
- 682              	.Ldebug_ranges0:
- 683 0000 00000000 		.4byte	.LFB63
- 684 0004 78000000 		.4byte	.LFE63
- 685 0008 00000000 		.4byte	.LFB64
- 686 000c 0E000000 		.4byte	.LFE64
- 687 0010 00000000 		.4byte	.LFB65
- 688 0014 88000000 		.4byte	.LFE65
- 689 0018 00000000 		.4byte	0
- 690 001c 00000000 		.4byte	0
- 691              		.section	.debug_line,"",%progbits
- 692              	.Ldebug_line0:
- 693 0000 C7010000 		.section	.debug_str,"MS",%progbits,1
- 693      02005901 
- 693      00000201 
- 693      FB0E0D00 
- 693      01010101 
- 694              	.LASF29:
- 695 0000 49325374 		.ascii	"I2Stest\000"
- 695      65737400 
- 696              	.LASF27:
- 697 0008 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
- 697      73657273 
- 697      5C4C756B 
- 697      61732043 
- 697      72657574 
- 698 0036 65445350 		.ascii	"eDSPPSoC-I2C\\PSoC5_SPI_Master_DSP.cydsn\000"
- 698      50536F43 
- 698      2D493243 
- 698      5C50536F 
- 698      43355F53 
- 699              	.LASF9:
- 700 005e 5F5F696E 		.ascii	"__int32_t\000"
- 700      7433325F 
- 700      7400
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 15
+ 618 008e 8B010000 		.4byte	.LASF12
+ 619 0092 04       		.byte	0x4
+ 620 0093 9301     		.2byte	0x193
+ 621 0095 3A000000 		.4byte	0x3a
+ 622 0099 05       		.uleb128 0x5
+ 623 009a 92010000 		.4byte	.LASF13
+ 624 009e 04       		.byte	0x4
+ 625 009f 9401     		.2byte	0x194
+ 626 00a1 53000000 		.4byte	0x53
+ 627 00a5 02       		.uleb128 0x2
+ 628 00a6 04       		.byte	0x4
+ 629 00a7 04       		.byte	0x4
+ 630 00a8 20010000 		.4byte	.LASF14
+ 631 00ac 02       		.uleb128 0x2
+ 632 00ad 08       		.byte	0x8
+ 633 00ae 04       		.byte	0x4
+ 634 00af 70010000 		.4byte	.LASF15
+ 635 00b3 02       		.uleb128 0x2
+ 636 00b4 01       		.byte	0x1
+ 637 00b5 08       		.byte	0x8
+ 638 00b6 04020000 		.4byte	.LASF16
+ 639 00ba 05       		.uleb128 0x5
+ 640 00bb 34010000 		.4byte	.LASF17
+ 641 00bf 04       		.byte	0x4
+ 642 00c0 3C02     		.2byte	0x23c
+ 643 00c2 C6000000 		.4byte	0xc6
+ 644 00c6 06       		.uleb128 0x6
+ 645 00c7 81000000 		.4byte	0x81
+ 646 00cb 06       		.uleb128 0x6
+ 647 00cc 8D000000 		.4byte	0x8d
+ 648 00d0 02       		.uleb128 0x2
+ 649 00d1 04       		.byte	0x4
+ 650 00d2 07       		.byte	0x7
+ 651 00d3 F0010000 		.4byte	.LASF18
+ 652 00d7 07       		.uleb128 0x7
+ 653 00d8 A6010000 		.4byte	.LASF35
+ 654 00dc 01       		.byte	0x1
+ 655 00dd 1C       		.byte	0x1c
+ 656 00de 00000000 		.4byte	.LFB63
+ 657 00e2 68000000 		.4byte	.LFE63-.LFB63
+ 658 00e6 01       		.uleb128 0x1
+ 659 00e7 9C       		.byte	0x9c
+ 660 00e8 08       		.uleb128 0x8
+ 661 00e9 10010000 		.4byte	.LASF19
+ 662 00ed 01       		.byte	0x1
+ 663 00ee 2D       		.byte	0x2d
+ 664 00ef 00000000 		.4byte	.LFB64
+ 665 00f3 12000000 		.4byte	.LFE64-.LFB64
+ 666 00f7 01       		.uleb128 0x1
+ 667 00f8 9C       		.byte	0x9c
+ 668 00f9 09       		.uleb128 0x9
+ 669 00fa 0E000000 		.4byte	.LASF20
+ 670 00fe 01       		.byte	0x1
+ 671 00ff 37       		.byte	0x37
+ 672 0100 00000000 		.4byte	.LFB65
+ 673 0104 0C000000 		.4byte	.LFE65-.LFB65
+ 674 0108 01       		.uleb128 0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 16
 
 
- 701              	.LASF25:
- 702 0068 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 702      4320342E 
- 702      392E3320 
- 702      32303135 
- 702      30333033 
- 703 009b 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
- 703      20726576 
- 703      6973696F 
- 703      6E203232 
- 703      31323230 
- 704 00ce 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
- 704      66756E63 
- 704      74696F6E 
- 704      2D736563 
- 704      74696F6E 
- 705              	.LASF28:
- 706 00f6 49325369 		.ascii	"I2Sinit\000"
- 706      6E697400 
- 707              	.LASF14:
- 708 00fe 666C6F61 		.ascii	"float\000"
- 708      7400
- 709              	.LASF22:
- 710 0104 74784275 		.ascii	"txBuff\000"
- 710      666600
- 711              	.LASF1:
- 712 010b 756E7369 		.ascii	"unsigned char\000"
- 712      676E6564 
- 712      20636861 
- 712      7200
- 713              	.LASF17:
- 714 0119 72656738 		.ascii	"reg8\000"
- 714      00
- 715              	.LASF5:
- 716 011e 6C6F6E67 		.ascii	"long unsigned int\000"
- 716      20756E73 
- 716      69676E65 
- 716      6420696E 
- 716      7400
- 717              	.LASF21:
- 718 0130 74656D70 		.ascii	"temp\000"
- 718      00
- 719              	.LASF3:
- 720 0135 73686F72 		.ascii	"short unsigned int\000"
- 720      7420756E 
- 720      7369676E 
- 720      65642069 
- 720      6E7400
- 721              	.LASF19:
- 722 0148 49544D5F 		.ascii	"ITM_RxBuffer\000"
- 722      52784275 
- 722      66666572 
- 722      00
- 723              	.LASF15:
- 724 0155 646F7562 		.ascii	"double\000"
- 724      6C6500
- 725              	.LASF12:
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 16
+ 675 0109 9C       		.byte	0x9c
+ 676 010a 0A       		.uleb128 0xa
+ 677 010b 2F020000 		.4byte	.LASF36
+ 678 010f 01       		.byte	0x1
+ 679 0110 3D       		.byte	0x3d
+ 680 0111 00000000 		.4byte	.LFB66
+ 681 0115 DC000000 		.4byte	.LFE66-.LFB66
+ 682 0119 01       		.uleb128 0x1
+ 683 011a 9C       		.byte	0x9c
+ 684 011b 2C010000 		.4byte	0x12c
+ 685 011f 0B       		.uleb128 0xb
+ 686 0120 6900     		.ascii	"i\000"
+ 687 0122 01       		.byte	0x1
+ 688 0123 3F       		.byte	0x3f
+ 689 0124 81000000 		.4byte	0x81
+ 690 0128 02       		.uleb128 0x2
+ 691 0129 91       		.byte	0x91
+ 692 012a 6F       		.sleb128 -17
+ 693 012b 00       		.byte	0
+ 694 012c 0C       		.uleb128 0xc
+ 695 012d 24020000 		.4byte	.LASF37
+ 696 0131 01       		.byte	0x1
+ 697 0132 61       		.byte	0x61
+ 698 0133 00000000 		.4byte	.LFB67
+ 699 0137 34010000 		.4byte	.LFE67-.LFB67
+ 700 013b 01       		.uleb128 0x1
+ 701 013c 9C       		.byte	0x9c
+ 702 013d 50010000 		.4byte	0x150
+ 703 0141 0D       		.uleb128 0xd
+ 704 0142 04010000 		.4byte	.LASF21
+ 705 0146 01       		.byte	0x1
+ 706 0147 63       		.byte	0x63
+ 707 0148 81000000 		.4byte	0x81
+ 708 014c 02       		.uleb128 0x2
+ 709 014d 91       		.byte	0x91
+ 710 014e 77       		.sleb128 -9
+ 711 014f 00       		.byte	0
+ 712 0150 0E       		.uleb128 0xe
+ 713 0151 63010000 		.4byte	.LASF22
+ 714 0155 05       		.byte	0x5
+ 715 0156 9606     		.2byte	0x696
+ 716 0158 5C010000 		.4byte	0x15c
+ 717 015c 06       		.uleb128 0x6
+ 718 015d 76000000 		.4byte	0x76
+ 719 0161 0F       		.uleb128 0xf
+ 720 0162 81000000 		.4byte	0x81
+ 721 0166 71010000 		.4byte	0x171
+ 722 016a 10       		.uleb128 0x10
+ 723 016b D0000000 		.4byte	0xd0
+ 724 016f 3F       		.byte	0x3f
+ 725 0170 00       		.byte	0
+ 726 0171 11       		.uleb128 0x11
+ 727 0172 DF010000 		.4byte	.LASF23
+ 728 0176 06       		.byte	0x6
+ 729 0177 24       		.byte	0x24
+ 730 0178 61010000 		.4byte	0x161
+ 731 017c 05       		.uleb128 0x5
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 17
 
 
- 726 015c 75696E74 		.ascii	"uint16\000"
- 726      313600
- 727              	.LASF26:
- 728 0163 2E5C6932 		.ascii	".\\i2s.c\000"
- 728      732E6300 
- 729              	.LASF23:
- 730 016b 7478446D 		.ascii	"txDmaChan\000"
- 730      61436861 
- 730      6E00
- 731              	.LASF13:
- 732 0175 75696E74 		.ascii	"uint32\000"
- 732      333200
- 733              	.LASF8:
- 734 017c 756E7369 		.ascii	"unsigned int\000"
- 734      676E6564 
- 734      20696E74 
- 734      00
- 735              	.LASF7:
- 736 0189 6C6F6E67 		.ascii	"long long unsigned int\000"
- 736      206C6F6E 
- 736      6720756E 
- 736      7369676E 
- 736      65642069 
- 737              	.LASF20:
- 738 01a0 77724275 		.ascii	"wrBuffer\000"
- 738      66666572 
- 738      00
- 739              	.LASF10:
- 740 01a9 696E7433 		.ascii	"int32_t\000"
- 740      325F7400 
- 741              	.LASF18:
- 742 01b1 73697A65 		.ascii	"sizetype\000"
- 742      74797065 
- 742      00
- 743              	.LASF6:
- 744 01ba 6C6F6E67 		.ascii	"long long int\000"
- 744      206C6F6E 
- 744      6720696E 
- 744      7400
- 745              	.LASF24:
- 746 01c8 7478446D 		.ascii	"txDmaTd\000"
- 746      61546400 
- 747              	.LASF16:
- 748 01d0 63686172 		.ascii	"char\000"
- 748      00
- 749              	.LASF2:
- 750 01d5 73686F72 		.ascii	"short int\000"
- 750      7420696E 
- 750      7400
- 751              	.LASF11:
- 752 01df 75696E74 		.ascii	"uint8\000"
- 752      3800
- 753              	.LASF30:
- 754 01e5 446D6154 		.ascii	"DmaTxConfiguration\000"
- 754      78436F6E 
- 754      66696775 
- 754      72617469 
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccanWeFd.s 			page 17
+ 732 017d 03       		.byte	0x3
+ 733 017e 00000000 		.4byte	wrBuffer
+ 734 0182 11       		.uleb128 0x11
+ 735 0183 4B010000 		.4byte	.LASF24
+ 736 0187 06       		.byte	0x6
+ 737 0188 25       		.byte	0x25
+ 738 0189 81000000 		.4byte	0x81
+ 739 018d 05       		.uleb128 0x5
+ 740 018e 03       		.byte	0x3
+ 741 018f 00000000 		.4byte	temp
+ 742 0193 0F       		.uleb128 0xf
+ 743 0194 81000000 		.4byte	0x81
+ 744 0198 A4010000 		.4byte	0x1a4
+ 745 019c 12       		.uleb128 0x12
+ 746 019d D0000000 		.4byte	0xd0
+ 747 01a1 DF01     		.2byte	0x1df
+ 748 01a3 00       		.byte	0
+ 749 01a4 11       		.uleb128 0x11
+ 750 01a5 77010000 		.4byte	.LASF25
+ 751 01a9 01       		.byte	0x1
+ 752 01aa 10       		.byte	0x10
+ 753 01ab 93010000 		.4byte	0x193
+ 754 01af 05       		.uleb128 0x5
+ 755 01b0 03       		.byte	0x3
+ 756 01b1 00000000 		.4byte	soundBuffer
+ 757 01b5 11       		.uleb128 0x11
+ 758 01b6 C7010000 		.4byte	.LASF26
+ 759 01ba 01       		.byte	0x1
+ 760 01bb 11       		.byte	0x11
+ 761 01bc CB000000 		.4byte	0xcb
+ 762 01c0 05       		.uleb128 0x5
+ 763 01c1 03       		.byte	0x3
+ 764 01c2 00000000 		.4byte	outIndex
+ 765 01c6 11       		.uleb128 0x11
+ 766 01c7 18010000 		.4byte	.LASF27
+ 767 01cb 01       		.byte	0x1
+ 768 01cc 12       		.byte	0x12
+ 769 01cd CB000000 		.4byte	0xcb
+ 770 01d1 05       		.uleb128 0x5
+ 771 01d2 03       		.byte	0x3
+ 772 01d3 00000000 		.4byte	inIndex
+ 773 01d7 11       		.uleb128 0x11
+ 774 01d8 57020000 		.4byte	.LASF28
+ 775 01dc 01       		.byte	0x1
+ 776 01dd 15       		.byte	0x15
+ 777 01de C6000000 		.4byte	0xc6
+ 778 01e2 05       		.uleb128 0x5
+ 779 01e3 03       		.byte	0x3
+ 780 01e4 00000000 		.4byte	syncDma
+ 781 01e8 11       		.uleb128 0x11
+ 782 01e9 D0010000 		.4byte	.LASF29
+ 783 01ed 01       		.byte	0x1
+ 784 01ee 16       		.byte	0x16
+ 785 01ef C6000000 		.4byte	0xc6
+ 786 01f3 05       		.uleb128 0x5
+ 787 01f4 03       		.byte	0x3
+ 788 01f5 00000000 		.4byte	syncDmaCounter
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 18
 
 
- 754      6F6E00
- 755              	.LASF4:
- 756 01f8 6C6F6E67 		.ascii	"long int\000"
- 756      20696E74 
- 756      00
- 757              	.LASF0:
- 758 0201 7369676E 		.ascii	"signed char\000"
- 758      65642063 
- 758      68617200 
- 759              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 789 01f9 11       		.uleb128 0x11
+ 790 01fa 09020000 		.4byte	.LASF30
+ 791 01fe 01       		.byte	0x1
+ 792 01ff 19       		.byte	0x19
+ 793 0200 81000000 		.4byte	0x81
+ 794 0204 05       		.uleb128 0x5
+ 795 0205 03       		.byte	0x3
+ 796 0206 00000000 		.4byte	TxOutDmaCh
+ 797 020a 0F       		.uleb128 0xf
+ 798 020b 81000000 		.4byte	0x81
+ 799 020f 1A020000 		.4byte	0x21a
+ 800 0213 10       		.uleb128 0x10
+ 801 0214 D0000000 		.4byte	0xd0
+ 802 0218 09       		.byte	0x9
+ 803 0219 00       		.byte	0
+ 804 021a 11       		.uleb128 0x11
+ 805 021b F9010000 		.4byte	.LASF31
+ 806 021f 01       		.byte	0x1
+ 807 0220 1A       		.byte	0x1a
+ 808 0221 0A020000 		.4byte	0x20a
+ 809 0225 05       		.uleb128 0x5
+ 810 0226 03       		.byte	0x3
+ 811 0227 00000000 		.4byte	TxOutDmaTd
+ 812 022b 00       		.byte	0
+ 813              		.section	.debug_abbrev,"",%progbits
+ 814              	.Ldebug_abbrev0:
+ 815 0000 01       		.uleb128 0x1
+ 816 0001 11       		.uleb128 0x11
+ 817 0002 01       		.byte	0x1
+ 818 0003 25       		.uleb128 0x25
+ 819 0004 0E       		.uleb128 0xe
+ 820 0005 13       		.uleb128 0x13
+ 821 0006 0B       		.uleb128 0xb
+ 822 0007 03       		.uleb128 0x3
+ 823 0008 0E       		.uleb128 0xe
+ 824 0009 1B       		.uleb128 0x1b
+ 825 000a 0E       		.uleb128 0xe
+ 826 000b 55       		.uleb128 0x55
+ 827 000c 17       		.uleb128 0x17
+ 828 000d 11       		.uleb128 0x11
+ 829 000e 01       		.uleb128 0x1
+ 830 000f 10       		.uleb128 0x10
+ 831 0010 17       		.uleb128 0x17
+ 832 0011 00       		.byte	0
+ 833 0012 00       		.byte	0
+ 834 0013 02       		.uleb128 0x2
+ 835 0014 24       		.uleb128 0x24
+ 836 0015 00       		.byte	0
+ 837 0016 0B       		.uleb128 0xb
+ 838 0017 0B       		.uleb128 0xb
+ 839 0018 3E       		.uleb128 0x3e
+ 840 0019 0B       		.uleb128 0xb
+ 841 001a 03       		.uleb128 0x3
+ 842 001b 0E       		.uleb128 0xe
+ 843 001c 00       		.byte	0
+ 844 001d 00       		.byte	0
+ 845 001e 03       		.uleb128 0x3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 19
+
+
+ 846 001f 16       		.uleb128 0x16
+ 847 0020 00       		.byte	0
+ 848 0021 03       		.uleb128 0x3
+ 849 0022 0E       		.uleb128 0xe
+ 850 0023 3A       		.uleb128 0x3a
+ 851 0024 0B       		.uleb128 0xb
+ 852 0025 3B       		.uleb128 0x3b
+ 853 0026 0B       		.uleb128 0xb
+ 854 0027 49       		.uleb128 0x49
+ 855 0028 13       		.uleb128 0x13
+ 856 0029 00       		.byte	0
+ 857 002a 00       		.byte	0
+ 858 002b 04       		.uleb128 0x4
+ 859 002c 24       		.uleb128 0x24
+ 860 002d 00       		.byte	0
+ 861 002e 0B       		.uleb128 0xb
+ 862 002f 0B       		.uleb128 0xb
+ 863 0030 3E       		.uleb128 0x3e
+ 864 0031 0B       		.uleb128 0xb
+ 865 0032 03       		.uleb128 0x3
+ 866 0033 08       		.uleb128 0x8
+ 867 0034 00       		.byte	0
+ 868 0035 00       		.byte	0
+ 869 0036 05       		.uleb128 0x5
+ 870 0037 16       		.uleb128 0x16
+ 871 0038 00       		.byte	0
+ 872 0039 03       		.uleb128 0x3
+ 873 003a 0E       		.uleb128 0xe
+ 874 003b 3A       		.uleb128 0x3a
+ 875 003c 0B       		.uleb128 0xb
+ 876 003d 3B       		.uleb128 0x3b
+ 877 003e 05       		.uleb128 0x5
+ 878 003f 49       		.uleb128 0x49
+ 879 0040 13       		.uleb128 0x13
+ 880 0041 00       		.byte	0
+ 881 0042 00       		.byte	0
+ 882 0043 06       		.uleb128 0x6
+ 883 0044 35       		.uleb128 0x35
+ 884 0045 00       		.byte	0
+ 885 0046 49       		.uleb128 0x49
+ 886 0047 13       		.uleb128 0x13
+ 887 0048 00       		.byte	0
+ 888 0049 00       		.byte	0
+ 889 004a 07       		.uleb128 0x7
+ 890 004b 2E       		.uleb128 0x2e
+ 891 004c 00       		.byte	0
+ 892 004d 3F       		.uleb128 0x3f
+ 893 004e 19       		.uleb128 0x19
+ 894 004f 03       		.uleb128 0x3
+ 895 0050 0E       		.uleb128 0xe
+ 896 0051 3A       		.uleb128 0x3a
+ 897 0052 0B       		.uleb128 0xb
+ 898 0053 3B       		.uleb128 0x3b
+ 899 0054 0B       		.uleb128 0xb
+ 900 0055 27       		.uleb128 0x27
+ 901 0056 19       		.uleb128 0x19
+ 902 0057 11       		.uleb128 0x11
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 20
+
+
+ 903 0058 01       		.uleb128 0x1
+ 904 0059 12       		.uleb128 0x12
+ 905 005a 06       		.uleb128 0x6
+ 906 005b 40       		.uleb128 0x40
+ 907 005c 18       		.uleb128 0x18
+ 908 005d 9642     		.uleb128 0x2116
+ 909 005f 19       		.uleb128 0x19
+ 910 0060 00       		.byte	0
+ 911 0061 00       		.byte	0
+ 912 0062 08       		.uleb128 0x8
+ 913 0063 2E       		.uleb128 0x2e
+ 914 0064 00       		.byte	0
+ 915 0065 3F       		.uleb128 0x3f
+ 916 0066 19       		.uleb128 0x19
+ 917 0067 03       		.uleb128 0x3
+ 918 0068 0E       		.uleb128 0xe
+ 919 0069 3A       		.uleb128 0x3a
+ 920 006a 0B       		.uleb128 0xb
+ 921 006b 3B       		.uleb128 0x3b
+ 922 006c 0B       		.uleb128 0xb
+ 923 006d 11       		.uleb128 0x11
+ 924 006e 01       		.uleb128 0x1
+ 925 006f 12       		.uleb128 0x12
+ 926 0070 06       		.uleb128 0x6
+ 927 0071 40       		.uleb128 0x40
+ 928 0072 18       		.uleb128 0x18
+ 929 0073 9642     		.uleb128 0x2116
+ 930 0075 19       		.uleb128 0x19
+ 931 0076 00       		.byte	0
+ 932 0077 00       		.byte	0
+ 933 0078 09       		.uleb128 0x9
+ 934 0079 2E       		.uleb128 0x2e
+ 935 007a 00       		.byte	0
+ 936 007b 3F       		.uleb128 0x3f
+ 937 007c 19       		.uleb128 0x19
+ 938 007d 03       		.uleb128 0x3
+ 939 007e 0E       		.uleb128 0xe
+ 940 007f 3A       		.uleb128 0x3a
+ 941 0080 0B       		.uleb128 0xb
+ 942 0081 3B       		.uleb128 0x3b
+ 943 0082 0B       		.uleb128 0xb
+ 944 0083 11       		.uleb128 0x11
+ 945 0084 01       		.uleb128 0x1
+ 946 0085 12       		.uleb128 0x12
+ 947 0086 06       		.uleb128 0x6
+ 948 0087 40       		.uleb128 0x40
+ 949 0088 18       		.uleb128 0x18
+ 950 0089 9742     		.uleb128 0x2117
+ 951 008b 19       		.uleb128 0x19
+ 952 008c 00       		.byte	0
+ 953 008d 00       		.byte	0
+ 954 008e 0A       		.uleb128 0xa
+ 955 008f 2E       		.uleb128 0x2e
+ 956 0090 01       		.byte	0x1
+ 957 0091 3F       		.uleb128 0x3f
+ 958 0092 19       		.uleb128 0x19
+ 959 0093 03       		.uleb128 0x3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 21
+
+
+ 960 0094 0E       		.uleb128 0xe
+ 961 0095 3A       		.uleb128 0x3a
+ 962 0096 0B       		.uleb128 0xb
+ 963 0097 3B       		.uleb128 0x3b
+ 964 0098 0B       		.uleb128 0xb
+ 965 0099 27       		.uleb128 0x27
+ 966 009a 19       		.uleb128 0x19
+ 967 009b 11       		.uleb128 0x11
+ 968 009c 01       		.uleb128 0x1
+ 969 009d 12       		.uleb128 0x12
+ 970 009e 06       		.uleb128 0x6
+ 971 009f 40       		.uleb128 0x40
+ 972 00a0 18       		.uleb128 0x18
+ 973 00a1 9642     		.uleb128 0x2116
+ 974 00a3 19       		.uleb128 0x19
+ 975 00a4 01       		.uleb128 0x1
+ 976 00a5 13       		.uleb128 0x13
+ 977 00a6 00       		.byte	0
+ 978 00a7 00       		.byte	0
+ 979 00a8 0B       		.uleb128 0xb
+ 980 00a9 34       		.uleb128 0x34
+ 981 00aa 00       		.byte	0
+ 982 00ab 03       		.uleb128 0x3
+ 983 00ac 08       		.uleb128 0x8
+ 984 00ad 3A       		.uleb128 0x3a
+ 985 00ae 0B       		.uleb128 0xb
+ 986 00af 3B       		.uleb128 0x3b
+ 987 00b0 0B       		.uleb128 0xb
+ 988 00b1 49       		.uleb128 0x49
+ 989 00b2 13       		.uleb128 0x13
+ 990 00b3 02       		.uleb128 0x2
+ 991 00b4 18       		.uleb128 0x18
+ 992 00b5 00       		.byte	0
+ 993 00b6 00       		.byte	0
+ 994 00b7 0C       		.uleb128 0xc
+ 995 00b8 2E       		.uleb128 0x2e
+ 996 00b9 01       		.byte	0x1
+ 997 00ba 3F       		.uleb128 0x3f
+ 998 00bb 19       		.uleb128 0x19
+ 999 00bc 03       		.uleb128 0x3
+ 1000 00bd 0E       		.uleb128 0xe
+ 1001 00be 3A       		.uleb128 0x3a
+ 1002 00bf 0B       		.uleb128 0xb
+ 1003 00c0 3B       		.uleb128 0x3b
+ 1004 00c1 0B       		.uleb128 0xb
+ 1005 00c2 11       		.uleb128 0x11
+ 1006 00c3 01       		.uleb128 0x1
+ 1007 00c4 12       		.uleb128 0x12
+ 1008 00c5 06       		.uleb128 0x6
+ 1009 00c6 40       		.uleb128 0x40
+ 1010 00c7 18       		.uleb128 0x18
+ 1011 00c8 9642     		.uleb128 0x2116
+ 1012 00ca 19       		.uleb128 0x19
+ 1013 00cb 01       		.uleb128 0x1
+ 1014 00cc 13       		.uleb128 0x13
+ 1015 00cd 00       		.byte	0
+ 1016 00ce 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 22
+
+
+ 1017 00cf 0D       		.uleb128 0xd
+ 1018 00d0 34       		.uleb128 0x34
+ 1019 00d1 00       		.byte	0
+ 1020 00d2 03       		.uleb128 0x3
+ 1021 00d3 0E       		.uleb128 0xe
+ 1022 00d4 3A       		.uleb128 0x3a
+ 1023 00d5 0B       		.uleb128 0xb
+ 1024 00d6 3B       		.uleb128 0x3b
+ 1025 00d7 0B       		.uleb128 0xb
+ 1026 00d8 49       		.uleb128 0x49
+ 1027 00d9 13       		.uleb128 0x13
+ 1028 00da 02       		.uleb128 0x2
+ 1029 00db 18       		.uleb128 0x18
+ 1030 00dc 00       		.byte	0
+ 1031 00dd 00       		.byte	0
+ 1032 00de 0E       		.uleb128 0xe
+ 1033 00df 34       		.uleb128 0x34
+ 1034 00e0 00       		.byte	0
+ 1035 00e1 03       		.uleb128 0x3
+ 1036 00e2 0E       		.uleb128 0xe
+ 1037 00e3 3A       		.uleb128 0x3a
+ 1038 00e4 0B       		.uleb128 0xb
+ 1039 00e5 3B       		.uleb128 0x3b
+ 1040 00e6 05       		.uleb128 0x5
+ 1041 00e7 49       		.uleb128 0x49
+ 1042 00e8 13       		.uleb128 0x13
+ 1043 00e9 3F       		.uleb128 0x3f
+ 1044 00ea 19       		.uleb128 0x19
+ 1045 00eb 3C       		.uleb128 0x3c
+ 1046 00ec 19       		.uleb128 0x19
+ 1047 00ed 00       		.byte	0
+ 1048 00ee 00       		.byte	0
+ 1049 00ef 0F       		.uleb128 0xf
+ 1050 00f0 01       		.uleb128 0x1
+ 1051 00f1 01       		.byte	0x1
+ 1052 00f2 49       		.uleb128 0x49
+ 1053 00f3 13       		.uleb128 0x13
+ 1054 00f4 01       		.uleb128 0x1
+ 1055 00f5 13       		.uleb128 0x13
+ 1056 00f6 00       		.byte	0
+ 1057 00f7 00       		.byte	0
+ 1058 00f8 10       		.uleb128 0x10
+ 1059 00f9 21       		.uleb128 0x21
+ 1060 00fa 00       		.byte	0
+ 1061 00fb 49       		.uleb128 0x49
+ 1062 00fc 13       		.uleb128 0x13
+ 1063 00fd 2F       		.uleb128 0x2f
+ 1064 00fe 0B       		.uleb128 0xb
+ 1065 00ff 00       		.byte	0
+ 1066 0100 00       		.byte	0
+ 1067 0101 11       		.uleb128 0x11
+ 1068 0102 34       		.uleb128 0x34
+ 1069 0103 00       		.byte	0
+ 1070 0104 03       		.uleb128 0x3
+ 1071 0105 0E       		.uleb128 0xe
+ 1072 0106 3A       		.uleb128 0x3a
+ 1073 0107 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 23
+
+
+ 1074 0108 3B       		.uleb128 0x3b
+ 1075 0109 0B       		.uleb128 0xb
+ 1076 010a 49       		.uleb128 0x49
+ 1077 010b 13       		.uleb128 0x13
+ 1078 010c 3F       		.uleb128 0x3f
+ 1079 010d 19       		.uleb128 0x19
+ 1080 010e 02       		.uleb128 0x2
+ 1081 010f 18       		.uleb128 0x18
+ 1082 0110 00       		.byte	0
+ 1083 0111 00       		.byte	0
+ 1084 0112 12       		.uleb128 0x12
+ 1085 0113 21       		.uleb128 0x21
+ 1086 0114 00       		.byte	0
+ 1087 0115 49       		.uleb128 0x49
+ 1088 0116 13       		.uleb128 0x13
+ 1089 0117 2F       		.uleb128 0x2f
+ 1090 0118 05       		.uleb128 0x5
+ 1091 0119 00       		.byte	0
+ 1092 011a 00       		.byte	0
+ 1093 011b 00       		.byte	0
+ 1094              		.section	.debug_aranges,"",%progbits
+ 1095 0000 3C000000 		.4byte	0x3c
+ 1096 0004 0200     		.2byte	0x2
+ 1097 0006 00000000 		.4byte	.Ldebug_info0
+ 1098 000a 04       		.byte	0x4
+ 1099 000b 00       		.byte	0
+ 1100 000c 0000     		.2byte	0
+ 1101 000e 0000     		.2byte	0
+ 1102 0010 00000000 		.4byte	.LFB63
+ 1103 0014 68000000 		.4byte	.LFE63-.LFB63
+ 1104 0018 00000000 		.4byte	.LFB64
+ 1105 001c 12000000 		.4byte	.LFE64-.LFB64
+ 1106 0020 00000000 		.4byte	.LFB65
+ 1107 0024 0C000000 		.4byte	.LFE65-.LFB65
+ 1108 0028 00000000 		.4byte	.LFB66
+ 1109 002c DC000000 		.4byte	.LFE66-.LFB66
+ 1110 0030 00000000 		.4byte	.LFB67
+ 1111 0034 34010000 		.4byte	.LFE67-.LFB67
+ 1112 0038 00000000 		.4byte	0
+ 1113 003c 00000000 		.4byte	0
+ 1114              		.section	.debug_ranges,"",%progbits
+ 1115              	.Ldebug_ranges0:
+ 1116 0000 00000000 		.4byte	.LFB63
+ 1117 0004 68000000 		.4byte	.LFE63
+ 1118 0008 00000000 		.4byte	.LFB64
+ 1119 000c 12000000 		.4byte	.LFE64
+ 1120 0010 00000000 		.4byte	.LFB65
+ 1121 0014 0C000000 		.4byte	.LFE65
+ 1122 0018 00000000 		.4byte	.LFB66
+ 1123 001c DC000000 		.4byte	.LFE66
+ 1124 0020 00000000 		.4byte	.LFB67
+ 1125 0024 34010000 		.4byte	.LFE67
+ 1126 0028 00000000 		.4byte	0
+ 1127 002c 00000000 		.4byte	0
+ 1128              		.section	.debug_line,"",%progbits
+ 1129              	.Ldebug_line0:
+ 1130 0000 58020000 		.section	.debug_str,"MS",%progbits,1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 24
+
+
+ 1130      02005901 
+ 1130      00000201 
+ 1130      FB0E0D00 
+ 1130      01010101 
+ 1131              	.LASF6:
+ 1132 0000 6C6F6E67 		.ascii	"long long int\000"
+ 1132      206C6F6E 
+ 1132      6720696E 
+ 1132      7400
+ 1133              	.LASF20:
+ 1134 000e 49325374 		.ascii	"I2Stest\000"
+ 1134      65737400 
+ 1135              	.LASF34:
+ 1136 0016 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 1136      73657273 
+ 1136      5C4C756B 
+ 1136      61732043 
+ 1136      72657574 
+ 1137 0044 65445350 		.ascii	"eDSPPSoC-I2C\\PSoC5_SPI_Master_DSP.cydsn\000"
+ 1137      50536F43 
+ 1137      2D493243 
+ 1137      5C50536F 
+ 1137      43355F53 
+ 1138              	.LASF9:
+ 1139 006c 5F5F696E 		.ascii	"__int32_t\000"
+ 1139      7433325F 
+ 1139      7400
+ 1140              	.LASF32:
+ 1141 0076 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1141      4320342E 
+ 1141      392E3320 
+ 1141      32303135 
+ 1141      30333033 
+ 1142 00a9 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 1142      20726576 
+ 1142      6973696F 
+ 1142      6E203232 
+ 1142      31323230 
+ 1143 00dc 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1143      66756E63 
+ 1143      74696F6E 
+ 1143      2D736563 
+ 1143      74696F6E 
+ 1144              	.LASF21:
+ 1145 0104 736B6970 		.ascii	"skipNextOut\000"
+ 1145      4E657874 
+ 1145      4F757400 
+ 1146              	.LASF19:
+ 1147 0110 49325369 		.ascii	"I2Sinit\000"
+ 1147      6E697400 
+ 1148              	.LASF27:
+ 1149 0118 696E496E 		.ascii	"inIndex\000"
+ 1149      64657800 
+ 1150              	.LASF14:
+ 1151 0120 666C6F61 		.ascii	"float\000"
+ 1151      7400
+ 1152              	.LASF1:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 25
+
+
+ 1153 0126 756E7369 		.ascii	"unsigned char\000"
+ 1153      676E6564 
+ 1153      20636861 
+ 1153      7200
+ 1154              	.LASF17:
+ 1155 0134 72656738 		.ascii	"reg8\000"
+ 1155      00
+ 1156              	.LASF5:
+ 1157 0139 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1157      20756E73 
+ 1157      69676E65 
+ 1157      6420696E 
+ 1157      7400
+ 1158              	.LASF24:
+ 1159 014b 74656D70 		.ascii	"temp\000"
+ 1159      00
+ 1160              	.LASF3:
+ 1161 0150 73686F72 		.ascii	"short unsigned int\000"
+ 1161      7420756E 
+ 1161      7369676E 
+ 1161      65642069 
+ 1161      6E7400
+ 1162              	.LASF22:
+ 1163 0163 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1163      52784275 
+ 1163      66666572 
+ 1163      00
+ 1164              	.LASF15:
+ 1165 0170 646F7562 		.ascii	"double\000"
+ 1165      6C6500
+ 1166              	.LASF25:
+ 1167 0177 736F756E 		.ascii	"soundBuffer\000"
+ 1167      64427566 
+ 1167      66657200 
+ 1168              	.LASF33:
+ 1169 0183 2E5C6932 		.ascii	".\\i2s.c\000"
+ 1169      732E6300 
+ 1170              	.LASF12:
+ 1171 018b 75696E74 		.ascii	"uint16\000"
+ 1171      313600
+ 1172              	.LASF13:
+ 1173 0192 75696E74 		.ascii	"uint32\000"
+ 1173      333200
+ 1174              	.LASF8:
+ 1175 0199 756E7369 		.ascii	"unsigned int\000"
+ 1175      676E6564 
+ 1175      20696E74 
+ 1175      00
+ 1176              	.LASF35:
+ 1177 01a6 5478446D 		.ascii	"TxDmaDone\000"
+ 1177      61446F6E 
+ 1177      6500
+ 1178              	.LASF7:
+ 1179 01b0 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1179      206C6F6E 
+ 1179      6720756E 
+ 1179      7369676E 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 26
+
+
+ 1179      65642069 
+ 1180              	.LASF26:
+ 1181 01c7 6F757449 		.ascii	"outIndex\000"
+ 1181      6E646578 
+ 1181      00
+ 1182              	.LASF29:
+ 1183 01d0 73796E63 		.ascii	"syncDmaCounter\000"
+ 1183      446D6143 
+ 1183      6F756E74 
+ 1183      657200
+ 1184              	.LASF23:
+ 1185 01df 77724275 		.ascii	"wrBuffer\000"
+ 1185      66666572 
+ 1185      00
+ 1186              	.LASF10:
+ 1187 01e8 696E7433 		.ascii	"int32_t\000"
+ 1187      325F7400 
+ 1188              	.LASF18:
+ 1189 01f0 73697A65 		.ascii	"sizetype\000"
+ 1189      74797065 
+ 1189      00
+ 1190              	.LASF31:
+ 1191 01f9 54784F75 		.ascii	"TxOutDmaTd\000"
+ 1191      74446D61 
+ 1191      546400
+ 1192              	.LASF16:
+ 1193 0204 63686172 		.ascii	"char\000"
+ 1193      00
+ 1194              	.LASF30:
+ 1195 0209 54784F75 		.ascii	"TxOutDmaCh\000"
+ 1195      74446D61 
+ 1195      436800
+ 1196              	.LASF2:
+ 1197 0214 73686F72 		.ascii	"short int\000"
+ 1197      7420696E 
+ 1197      7400
+ 1198              	.LASF11:
+ 1199 021e 75696E74 		.ascii	"uint8\000"
+ 1199      3800
+ 1200              	.LASF37:
+ 1201 0224 55534272 		.ascii	"USBrefresh\000"
+ 1201      65667265 
+ 1201      736800
+ 1202              	.LASF36:
+ 1203 022f 446D6154 		.ascii	"DmaTxConfiguration\000"
+ 1203      78436F6E 
+ 1203      66696775 
+ 1203      72617469 
+ 1203      6F6E00
+ 1204              	.LASF4:
+ 1205 0242 6C6F6E67 		.ascii	"long int\000"
+ 1205      20696E74 
+ 1205      00
+ 1206              	.LASF0:
+ 1207 024b 7369676E 		.ascii	"signed char\000"
+ 1207      65642063 
+ 1207      68617200 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 27
+
+
+ 1208              	.LASF28:
+ 1209 0257 73796E63 		.ascii	"syncDma\000"
+ 1209      446D6100 
+ 1210              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

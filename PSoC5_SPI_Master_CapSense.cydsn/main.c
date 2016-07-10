@@ -51,7 +51,12 @@ int main()
     SPIinit();
     /***** Initialization completed *****/
     
-    uint32 pos = 30000;
+    uint32 pos = 130;
+    uint32 pos_old = 130;
+    int32 div=0;
+    
+    CyDelay(1000);
+    
     
     for(;;)
     {
@@ -60,8 +65,15 @@ int main()
         /* Next command to be written */
         pos = CapSense_Refresh();
         if(pos!=0xFFFFFFFF){
+            div=pos-pos_old;
+            if(div>50) pos_old+=50;
+            else
+            {
+                if(div<-50) pos_old-=50;
+                else pos_old=pos;
+            }
             //UARTsendNumber((uint8)pos);
-            SPIsendNumber((uint8)pos);
+            SPIsendNumber((uint8)pos_old);
         }
 
 

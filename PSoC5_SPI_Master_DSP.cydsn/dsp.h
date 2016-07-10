@@ -157,7 +157,7 @@ void DSPread32(uint16 address, uint8* datatarget, uint16 datasize);
 * Return:
 *
 *******************************************************************************/
-void DSPi2sInput(uint8 active);
+void DSPInput(uint32 in);
 
 /*******************************************************************************
 * Function Name: DSPpitch
@@ -172,7 +172,7 @@ void DSPi2sInput(uint8 active);
 * Return:
 *
 *******************************************************************************/
-void DSPpitch(uint32 pitch);
+void DSPpitch(int32 pitch);
 
 #endif /* (CY_DSP_H) */
 

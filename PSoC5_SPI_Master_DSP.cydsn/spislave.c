@@ -1,15 +1,15 @@
 /*******************************************************************************
-* File Name: spimaster.c
+* File Name: spislave.c
 *
-* Version: 1.2
+* Version: 1.0
 * Author: Lukas Creutzburg
 *
 * Description:
-*   Component sends data via SPI as Master
-*   Can send arrays
-*
+*   Component sends data via SPI as Slave (Problems with this!)
+*   Can send arrays (Problems with this!)
+*   Receives from Master
 * Changes:
-*   -Can now receive
+*   
 *
 *******************************************************************************/
 
@@ -52,9 +52,9 @@ void SPISsendNumber(uint8 number)
 {
 
     /* Warten auf abschliessen der TX Uebertragung */
-    while(!(SPIM_ReadTxStatus() & SPIS_STS_SPI_DONE));
+    while(!(SPIS_ReadTxStatus() & SPIS_STS_SPI_DONE));
     /* Senden eines Wortes */
-    SPIM_WriteTxData(number);
+    SPIS_WriteTxData(number);
     CyDelayUs(5);
 }
 
@@ -114,13 +114,16 @@ void SPISsendArray(uint8* numbers, uint16 numberOfbytes)
 *  uint8 received
 *
 *******************************************************************************/
-uint8 SPISreadNumber()
+uint8 SPISreadNumber(uint8 waiting)
 {
 
     /* Warten auf Byte */
-    while(SPIS_GetRxBufferSize() == 0)
+    if(waiting)
     {
-        CyDelayUs(5);    
+        while(SPIS_GetRxBufferSize() == 0)
+        {
+            CyDelayUs(5);    
+        }
     }
     /* Senden eines Wortes */
     uint8 received = SPIS_ReadRxData();

@@ -1,5 +1,5 @@
 /***************************************************************************
-* File Name: TxDMA_dma.c  
+* File Name: TxDma_dma.c  
 * Version 1.70
 *
 *  Description:
@@ -19,7 +19,7 @@
 ********************************************************************************/
 #include <CYLIB.H>
 #include <CYDMAC.H>
-#include <TxDMA_dma.H>
+#include <TxDma_dma.H>
 
 
 
@@ -29,47 +29,47 @@
 * 
 * 
 * 
-* TxDMA__DRQ_CTL_REG
+* TxDma__DRQ_CTL_REG
 * 
 * 
-* TxDMA__DRQ_NUMBER
+* TxDma__DRQ_NUMBER
 * 
 * Number of TD's used by this channel.
-* TxDMA__NUMBEROF_TDS
+* TxDma__NUMBEROF_TDS
 * 
 * Priority of this channel.
-* TxDMA__PRIORITY
+* TxDma__PRIORITY
 * 
-* True if TxDMA_TERMIN_SEL is used.
-* TxDMA__TERMIN_EN
+* True if TxDma_TERMIN_SEL is used.
+* TxDma__TERMIN_EN
 * 
 * TERMIN interrupt line to signal terminate.
-* TxDMA__TERMIN_SEL
+* TxDma__TERMIN_SEL
 * 
 * 
-* True if TxDMA_TERMOUT0_SEL is used.
-* TxDMA__TERMOUT0_EN
+* True if TxDma_TERMOUT0_SEL is used.
+* TxDma__TERMOUT0_EN
 * 
 * 
 * TERMOUT0 interrupt line to signal completion.
-* TxDMA__TERMOUT0_SEL
+* TxDma__TERMOUT0_SEL
 * 
 * 
-* True if TxDMA_TERMOUT1_SEL is used.
-* TxDMA__TERMOUT1_EN
+* True if TxDma_TERMOUT1_SEL is used.
+* TxDma__TERMOUT1_EN
 * 
 * 
 * TERMOUT1 interrupt line to signal completion.
-* TxDMA__TERMOUT1_SEL
+* TxDma__TERMOUT1_SEL
 * 
 ****************************************************************************/
 
 
-/* Zero based index of TxDMA dma channel */
-uint8 TxDMA_DmaHandle = DMA_INVALID_CHANNEL;
+/* Zero based index of TxDma dma channel */
+uint8 TxDma_DmaHandle = DMA_INVALID_CHANNEL;
 
 /*********************************************************************
-* Function Name: uint8 TxDMA_DmaInitalize
+* Function Name: uint8 TxDma_DmaInitalize
 **********************************************************************
 * Summary:
 *   Allocates and initialises a channel of the DMAC to be used by the
@@ -94,34 +94,34 @@ uint8 TxDMA_DmaHandle = DMA_INVALID_CHANNEL;
 *
 *
 *******************************************************************/
-uint8 TxDMA_DmaInitialize(uint8 BurstCount, uint8 ReqestPerBurst, uint16 UpperSrcAddress, uint16 UpperDestAddress) 
+uint8 TxDma_DmaInitialize(uint8 BurstCount, uint8 ReqestPerBurst, uint16 UpperSrcAddress, uint16 UpperDestAddress) 
 {
 
     /* Allocate a DMA channel. */
-    TxDMA_DmaHandle = (uint8)TxDMA__DRQ_NUMBER;
+    TxDma_DmaHandle = (uint8)TxDma__DRQ_NUMBER;
 
     /* Configure the channel. */
-    (void)CyDmaChSetConfiguration(TxDMA_DmaHandle,
+    (void)CyDmaChSetConfiguration(TxDma_DmaHandle,
                                   BurstCount,
                                   ReqestPerBurst,
-                                  (uint8)TxDMA__TERMOUT0_SEL,
-                                  (uint8)TxDMA__TERMOUT1_SEL,
-                                  (uint8)TxDMA__TERMIN_SEL);
+                                  (uint8)TxDma__TERMOUT0_SEL,
+                                  (uint8)TxDma__TERMOUT1_SEL,
+                                  (uint8)TxDma__TERMIN_SEL);
 
     /* Set the extended address for the transfers */
-    (void)CyDmaChSetExtendedAddress(TxDMA_DmaHandle, UpperSrcAddress, UpperDestAddress);
+    (void)CyDmaChSetExtendedAddress(TxDma_DmaHandle, UpperSrcAddress, UpperDestAddress);
 
     /* Set the priority for this channel */
-    (void)CyDmaChPriority(TxDMA_DmaHandle, (uint8)TxDMA__PRIORITY);
+    (void)CyDmaChPriority(TxDma_DmaHandle, (uint8)TxDma__PRIORITY);
     
-    return TxDMA_DmaHandle;
+    return TxDma_DmaHandle;
 }
 
 /*********************************************************************
-* Function Name: void TxDMA_DmaRelease
+* Function Name: void TxDma_DmaRelease
 **********************************************************************
 * Summary:
-*   Frees the channel associated with TxDMA.
+*   Frees the channel associated with TxDma.
 *
 *
 * Parameters:
@@ -133,9 +133,9 @@ uint8 TxDMA_DmaInitialize(uint8 BurstCount, uint8 ReqestPerBurst, uint16 UpperSr
 *   void.
 *
 *******************************************************************/
-void TxDMA_DmaRelease(void) 
+void TxDma_DmaRelease(void) 
 {
     /* Disable the channel */
-    (void)CyDmaChDisable(TxDMA_DmaHandle);
+    (void)CyDmaChDisable(TxDma_DmaHandle);
 }
 

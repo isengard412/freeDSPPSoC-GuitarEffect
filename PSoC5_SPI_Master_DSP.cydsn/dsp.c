@@ -99,7 +99,7 @@ void DSPinit()
     DSPwriteWord16(0xF200,0x0102);
     CyDelay(1);
     //0b    001-LRCLK1   001-BCLK1   0-LRCLKMODE   0-LRCLKPOL   0-BCLKPOL   01-WORDLENGTH   00-MSBPOS   000-32bitcycles64bitframes
-    DSPwriteWord16(SDATA_IN_1,0b0010010001000000);
+    DSPwriteWord16(SDATA_IN_1,0b0010010000000000);
     CyDelay(1);
     DSPwriteWord16(0xF208,0x0102);
     CyDelay(1);
@@ -241,31 +241,16 @@ void DSPread32(uint16 address, uint8* datatarget, uint16 datasize)
     
 }
 
-void DSPi2sInput(uint8 active)
+void DSPInput(uint32 in)
 {
-    /* generated input */
-    if(active==0)
-    {
-        /* i2s mute */
-        DSPwriteWord32(0x005B,0x00000000);
-        /* unmute generator */
-        DSPwriteWord32(0x0051,0x01000000); //data
-        DSPwriteWord32(0x0050,0x0000208A); //slew mode
-    }
-    else
-    {
-        /* mute generator */
-        DSPwriteWord32(0x0051,0x00000000); //data
-        DSPwriteWord32(0x0050,0x0000208A); //slew mode
-        /* i2s mute */
-        DSPwriteWord32(0x005B,0x00000001);
-    }
+    /* 0-i2s, 1-generated, 2-analog */
+    if(in<3) DSPwriteWord32(0x0026,in);
 }
 
-void DSPpitch(uint32 pitch)
+void DSPpitch(int32 pitch)
 {
     /* Wert zwischen +-34953 */
-    DSPsafeLoad(0x0059,pitch);
+    DSPsafeLoad(0x002A,(uint32)pitch);
 }
 
 

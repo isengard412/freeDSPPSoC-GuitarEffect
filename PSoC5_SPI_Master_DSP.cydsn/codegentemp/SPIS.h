@@ -34,7 +34,7 @@
 ***************************************/
 
 #define SPIS_DATA_WIDTH                  (8u)
-#define SPIS_INTERNAL_TX_INT_ENABLED     (1u)
+#define SPIS_INTERNAL_TX_INT_ENABLED     (0u)
 #define SPIS_INTERNAL_RX_INT_ENABLED     (1u)
 #define SPIS_MODE_USE_ZERO               (1u)
 #define SPIS_BIDIRECTIONAL_MODE          (0u)
@@ -42,9 +42,9 @@
 
 #define SPIS_FIFO_SIZE                  (4u)
 /* Internal interrupt handling */
-#define SPIS_TX_BUFFER_SIZE             (64u)
-#define SPIS_RX_BUFFER_SIZE             (64u)
-#define SPIS_INTERNAL_TX_INT_ENABLED    (1u)
+#define SPIS_TX_BUFFER_SIZE             (4u)
+#define SPIS_RX_BUFFER_SIZE             (4u)
+#define SPIS_INTERNAL_TX_INT_ENABLED    (0u)
 #define SPIS_INTERNAL_RX_INT_ENABLED    (1u)
 
 #define SPIS_TX_SOFTWARE_BUF_ENABLED    ((0u != SPIS_INTERNAL_TX_INT_ENABLED) && \
@@ -167,7 +167,7 @@ extern uint8 SPIS_initVar;
 
 #define SPIS_INT_ON_SPI_DONE    (uint8)(0u << SPIS_STS_SPI_DONE_SHIFT)
 #define SPIS_INT_ON_TX_EMPTY    (uint8)(0u << SPIS_STS_TX_FIFO_EMPTY_SHIFT)
-#define SPIS_INT_ON_TX_NOT_FULL (uint8)(1u << SPIS_STS_TX_FIFO_NOT_FULL_SHIFT)
+#define SPIS_INT_ON_TX_NOT_FULL (uint8)(0u << SPIS_STS_TX_FIFO_NOT_FULL_SHIFT)
 #define SPIS_INT_ON_BYTE_COMP   (uint8)(0u << SPIS_STS_BYTE_COMPLETE_SHIFT)
 
 #define SPIS_TX_INIT_INTERRUPTS_MASK  (SPIS_INT_ON_SPI_DONE | \
@@ -191,8 +191,8 @@ extern uint8 SPIS_initVar;
 #define SPIS__MODE_11 3
 
 
-#define SPIS_TX_BUFFER_SIZE         (64u)
-#define SPIS_RX_BUFFER_SIZE         (64u)
+#define SPIS_TX_BUFFER_SIZE         (4u)
+#define SPIS_RX_BUFFER_SIZE         (4u)
 
 /* Following definitions are for version Compatibility, they are obsolete.
 *  Please do not use it in new projects
