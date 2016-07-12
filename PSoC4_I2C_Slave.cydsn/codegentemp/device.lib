@@ -1384,6 +1384,18 @@
                 intrinsic_fall : 0.0;
             }
         }
+        bundle (swctrl) {
+            members (swctrl_0, swctrl_1);
+            direction : input;
+        }
+        bundle (data_out) {
+            members (data_out_0, data_out_1, data_out_2, data_out_3, data_out_4, data_out_5, data_out_6, data_out_7);
+            direction : input;
+        }
+        bundle (data_oe) {
+            members (data_oe_0, data_oe_1, data_oe_2, data_oe_3);
+            direction : input;
+        }
     }
     
     cell (p4csdcell) {
@@ -1410,6 +1422,15 @@
             }
         }
         pin (irq) {
+            direction : output;
+            timing() {
+                timing_type : rising_edge;
+                related_pin : "clk2";  /* TODO: actual clock not specified */
+                intrinsic_rise : 0.0;
+                intrinsic_fall : 0.0;
+            }
+        }
+        pin (comp) {
             direction : output;
             timing() {
                 timing_type : rising_edge;
@@ -1464,7 +1485,7 @@
     
     cell (p4abufcell) {
         pin (ctb_dsi_comp) { direction : output; }
-        pin (dsi_out) { direction : input; }
+        pin (ctb_dsi_comp_n) { direction : output; }
     }
     
     cell (p4anapumpcell) {
@@ -1560,5 +1581,58 @@
         pin (tr_out_6) { direction: output; }
         pin (hpd) { direction: inout; }
     }
+
+    cell (p4smartiocell) {
+        pin (clock_smartio) { direction: input; }
+        pin (data0_i) { direction: input; }
+        pin (data0_o) { direction: output; }
+        pin (data0_io) { direction: inout; }
+        pin (gpio0_i) { direction: input; }
+        pin (gpio0_o) { direction: output; }
+        pin (gpio0_io) { direction: inout; }
+        pin (data1_i) { direction: input; }
+        pin (data1_o) { direction: output; }
+        pin (data1_io) { direction: inout; }
+        pin (gpio1_i) { direction: input; }
+        pin (gpio1_o) { direction: output; }
+        pin (gpio1_io) { direction: inout; }
+        pin (data2_i) { direction: input; }
+        pin (data2_o) { direction: output; }
+        pin (data2_io) { direction: inout; }
+        pin (gpio2_i) { direction: input; }
+        pin (gpio2_o) { direction: output; }
+        pin (gpio2_io) { direction: inout; }
+        pin (data3_i) { direction: input; }
+        pin (data3_o) { direction: output; }
+        pin (data3_io) { direction: inout; }
+        pin (gpio3_i) { direction: input; }
+        pin (gpio3_o) { direction: output; }
+        pin (gpio3_io) { direction: inout; }
+        pin (data4_i) { direction: input; }
+        pin (data4_o) { direction: output; }
+        pin (data4_io) { direction: inout; }
+        pin (gpio4_i) { direction: input; }
+        pin (gpio4_o) { direction: output; }
+        pin (gpio4_io) { direction: inout; }
+        pin (data5_i) { direction: input; }
+        pin (data5_o) { direction: output; }
+        pin (data5_io) { direction: inout; }
+        pin (gpio5_i) { direction: input; }
+        pin (gpio5_o) { direction: output; }
+        pin (gpio5_io) { direction: inout; }
+        pin (data6_i) { direction: input; }
+        pin (data6_o) { direction: output; }
+        pin (data6_io) { direction: inout; }
+        pin (gpio6_i) { direction: input; }
+        pin (gpio6_o) { direction: output; }
+        pin (gpio6_io) { direction: inout; }
+        pin (data7_i) { direction: input; }
+        pin (data7_o) { direction: output; }
+        pin (data7_io) { direction: inout; }
+        pin (gpio7_i) { direction: input; }
+        pin (gpio7_o) { direction: output; }
+        pin (gpio7_io) { direction: inout; }
+    }
+
 
 /*}*/

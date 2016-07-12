@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
   55              		.thumb_func
   56              		.type	TxDmaDone, %function
   57              	TxDmaDone:
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 2
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 2
 
 
   58              	.LFB63:
@@ -70,29 +70,37 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
    5:.\i2s.c       **** * Author: Lukas Creutzburg
    6:.\i2s.c       **** *
    7:.\i2s.c       **** * Description:
-   8:.\i2s.c       **** *   Interaction with DSP via I2S
+   8:.\i2s.c       **** *   Interaction with DSP via I2S. Streaming from USB Sound Interface
    9:.\i2s.c       **** *
-  10:.\i2s.c       **** *
-  11:.\i2s.c       **** *******************************************************************************/
-  12:.\i2s.c       **** 
-  13:.\i2s.c       **** #include "i2s.h"
-  14:.\i2s.c       **** 
-  15:.\i2s.c       **** /* Circular buffer for audio stream. */
-  16:.\i2s.c       **** uint8 soundBuffer[BUFFER_SIZE];
-  17:.\i2s.c       **** volatile uint16 outIndex = 0u;
-  18:.\i2s.c       **** volatile uint16 inIndex  = 0u;
-  19:.\i2s.c       **** 
-  20:.\i2s.c       **** /* Variables used to manage DMA. */
-  21:.\i2s.c       **** volatile uint8 syncDma = 0u;
-  22:.\i2s.c       **** volatile uint8 syncDmaCounter = 0u;
-  23:.\i2s.c       **** 
-  24:.\i2s.c       **** /* Variable declarations for TxoutDMA. */
-  25:.\i2s.c       **** uint8 TxOutDmaCh;
-  26:.\i2s.c       **** uint8 TxOutDmaTd[NUM_OF_BUFFERS];
+  10:.\i2s.c       **** * Copyright:
+  11:.\i2s.c       **** * Released under Creative Commons Attribution Share-Alike 4.0 license.This 
+  12:.\i2s.c       **** * allows for both personal and commercial derivative works, as long as they 
+  13:.\i2s.c       **** * credit freeDSP and release their designs under the same license. The freeDSP 
+  14:.\i2s.c       **** * brand and freeDSP logo are protected by copyright and cannot be used without 
+  15:.\i2s.c       **** * formal permission. Please contact Sebastian Merchel for further information.
+  16:.\i2s.c       **** * https://creativecommons.org/licenses/by-sa/4.0/legalcode
+  17:.\i2s.c       **** *
+  18:.\i2s.c       **** *
+  19:.\i2s.c       **** *******************************************************************************/
+  20:.\i2s.c       **** 
+  21:.\i2s.c       **** #include "i2s.h"
+  22:.\i2s.c       **** 
+  23:.\i2s.c       **** /* Circular buffer for audio stream. */
+  24:.\i2s.c       **** uint8 soundBuffer[BUFFER_SIZE];
+  25:.\i2s.c       **** volatile uint16 outIndex = 0u;
+  26:.\i2s.c       **** volatile uint16 inIndex  = 0u;
   27:.\i2s.c       **** 
-  28:.\i2s.c       **** CY_ISR(TxDmaDone)
-  29:.\i2s.c       **** {
-  60              		.loc 1 29 0
+  28:.\i2s.c       **** /* Variables used to manage DMA. */
+  29:.\i2s.c       **** volatile uint8 syncDma = 0u;
+  30:.\i2s.c       **** volatile uint8 syncDmaCounter = 0u;
+  31:.\i2s.c       **** 
+  32:.\i2s.c       **** /* Variable declarations for TxoutDMA. */
+  33:.\i2s.c       **** uint8 TxOutDmaCh;
+  34:.\i2s.c       **** uint8 TxOutDmaTd[NUM_OF_BUFFERS];
+  35:.\i2s.c       **** 
+  36:.\i2s.c       **** CY_ISR(TxDmaDone)
+  37:.\i2s.c       **** {
+  60              		.loc 1 37 0
   61              		.cfi_startproc
   62              		@ args = 0, pretend = 0, frame = 0
   63              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -102,41 +110,41 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
   67              		.cfi_offset 14, -4
   68 0002 00AF     		add	r7, sp, #0
   69              		.cfi_def_cfa_register 7
-  30:.\i2s.c       ****     /* Move to next buffer location and adjust to be within buffer size. */
-  31:.\i2s.c       ****     ++outIndex;
-  70              		.loc 1 31 0
+  38:.\i2s.c       ****     /* Move to next buffer location and adjust to be within buffer size. */
+  39:.\i2s.c       ****     ++outIndex;
+  70              		.loc 1 39 0
   71 0004 134B     		ldr	r3, .L5
   72 0006 1B88     		ldrh	r3, [r3]	@ movhi
   73 0008 9BB2     		uxth	r3, r3
   74 000a 0133     		adds	r3, r3, #1
   75 000c 9AB2     		uxth	r2, r3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 3
+
+
   76 000e 114B     		ldr	r3, .L5
   77 0010 1A80     		strh	r2, [r3]	@ movhi
-  32:.\i2s.c       ****     outIndex = (outIndex >= NUM_OF_BUFFERS) ? 0u : outIndex;
-  78              		.loc 1 32 0
+  40:.\i2s.c       ****     outIndex = (outIndex >= NUM_OF_BUFFERS) ? 0u : outIndex;
+  78              		.loc 1 40 0
   79 0012 104B     		ldr	r3, .L5
   80 0014 1B88     		ldrh	r3, [r3]	@ movhi
   81 0016 9BB2     		uxth	r3, r3
   82 0018 092B     		cmp	r3, #9
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 3
-
-
   83 001a 03D8     		bhi	.L2
-  84              		.loc 1 32 0 is_stmt 0 discriminator 1
+  84              		.loc 1 40 0 is_stmt 0 discriminator 1
   85 001c 0D4B     		ldr	r3, .L5
   86 001e 1B88     		ldrh	r3, [r3]	@ movhi
   87 0020 9BB2     		uxth	r3, r3
   88 0022 00E0     		b	.L3
   89              	.L2:
-  90              		.loc 1 32 0 discriminator 2
+  90              		.loc 1 40 0 discriminator 2
   91 0024 0023     		movs	r3, #0
   92              	.L3:
-  93              		.loc 1 32 0 discriminator 4
+  93              		.loc 1 40 0 discriminator 4
   94 0026 0B4A     		ldr	r2, .L5
   95 0028 1380     		strh	r3, [r2]	@ movhi
-  33:.\i2s.c       **** 
-  34:.\i2s.c       ****     if (outIndex == inIndex)
-  96              		.loc 1 34 0 is_stmt 1 discriminator 4
+  41:.\i2s.c       **** 
+  42:.\i2s.c       ****     if (outIndex == inIndex)
+  96              		.loc 1 42 0 is_stmt 1 discriminator 4
   97 002a 0A4B     		ldr	r3, .L5
   98 002c 1B88     		ldrh	r3, [r3]	@ movhi
   99 002e 9AB2     		uxth	r2, r3
@@ -145,31 +153,34 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  102 0034 9BB2     		uxth	r3, r3
  103 0036 9A42     		cmp	r2, r3
  104 0038 0AD1     		bne	.L1
-  35:.\i2s.c       ****     {
-  36:.\i2s.c       ****         /* Stop DMA operation. */
-  37:.\i2s.c       ****         CyDmaChDisable(TxOutDmaCh);
- 105              		.loc 1 37 0
+  43:.\i2s.c       ****     {
+  44:.\i2s.c       ****         /* Stop DMA operation. */
+  45:.\i2s.c       ****         CyDmaChDisable(TxOutDmaCh);
+ 105              		.loc 1 45 0
  106 003a 084B     		ldr	r3, .L5+8
  107 003c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  108 003e 1846     		mov	r0, r3
  109 0040 FFF7FEFF 		bl	CyDmaChDisable
-  38:.\i2s.c       **** 
-  39:.\i2s.c       ****         /* Enable underflow delayed start. */
-  40:.\i2s.c       ****         syncDma = 0u;
- 110              		.loc 1 40 0
+  46:.\i2s.c       **** 
+  47:.\i2s.c       ****         /* Enable underflow delayed start. */
+  48:.\i2s.c       ****         syncDma = 0u;
+ 110              		.loc 1 48 0
  111 0044 064B     		ldr	r3, .L5+12
  112 0046 0022     		movs	r2, #0
  113 0048 1A70     		strb	r2, [r3]
-  41:.\i2s.c       ****         syncDmaCounter = 0u;
- 114              		.loc 1 41 0
+  49:.\i2s.c       ****         syncDmaCounter = 0u;
+ 114              		.loc 1 49 0
  115 004a 064B     		ldr	r3, .L5+16
  116 004c 0022     		movs	r2, #0
  117 004e 1A70     		strb	r2, [r3]
  118              	.L1:
-  42:.\i2s.c       ****     }
-  43:.\i2s.c       **** }
- 119              		.loc 1 43 0
+  50:.\i2s.c       ****     }
+  51:.\i2s.c       **** }
+ 119              		.loc 1 51 0
  120 0050 80BD     		pop	{r7, pc}
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 4
+
+
  121              	.L6:
  122 0052 00BF     		.align	2
  123              	.L5:
@@ -178,9 +189,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  126 005c 00000000 		.word	TxOutDmaCh
  127 0060 00000000 		.word	syncDma
  128 0064 00000000 		.word	syncDmaCounter
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 4
-
-
  129              		.cfi_endproc
  130              	.LFE63:
  131              		.size	TxDmaDone, .-TxDmaDone
@@ -192,10 +200,10 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  137              		.type	I2Sinit, %function
  138              	I2Sinit:
  139              	.LFB64:
-  44:.\i2s.c       **** 
-  45:.\i2s.c       **** void I2Sinit()
-  46:.\i2s.c       **** {
- 140              		.loc 1 46 0
+  52:.\i2s.c       **** 
+  53:.\i2s.c       **** void I2Sinit()
+  54:.\i2s.c       **** {
+ 140              		.loc 1 54 0
  141              		.cfi_startproc
  142              		@ args = 0, pretend = 0, frame = 0
  143              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -205,20 +213,20 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  147              		.cfi_offset 14, -4
  148 0002 00AF     		add	r7, sp, #0
  149              		.cfi_def_cfa_register 7
-  47:.\i2s.c       ****     I2S_1_Start();
- 150              		.loc 1 47 0
+  55:.\i2s.c       ****     I2S_1_Start();
+ 150              		.loc 1 55 0
  151 0004 FFF7FEFF 		bl	I2S_1_Start
-  48:.\i2s.c       **** 
-  49:.\i2s.c       ****     
-  50:.\i2s.c       ****     /* Configure DMA */ 
-  51:.\i2s.c       ****     DmaTxConfiguration();
- 152              		.loc 1 51 0
+  56:.\i2s.c       **** 
+  57:.\i2s.c       ****     
+  58:.\i2s.c       ****     /* Configure DMA */ 
+  59:.\i2s.c       ****     DmaTxConfiguration();
+ 152              		.loc 1 59 0
  153 0008 FFF7FEFF 		bl	DmaTxConfiguration
-  52:.\i2s.c       ****     I2S_1_EnableTx();
- 154              		.loc 1 52 0
+  60:.\i2s.c       ****     I2S_1_EnableTx();
+ 154              		.loc 1 60 0
  155 000c FFF7FEFF 		bl	I2S_1_EnableTx
-  53:.\i2s.c       **** }
- 156              		.loc 1 53 0
+  61:.\i2s.c       **** }
+ 156              		.loc 1 61 0
  157 0010 80BD     		pop	{r7, pc}
  158              		.cfi_endproc
  159              	.LFE64:
@@ -230,26 +238,26 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  165              		.thumb_func
  166              		.type	I2Stest, %function
  167              	I2Stest:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 5
+
+
  168              	.LFB65:
-  54:.\i2s.c       **** 
-  55:.\i2s.c       **** void I2Stest()
-  56:.\i2s.c       **** {
- 169              		.loc 1 56 0
+  62:.\i2s.c       **** 
+  63:.\i2s.c       **** void I2Stest()
+  64:.\i2s.c       **** {
+ 169              		.loc 1 64 0
  170              		.cfi_startproc
  171              		@ args = 0, pretend = 0, frame = 0
  172              		@ frame_needed = 1, uses_anonymous_args = 0
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 5
-
-
  173              		@ link register save eliminated.
  174 0000 80B4     		push	{r7}
  175              		.cfi_def_cfa_offset 4
  176              		.cfi_offset 7, -4
  177 0002 00AF     		add	r7, sp, #0
  178              		.cfi_def_cfa_register 7
-  57:.\i2s.c       **** //not yet implemented!
-  58:.\i2s.c       **** }
- 179              		.loc 1 58 0
+  65:.\i2s.c       **** //not yet implemented!
+  66:.\i2s.c       **** }
+ 179              		.loc 1 66 0
  180 0004 BD46     		mov	sp, r7
  181              		.cfi_def_cfa_register 13
  182              		@ sp needed
@@ -268,11 +276,11 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  195              		.type	DmaTxConfiguration, %function
  196              	DmaTxConfiguration:
  197              	.LFB66:
-  59:.\i2s.c       **** 
-  60:.\i2s.c       **** 
-  61:.\i2s.c       **** void DmaTxConfiguration(void)
-  62:.\i2s.c       **** {
- 198              		.loc 1 62 0
+  67:.\i2s.c       **** 
+  68:.\i2s.c       **** 
+  69:.\i2s.c       **** void DmaTxConfiguration(void)
+  70:.\i2s.c       **** {
+ 198              		.loc 1 70 0
  199              		.cfi_startproc
  200              		@ args = 0, pretend = 0, frame = 8
  201              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -285,71 +293,74 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  208              		.cfi_def_cfa_offset 24
  209 0004 00AF     		add	r7, sp, #0
  210              		.cfi_def_cfa_register 7
-  63:.\i2s.c       ****     uint8 i;
-  64:.\i2s.c       ****     /* Initialize DMA channel. */
-  65:.\i2s.c       ****     TxOutDmaCh = TxDma_DmaInitialize(TX_DMA_BYTES_PER_BURST, TX_DMA_REQUEST_PER_BURST,
-  66:.\i2s.c       ****                                             HI16(TX_DMA_SRC_BASE), HI16(TX_DMA_DST_BASE));
- 211              		.loc 1 66 0
+  71:.\i2s.c       ****     uint8 i;
+  72:.\i2s.c       ****     /* Initialize DMA channel. */
+  73:.\i2s.c       ****     TxOutDmaCh = TxDma_DmaInitialize(TX_DMA_BYTES_PER_BURST, TX_DMA_REQUEST_PER_BURST,
+  74:.\i2s.c       ****                                             HI16(TX_DMA_SRC_BASE), HI16(TX_DMA_DST_BASE));
+ 211              		.loc 1 74 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 6
+
+
  212 0006 324B     		ldr	r3, .L16
  213 0008 1B0C     		lsrs	r3, r3, #16
-  65:.\i2s.c       ****                                             HI16(TX_DMA_SRC_BASE), HI16(TX_DMA_DST_BASE));
- 214              		.loc 1 65 0
+  73:.\i2s.c       ****                                             HI16(TX_DMA_SRC_BASE), HI16(TX_DMA_DST_BASE));
+ 214              		.loc 1 73 0
  215 000a 9BB2     		uxth	r3, r3
  216 000c 0120     		movs	r0, #1
  217 000e 0121     		movs	r1, #1
  218 0010 1A46     		mov	r2, r3
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 6
-
-
  219 0012 4FF48043 		mov	r3, #16384
  220 0016 FFF7FEFF 		bl	TxDma_DmaInitialize
  221 001a 0346     		mov	r3, r0
  222 001c 1A46     		mov	r2, r3
  223 001e 2D4B     		ldr	r3, .L16+4
  224 0020 1A70     		strb	r2, [r3]
-  67:.\i2s.c       **** 
-  68:.\i2s.c       ****     /* Allocate transfer descriptors for each buffer chunk. */
-  69:.\i2s.c       ****     for (i = 0u; i < NUM_OF_BUFFERS; ++i)
- 225              		.loc 1 69 0
+  75:.\i2s.c       **** 
+  76:.\i2s.c       ****     /* Allocate transfer descriptors for each buffer chunk. */
+  77:.\i2s.c       ****     for (i = 0u; i < NUM_OF_BUFFERS; ++i)
+ 225              		.loc 1 77 0
  226 0022 0023     		movs	r3, #0
  227 0024 FB71     		strb	r3, [r7, #7]
  228 0026 09E0     		b	.L10
  229              	.L11:
-  70:.\i2s.c       ****     {
-  71:.\i2s.c       ****         TxOutDmaTd[i] = CyDmaTdAllocate();
- 230              		.loc 1 71 0 discriminator 3
+  78:.\i2s.c       ****     {
+  79:.\i2s.c       ****         TxOutDmaTd[i] = CyDmaTdAllocate();
+ 230              		.loc 1 79 0 discriminator 3
  231 0028 FC79     		ldrb	r4, [r7, #7]	@ zero_extendqisi2
  232 002a FFF7FEFF 		bl	CyDmaTdAllocate
  233 002e 0346     		mov	r3, r0
  234 0030 1A46     		mov	r2, r3
  235 0032 294B     		ldr	r3, .L16+8
  236 0034 1A55     		strb	r2, [r3, r4]
-  69:.\i2s.c       ****     {
- 237              		.loc 1 69 0 discriminator 3
+  77:.\i2s.c       ****     {
+ 237              		.loc 1 77 0 discriminator 3
  238 0036 FB79     		ldrb	r3, [r7, #7]
  239 0038 0133     		adds	r3, r3, #1
  240 003a FB71     		strb	r3, [r7, #7]
  241              	.L10:
-  69:.\i2s.c       ****     {
- 242              		.loc 1 69 0 is_stmt 0 discriminator 1
+  77:.\i2s.c       ****     {
+ 242              		.loc 1 77 0 is_stmt 0 discriminator 1
  243 003c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
  244 003e 092B     		cmp	r3, #9
  245 0040 F2D9     		bls	.L11
-  72:.\i2s.c       ****     }
-  73:.\i2s.c       **** 
-  74:.\i2s.c       ****     /* Configure DMA transfer descriptors. */
-  75:.\i2s.c       ****     for (i = 0u; i < (NUM_OF_BUFFERS - 1u); ++i)
- 246              		.loc 1 75 0 is_stmt 1
+  80:.\i2s.c       ****     }
+  81:.\i2s.c       **** 
+  82:.\i2s.c       ****     /* Configure DMA transfer descriptors. */
+  83:.\i2s.c       ****     for (i = 0u; i < (NUM_OF_BUFFERS - 1u); ++i)
+ 246              		.loc 1 83 0 is_stmt 1
  247 0042 0023     		movs	r3, #0
  248 0044 FB71     		strb	r3, [r7, #7]
  249 0046 0FE0     		b	.L12
  250              	.L13:
-  76:.\i2s.c       ****     {
-  77:.\i2s.c       ****         /* Chain current and next DMA transfer descriptors to be in row. */
-  78:.\i2s.c       ****         CyDmaTdSetConfiguration(TxOutDmaTd[i], TRANSFER_SIZE, TxOutDmaTd[i + 1u],
- 251              		.loc 1 78 0 discriminator 3
+  84:.\i2s.c       ****     {
+  85:.\i2s.c       ****         /* Chain current and next DMA transfer descriptors to be in row. */
+  86:.\i2s.c       ****         CyDmaTdSetConfiguration(TxOutDmaTd[i], TRANSFER_SIZE, TxOutDmaTd[i + 1u],
+ 251              		.loc 1 86 0 discriminator 3
  252 0048 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
  253 004a 234A     		ldr	r2, .L16+8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 7
+
+
  254 004c D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
  255 004e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
  256 0050 0133     		adds	r3, r3, #1
@@ -358,27 +369,24 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  259 0056 0846     		mov	r0, r1
  260 0058 3021     		movs	r1, #48
  261 005a 1A46     		mov	r2, r3
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 7
-
-
  262 005c 0123     		movs	r3, #1
  263 005e FFF7FEFF 		bl	CyDmaTdSetConfiguration
-  75:.\i2s.c       ****     {
- 264              		.loc 1 75 0 discriminator 3
+  83:.\i2s.c       ****     {
+ 264              		.loc 1 83 0 discriminator 3
  265 0062 FB79     		ldrb	r3, [r7, #7]
  266 0064 0133     		adds	r3, r3, #1
  267 0066 FB71     		strb	r3, [r7, #7]
  268              	.L12:
-  75:.\i2s.c       ****     {
- 269              		.loc 1 75 0 is_stmt 0 discriminator 1
+  83:.\i2s.c       ****     {
+ 269              		.loc 1 83 0 is_stmt 0 discriminator 1
  270 0068 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
  271 006a 082B     		cmp	r3, #8
  272 006c ECD9     		bls	.L13
-  79:.\i2s.c       ****                                 TD_INC_SRC_ADR);
-  80:.\i2s.c       ****     }
-  81:.\i2s.c       ****     /* Chain last and 1st DMA transfer descriptors to make cyclic buffer. */
-  82:.\i2s.c       ****     CyDmaTdSetConfiguration(TxOutDmaTd[NUM_OF_BUFFERS - 1u], TRANSFER_SIZE, TxOutDmaTd[0u],
- 273              		.loc 1 82 0 is_stmt 1
+  87:.\i2s.c       ****                                 TD_INC_SRC_ADR);
+  88:.\i2s.c       ****     }
+  89:.\i2s.c       ****     /* Chain last and 1st DMA transfer descriptors to make cyclic buffer. */
+  90:.\i2s.c       ****     CyDmaTdSetConfiguration(TxOutDmaTd[NUM_OF_BUFFERS - 1u], TRANSFER_SIZE, TxOutDmaTd[0u],
+ 273              		.loc 1 90 0 is_stmt 1
  274 006e 1A4B     		ldr	r3, .L16+8
  275 0070 5A7A     		ldrb	r2, [r3, #9]	@ zero_extendqisi2
  276 0072 194B     		ldr	r3, .L16+8
@@ -388,19 +396,19 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  280 007a 1A46     		mov	r2, r3
  281 007c 0123     		movs	r3, #1
  282 007e FFF7FEFF 		bl	CyDmaTdSetConfiguration
-  83:.\i2s.c       ****                                 TD_INC_SRC_ADR);
-  84:.\i2s.c       **** 
-  85:.\i2s.c       **** 
-  86:.\i2s.c       ****     for (i = 0u; i < NUM_OF_BUFFERS; i++)
- 283              		.loc 1 86 0
+  91:.\i2s.c       ****                                 TD_INC_SRC_ADR);
+  92:.\i2s.c       **** 
+  93:.\i2s.c       **** 
+  94:.\i2s.c       ****     for (i = 0u; i < NUM_OF_BUFFERS; i++)
+ 283              		.loc 1 94 0
  284 0082 0023     		movs	r3, #0
  285 0084 FB71     		strb	r3, [r7, #7]
  286 0086 14E0     		b	.L14
  287              	.L15:
-  87:.\i2s.c       ****     {
-  88:.\i2s.c       ****         /* Set source and destination addresses. */
-  89:.\i2s.c       ****         CyDmaTdSetAddress(TxOutDmaTd[i], LO16((uint32) &soundBuffer[i * TRANSFER_SIZE]),
- 288              		.loc 1 89 0 discriminator 3
+  95:.\i2s.c       ****     {
+  96:.\i2s.c       ****         /* Set source and destination addresses. */
+  97:.\i2s.c       ****         CyDmaTdSetAddress(TxOutDmaTd[i], LO16((uint32) &soundBuffer[i * TRANSFER_SIZE]),
+ 288              		.loc 1 97 0 discriminator 3
  289 0088 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
  290 008a 134A     		ldr	r2, .L16+8
  291 008c D15C     		ldrb	r1, [r2, r3]	@ zero_extendqisi2
@@ -410,6 +418,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  295 0094 1344     		add	r3, r3, r2
  296 0096 1B01     		lsls	r3, r3, #4
  297 0098 1A46     		mov	r2, r3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 8
+
+
  298 009a 0D4B     		ldr	r3, .L16
  299 009c 1344     		add	r3, r3, r2
  300 009e 9BB2     		uxth	r3, r3
@@ -417,26 +428,23 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  302 00a2 1946     		mov	r1, r3
  303 00a4 46F24752 		movw	r2, #25927
  304 00a8 FFF7FEFF 		bl	CyDmaTdSetAddress
-  86:.\i2s.c       ****     {
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 8
-
-
- 305              		.loc 1 86 0 discriminator 3
+  94:.\i2s.c       ****     {
+ 305              		.loc 1 94 0 discriminator 3
  306 00ac FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
  307 00ae 0133     		adds	r3, r3, #1
  308 00b0 FB71     		strb	r3, [r7, #7]
  309              	.L14:
-  86:.\i2s.c       ****     {
- 310              		.loc 1 86 0 is_stmt 0 discriminator 1
+  94:.\i2s.c       ****     {
+ 310              		.loc 1 94 0 is_stmt 0 discriminator 1
  311 00b2 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
  312 00b4 092B     		cmp	r3, #9
  313 00b6 E7D9     		bls	.L15
-  90:.\i2s.c       ****                                            LO16((uint32) I2S_1_TX_CH0_F0_PTR));
-  91:.\i2s.c       ****     }
-  92:.\i2s.c       **** 
-  93:.\i2s.c       ****     /* Set 1st transfer descriptor to execute. */
-  94:.\i2s.c       ****     CyDmaChSetInitialTd(TxOutDmaCh, TxOutDmaTd[0u]);
- 314              		.loc 1 94 0 is_stmt 1
+  98:.\i2s.c       ****                                            LO16((uint32) I2S_1_TX_CH0_F0_PTR));
+  99:.\i2s.c       ****     }
+ 100:.\i2s.c       **** 
+ 101:.\i2s.c       ****     /* Set 1st transfer descriptor to execute. */
+ 102:.\i2s.c       ****     CyDmaChSetInitialTd(TxOutDmaCh, TxOutDmaTd[0u]);
+ 314              		.loc 1 102 0 is_stmt 1
  315 00b8 064B     		ldr	r3, .L16+4
  316 00ba 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
  317 00bc 064B     		ldr	r3, .L16+8
@@ -444,8 +452,8 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  319 00c0 1046     		mov	r0, r2
  320 00c2 1946     		mov	r1, r3
  321 00c4 FFF7FEFF 		bl	CyDmaChSetInitialTd
-  95:.\i2s.c       **** }
- 322              		.loc 1 95 0
+ 103:.\i2s.c       **** }
+ 322              		.loc 1 103 0
  323 00c8 0C37     		adds	r7, r7, #12
  324              		.cfi_def_cfa_offset 12
  325 00ca BD46     		mov	sp, r7
@@ -469,109 +477,109 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  343              		.type	USBrefresh, %function
  344              	USBrefresh:
  345              	.LFB67:
-  96:.\i2s.c       **** 
-  97:.\i2s.c       **** void USBrefresh()
-  98:.\i2s.c       **** {
- 346              		.loc 1 98 0
+ 104:.\i2s.c       **** 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 9
+
+
+ 105:.\i2s.c       **** void USBrefresh()
+ 106:.\i2s.c       **** {
+ 346              		.loc 1 106 0
  347              		.cfi_startproc
  348              		@ args = 0, pretend = 0, frame = 8
  349              		@ frame_needed = 1, uses_anonymous_args = 0
  350 0000 80B5     		push	{r7, lr}
  351              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 9
-
-
  352              		.cfi_offset 7, -8
  353              		.cfi_offset 14, -4
  354 0002 82B0     		sub	sp, sp, #8
  355              		.cfi_def_cfa_offset 16
  356 0004 00AF     		add	r7, sp, #0
  357              		.cfi_def_cfa_register 7
-  99:.\i2s.c       ****     uint8 skipNextOut = 0u;
- 358              		.loc 1 99 0
+ 107:.\i2s.c       ****     uint8 skipNextOut = 0u;
+ 358              		.loc 1 107 0
  359 0006 0023     		movs	r3, #0
  360 0008 FB71     		strb	r3, [r7, #7]
- 100:.\i2s.c       ****     /* Check if configuration or interface settings are changed. */
- 101:.\i2s.c       ****     if (0u != USBFS_IsConfigurationChanged())
- 361              		.loc 1 101 0
+ 108:.\i2s.c       ****     /* Check if configuration or interface settings are changed. */
+ 109:.\i2s.c       ****     if (0u != USBFS_IsConfigurationChanged())
+ 361              		.loc 1 109 0
  362 000a FFF7FEFF 		bl	USBFS_IsConfigurationChanged
  363 000e 0346     		mov	r3, r0
  364 0010 002B     		cmp	r3, #0
  365 0012 7FD0     		beq	.L18
- 102:.\i2s.c       ****     {
- 103:.\i2s.c       ****         /* Check active alternate setting. */
- 104:.\i2s.c       ****         if ((0u != USBFS_GetConfiguration()) &&
- 366              		.loc 1 104 0
+ 110:.\i2s.c       ****     {
+ 111:.\i2s.c       ****         /* Check active alternate setting. */
+ 112:.\i2s.c       ****         if ((0u != USBFS_GetConfiguration()) &&
+ 366              		.loc 1 112 0
  367 0014 FFF7FEFF 		bl	USBFS_GetConfiguration
  368 0018 0346     		mov	r3, r0
  369 001a 002B     		cmp	r3, #0
  370 001c 16D0     		beq	.L20
- 105:.\i2s.c       ****             (0u != USBFS_GetInterfaceSetting(AUDIO_INTERFACE)))
- 371              		.loc 1 105 0 discriminator 1
+ 113:.\i2s.c       ****             (0u != USBFS_GetInterfaceSetting(AUDIO_INTERFACE)))
+ 371              		.loc 1 113 0 discriminator 1
  372 001e 0120     		movs	r0, #1
  373 0020 FFF7FEFF 		bl	USBFS_GetInterfaceSetting
  374 0024 0346     		mov	r3, r0
- 104:.\i2s.c       ****             (0u != USBFS_GetInterfaceSetting(AUDIO_INTERFACE)))
- 375              		.loc 1 104 0 discriminator 1
+ 112:.\i2s.c       ****             (0u != USBFS_GetInterfaceSetting(AUDIO_INTERFACE)))
+ 375              		.loc 1 112 0 discriminator 1
  376 0026 002B     		cmp	r3, #0
  377 0028 10D0     		beq	.L20
- 106:.\i2s.c       ****         {
- 107:.\i2s.c       ****             /* Alternate settings 1: Audio is streaming. */
- 108:.\i2s.c       **** 
- 109:.\i2s.c       ****             /* Reset variables. */
- 110:.\i2s.c       ****             inIndex  = 0u;
- 378              		.loc 1 110 0
+ 114:.\i2s.c       ****         {
+ 115:.\i2s.c       ****             /* Alternate settings 1: Audio is streaming. */
+ 116:.\i2s.c       **** 
+ 117:.\i2s.c       ****             /* Reset variables. */
+ 118:.\i2s.c       ****             inIndex  = 0u;
+ 378              		.loc 1 118 0
  379 002a 3C4B     		ldr	r3, .L27
  380 002c 0022     		movs	r2, #0
  381 002e 1A80     		strh	r2, [r3]	@ movhi
- 111:.\i2s.c       ****             outIndex = 0u;
- 382              		.loc 1 111 0
+ 119:.\i2s.c       ****             outIndex = 0u;
+ 382              		.loc 1 119 0
  383 0030 3B4B     		ldr	r3, .L27+4
  384 0032 0022     		movs	r2, #0
  385 0034 1A80     		strh	r2, [r3]	@ movhi
- 112:.\i2s.c       ****             syncDma  = 0u;
- 386              		.loc 1 112 0
+ 120:.\i2s.c       ****             syncDma  = 0u;
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 10
+
+
+ 386              		.loc 1 120 0
  387 0036 3B4B     		ldr	r3, .L27+8
  388 0038 0022     		movs	r2, #0
  389 003a 1A70     		strb	r2, [r3]
- 113:.\i2s.c       ****             skipNextOut = 0u;
- 390              		.loc 1 113 0
+ 121:.\i2s.c       ****             skipNextOut = 0u;
+ 390              		.loc 1 121 0
  391 003c 0023     		movs	r3, #0
  392 003e FB71     		strb	r3, [r7, #7]
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 10
-
-
- 114:.\i2s.c       ****             syncDmaCounter = 0u;
- 393              		.loc 1 114 0
+ 122:.\i2s.c       ****             syncDmaCounter = 0u;
+ 393              		.loc 1 122 0
  394 0040 394B     		ldr	r3, .L27+12
  395 0042 0022     		movs	r2, #0
  396 0044 1A70     		strb	r2, [r3]
- 115:.\i2s.c       **** 
- 116:.\i2s.c       ****             /* Enable OUT endpoint to receive audio stream. */
- 117:.\i2s.c       ****             USBFS_EnableOutEP(OUT_EP_NUM);
- 397              		.loc 1 117 0
+ 123:.\i2s.c       **** 
+ 124:.\i2s.c       ****             /* Enable OUT endpoint to receive audio stream. */
+ 125:.\i2s.c       ****             USBFS_EnableOutEP(OUT_EP_NUM);
+ 397              		.loc 1 125 0
  398 0046 0220     		movs	r0, #2
  399 0048 FFF7FEFF 		bl	USBFS_EnableOutEP
  400              	.L20:
- 118:.\i2s.c       ****     }
- 119:.\i2s.c       **** 
- 120:.\i2s.c       ****     if (USBFS_OUT_BUFFER_FULL == USBFS_GetEPState(OUT_EP_NUM))
- 401              		.loc 1 120 0
+ 126:.\i2s.c       ****     }
+ 127:.\i2s.c       **** 
+ 128:.\i2s.c       ****     if (USBFS_OUT_BUFFER_FULL == USBFS_GetEPState(OUT_EP_NUM))
+ 401              		.loc 1 128 0
  402 004c 0220     		movs	r0, #2
  403 004e FFF7FEFF 		bl	USBFS_GetEPState
  404 0052 0346     		mov	r3, r0
  405 0054 012B     		cmp	r3, #1
  406 0056 4AD1     		bne	.L21
- 121:.\i2s.c       ****     {
- 122:.\i2s.c       ****         if (0u == skipNextOut)
- 407              		.loc 1 122 0
+ 129:.\i2s.c       ****     {
+ 130:.\i2s.c       ****         if (0u == skipNextOut)
+ 407              		.loc 1 130 0
  408 0058 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
  409 005a 002B     		cmp	r3, #0
  410 005c 38D1     		bne	.L22
- 123:.\i2s.c       ****         {
- 124:.\i2s.c       ****             /* Trigger DMA to copy data from OUT endpoint buffer. */
- 125:.\i2s.c       ****             USBFS_ReadOutEP(OUT_EP_NUM, &soundBuffer[inIndex * TRANSFER_SIZE],
- 411              		.loc 1 125 0
+ 131:.\i2s.c       ****         {
+ 132:.\i2s.c       ****             /* Trigger DMA to copy data from OUT endpoint buffer. */
+ 133:.\i2s.c       ****             USBFS_ReadOutEP(OUT_EP_NUM, &soundBuffer[inIndex * TRANSFER_SIZE],
+ 411              		.loc 1 133 0
  412 005e 2F4B     		ldr	r3, .L27
  413 0060 1B88     		ldrh	r3, [r3]	@ movhi
  414 0062 9BB2     		uxth	r3, r3
@@ -587,33 +595,33 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  424 0076 1946     		mov	r1, r3
  425 0078 3022     		movs	r2, #48
  426 007a FFF7FEFF 		bl	USBFS_ReadOutEP
- 126:.\i2s.c       ****                                         TRANSFER_SIZE);
- 127:.\i2s.c       **** 
- 128:.\i2s.c       ****             /* Wait until DMA completes copying data from OUT endpoint buffer. */
- 129:.\i2s.c       ****             while (USBFS_OUT_BUFFER_FULL == USBFS_GetEPState(OUT_EP_NUM))
- 427              		.loc 1 129 0
+ 134:.\i2s.c       ****                                         TRANSFER_SIZE);
+ 135:.\i2s.c       **** 
+ 136:.\i2s.c       ****             /* Wait until DMA completes copying data from OUT endpoint buffer. */
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 11
+
+
+ 137:.\i2s.c       ****             while (USBFS_OUT_BUFFER_FULL == USBFS_GetEPState(OUT_EP_NUM))
+ 427              		.loc 1 137 0
  428 007e 00BF     		nop
  429              	.L23:
- 430              		.loc 1 129 0 is_stmt 0 discriminator 1
+ 430              		.loc 1 137 0 is_stmt 0 discriminator 1
  431 0080 0220     		movs	r0, #2
  432 0082 FFF7FEFF 		bl	USBFS_GetEPState
  433 0086 0346     		mov	r3, r0
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 11
-
-
  434 0088 012B     		cmp	r3, #1
  435 008a F9D0     		beq	.L23
- 130:.\i2s.c       ****             {
- 131:.\i2s.c       ****             }
- 132:.\i2s.c       **** 
- 133:.\i2s.c       ****             /* Move to the next buffer location and adjust to be within
- 134:.\i2s.c       ****             * buffer size. Lock from DmaDone interruption.
- 135:.\i2s.c       ****             */
- 136:.\i2s.c       ****             DmaDone_Disable();
- 436              		.loc 1 136 0 is_stmt 1
+ 138:.\i2s.c       ****             {
+ 139:.\i2s.c       ****             }
+ 140:.\i2s.c       **** 
+ 141:.\i2s.c       ****             /* Move to the next buffer location and adjust to be within
+ 142:.\i2s.c       ****             * buffer size. Lock from DmaDone interruption.
+ 143:.\i2s.c       ****             */
+ 144:.\i2s.c       ****             DmaDone_Disable();
+ 436              		.loc 1 144 0 is_stmt 1
  437 008c FFF7FEFF 		bl	DmaDone_Disable
- 137:.\i2s.c       ****             ++inIndex;
- 438              		.loc 1 137 0
+ 145:.\i2s.c       ****             ++inIndex;
+ 438              		.loc 1 145 0
  439 0090 224B     		ldr	r3, .L27
  440 0092 1B88     		ldrh	r3, [r3]	@ movhi
  441 0094 9BB2     		uxth	r3, r3
@@ -621,70 +629,70 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  443 0098 9AB2     		uxth	r2, r3
  444 009a 204B     		ldr	r3, .L27
  445 009c 1A80     		strh	r2, [r3]	@ movhi
- 138:.\i2s.c       ****             inIndex = (inIndex >= NUM_OF_BUFFERS) ? 0u : inIndex;
- 446              		.loc 1 138 0
+ 146:.\i2s.c       ****             inIndex = (inIndex >= NUM_OF_BUFFERS) ? 0u : inIndex;
+ 446              		.loc 1 146 0
  447 009e 1F4B     		ldr	r3, .L27
  448 00a0 1B88     		ldrh	r3, [r3]	@ movhi
  449 00a2 9BB2     		uxth	r3, r3
  450 00a4 092B     		cmp	r3, #9
  451 00a6 03D8     		bhi	.L24
- 452              		.loc 1 138 0 is_stmt 0 discriminator 1
+ 452              		.loc 1 146 0 is_stmt 0 discriminator 1
  453 00a8 1C4B     		ldr	r3, .L27
  454 00aa 1B88     		ldrh	r3, [r3]	@ movhi
  455 00ac 9BB2     		uxth	r3, r3
  456 00ae 00E0     		b	.L25
  457              	.L24:
- 458              		.loc 1 138 0 discriminator 2
+ 458              		.loc 1 146 0 discriminator 2
  459 00b0 0023     		movs	r3, #0
  460              	.L25:
- 461              		.loc 1 138 0 discriminator 4
+ 461              		.loc 1 146 0 discriminator 4
  462 00b2 1A4A     		ldr	r2, .L27
  463 00b4 1380     		strh	r3, [r2]	@ movhi
- 139:.\i2s.c       ****             DmaDone_Enable();
- 464              		.loc 1 139 0 is_stmt 1 discriminator 4
+ 147:.\i2s.c       ****             DmaDone_Enable();
+ 464              		.loc 1 147 0 is_stmt 1 discriminator 4
  465 00b6 FFF7FEFF 		bl	DmaDone_Enable
- 140:.\i2s.c       ****             ++syncDmaCounter;
- 466              		.loc 1 140 0 discriminator 4
+ 148:.\i2s.c       ****             ++syncDmaCounter;
+ 466              		.loc 1 148 0 discriminator 4
  467 00ba 1B4B     		ldr	r3, .L27+12
  468 00bc 1B78     		ldrb	r3, [r3]
  469 00be DBB2     		uxtb	r3, r3
  470 00c0 0133     		adds	r3, r3, #1
  471 00c2 DAB2     		uxtb	r2, r3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 12
+
+
  472 00c4 184B     		ldr	r3, .L27+12
  473 00c6 1A70     		strb	r2, [r3]
- 141:.\i2s.c       **** 
- 142:.\i2s.c       ****             /* Enable OUT endpoint to receive data from host. */
- 143:.\i2s.c       ****             USBFS_EnableOutEP(OUT_EP_NUM);
- 474              		.loc 1 143 0 discriminator 4
+ 149:.\i2s.c       **** 
+ 150:.\i2s.c       ****             /* Enable OUT endpoint to receive data from host. */
+ 151:.\i2s.c       ****             USBFS_EnableOutEP(OUT_EP_NUM);
+ 474              		.loc 1 151 0 discriminator 4
  475 00c8 0220     		movs	r0, #2
  476 00ca FFF7FEFF 		bl	USBFS_EnableOutEP
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 12
-
-
  477 00ce 04E0     		b	.L26
  478              	.L22:
- 144:.\i2s.c       ****         }
- 145:.\i2s.c       ****         else
- 146:.\i2s.c       ****         {
- 147:.\i2s.c       ****             /* Ignore received data from host and arm OUT endpoint
- 148:.\i2s.c       ****             * without reading if overflow is detected.
- 149:.\i2s.c       ****             */
- 150:.\i2s.c       ****             USBFS_EnableOutEP(OUT_EP_NUM);
- 479              		.loc 1 150 0
+ 152:.\i2s.c       ****         }
+ 153:.\i2s.c       ****         else
+ 154:.\i2s.c       ****         {
+ 155:.\i2s.c       ****             /* Ignore received data from host and arm OUT endpoint
+ 156:.\i2s.c       ****             * without reading if overflow is detected.
+ 157:.\i2s.c       ****             */
+ 158:.\i2s.c       ****             USBFS_EnableOutEP(OUT_EP_NUM);
+ 479              		.loc 1 158 0
  480 00d0 0220     		movs	r0, #2
  481 00d2 FFF7FEFF 		bl	USBFS_EnableOutEP
- 151:.\i2s.c       ****             skipNextOut = 0u;
- 482              		.loc 1 151 0
+ 159:.\i2s.c       ****             skipNextOut = 0u;
+ 482              		.loc 1 159 0
  483 00d6 0023     		movs	r3, #0
  484 00d8 FB71     		strb	r3, [r7, #7]
  485              	.L26:
- 152:.\i2s.c       ****         }
- 153:.\i2s.c       **** 
- 154:.\i2s.c       ****         /* When internal 32-kHz clock is slower, compare to PC traffic
- 155:.\i2s.c       ****         * then skip next transfer from PC.
- 156:.\i2s.c       ****         */
- 157:.\i2s.c       ****         if (outIndex == inIndex)
- 486              		.loc 1 157 0
+ 160:.\i2s.c       ****         }
+ 161:.\i2s.c       **** 
+ 162:.\i2s.c       ****         /* When internal 32-kHz clock is slower, compare to PC traffic
+ 163:.\i2s.c       ****         * then skip next transfer from PC.
+ 164:.\i2s.c       ****         */
+ 165:.\i2s.c       ****         if (outIndex == inIndex)
+ 486              		.loc 1 165 0
  487 00da 114B     		ldr	r3, .L27+4
  488 00dc 1B88     		ldrh	r3, [r3]	@ movhi
  489 00de 9AB2     		uxth	r2, r3
@@ -693,53 +701,53 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  492 00e4 9BB2     		uxth	r3, r3
  493 00e6 9A42     		cmp	r2, r3
  494 00e8 01D1     		bne	.L21
- 158:.\i2s.c       ****         {
- 159:.\i2s.c       ****             skipNextOut = 1u;
- 495              		.loc 1 159 0
+ 166:.\i2s.c       ****         {
+ 167:.\i2s.c       ****             skipNextOut = 1u;
+ 495              		.loc 1 167 0
  496 00ea 0123     		movs	r3, #1
  497 00ec FB71     		strb	r3, [r7, #7]
  498              	.L21:
- 160:.\i2s.c       ****         }
- 161:.\i2s.c       ****     }
- 162:.\i2s.c       **** 
- 163:.\i2s.c       ****     /* Enable DMA transfers when sound buffer is half-full. */
- 164:.\i2s.c       ****     if ((0u == syncDma) && (syncDmaCounter == (NUM_OF_BUFFERS / 2u)))
- 499              		.loc 1 164 0
+ 168:.\i2s.c       ****         }
+ 169:.\i2s.c       ****     }
+ 170:.\i2s.c       **** 
+ 171:.\i2s.c       ****     /* Enable DMA transfers when sound buffer is half-full. */
+ 172:.\i2s.c       ****     if ((0u == syncDma) && (syncDmaCounter == (NUM_OF_BUFFERS / 2u)))
+ 499              		.loc 1 172 0
  500 00ee 0D4B     		ldr	r3, .L27+8
  501 00f0 1B78     		ldrb	r3, [r3]
  502 00f2 DBB2     		uxtb	r3, r3
  503 00f4 002B     		cmp	r3, #0
  504 00f6 0DD1     		bne	.L18
- 505              		.loc 1 164 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 13
+
+
+ 505              		.loc 1 172 0 is_stmt 0 discriminator 1
  506 00f8 0B4B     		ldr	r3, .L27+12
  507 00fa 1B78     		ldrb	r3, [r3]
  508 00fc DBB2     		uxtb	r3, r3
  509 00fe 052B     		cmp	r3, #5
  510 0100 08D1     		bne	.L18
- 165:.\i2s.c       ****     {
- 166:.\i2s.c       ****         /* Start DMA operation. */
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 13
-
-
- 167:.\i2s.c       ****         CyDmaChEnable(TxOutDmaCh, TX_DMA_ENABLE_PRESERVE_TD);
- 511              		.loc 1 167 0 is_stmt 1
+ 173:.\i2s.c       ****     {
+ 174:.\i2s.c       ****         /* Start DMA operation. */
+ 175:.\i2s.c       ****         CyDmaChEnable(TxOutDmaCh, TX_DMA_ENABLE_PRESERVE_TD);
+ 511              		.loc 1 175 0 is_stmt 1
  512 0102 0B4B     		ldr	r3, .L27+20
  513 0104 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
  514 0106 1846     		mov	r0, r3
  515 0108 0121     		movs	r1, #1
  516 010a FFF7FEFF 		bl	CyDmaChEnable
- 168:.\i2s.c       **** 
- 169:.\i2s.c       ****         /* Disable underflow delayed start. */
- 170:.\i2s.c       ****         syncDma = 1u;
- 517              		.loc 1 170 0
+ 176:.\i2s.c       **** 
+ 177:.\i2s.c       ****         /* Disable underflow delayed start. */
+ 178:.\i2s.c       ****         syncDma = 1u;
+ 517              		.loc 1 178 0
  518 010e 054B     		ldr	r3, .L27+8
  519 0110 0122     		movs	r2, #1
  520 0112 1A70     		strb	r2, [r3]
  521              	.L18:
- 171:.\i2s.c       ****     }
- 172:.\i2s.c       **** }
- 173:.\i2s.c       **** }
- 522              		.loc 1 173 0
+ 179:.\i2s.c       ****     }
+ 180:.\i2s.c       **** }
+ 181:.\i2s.c       **** }
+ 522              		.loc 1 181 0
  523 0114 0837     		adds	r7, r7, #8
  524              		.cfi_def_cfa_offset 8
  525 0116 BD46     		mov	sp, r7
@@ -770,6 +778,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  550 0000 28020000 		.4byte	0x228
  551 0004 0400     		.2byte	0x4
  552 0006 00000000 		.4byte	.Ldebug_abbrev0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 14
+
+
  553 000a 04       		.byte	0x4
  554 000b 01       		.uleb128 0x1
  555 000c 76000000 		.4byte	.LASF32
@@ -778,9 +789,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  558 0015 16000000 		.4byte	.LASF34
  559 0019 00000000 		.4byte	.Ldebug_ranges0+0
  560 001d 00000000 		.4byte	0
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 14
-
-
  561 0021 00000000 		.4byte	.Ldebug_line0
  562 0025 02       		.uleb128 0x2
  563 0026 01       		.byte	0x1
@@ -830,6 +838,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  607 0076 03       		.uleb128 0x3
  608 0077 E8010000 		.4byte	.LASF10
  609 007b 03       		.byte	0x3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 15
+
+
  610 007c 2C       		.byte	0x2c
  611 007d 41000000 		.4byte	0x41
  612 0081 05       		.uleb128 0x5
@@ -838,9 +849,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  615 0087 9201     		.2byte	0x192
  616 0089 2C000000 		.4byte	0x2c
  617 008d 05       		.uleb128 0x5
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 15
-
-
  618 008e 8B010000 		.4byte	.LASF12
  619 0092 04       		.byte	0x4
  620 0093 9301     		.2byte	0x193
@@ -878,7 +886,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  652 00d7 07       		.uleb128 0x7
  653 00d8 A6010000 		.4byte	.LASF35
  654 00dc 01       		.byte	0x1
- 655 00dd 1C       		.byte	0x1c
+ 655 00dd 24       		.byte	0x24
  656 00de 00000000 		.4byte	.LFB63
  657 00e2 68000000 		.4byte	.LFE63-.LFB63
  658 00e6 01       		.uleb128 0x1
@@ -886,26 +894,26 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  660 00e8 08       		.uleb128 0x8
  661 00e9 10010000 		.4byte	.LASF19
  662 00ed 01       		.byte	0x1
- 663 00ee 2D       		.byte	0x2d
+ 663 00ee 35       		.byte	0x35
  664 00ef 00000000 		.4byte	.LFB64
  665 00f3 12000000 		.4byte	.LFE64-.LFB64
  666 00f7 01       		.uleb128 0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 16
+
+
  667 00f8 9C       		.byte	0x9c
  668 00f9 09       		.uleb128 0x9
  669 00fa 0E000000 		.4byte	.LASF20
  670 00fe 01       		.byte	0x1
- 671 00ff 37       		.byte	0x37
+ 671 00ff 3F       		.byte	0x3f
  672 0100 00000000 		.4byte	.LFB65
  673 0104 0C000000 		.4byte	.LFE65-.LFB65
  674 0108 01       		.uleb128 0x1
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 16
-
-
  675 0109 9C       		.byte	0x9c
  676 010a 0A       		.uleb128 0xa
  677 010b 2F020000 		.4byte	.LASF36
  678 010f 01       		.byte	0x1
- 679 0110 3D       		.byte	0x3d
+ 679 0110 45       		.byte	0x45
  680 0111 00000000 		.4byte	.LFB66
  681 0115 DC000000 		.4byte	.LFE66-.LFB66
  682 0119 01       		.uleb128 0x1
@@ -914,7 +922,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  685 011f 0B       		.uleb128 0xb
  686 0120 6900     		.ascii	"i\000"
  687 0122 01       		.byte	0x1
- 688 0123 3F       		.byte	0x3f
+ 688 0123 47       		.byte	0x47
  689 0124 81000000 		.4byte	0x81
  690 0128 02       		.uleb128 0x2
  691 0129 91       		.byte	0x91
@@ -923,7 +931,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  694 012c 0C       		.uleb128 0xc
  695 012d 24020000 		.4byte	.LASF37
  696 0131 01       		.byte	0x1
- 697 0132 61       		.byte	0x61
+ 697 0132 69       		.byte	0x69
  698 0133 00000000 		.4byte	.LFB67
  699 0137 34010000 		.4byte	.LFE67-.LFB67
  700 013b 01       		.uleb128 0x1
@@ -932,7 +940,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  703 0141 0D       		.uleb128 0xd
  704 0142 04010000 		.4byte	.LASF21
  705 0146 01       		.byte	0x1
- 706 0147 63       		.byte	0x63
+ 706 0147 6B       		.byte	0x6b
  707 0148 81000000 		.4byte	0x81
  708 014c 02       		.uleb128 0x2
  709 014d 91       		.byte	0x91
@@ -950,23 +958,23 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  721 0166 71010000 		.4byte	0x171
  722 016a 10       		.uleb128 0x10
  723 016b D0000000 		.4byte	0xd0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 17
+
+
  724 016f 3F       		.byte	0x3f
  725 0170 00       		.byte	0
  726 0171 11       		.uleb128 0x11
  727 0172 DF010000 		.4byte	.LASF23
  728 0176 06       		.byte	0x6
- 729 0177 24       		.byte	0x24
+ 729 0177 2C       		.byte	0x2c
  730 0178 61010000 		.4byte	0x161
  731 017c 05       		.uleb128 0x5
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 17
-
-
  732 017d 03       		.byte	0x3
  733 017e 00000000 		.4byte	wrBuffer
  734 0182 11       		.uleb128 0x11
  735 0183 4B010000 		.4byte	.LASF24
  736 0187 06       		.byte	0x6
- 737 0188 25       		.byte	0x25
+ 737 0188 2D       		.byte	0x2d
  738 0189 81000000 		.4byte	0x81
  739 018d 05       		.uleb128 0x5
  740 018e 03       		.byte	0x3
@@ -981,7 +989,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  749 01a4 11       		.uleb128 0x11
  750 01a5 77010000 		.4byte	.LASF25
  751 01a9 01       		.byte	0x1
- 752 01aa 10       		.byte	0x10
+ 752 01aa 18       		.byte	0x18
  753 01ab 93010000 		.4byte	0x193
  754 01af 05       		.uleb128 0x5
  755 01b0 03       		.byte	0x3
@@ -989,7 +997,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  757 01b5 11       		.uleb128 0x11
  758 01b6 C7010000 		.4byte	.LASF26
  759 01ba 01       		.byte	0x1
- 760 01bb 11       		.byte	0x11
+ 760 01bb 19       		.byte	0x19
  761 01bc CB000000 		.4byte	0xcb
  762 01c0 05       		.uleb128 0x5
  763 01c1 03       		.byte	0x3
@@ -997,7 +1005,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  765 01c6 11       		.uleb128 0x11
  766 01c7 18010000 		.4byte	.LASF27
  767 01cb 01       		.byte	0x1
- 768 01cc 12       		.byte	0x12
+ 768 01cc 1A       		.byte	0x1a
  769 01cd CB000000 		.4byte	0xcb
  770 01d1 05       		.uleb128 0x5
  771 01d2 03       		.byte	0x3
@@ -1005,26 +1013,26 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  773 01d7 11       		.uleb128 0x11
  774 01d8 57020000 		.4byte	.LASF28
  775 01dc 01       		.byte	0x1
- 776 01dd 15       		.byte	0x15
+ 776 01dd 1D       		.byte	0x1d
  777 01de C6000000 		.4byte	0xc6
  778 01e2 05       		.uleb128 0x5
  779 01e3 03       		.byte	0x3
  780 01e4 00000000 		.4byte	syncDma
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 18
+
+
  781 01e8 11       		.uleb128 0x11
  782 01e9 D0010000 		.4byte	.LASF29
  783 01ed 01       		.byte	0x1
- 784 01ee 16       		.byte	0x16
+ 784 01ee 1E       		.byte	0x1e
  785 01ef C6000000 		.4byte	0xc6
  786 01f3 05       		.uleb128 0x5
  787 01f4 03       		.byte	0x3
  788 01f5 00000000 		.4byte	syncDmaCounter
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 18
-
-
  789 01f9 11       		.uleb128 0x11
  790 01fa 09020000 		.4byte	.LASF30
  791 01fe 01       		.byte	0x1
- 792 01ff 19       		.byte	0x19
+ 792 01ff 21       		.byte	0x21
  793 0200 81000000 		.4byte	0x81
  794 0204 05       		.uleb128 0x5
  795 0205 03       		.byte	0x3
@@ -1039,7 +1047,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  804 021a 11       		.uleb128 0x11
  805 021b F9010000 		.4byte	.LASF31
  806 021f 01       		.byte	0x1
- 807 0220 1A       		.byte	0x1a
+ 807 0220 22       		.byte	0x22
  808 0221 0A020000 		.4byte	0x20a
  809 0225 05       		.uleb128 0x5
  810 0226 03       		.byte	0x3
@@ -1070,6 +1078,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  835 0014 24       		.uleb128 0x24
  836 0015 00       		.byte	0
  837 0016 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 19
+
+
  838 0017 0B       		.uleb128 0xb
  839 0018 3E       		.uleb128 0x3e
  840 0019 0B       		.uleb128 0xb
@@ -1078,9 +1089,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  843 001c 00       		.byte	0
  844 001d 00       		.byte	0
  845 001e 03       		.uleb128 0x3
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 19
-
-
  846 001f 16       		.uleb128 0x16
  847 0020 00       		.byte	0
  848 0021 03       		.uleb128 0x3
@@ -1130,6 +1138,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  892 004d 3F       		.uleb128 0x3f
  893 004e 19       		.uleb128 0x19
  894 004f 03       		.uleb128 0x3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 20
+
+
  895 0050 0E       		.uleb128 0xe
  896 0051 3A       		.uleb128 0x3a
  897 0052 0B       		.uleb128 0xb
@@ -1138,9 +1149,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  900 0055 27       		.uleb128 0x27
  901 0056 19       		.uleb128 0x19
  902 0057 11       		.uleb128 0x11
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 20
-
-
  903 0058 01       		.uleb128 0x1
  904 0059 12       		.uleb128 0x12
  905 005a 06       		.uleb128 0x6
@@ -1190,6 +1198,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  949 0088 18       		.uleb128 0x18
  950 0089 9742     		.uleb128 0x2117
  951 008b 19       		.uleb128 0x19
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 21
+
+
  952 008c 00       		.byte	0
  953 008d 00       		.byte	0
  954 008e 0A       		.uleb128 0xa
@@ -1198,9 +1209,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  957 0091 3F       		.uleb128 0x3f
  958 0092 19       		.uleb128 0x19
  959 0093 03       		.uleb128 0x3
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 21
-
-
  960 0094 0E       		.uleb128 0xe
  961 0095 3A       		.uleb128 0x3a
  962 0096 0B       		.uleb128 0xb
@@ -1250,6 +1258,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1006 00c3 01       		.uleb128 0x1
  1007 00c4 12       		.uleb128 0x12
  1008 00c5 06       		.uleb128 0x6
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 22
+
+
  1009 00c6 40       		.uleb128 0x40
  1010 00c7 18       		.uleb128 0x18
  1011 00c8 9642     		.uleb128 0x2116
@@ -1258,9 +1269,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1014 00cc 13       		.uleb128 0x13
  1015 00cd 00       		.byte	0
  1016 00ce 00       		.byte	0
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 22
-
-
  1017 00cf 0D       		.uleb128 0xd
  1018 00d0 34       		.uleb128 0x34
  1019 00d1 00       		.byte	0
@@ -1310,6 +1318,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1063 00fd 2F       		.uleb128 0x2f
  1064 00fe 0B       		.uleb128 0xb
  1065 00ff 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 23
+
+
  1066 0100 00       		.byte	0
  1067 0101 11       		.uleb128 0x11
  1068 0102 34       		.uleb128 0x34
@@ -1318,9 +1329,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1071 0105 0E       		.uleb128 0xe
  1072 0106 3A       		.uleb128 0x3a
  1073 0107 0B       		.uleb128 0xb
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 23
-
-
  1074 0108 3B       		.uleb128 0x3b
  1075 0109 0B       		.uleb128 0xb
  1076 010a 49       		.uleb128 0x49
@@ -1370,6 +1378,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1120 0010 00000000 		.4byte	.LFB65
  1121 0014 0C000000 		.4byte	.LFE65
  1122 0018 00000000 		.4byte	.LFB66
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 24
+
+
  1123 001c DC000000 		.4byte	.LFE66
  1124 0020 00000000 		.4byte	.LFB67
  1125 0024 34010000 		.4byte	.LFE67
@@ -1377,10 +1388,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1127 002c 00000000 		.4byte	0
  1128              		.section	.debug_line,"",%progbits
  1129              	.Ldebug_line0:
- 1130 0000 58020000 		.section	.debug_str,"MS",%progbits,1
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 24
-
-
+ 1130 0000 59020000 		.section	.debug_str,"MS",%progbits,1
  1130      02005901 
  1130      00000201 
  1130      FB0E0D00 
@@ -1430,6 +1438,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1145      4F757400 
  1146              	.LASF19:
  1147 0110 49325369 		.ascii	"I2Sinit\000"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 25
+
+
  1147      6E697400 
  1148              	.LASF27:
  1149 0118 696E496E 		.ascii	"inIndex\000"
@@ -1438,9 +1449,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1151 0120 666C6F61 		.ascii	"float\000"
  1151      7400
  1152              	.LASF1:
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 25
-
-
  1153 0126 756E7369 		.ascii	"unsigned char\000"
  1153      676E6564 
  1153      20636861 
@@ -1490,6 +1498,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1175      20696E74 
  1175      00
  1176              	.LASF35:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 26
+
+
  1177 01a6 5478446D 		.ascii	"TxDmaDone\000"
  1177      61446F6E 
  1177      6500
@@ -1498,9 +1509,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1179      206C6F6E 
  1179      6720756E 
  1179      7369676E 
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 26
-
-
  1179      65642069 
  1180              	.LASF26:
  1181 01c7 6F757449 		.ascii	"outIndex\000"
@@ -1550,6 +1558,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1203      66696775 
  1203      72617469 
  1203      6F6E00
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccLpUhnz.s 			page 27
+
+
  1204              	.LASF4:
  1205 0242 6C6F6E67 		.ascii	"long int\000"
  1205      20696E74 
@@ -1558,9 +1569,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 1
  1207 024b 7369676E 		.ascii	"signed char\000"
  1207      65642063 
  1207      68617200 
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccJ3cWMY.s 			page 27
-
-
  1208              	.LASF28:
  1209 0257 73796E63 		.ascii	"syncDma\000"
  1209      446D6100 

@@ -1,15 +1,16 @@
-/*******************************************************************************
-* File Name: I2CS_BOOT.c
-* Version 3.10
+/***************************************************************************//**
+* \file I2CS_BOOT.c
+* \version 3.20
 *
-* Description:
+* \brief
 *  This file provides the source code of the bootloader communication APIs
 *  for the SCB Component Unconfigured mode.
 *
 * Note:
 *
 ********************************************************************************
-* Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* \copyright
+* Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -22,17 +23,10 @@
 
 /*******************************************************************************
 * Function Name: I2CS_CyBtldrCommStart
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
-*  Calls the CyBtldrCommStart function of the bootloader communication
-*  component for the selected mode.
-*
-* Parameters:
-*  None
-*
-* Return:
-*  None
+*  Starts I2CS component. After this function call the component is 
+*  ready for communication.
 *
 *******************************************************************************/
 void I2CS_CyBtldrCommStart(void)
@@ -64,17 +58,9 @@ void I2CS_CyBtldrCommStart(void)
 
 /*******************************************************************************
 * Function Name: I2CS_CyBtldrCommStop
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
-*  Calls the CyBtldrCommStop function of the bootloader communication
-*  component for the selected mode.
-*
-* Parameters:
-*  None
-*
-* Return:
-*  None
+*  Stops I2CS component.
 *
 *******************************************************************************/
 void I2CS_CyBtldrCommStop(void)
@@ -106,17 +92,9 @@ void I2CS_CyBtldrCommStop(void)
 
 /*******************************************************************************
 * Function Name: I2CS_CyBtldrCommReset
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
-*  Calls the CyBtldrCommReset function of the bootloader communication
-*  component for the selected mode.
-*
-* Parameters:
-*  None
-*
-* Return:
-*  None
+*  Clears I2CS component buffers.
 *
 *******************************************************************************/
 void I2CS_CyBtldrCommReset(void)
@@ -148,24 +126,25 @@ void I2CS_CyBtldrCommReset(void)
 
 /*******************************************************************************
 * Function Name: I2CS_CyBtldrCommRead
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
-*  Calls the CyBtldrCommRead function of the bootloader communication
-*  component for the selected mode.
+*  Allows the caller to read data from the bootloader host (the host writes the 
+*  data). The function handles polling to allow a block of data to be completely
+*  received from the host device.
 *
-* Parameters:
-*  pData:    Pointer to storage for the block of data to be read from the
-*            bootloader host
-*  size:     Number of bytes to be read.
-*  count:    Pointer to the variable to write the number of bytes actually
-*            read.
-*  timeOut:  Number of units in 10 ms to wait before returning because of a
-*            timeout.
+*  \param pData: Pointer to storage for the block of data to be read from the
+*   bootloader host.
+*  \param size: Number of bytes to be read.
+*  \param count: Pointer to the variable to write the number of bytes actually
+*   read.
+*  \param timeOut: Number of units in 10 ms to wait before returning because of a
+*   timeout.
 *
-* Return:
-*  Returns CYRET_SUCCESS if no problem was encountered or returns the value
-*  that best describes the problem.
+* \return
+*  \return
+*  cystatus: Returns CYRET_SUCCESS if no problem was encountered or returns the
+*  value that best describes the problem. For more information refer to 
+*  the “Return Codes” section of the System Reference Guide.
 *
 *******************************************************************************/
 cystatus I2CS_CyBtldrCommRead(uint8 pData[], uint16 size, uint16 * count, uint8 timeOut)
@@ -201,23 +180,24 @@ cystatus I2CS_CyBtldrCommRead(uint8 pData[], uint16 size, uint16 * count, uint8 
 
 /*******************************************************************************
 * Function Name: I2CS_CyBtldrCommWrite
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
-*  Calls the CyBtldrCommWrite  function of the bootloader communication
-*  component for the selected mode.
+*  Allows the caller to write data to the bootloader host (the host reads the 
+*  data). The function does not use timeout and returns after data has been copied
+*  into the slave read buffer. This data available to be read by the bootloader
+*  host until following host data write.
 *
-* Parameters:
-*  pData:    Pointer to the block of data to be written to the bootloader host.
-*  size:     Number of bytes to be written.
-*  count:    Pointer to the variable to write the number of bytes actually
-*            written.
-*  timeOut:  Number of units in 10 ms to wait before returning because of a
-*            timeout.
+*  \param pData: Pointer to the block of data to be written to the bootloader host.
+*  \param size: Number of bytes to be written.
+*  \param count: Pointer to the variable to write the number of bytes actually
+*   written.
+*  \param timeOut: Number of units in 10 ms to wait before returning because of a
+*   timeout.
 *
-* Return:
-*  Returns CYRET_SUCCESS if no problem was encountered or returns the value
-*  that best describes the problem.
+*  \return
+*  cystatus: Returns CYRET_SUCCESS if no problem was encountered or returns the
+*  value that best describes the problem. For more information refer to 
+*  the “Return Codes” section of the System Reference Guide.
 *
 *******************************************************************************/
 cystatus I2CS_CyBtldrCommWrite(const uint8 pData[], uint16 size, uint16 * count, uint8 timeOut)

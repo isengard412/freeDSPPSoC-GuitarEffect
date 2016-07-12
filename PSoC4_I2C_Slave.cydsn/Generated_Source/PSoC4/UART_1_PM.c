@@ -1,15 +1,16 @@
-/*******************************************************************************
-* File Name: UART_1_PM.c
-* Version 3.10
+/***************************************************************************//**
+* \file UART_1_PM.c
+* \version 3.20
 *
-* Description:
+* \brief
 *  This file provides the source code to the Power Management support for
 *  the SCB Component.
 *
 * Note:
 *
 ********************************************************************************
-* Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* \copyright
+* Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -50,18 +51,23 @@
 
 /*******************************************************************************
 * Function Name: UART_1_Sleep
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
-*  Prepares the component to enter Deep Sleep.
-*  The "Enable wakeup from Sleep Mode" selection has an influence on
-*  this function implementation.
+*  Prepares the UART_1 component to enter Deep Sleep.
+*  The “Enable wakeup from Deep Sleep Mode” selection has an influence on this 
+*  function implementation:
+*  - Checked: configures the component to be wakeup source from Deep Sleep.
+*  - Unchecked: stores the current component state (enabled or disabled) and 
+*    disables the component. See SCB_Stop() function for details about component 
+*    disabling.
 *
-* Parameters:
-*  None
+*  Call the UART_1_Sleep() function before calling the 
+*  CyPmSysDeepSleep() function. 
+*  Refer to the PSoC Creator System Reference Guide for more information about 
+*  power management functions and Low power section of this document for the 
+*  selected mode.
 *
-* Return:
-*  None
+*  This function should not be called before entering Sleep.
 *
 *******************************************************************************/
 void UART_1_Sleep(void)
@@ -134,19 +140,20 @@ void UART_1_Sleep(void)
 
 /*******************************************************************************
 * Function Name: UART_1_Wakeup
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
-*  Prepares the component for the Active mode operation after exiting
-*  Deep Sleep. The "Enable wakeup from Sleep Mode" option has an influence
-*  on this function implementation.
+*  Prepares the UART_1 component for Active mode operation after 
+*  Deep Sleep.
+*  The “Enable wakeup from Deep Sleep Mode” selection has influence on this 
+*  function implementation:
+*  - Checked: restores the component Active mode configuration.
+*  - Unchecked: enables the component if it was enabled before enter Deep Sleep.
+*
 *  This function should not be called after exiting Sleep.
 *
-* Parameters:
-*  None
-*
-* Return:
-*  None
+*  \sideeffect
+*   Calling the UART_1_Wakeup() function without first calling the 
+*   UART_1_Sleep() function may produce unexpected behavior.
 *
 *******************************************************************************/
 void UART_1_Wakeup(void)

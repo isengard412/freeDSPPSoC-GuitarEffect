@@ -7,21 +7,30 @@
 * Description:
 *  Interaction with DSP
 *
+* Copyright:
+* Released under Creative Commons Attribution Share-Alike 4.0 license.This 
+* allows for both personal and commercial derivative works, as long as they 
+* credit freeDSP and release their designs under the same license. The freeDSP 
+* brand and freeDSP logo are protected by copyright and cannot be used without 
+* formal permission. Please contact Sebastian Merchel for further information.
+* https://creativecommons.org/licenses/by-sa/4.0/legalcode
+*
 *******************************************************************************/
 
 #include "main.h"
 
 int32 pitch = 0;
 int32 pitch_target = 0;
+int32 cache = 0x4;
 
 CY_ISR_PROTO(spi_rx_interrupt);
 
 
 CY_ISR(SPI_Rx)
 {
-    /* Wert zwischen +-34953 */
-    pitch_target = (int32)SPISreadNumber(0u);
-    pitch_target = (pitch_target-130)*200;
+    
+    cache = (int32)SPISreadNumber(0u);
+    
 }
 
 
@@ -54,8 +63,6 @@ int main()
     I2Sinit();
     /* Activatind PSoC Communication */
     SPISinit();
-    /* Start USBFS Operation with 5V operation. */
-    //USBFS_Start(USBFS_AUDIO_DEVICE, USBFS_5V_OPERATION);
     
     /***** Initialization completed *****/
     
@@ -72,7 +79,17 @@ int main()
     
     for(;;)
     {
-        //USBrefresh();
+        if(cache>0x3) 
+        {
+            pitch_target=cache;
+            /* Wert zwischen +-34953 */
+            pitch_target = (pitch_target-113)*200;
+        }
+        else
+        {
+            DSPInput((uint32)cache);
+            cache = 130;
+        }
         if(pitch_target>pitch+0xF) pitch+=0x1;
         else
         { 

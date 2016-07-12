@@ -11,43 +11,23 @@
 * Changes:
 *   -Can now receive
 *
+* Copyright:
+* Released under Creative Commons Attribution Share-Alike 4.0 license.This 
+* allows for both personal and commercial derivative works, as long as they 
+* credit freeDSP and release their designs under the same license. The freeDSP 
+* brand and freeDSP logo are protected by copyright and cannot be used without 
+* formal permission. Please contact Sebastian Merchel for further information.
+* https://creativecommons.org/licenses/by-sa/4.0/legalcode
+*
 *******************************************************************************/
 
 #include "spimaster.h"
 
-/*******************************************************************************
-* Function Name: SPIinit
-********************************************************************************
-*
-* Summary:
-*  Initialize communication
-*
-* Parameters:
-*  None.
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
 void SPIinit()
 {
     SPIM_Start();
 }
 
-/*******************************************************************************
-* Function Name: SPIsendNumber
-********************************************************************************
-*
-* Summary:
-*  Sending a Number via SPI as Master
-*
-* Parameters:
-*  uint8 number
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
 void SPIsendNumber(uint8 number)
 {
 
@@ -58,21 +38,6 @@ void SPIsendNumber(uint8 number)
     CyDelayUs(5);
 }
 
-
-/*******************************************************************************
-* Function Name: SPIsendArray
-********************************************************************************
-*
-* Summary:
-*  Sending an Array via SPI as Master
-*
-* Parameters:
-*  uint8 numbers[]
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
 void SPIsendArray(uint8* numbers, uint16 numberOfbytes)
 {
     /* Warten auf abschliessen der TX Uebertragung */
@@ -100,20 +65,6 @@ void SPIsendArray(uint8* numbers, uint16 numberOfbytes)
 
 }
 
-/*******************************************************************************
-* Function Name: SPIreadNumber
-********************************************************************************
-*
-* Summary:
-*  Receiving a Number via SPI as Master
-*
-* Parameters:
-*  None
-*
-* Return:
-*  uint8 received
-*
-*******************************************************************************/
 uint8 SPIreadNumber()
 {
 
@@ -127,20 +78,6 @@ uint8 SPIreadNumber()
     return received;
 }
 
-/*******************************************************************************
-* Function Name: SPIreadFinished
-********************************************************************************
-*
-* Summary:
-*  Returning the RX buffersize
-*
-* Parameters:
-*  None
-*
-* Return:
-*  uint8 buffer
-*
-*******************************************************************************/
 uint8 SPIreadFinished()
 {
     return SPIM_GetRxBufferSize();

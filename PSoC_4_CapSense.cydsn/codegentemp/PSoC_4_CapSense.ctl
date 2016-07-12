@@ -1,6 +1,6 @@
 -- ======================================================================
 -- PSoC_4_CapSense.ctl generated from PSoC_4_CapSense
--- 05/16/2016 at 21:40
+-- 07/12/2016 at 20:14
 -- This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 -- ======================================================================
 

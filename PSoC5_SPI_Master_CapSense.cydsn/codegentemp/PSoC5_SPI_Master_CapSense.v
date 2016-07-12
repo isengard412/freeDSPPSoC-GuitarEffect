@@ -1,6 +1,6 @@
 // ======================================================================
 // PSoC5_SPI_Master_CapSense.v generated from TopDesign.cysch
-// 07/09/2016 at 16:49
+// 07/12/2016 at 20:13
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 

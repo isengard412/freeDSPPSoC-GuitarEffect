@@ -1,15 +1,16 @@
-/*******************************************************************************
-* File Name: UART_1_SPI_UART.c
-* Version 3.10
+/***************************************************************************//**
+* \file UART_1_SPI_UART.c
+* \version 3.20
 *
-* Description:
+* \brief
 *  This file provides the source code to the API for the SCB Component in
 *  SPI and UART modes.
 *
 * Note:
 *
 *******************************************************************************
-* Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* \copyright
+* Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -23,13 +24,25 @@
 ***************************************/
 
 #if(UART_1_INTERNAL_RX_SW_BUFFER_CONST)
+    /* Start index to put data into the software receive buffer.*/
     volatile uint32 UART_1_rxBufferHead;
+    /* Start index to get data from the software receive buffer.*/
     volatile uint32 UART_1_rxBufferTail;
+    /**
+    * \addtogroup group_globals
+    * \{
+    */
+    /** Sets when internal software receive buffer overflow
+    *  was occurred.
+    */
     volatile uint8  UART_1_rxBufferOverflow;
+    /** \} globals */
 #endif /* (UART_1_INTERNAL_RX_SW_BUFFER_CONST) */
 
 #if(UART_1_INTERNAL_TX_SW_BUFFER_CONST)
+    /* Start index to put data into the software transmit buffer.*/
     volatile uint32 UART_1_txBufferHead;
+    /* Start index to get data from the software transmit buffer.*/
     volatile uint32 UART_1_txBufferTail;
 #endif /* (UART_1_INTERNAL_TX_SW_BUFFER_CONST) */
 
@@ -46,9 +59,8 @@
 #if(UART_1_RX_DIRECTION)
     /*******************************************************************************
     * Function Name: UART_1_SpiUartReadRxData
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Retrieves the next data element from the receive buffer.
     *   - RX software buffer is disabled: Returns data element retrieved from
     *     RX FIFO. Undefined data will be returned if the RX FIFO is empty.
@@ -56,14 +68,16 @@
     *     receive buffer. Zero value is returned if the software receive buffer
     *     is empty.
     *
-    * Parameters:
-    *  None
+    * \return
+    *  Next data element from the receive buffer. 
+    *  The amount of data bits to be received depends on RX data bits selection 
+    *  (the data bit counting starts from LSB of return value).
     *
-    * Return:
-    *  Next data element from the receive buffer.
-    *
-    * Global Variables:
-    *  Look into UART_1_SpiInit for description.
+    * \globalvars
+    *  UART_1_rxBufferHead - the start index to put data into the 
+    *  software receive buffer.
+    *  UART_1_rxBufferTail - the start index to get data from the 
+    *  software receive buffer.
     *
     *******************************************************************************/
     uint32 UART_1_SpiUartReadRxData(void)
@@ -122,20 +136,22 @@
 
     /*******************************************************************************
     * Function Name: UART_1_SpiUartGetRxBufferSize
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Returns the number of received data elements in the receive buffer.
     *   - RX software buffer disabled: returns the number of used entries in
     *     RX FIFO.
     *   - RX software buffer enabled: returns the number of elements which were
     *     placed in the receive buffer. This does not include the hardware RX FIFO.
     *
-    * Parameters:
-    *  None
+    * \return
+    *  Number of received data elements.
     *
-    * Return:
-    *  Number of received data elements
+    * \globalvars
+    *  UART_1_rxBufferHead - the start index to put data into the 
+    *  software receive buffer.
+    *  UART_1_rxBufferTail - the start index to get data from the 
+    *  software receive buffer.
     *
     *******************************************************************************/
     uint32 UART_1_SpiUartGetRxBufferSize(void)
@@ -170,16 +186,15 @@
 
     /*******************************************************************************
     * Function Name: UART_1_SpiUartClearRxBuffer
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Clears the receive buffer and RX FIFO.
     *
-    * Parameters:
-    *  None
-    *
-    * Return:
-    *  None
+    * \globalvars
+    *  UART_1_rxBufferHead - the start index to put data into the 
+    *  software receive buffer.
+    *  UART_1_rxBufferTail - the start index to get data from the 
+    *  software receive buffer.
     *
     *******************************************************************************/
     void UART_1_SpiUartClearRxBuffer(void)
@@ -204,7 +219,7 @@
                 UART_1_INTR_RX_MASK_REG |= UART_1_INTR_RX_NOT_EMPTY;
             }
             #endif
-
+            
             /* Release lock */
             UART_1_EnableInt();
         }
@@ -221,19 +236,22 @@
 #if(UART_1_TX_DIRECTION)
     /*******************************************************************************
     * Function Name: UART_1_SpiUartWriteTxData
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Places a data entry into the transmit buffer to be sent at the next available
     *  bus time.
     *  This function is blocking and waits until there is space available to put the
     *  requested data in the transmit buffer.
     *
-    * Parameters:
-    *  txDataByte: the data to be transmitted.
+    *  \param txDataByte: the data to be transmitted.
+    *   The amount of data bits to be transmitted depends on TX data bits selection 
+    *   (the data bit counting starts from LSB of txDataByte).
     *
-    * Return:
-    *  None
+    * \globalvars
+    *  UART_1_txBufferHead - the start index to put data into the 
+    *  software transmit buffer.
+    *  UART_1_txBufferTail - start index to get data from the software
+    *  transmit buffer.
     *
     *******************************************************************************/
     void UART_1_SpiUartWriteTxData(uint32 txData)
@@ -300,20 +318,23 @@
 
     /*******************************************************************************
     * Function Name: UART_1_SpiUartPutArray
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Places an array of data into the transmit buffer to be sent.
     *  This function is blocking and waits until there is a space available to put
     *  all the requested data in the transmit buffer. The array size can be greater
     *  than transmit buffer size.
     *
-    * Parameters:
-    *  wrBuf:  pointer to an array with data to be placed in transmit buffer.
-    *  count:  number of data elements to be placed in the transmit buffer.
+    * \param wrBuf: pointer to an array of data to be placed in transmit buffer. 
+    *  The width of the data to be transmitted depends on TX data width selection 
+    *  (the data bit counting starts from LSB for each array element).
+    * \param count: number of data elements to be placed in the transmit buffer.
     *
-    * Return:
-    *  None
+    * \globalvars
+    *  UART_1_txBufferHead - the start index to put data into the 
+    *  software transmit buffer.
+    *  UART_1_txBufferTail - start index to get data from the software
+    *  transmit buffer.
     *
     *******************************************************************************/
     void UART_1_SpiUartPutArray(const uint8 wrBuf[], uint32 count)
@@ -329,22 +350,24 @@
 
     /*******************************************************************************
     * Function Name: UART_1_SpiUartGetTxBufferSize
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
-    * Returns the number of elements currently in the transmit buffer.
-    *  - TX software buffer is disabled: returns the number of used entries in
-    *    TX FIFO.
-    *  - TX software buffer is enabled: returns the number of elements currently
-    *    used in the transmit buffer. This number does not include used entries in
-    *    the TX FIFO. The transmit buffer size is zero until the TX FIFO is
-    *    not full.
+    *  Returns the number of elements currently in the transmit buffer.
+    *   - TX software buffer is disabled: returns the number of used entries in
+    *     TX FIFO.
+    *   - TX software buffer is enabled: returns the number of elements currently
+    *     used in the transmit buffer. This number does not include used entries in
+    *     the TX FIFO. The transmit buffer size is zero until the TX FIFO is
+    *     not full.
     *
-    * Parameters:
-    *  None
-    *
-    * Return:
+    * \return
     *  Number of data elements ready to transmit.
+    *
+    * \globalvars
+    *  UART_1_txBufferHead - the start index to put data into the 
+    *  software transmit buffer.
+    *  UART_1_txBufferTail - start index to get data from the software
+    *  transmit buffer.
     *
     *******************************************************************************/
     uint32 UART_1_SpiUartGetTxBufferSize(void)
@@ -380,16 +403,15 @@
 
     /*******************************************************************************
     * Function Name: UART_1_SpiUartClearTxBuffer
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Clears the transmit buffer and TX FIFO.
     *
-    * Parameters:
-    *  None
-    *
-    * Return:
-    *  None
+    * \globalvars
+    *  UART_1_txBufferHead - the start index to put data into the 
+    *  software transmit buffer.
+    *  UART_1_txBufferTail - start index to get data from the software
+    *  transmit buffer.
     *
     *******************************************************************************/
     void UART_1_SpiUartClearTxBuffer(void)
@@ -421,16 +443,12 @@
 
 /*******************************************************************************
 * Function Name: UART_1_SpiUartDisableIntRx
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
 *  Disables the RX interrupt sources.
 *
-* Parameters:
-*  None
-*
-* Return:
-*  Returns the RX interrupt sources enabled before the function call.
+*  \return
+*   Returns the RX interrupt sources enabled before the function call.
 *
 *******************************************************************************/
 uint32 UART_1_SpiUartDisableIntRx(void)
@@ -447,16 +465,12 @@ uint32 UART_1_SpiUartDisableIntRx(void)
 
 /*******************************************************************************
 * Function Name: UART_1_SpiUartDisableIntTx
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
 *  Disables TX interrupt sources.
 *
-* Parameters:
-*  None
-*
-* Return:
-*  Returns TX interrupt sources enabled before function call.
+*  \return
+*   Returns TX interrupt sources enabled before function call.
 *
 *******************************************************************************/
 uint32 UART_1_SpiUartDisableIntTx(void)
@@ -474,18 +488,13 @@ uint32 UART_1_SpiUartDisableIntTx(void)
 #if(UART_1_SCB_MODE_UNCONFIG_CONST_CFG)
     /*******************************************************************************
     * Function Name: UART_1_PutWordInRxBuffer
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Stores a byte/word into the RX buffer.
     *  Only available in the Unconfigured operation mode.
     *
-    * Parameters:
-    *  index:      index to store data byte/word in the RX buffer.
-    *  rxDataByte: byte/word to store.
-    *
-    * Return:
-    *  None
+    *  \param index:      index to store data byte/word in the RX buffer.
+    *  \param rxDataByte: byte/word to store.
     *
     *******************************************************************************/
     void UART_1_PutWordInRxBuffer(uint32 idx, uint32 rxDataByte)
@@ -505,17 +514,13 @@ uint32 UART_1_SpiUartDisableIntTx(void)
 
     /*******************************************************************************
     * Function Name: UART_1_GetWordFromRxBuffer
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Reads byte/word from RX buffer.
     *  Only available in the Unconfigured operation mode.
     *
-    * Parameters:
-    *  None
-    *
-    * Return:
-    *  Returns byte/word read from RX buffer.
+    *  \return
+    *   Returns byte/word read from RX buffer.
     *
     *******************************************************************************/
     uint32 UART_1_GetWordFromRxBuffer(uint32 idx)
@@ -538,18 +543,13 @@ uint32 UART_1_SpiUartDisableIntTx(void)
 
     /*******************************************************************************
     * Function Name: UART_1_PutWordInTxBuffer
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Stores byte/word into the TX buffer.
     *  Only available in the Unconfigured operation mode.
     *
-    * Parameters:
-    *  idx:        index to store data byte/word in the TX buffer.
-    *  txDataByte: byte/word to store.
-    *
-    * Return:
-    *  None
+    *  \param idx:        index to store data byte/word in the TX buffer.
+    *  \param txDataByte: byte/word to store.
     *
     *******************************************************************************/
     void UART_1_PutWordInTxBuffer(uint32 idx, uint32 txDataByte)
@@ -569,17 +569,15 @@ uint32 UART_1_SpiUartDisableIntTx(void)
 
     /*******************************************************************************
     * Function Name: UART_1_GetWordFromTxBuffer
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Reads byte/word from the TX buffer.
     *  Only available in the Unconfigured operation mode.
     *
-    * Parameters:
-    *  idx: index to get data byte/word from the TX buffer.
+    *  \param idx: index to get data byte/word from the TX buffer.
     *
-    * Return:
-    *  Returns byte/word read from the TX buffer.
+    *  \return
+    *   Returns byte/word read from the TX buffer.
     *
     *******************************************************************************/
     uint32 UART_1_GetWordFromTxBuffer(uint32 idx)

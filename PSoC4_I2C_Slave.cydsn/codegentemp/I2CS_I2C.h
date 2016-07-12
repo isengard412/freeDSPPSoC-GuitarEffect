@@ -1,15 +1,16 @@
-/*******************************************************************************
-* File Name: I2CS_I2C.h
-* Version 3.10
+/***************************************************************************//**
+* \file I2CS_I2C.h
+* \version 3.20
 *
-* Description:
+* \brief
 *  This file provides constants and parameter values for the SCB Component in
 *  the I2C mode.
 *
 * Note:
 *
 ********************************************************************************
-* Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* \copyright
+* Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -122,11 +123,7 @@
                                                                   I2CS_CHECK_I2C_GENERAL_CALL_CONST)
 
     /* I2C: TX or RX FIFO size */
-    #if (I2CS_CY_SCBIP_V0 || I2CS_CY_SCBIP_V1)
-        #define I2CS_I2C_FIFO_SIZE  (I2CS_FIFO_SIZE)
-    #else
-        #define I2CS_I2C_FIFO_SIZE  I2CS_GET_FIFO_SIZE(I2CS_I2C_BYTE_MODE_ENABLE)
-    #endif /* (I2CS_CY_SCBIP_V0 || I2CS_CY_SCBIP_V1) */
+    #define I2CS_I2C_FIFO_SIZE  I2CS_GET_FIFO_SIZE(I2CS_I2C_BYTE_MODE_ENABLE)
 
     /* Adjust AF and DF filter settings. Ticket ID#176179 */
     #if ((I2CS_I2C_MODE_SLAVE == I2CS_I2C_MODE) ||     \
@@ -157,35 +154,117 @@
 *       Type Definitions
 ***************************************/
 
+/**
+* \addtogroup group_structures
+* @{
+*/
 typedef struct
 {
+    /** Mode of operation for I2C. The following defines are available choices:
+     *  - I2CS_I2C_MODE_SLAVE
+     *  - I2CS_I2C_MODE_MASTER
+     *  - I2CS_I2C_MODE_MULTI_MASTER
+     *  - I2CS_I2C_MODE_MULTI_MASTER_SLAVE
+    */
     uint32 mode;
+
+    /** Oversampling factor for the low phase of the I2C clock. Ignored for
+     *  Slave mode operation.  The oversampling factors need to be chosen in
+     *  conjunction with the clock rate in order to generate the desired rate
+     *  of I2C operation.
+    */
     uint32 oversampleLow;
+
+    /** Oversampling factor for the high phase of the I2C clock. Ignored for
+     *  Slave mode operation.
+    */
     uint32 oversampleHigh;
+
+    /** This field is left for compatibility and its value is ignored.
+     *  Median filter is enabled or disabled depends on the data rate and
+     *  operation mode.
+    */
     uint32 enableMedianFilter;
+
+    /** 7-bit slave address. Ignored for non-slave modes.
+    */
     uint32 slaveAddr;
+
+    /** 8-bit slave address mask. Bit 0 must have a value of 0. Ignored for
+     *  non-slave modes.
+     *  - Bit value 0 – excludes bit from address comparison.
+     *  - Bit value 1 – the bit needs to match with the corresponding bit
+     *   of the device address.
+    */
     uint32 slaveAddrMask;
+
+    /** When enabled the matching address is received into the RX FIFO:
+     *  0 – disable, 1 – enable.
+     *
+     *  The callback function has to be registered to handle the address
+     *  accepted in the RX FIFO. Refer to section Accept matching address
+     *  RX FIFO for more information.
+    */
     uint32 acceptAddr;
+
+    /** When enabled the matching address generates a wakeup request:
+     *  0 – disable, 1 – enable. 1 – enable. Ignored for non-slave modes.
+    */
     uint32 enableWake;
+
+    /** When enabled the TX and RX FIFO depth is doubled and equal to
+     *  16 bytes: 0 – disable, 1 – enable.
+     *
+     * Ignored for all devices other than PSoC 4100 BLE / PSoC 4200 BLE /
+     * PSoC 4100M / PSoC 4200M / PSoC 4200L / PSoC 4000S / PSoC 4100S /
+     * PSoC Analog Coprocessor.
+    */
     uint8  enableByteMode;
+
+    /** Data rate in kbps used while the of I2C is in operation. Valid values
+      * are between 1 and 1000. Note that this filed must be initialized
+      * for correct operation if Unconfigured SCB was utilized with previous
+      * version of the component.
+    */
     uint16 dataRate;
+
+    /** When enabled the I2C general call address (0x00) will be accepted by
+     *  the I2C hardware and trigger an interrupt: 0 – disable, 1 – enable.
+     *
+     *  The callback function has to be registered to handle a general call
+     *  address. Refer to section Accept General Call for more information.
+    */
     uint8  acceptGeneralAddr;
 } I2CS_I2C_INIT_STRUCT;
-
+/** @} structures */
 
 /***************************************
 *        Function Prototypes
 ***************************************/
 
+/**
+* \addtogroup group_i2c
+* @{
+*/
 /* Common functions */
 #if(I2CS_SCB_MODE_UNCONFIG_CONST_CFG)
     void I2CS_I2CInit(const I2CS_I2C_INIT_STRUCT *config);
 #endif /* (I2CS_SCB_MODE_UNCONFIG_CONST_CFG) */
+/** @} i2c */
 
+/**
+* \addtogroup group_interrupt
+* @{
+*/
 #if (I2CS_I2C_CUSTOM_ADDRESS_HANDLER_CONST)
     void I2CS_SetI2cAddressCustomInterruptHandler(uint32 (*func) (void));
 #endif /* (I2CS_I2C_CUSTOM_ADDRESS_HANDLER_CONST) */
+/** @} interrupt */
 
+/**
+* \addtogroup group_i2c
+* @{
+*/
 /* I2C Master functions prototypes */
 #if(I2CS_I2C_MASTER_CONST)
     /* Read and Clear status functions */
@@ -227,6 +306,7 @@ typedef struct
     void   I2CS_I2CSlaveClearReadBuf(void);
     void   I2CS_I2CSlaveClearWriteBuf(void);
 #endif /* (I2CS_I2C_SLAVE_CONST) */
+/** @} i2c */
 
 CY_ISR_PROTO(I2CS_I2C_ISR);
 
@@ -303,6 +383,8 @@ CY_ISR_PROTO(I2CS_I2C_ISR);
 #define I2CS_I2C_SLAVE_OVFL_RETURN      (0xFFu)     /* Return by slave when overflow */
 
 #define I2CS_I2C_RESET_ERROR            (0x01u)     /* Flag to re-enable SCB IP */
+
+#define I2CS_I2C_TX_OVERFLOW_COUNT      (I2CS_I2C_FIFO_SIZE + 2u)
 
 
 /***************************************
@@ -394,12 +476,12 @@ CY_ISR_PROTO(I2CS_I2C_ISR);
 
 #define I2CS_I2C_CTRL       (I2CS_I2C_CTRL_S_GENERAL_IGNORE)
 
-#define I2CS_I2C_RX_CTRL    ((I2CS_FIFO_SIZE - 1u)  | \
-                                         I2CS_RX_CTRL_MSB_FIRST | \
-                                         I2CS_RX_CTRL_ENABLED)
+#define I2CS_I2C_RX_CTRL    ((I2CS_ONE_BYTE_WIDTH - 1u) | \
+                                          I2CS_RX_CTRL_MSB_FIRST    | \
+                                          I2CS_RX_CTRL_ENABLED)
 
-#define I2CS_I2C_TX_CTRL    ((I2CS_FIFO_SIZE - 1u)  | \
-                                         I2CS_TX_CTRL_MSB_FIRST | \
+#define I2CS_I2C_TX_CTRL    ((I2CS_ONE_BYTE_WIDTH - 1u) | \
+                                         I2CS_TX_CTRL_MSB_FIRST     | \
                                          I2CS_TX_CTRL_ENABLED)
 
 #define I2CS_I2C_INTR_SLAVE_MASK    (I2CS_INTR_SLAVE_I2C_ADDR_MATCH | \

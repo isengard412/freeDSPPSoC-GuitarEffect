@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
   51 0024 3100     		.ascii	"1\000"
   52 0026 0000     		.align	2
   53              	.LC6:
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 2
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 2
 
 
   54 0028 312E3500 		.ascii	"1.5\000"
@@ -91,50 +91,44 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
    7:.\uart.c      **** * Description:
    8:.\uart.c      **** *   Component sends data via UART
    9:.\uart.c      **** *
-  10:.\uart.c      **** *******************************************************************************/
-  11:.\uart.c      **** 
-  12:.\uart.c      **** #include "uart.h"
-  13:.\uart.c      **** 
-  14:.\uart.c      **** char8* parity[] = {"None", "Odd", "Even", "Mark", "Space"};
-  15:.\uart.c      **** char8* stop[]   = {"1", "1.5", "2"};
-  16:.\uart.c      **** 
-  17:.\uart.c      **** /*******************************************************************************
-  18:.\uart.c      **** * Function Name: main
-  19:.\uart.c      **** ********************************************************************************
-  20:.\uart.c      **** *
-  21:.\uart.c      **** * Summary:
-  22:.\uart.c      **** *  Initialize communication
-  23:.\uart.c      **** *
-  24:.\uart.c      **** * Parameters:
-  25:.\uart.c      **** *  None.
-  26:.\uart.c      **** *
-  27:.\uart.c      **** * Return:
-  28:.\uart.c      **** *  None.
-  29:.\uart.c      **** *
-  30:.\uart.c      **** *******************************************************************************/
-  31:.\uart.c      **** void UARTinit()
-  32:.\uart.c      **** {
-  75              		.loc 1 32 0
+  10:.\uart.c      **** * Copyright:
+  11:.\uart.c      **** * Released under Creative Commons Attribution Share-Alike 4.0 license.This 
+  12:.\uart.c      **** * allows for both personal and commercial derivative works, as long as they 
+  13:.\uart.c      **** * credit freeDSP and release their designs under the same license. The freeDSP 
+  14:.\uart.c      **** * brand and freeDSP logo are protected by copyright and cannot be used without 
+  15:.\uart.c      **** * formal permission. Please contact Sebastian Merchel for further information.
+  16:.\uart.c      **** * https://creativecommons.org/licenses/by-sa/4.0/legalcode
+  17:.\uart.c      **** *
+  18:.\uart.c      **** *******************************************************************************/
+  19:.\uart.c      **** 
+  20:.\uart.c      **** #include "uart.h"
+  21:.\uart.c      **** 
+  22:.\uart.c      **** char8* parity[] = {"None", "Odd", "Even", "Mark", "Space"};
+  23:.\uart.c      **** char8* stop[]   = {"1", "1.5", "2"};
+  24:.\uart.c      **** 
+  25:.\uart.c      **** void UARTinit()
+  26:.\uart.c      **** {
+  75              		.loc 1 26 0
   76              		.cfi_startproc
   77              		@ args = 0, pretend = 0, frame = 0
   78              		@ frame_needed = 1, uses_anonymous_args = 0
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 3
-
-
   79 0000 80B5     		push	{r7, lr}
   80              		.cfi_def_cfa_offset 8
   81              		.cfi_offset 7, -8
   82              		.cfi_offset 14, -4
   83 0002 00AF     		add	r7, sp, #0
   84              		.cfi_def_cfa_register 7
-  33:.\uart.c      ****     /* Start USBFS operation with 5-V operation. */
-  34:.\uart.c      ****     USBUART_Start(USBFS_DEVICE, USBUART_5V_OPERATION); 
-  85              		.loc 1 34 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 3
+
+
+  27:.\uart.c      ****     /* Start USBFS operation with 5-V operation. */
+  28:.\uart.c      ****     USBUART_Start(USBFS_DEVICE, USBUART_5V_OPERATION); 
+  85              		.loc 1 28 0
   86 0004 0020     		movs	r0, #0
   87 0006 0121     		movs	r1, #1
   88 0008 FFF7FEFF 		bl	USBUART_Start
-  35:.\uart.c      **** }
-  89              		.loc 1 35 0
+  29:.\uart.c      **** }
+  89              		.loc 1 29 0
   90 000c 80BD     		pop	{r7, pc}
   91              		.cfi_endproc
   92              	.LFE63:
@@ -147,24 +141,10 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
   99              		.type	UARTsendString, %function
  100              	UARTsendString:
  101              	.LFB64:
-  36:.\uart.c      **** 
-  37:.\uart.c      **** /*******************************************************************************
-  38:.\uart.c      **** * Function Name: UARTsendString
-  39:.\uart.c      **** ********************************************************************************
-  40:.\uart.c      **** *
-  41:.\uart.c      **** * Summary:
-  42:.\uart.c      **** *  Sending a string via UART
-  43:.\uart.c      **** *
-  44:.\uart.c      **** * Parameters:
-  45:.\uart.c      **** *  char string[]
-  46:.\uart.c      **** *
-  47:.\uart.c      **** * Return:
-  48:.\uart.c      **** *  None.
-  49:.\uart.c      **** *
-  50:.\uart.c      **** *******************************************************************************/
-  51:.\uart.c      **** void UARTsendString(char string[])
-  52:.\uart.c      **** {
- 102              		.loc 1 52 0
+  30:.\uart.c      **** 
+  31:.\uart.c      **** void UARTsendString(char string[])
+  32:.\uart.c      **** {
+ 102              		.loc 1 32 0
  103              		.cfi_startproc
  104              		@ args = 0, pretend = 0, frame = 8
  105              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -177,70 +157,67 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  112 0004 00AF     		add	r7, sp, #0
  113              		.cfi_def_cfa_register 7
  114 0006 7860     		str	r0, [r7, #4]
-  53:.\uart.c      ****     /* Host can send double SET_INTERFACE request. */
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 4
-
-
-  54:.\uart.c      ****     if (0u != USBUART_IsConfigurationChanged())
- 115              		.loc 1 54 0
+  33:.\uart.c      ****     /* Host can send double SET_INTERFACE request. */
+  34:.\uart.c      ****     if (0u != USBUART_IsConfigurationChanged())
+ 115              		.loc 1 34 0
  116 0008 FFF7FEFF 		bl	USBUART_IsConfigurationChanged
  117 000c 0346     		mov	r3, r0
  118 000e 002B     		cmp	r3, #0
  119 0010 06D0     		beq	.L3
-  55:.\uart.c      ****     {
-  56:.\uart.c      ****         /* Initialize IN endpoints when device is configured. */
-  57:.\uart.c      ****         if (0u != USBUART_GetConfiguration())
- 120              		.loc 1 57 0
+  35:.\uart.c      ****     {
+  36:.\uart.c      ****         /* Initialize IN endpoints when device is configured. */
+  37:.\uart.c      ****         if (0u != USBUART_GetConfiguration())
+ 120              		.loc 1 37 0
  121 0012 FFF7FEFF 		bl	USBUART_GetConfiguration
  122 0016 0346     		mov	r3, r0
  123 0018 002B     		cmp	r3, #0
  124 001a 01D0     		beq	.L3
-  58:.\uart.c      ****         {
-  59:.\uart.c      ****             /* Enumeration is done, enable OUT endpoint to receive data 
-  60:.\uart.c      ****              * from host. */
-  61:.\uart.c      ****             USBUART_CDC_Init();
- 125              		.loc 1 61 0
+  38:.\uart.c      ****         {
+  39:.\uart.c      ****             /* Enumeration is done, enable OUT endpoint to receive data 
+  40:.\uart.c      ****              * from host. */
+  41:.\uart.c      ****             USBUART_CDC_Init();
+ 125              		.loc 1 41 0
  126 001c FFF7FEFF 		bl	USBUART_CDC_Init
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 4
+
+
  127              	.L3:
-  62:.\uart.c      ****         }
-  63:.\uart.c      ****     }
-  64:.\uart.c      **** 
-  65:.\uart.c      ****     /* Service USB CDC when device is configured. */
-  66:.\uart.c      ****     if (0u != USBUART_GetConfiguration())
- 128              		.loc 1 66 0
+  42:.\uart.c      ****         }
+  43:.\uart.c      ****     }
+  44:.\uart.c      **** 
+  45:.\uart.c      ****     /* Service USB CDC when device is configured. */
+  46:.\uart.c      ****     if (0u != USBUART_GetConfiguration())
+ 128              		.loc 1 46 0
  129 0020 FFF7FEFF 		bl	USBUART_GetConfiguration
  130 0024 0346     		mov	r3, r0
  131 0026 002B     		cmp	r3, #0
  132 0028 08D0     		beq	.L2
-  67:.\uart.c      ****     {
-  68:.\uart.c      ****         /* Wait until component is ready to send data to host. */
-  69:.\uart.c      ****         while (0u == USBUART_CDCIsReady())
- 133              		.loc 1 69 0
+  47:.\uart.c      ****     {
+  48:.\uart.c      ****         /* Wait until component is ready to send data to host. */
+  49:.\uart.c      ****         while (0u == USBUART_CDCIsReady())
+ 133              		.loc 1 49 0
  134 002a 00BF     		nop
  135              	.L5:
- 136              		.loc 1 69 0 is_stmt 0 discriminator 1
+ 136              		.loc 1 49 0 is_stmt 0 discriminator 1
  137 002c FFF7FEFF 		bl	USBUART_CDCIsReady
  138 0030 0346     		mov	r3, r0
  139 0032 002B     		cmp	r3, #0
  140 0034 FAD0     		beq	.L5
-  70:.\uart.c      ****         {
-  71:.\uart.c      ****         }
-  72:.\uart.c      **** 
-  73:.\uart.c      ****         /* Send data back to host. */
-  74:.\uart.c      ****         //USBUART_PutData(buffer, count);
-  75:.\uart.c      ****         USBUART_PutString(string);       
- 141              		.loc 1 75 0 is_stmt 1
+  50:.\uart.c      ****         {
+  51:.\uart.c      ****         }
+  52:.\uart.c      **** 
+  53:.\uart.c      ****         /* Send data back to host. */
+  54:.\uart.c      ****         //USBUART_PutData(buffer, count);
+  55:.\uart.c      ****         USBUART_PutString(string);       
+ 141              		.loc 1 55 0 is_stmt 1
  142 0036 7868     		ldr	r0, [r7, #4]
  143 0038 FFF7FEFF 		bl	USBUART_PutString
  144              	.L2:
-  76:.\uart.c      ****     }
-  77:.\uart.c      **** }
- 145              		.loc 1 77 0
+  56:.\uart.c      ****     }
+  57:.\uart.c      **** }
+ 145              		.loc 1 57 0
  146 003c 0837     		adds	r7, r7, #8
  147              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 5
-
-
  148 003e BD46     		mov	sp, r7
  149              		.cfi_def_cfa_register 13
  150              		@ sp needed
@@ -260,24 +237,13 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  164              		.type	UARTsendNumber, %function
  165              	UARTsendNumber:
  166              	.LFB65:
-  78:.\uart.c      **** 
-  79:.\uart.c      **** /*******************************************************************************
-  80:.\uart.c      **** * Function Name: UARTsendNumber
-  81:.\uart.c      **** ********************************************************************************
-  82:.\uart.c      **** *
-  83:.\uart.c      **** * Summary:
-  84:.\uart.c      **** *  Sending a number via UART
-  85:.\uart.c      **** *
-  86:.\uart.c      **** * Parameters:
-  87:.\uart.c      **** *  char string[]
-  88:.\uart.c      **** *
-  89:.\uart.c      **** * Return:
-  90:.\uart.c      **** *  None.
-  91:.\uart.c      **** *
-  92:.\uart.c      **** *******************************************************************************/
-  93:.\uart.c      **** void UARTsendNumber(uint32 number)
-  94:.\uart.c      **** {
- 167              		.loc 1 94 0
+  58:.\uart.c      **** 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 5
+
+
+  59:.\uart.c      **** void UARTsendNumber(uint32 number)
+  60:.\uart.c      **** {
+ 167              		.loc 1 60 0
  168              		.cfi_startproc
  169              		@ args = 0, pretend = 0, frame = 64
  170              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -290,104 +256,101 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  177 0004 00AF     		add	r7, sp, #0
  178              		.cfi_def_cfa_register 7
  179 0006 7860     		str	r0, [r7, #4]
-  95:.\uart.c      ****     /* Host can send double SET_INTERFACE request. */
-  96:.\uart.c      ****     if (0u != USBUART_IsConfigurationChanged())
- 180              		.loc 1 96 0
+  61:.\uart.c      ****     /* Host can send double SET_INTERFACE request. */
+  62:.\uart.c      ****     if (0u != USBUART_IsConfigurationChanged())
+ 180              		.loc 1 62 0
  181 0008 FFF7FEFF 		bl	USBUART_IsConfigurationChanged
  182 000c 0346     		mov	r3, r0
  183 000e 002B     		cmp	r3, #0
  184 0010 06D0     		beq	.L7
-  97:.\uart.c      ****     {
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 6
-
-
-  98:.\uart.c      ****         /* Initialize IN endpoints when device is configured. */
-  99:.\uart.c      ****         if (0u != USBUART_GetConfiguration())
- 185              		.loc 1 99 0
+  63:.\uart.c      ****     {
+  64:.\uart.c      ****         /* Initialize IN endpoints when device is configured. */
+  65:.\uart.c      ****         if (0u != USBUART_GetConfiguration())
+ 185              		.loc 1 65 0
  186 0012 FFF7FEFF 		bl	USBUART_GetConfiguration
  187 0016 0346     		mov	r3, r0
  188 0018 002B     		cmp	r3, #0
  189 001a 01D0     		beq	.L7
- 100:.\uart.c      ****         {
- 101:.\uart.c      ****             /* Enumeration is done, enable OUT endpoint to receive data 
- 102:.\uart.c      ****              * from host. */
- 103:.\uart.c      ****             USBUART_CDC_Init();
- 190              		.loc 1 103 0
+  66:.\uart.c      ****         {
+  67:.\uart.c      ****             /* Enumeration is done, enable OUT endpoint to receive data 
+  68:.\uart.c      ****              * from host. */
+  69:.\uart.c      ****             USBUART_CDC_Init();
+ 190              		.loc 1 69 0
  191 001c FFF7FEFF 		bl	USBUART_CDC_Init
  192              	.L7:
- 104:.\uart.c      ****         }
- 105:.\uart.c      ****     }
- 106:.\uart.c      **** 
- 107:.\uart.c      ****     /* Service USB CDC when device is configured. */
- 108:.\uart.c      ****     if (0u != USBUART_GetConfiguration())
- 193              		.loc 1 108 0
+  70:.\uart.c      ****         }
+  71:.\uart.c      ****     }
+  72:.\uart.c      **** 
+  73:.\uart.c      ****     /* Service USB CDC when device is configured. */
+  74:.\uart.c      ****     if (0u != USBUART_GetConfiguration())
+ 193              		.loc 1 74 0
  194 0020 FFF7FEFF 		bl	USBUART_GetConfiguration
  195 0024 0346     		mov	r3, r0
  196 0026 002B     		cmp	r3, #0
  197 0028 28D0     		beq	.L6
  198              	.LBB2:
- 109:.\uart.c      ****     {
- 110:.\uart.c      ****         /* Wait until component is ready to send data to host. */
- 111:.\uart.c      ****         while (0u == USBUART_CDCIsReady())
- 199              		.loc 1 111 0
+  75:.\uart.c      ****     {
+  76:.\uart.c      ****         /* Wait until component is ready to send data to host. */
+  77:.\uart.c      ****         while (0u == USBUART_CDCIsReady())
+ 199              		.loc 1 77 0
  200 002a 00BF     		nop
  201              	.L9:
- 202              		.loc 1 111 0 is_stmt 0 discriminator 1
+ 202              		.loc 1 77 0 is_stmt 0 discriminator 1
  203 002c FFF7FEFF 		bl	USBUART_CDCIsReady
  204 0030 0346     		mov	r3, r0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 6
+
+
  205 0032 002B     		cmp	r3, #0
  206 0034 FAD0     		beq	.L9
- 112:.\uart.c      ****         {
- 113:.\uart.c      ****         }
- 114:.\uart.c      **** 
- 115:.\uart.c      ****         /* Send data back to host. */
- 116:.\uart.c      ****         //USBUART_PutData(buffer, count);
- 117:.\uart.c      ****         int bytesWritten; 
- 118:.\uart.c      ****         char myString[50]; 
- 119:.\uart.c      ****         bytesWritten = sprintf(myString, "%lu", number); 
- 207              		.loc 1 119 0 is_stmt 1
+  78:.\uart.c      ****         {
+  79:.\uart.c      ****         }
+  80:.\uart.c      **** 
+  81:.\uart.c      ****         /* Send data back to host. */
+  82:.\uart.c      ****         //USBUART_PutData(buffer, count);
+  83:.\uart.c      ****         int bytesWritten; 
+  84:.\uart.c      ****         char myString[50]; 
+  85:.\uart.c      ****         bytesWritten = sprintf(myString, "%lu", number); 
+ 207              		.loc 1 85 0 is_stmt 1
  208 0036 07F10803 		add	r3, r7, #8
  209 003a 1846     		mov	r0, r3
  210 003c 1149     		ldr	r1, .L10
  211 003e 7A68     		ldr	r2, [r7, #4]
  212 0040 FFF7FEFF 		bl	sprintf
  213 0044 F863     		str	r0, [r7, #60]
- 120:.\uart.c      ****         myString[bytesWritten]='\r';
- 214              		.loc 1 120 0
+  86:.\uart.c      ****         myString[bytesWritten]='\r';
+ 214              		.loc 1 86 0
  215 0046 07F10802 		add	r2, r7, #8
  216 004a FB6B     		ldr	r3, [r7, #60]
  217 004c 1344     		add	r3, r3, r2
  218 004e 0D22     		movs	r2, #13
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 7
-
-
  219 0050 1A70     		strb	r2, [r3]
- 121:.\uart.c      ****         myString[bytesWritten+1]='\n';
- 220              		.loc 1 121 0
+  87:.\uart.c      ****         myString[bytesWritten+1]='\n';
+ 220              		.loc 1 87 0
  221 0052 FB6B     		ldr	r3, [r7, #60]
  222 0054 0133     		adds	r3, r3, #1
  223 0056 07F14002 		add	r2, r7, #64
  224 005a 1344     		add	r3, r3, r2
  225 005c 0A22     		movs	r2, #10
  226 005e 03F8382C 		strb	r2, [r3, #-56]
- 122:.\uart.c      ****         myString[bytesWritten+2]='\0';
- 227              		.loc 1 122 0
+  88:.\uart.c      ****         myString[bytesWritten+2]='\0';
+ 227              		.loc 1 88 0
  228 0062 FB6B     		ldr	r3, [r7, #60]
  229 0064 0233     		adds	r3, r3, #2
  230 0066 07F14002 		add	r2, r7, #64
  231 006a 1344     		add	r3, r3, r2
  232 006c 0022     		movs	r2, #0
  233 006e 03F8382C 		strb	r2, [r3, #-56]
- 123:.\uart.c      ****         USBUART_PutString(myString);       
- 234              		.loc 1 123 0
+  89:.\uart.c      ****         USBUART_PutString(myString);       
+ 234              		.loc 1 89 0
  235 0072 07F10803 		add	r3, r7, #8
  236 0076 1846     		mov	r0, r3
  237 0078 FFF7FEFF 		bl	USBUART_PutString
  238              	.L6:
  239              	.LBE2:
- 124:.\uart.c      ****     }
- 125:.\uart.c      **** }
- 240              		.loc 1 125 0
+  90:.\uart.c      ****     }
+  91:.\uart.c      **** }
+ 240              		.loc 1 91 0
  241 007c 4037     		adds	r7, r7, #64
  242              		.cfi_def_cfa_offset 8
  243 007e BD46     		mov	sp, r7
@@ -395,6 +358,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  245              		@ sp needed
  246 0080 80BD     		pop	{r7, pc}
  247              	.L11:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 7
+
+
  248 0082 00BF     		.align	2
  249              	.L10:
  250 0084 30000000 		.word	.LC8
@@ -418,9 +384,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  268 0010 01       		.byte	0x1
  269 0011 00000000 		.4byte	.LASF27
  270 0015 FD000000 		.4byte	.LASF28
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 8
-
-
  271 0019 00000000 		.4byte	.Ldebug_ranges0+0
  272 001d 00000000 		.4byte	0
  273 0021 00000000 		.4byte	.Ldebug_line0
@@ -455,6 +418,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  302 0056 D8000000 		.4byte	.LASF5
  303 005a 02       		.uleb128 0x2
  304 005b 08       		.byte	0x8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 8
+
+
  305 005c 05       		.byte	0x5
  306 005d CE010000 		.4byte	.LASF6
  307 0061 02       		.uleb128 0x2
@@ -478,9 +444,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  325 0082 73010000 		.4byte	.LASF11
  326 0086 04       		.byte	0x4
  327 0087 9401     		.2byte	0x194
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 9
-
-
  328 0089 53000000 		.4byte	0x53
  329 008d 02       		.uleb128 0x2
  330 008e 04       		.byte	0x4
@@ -509,15 +472,18 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  353 00bb 07       		.uleb128 0x7
  354 00bc 6A010000 		.4byte	.LASF29
  355 00c0 01       		.byte	0x1
- 356 00c1 1F       		.byte	0x1f
+ 356 00c1 19       		.byte	0x19
  357 00c2 00000000 		.4byte	.LFB63
  358 00c6 0E000000 		.4byte	.LFE63-.LFB63
  359 00ca 01       		.uleb128 0x1
  360 00cb 9C       		.byte	0x9c
  361 00cc 08       		.uleb128 0x8
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 9
+
+
  362 00cd 13000000 		.4byte	.LASF17
  363 00d1 01       		.byte	0x1
- 364 00d2 33       		.byte	0x33
+ 364 00d2 1F       		.byte	0x1f
  365 00d3 00000000 		.4byte	.LFB64
  366 00d7 42000000 		.4byte	.LFE64-.LFB64
  367 00db 01       		.uleb128 0x1
@@ -526,7 +492,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  370 00e1 09       		.uleb128 0x9
  371 00e2 B7000000 		.4byte	.LASF19
  372 00e6 01       		.byte	0x1
- 373 00e7 33       		.byte	0x33
+ 373 00e7 1F       		.byte	0x1f
  374 00e8 B5000000 		.4byte	0xb5
  375 00ec 02       		.uleb128 0x2
  376 00ed 91       		.byte	0x91
@@ -535,19 +501,16 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  379 00f0 08       		.uleb128 0x8
  380 00f1 B6010000 		.4byte	.LASF18
  381 00f5 01       		.byte	0x1
- 382 00f6 5D       		.byte	0x5d
+ 382 00f6 3B       		.byte	0x3b
  383 00f7 00000000 		.4byte	.LFB65
  384 00fb 88000000 		.4byte	.LFE65-.LFB65
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 10
-
-
  385 00ff 01       		.uleb128 0x1
  386 0100 9C       		.byte	0x9c
  387 0101 3B010000 		.4byte	0x13b
  388 0105 09       		.uleb128 0x9
  389 0106 A7010000 		.4byte	.LASF20
  390 010a 01       		.byte	0x1
- 391 010b 5D       		.byte	0x5d
+ 391 010b 3B       		.byte	0x3b
  392 010c 81000000 		.4byte	0x81
  393 0110 03       		.uleb128 0x3
  394 0111 91       		.byte	0x91
@@ -558,7 +521,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  399 011d 0B       		.uleb128 0xb
  400 011e 00020000 		.4byte	.LASF21
  401 0122 01       		.byte	0x1
- 402 0123 75       		.byte	0x75
+ 402 0123 53       		.byte	0x53
  403 0124 68000000 		.4byte	0x68
  404 0128 02       		.uleb128 0x2
  405 0129 91       		.byte	0x91
@@ -566,7 +529,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  407 012b 0B       		.uleb128 0xb
  408 012c 87010000 		.4byte	.LASF22
  409 0130 01       		.byte	0x1
- 410 0131 76       		.byte	0x76
+ 410 0131 54       		.byte	0x54
  411 0132 3B010000 		.4byte	0x13b
  412 0136 02       		.uleb128 0x2
  413 0137 91       		.byte	0x91
@@ -575,6 +538,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  416 013a 00       		.byte	0
  417 013b 0C       		.uleb128 0xc
  418 013c A7000000 		.4byte	0xa7
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 10
+
+
  419 0140 4B010000 		.4byte	0x14b
  420 0144 0D       		.uleb128 0xd
  421 0145 AE000000 		.4byte	0xae
@@ -598,12 +564,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  439 016d 04       		.byte	0x4
  440 016e 9B000000 		.4byte	0x9b
  441 0172 10       		.uleb128 0x10
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 11
-
-
  442 0173 0D020000 		.4byte	.LASF24
  443 0177 01       		.byte	0x1
- 444 0178 0E       		.byte	0xe
+ 444 0178 16       		.byte	0x16
  445 0179 5C010000 		.4byte	0x15c
  446 017d 05       		.uleb128 0x5
  447 017e 03       		.byte	0x3
@@ -618,7 +581,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  456 0193 10       		.uleb128 0x10
  457 0194 58010000 		.4byte	.LASF25
  458 0198 01       		.byte	0x1
- 459 0199 0F       		.byte	0xf
+ 459 0199 17       		.byte	0x17
  460 019a 83010000 		.4byte	0x183
  461 019e 05       		.uleb128 0x5
  462 019f 03       		.byte	0x3
@@ -635,6 +598,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  473 0006 0B       		.uleb128 0xb
  474 0007 03       		.uleb128 0x3
  475 0008 0E       		.uleb128 0xe
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 11
+
+
  476 0009 1B       		.uleb128 0x1b
  477 000a 0E       		.uleb128 0xe
  478 000b 55       		.uleb128 0x55
@@ -658,9 +624,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  496 001d 00       		.byte	0
  497 001e 03       		.uleb128 0x3
  498 001f 16       		.uleb128 0x16
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 12
-
-
  499 0020 00       		.byte	0
  500 0021 03       		.uleb128 0x3
  501 0022 0E       		.uleb128 0xe
@@ -695,6 +658,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  530 003f 49       		.uleb128 0x49
  531 0040 13       		.uleb128 0x13
  532 0041 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 12
+
+
  533 0042 00       		.byte	0
  534 0043 06       		.uleb128 0x6
  535 0044 0F       		.uleb128 0xf
@@ -718,9 +684,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  553 0056 0B       		.uleb128 0xb
  554 0057 11       		.uleb128 0x11
  555 0058 01       		.uleb128 0x1
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 13
-
-
  556 0059 12       		.uleb128 0x12
  557 005a 06       		.uleb128 0x6
  558 005b 40       		.uleb128 0x40
@@ -755,6 +718,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  587 007a 00       		.byte	0
  588 007b 00       		.byte	0
  589 007c 09       		.uleb128 0x9
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 13
+
+
  590 007d 05       		.uleb128 0x5
  591 007e 00       		.byte	0
  592 007f 03       		.uleb128 0x3
@@ -778,9 +744,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  610 0091 06       		.uleb128 0x6
  611 0092 00       		.byte	0
  612 0093 00       		.byte	0
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 14
-
-
  613 0094 0B       		.uleb128 0xb
  614 0095 34       		.uleb128 0x34
  615 0096 00       		.byte	0
@@ -815,6 +778,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  644 00b3 00       		.byte	0
  645 00b4 00       		.byte	0
  646 00b5 0E       		.uleb128 0xe
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 14
+
+
  647 00b6 34       		.uleb128 0x34
  648 00b7 00       		.byte	0
  649 00b8 03       		.uleb128 0x3
@@ -838,9 +804,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  667 00ca 13       		.uleb128 0x13
  668 00cb 00       		.byte	0
  669 00cc 00       		.byte	0
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 15
-
-
  670 00cd 10       		.uleb128 0x10
  671 00ce 34       		.uleb128 0x34
  672 00cf 00       		.byte	0
@@ -875,6 +838,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  701 0024 88000000 		.4byte	.LFE65-.LFB65
  702 0028 00000000 		.4byte	0
  703 002c 00000000 		.4byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 15
+
+
  704              		.section	.debug_ranges,"",%progbits
  705              	.Ldebug_ranges0:
  706 0000 00000000 		.4byte	.LFB63
@@ -887,7 +853,7 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  713 001c 00000000 		.4byte	0
  714              		.section	.debug_line,"",%progbits
  715              	.Ldebug_line0:
- 716 0000 9F010000 		.section	.debug_str,"MS",%progbits,1
+ 716 0000 9E010000 		.section	.debug_str,"MS",%progbits,1
  716      02004901 
  716      00000201 
  716      FB0E0D00 
@@ -898,9 +864,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  718      00
  719              	.LASF9:
  720 0009 5F5F696E 		.ascii	"__int32_t\000"
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 16
-
-
  720      7433325F 
  720      7400
  721              	.LASF17:
@@ -935,6 +898,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  732      7400
  733              	.LASF1:
  734 00c4 756E7369 		.ascii	"unsigned char\000"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 16
+
+
  734      676E6564 
  734      20636861 
  734      7200
@@ -958,9 +924,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  742      73657273 
  742      5C4C756B 
  742      61732043 
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 17
-
-
  742      72657574 
  743 012b 65445350 		.ascii	"eDSPPSoC-I2C\\PSoC5_SPI_Master_CapSense.cydsn\000"
  743      50536F43 
@@ -995,6 +958,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  757 0190 6C6F6E67 		.ascii	"long long unsigned int\000"
  757      206C6F6E 
  757      6720756E 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccfhXwS7.s 			page 17
+
+
  757      7369676E 
  757      65642069 
  758              	.LASF20:
@@ -1018,9 +984,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 1
  767      6720696E 
  767      7400
  768              	.LASF15:
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccD7J4fZ.s 			page 18
-
-
  769 01dc 63686172 		.ascii	"char\000"
  769      00
  770              	.LASF2:

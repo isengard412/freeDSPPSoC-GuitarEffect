@@ -7,6 +7,14 @@
 * Description:
 *   Component sends data via UART
 *
+* Copyright:
+* Released under Creative Commons Attribution Share-Alike 4.0 license.This 
+* allows for both personal and commercial derivative works, as long as they 
+* credit freeDSP and release their designs under the same license. The freeDSP 
+* brand and freeDSP logo are protected by copyright and cannot be used without 
+* formal permission. Please contact Sebastian Merchel for further information.
+* https://creativecommons.org/licenses/by-sa/4.0/legalcode
+*
 *******************************************************************************/
 
 #include "uart.h"
@@ -14,40 +22,12 @@
 char8* parity[] = {"None", "Odd", "Even", "Mark", "Space"};
 char8* stop[]   = {"1", "1.5", "2"};
 
-/*******************************************************************************
-* Function Name: main
-********************************************************************************
-*
-* Summary:
-*  Initialize communication
-*
-* Parameters:
-*  None.
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
 void UARTinit()
 {
     /* Start USBFS operation with 5-V operation. */
     USBUART_Start(USBFS_DEVICE, USBUART_5V_OPERATION); 
 }
 
-/*******************************************************************************
-* Function Name: UARTsendString
-********************************************************************************
-*
-* Summary:
-*  Sending a string via UART
-*
-* Parameters:
-*  char string[]
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
 void UARTsendString(char string[])
 {
     /* Host can send double SET_INTERFACE request. */
@@ -76,20 +56,6 @@ void UARTsendString(char string[])
     }
 }
 
-/*******************************************************************************
-* Function Name: UARTsendNumber
-********************************************************************************
-*
-* Summary:
-*  Sending a number via UART
-*
-* Parameters:
-*  char string[]
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
 void UARTsendNumber(uint32 number)
 {
     /* Host can send double SET_INTERFACE request. */

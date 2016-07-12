@@ -8,46 +8,24 @@
 *   Component sends data via SPI as Slave (Problems with this!)
 *   Can send arrays (Problems with this!)
 *   Receives from Master
-* Changes:
-*   
+* 
+* Copyright:
+* Released under Creative Commons Attribution Share-Alike 4.0 license.This 
+* allows for both personal and commercial derivative works, as long as they 
+* credit freeDSP and release their designs under the same license. The freeDSP 
+* brand and freeDSP logo are protected by copyright and cannot be used without 
+* formal permission. Please contact Sebastian Merchel for further information.
+* https://creativecommons.org/licenses/by-sa/4.0/legalcode
 *
 *******************************************************************************/
 
 #include "spislave.h"
 
-/*******************************************************************************
-* Function Name: SPIinit
-********************************************************************************
-*
-* Summary:
-*  Initialize communication
-*
-* Parameters:
-*  None.
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
 void SPISinit()
 {
     SPIS_Start();
 }
 
-/*******************************************************************************
-* Function Name: SPIsendNumber
-********************************************************************************
-*
-* Summary:
-*  Sending a Number via SPI as Master
-*
-* Parameters:
-*  uint8 number
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
 void SPISsendNumber(uint8 number)
 {
 
@@ -58,21 +36,6 @@ void SPISsendNumber(uint8 number)
     CyDelayUs(5);
 }
 
-
-/*******************************************************************************
-* Function Name: SPIsendArray
-********************************************************************************
-*
-* Summary:
-*  Sending an Array via SPI as Master
-*
-* Parameters:
-*  uint8 numbers[]
-*
-* Return:
-*  None.
-*
-*******************************************************************************/
 void SPISsendArray(uint8* numbers, uint16 numberOfbytes)
 {
     /* Warten auf abschliessen der TX Uebertragung */
@@ -100,20 +63,6 @@ void SPISsendArray(uint8* numbers, uint16 numberOfbytes)
 
 }
 
-/*******************************************************************************
-* Function Name: SPIreadNumber
-********************************************************************************
-*
-* Summary:
-*  Receiving a Number via SPI as Master
-*
-* Parameters:
-*  None
-*
-* Return:
-*  uint8 received
-*
-*******************************************************************************/
 uint8 SPISreadNumber(uint8 waiting)
 {
 
@@ -130,20 +79,6 @@ uint8 SPISreadNumber(uint8 waiting)
     return received;
 }
 
-/*******************************************************************************
-* Function Name: SPIreadFinished
-********************************************************************************
-*
-* Summary:
-*  Returning the RX buffersize
-*
-* Parameters:
-*  None
-*
-* Return:
-*  uint8 buffer
-*
-*******************************************************************************/
 uint8 SPISreadFinished()
 {
     return SPIS_GetRxBufferSize();

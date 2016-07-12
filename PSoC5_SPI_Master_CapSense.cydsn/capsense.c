@@ -7,6 +7,14 @@
 *  Description:
 *  CapSense module
 *
+* Copyright:
+* Released under Creative Commons Attribution Share-Alike 4.0 license.This 
+* allows for both personal and commercial derivative works, as long as they 
+* credit freeDSP and release their designs under the same license. The freeDSP 
+* brand and freeDSP logo are protected by copyright and cannot be used without 
+* formal permission. Please contact Sebastian Merchel for further information.
+* https://creativecommons.org/licenses/by-sa/4.0/legalcode
+*
 * ===========================================================================================================
 */
 #include "capsense.h"
@@ -77,6 +85,7 @@ void CapSense_Button0(void)
     {
         //is pressed
         UARTsendString("Button 0\n");
+        SPIsendNumber((uint8)0x0);
     }
     else
     {
@@ -91,6 +100,7 @@ void CapSense_Button1(void)
     {
         //is pressed
         UARTsendString("Button 1\n");
+        SPIsendNumber((uint8)0x1);
     }
     else
     {
@@ -105,6 +115,7 @@ void CapSense_Button2(void)
     {
         //is pressed
         UARTsendString("Button 2\n");
+        SPIsendNumber((uint8)0x2);
     }
     else
     {

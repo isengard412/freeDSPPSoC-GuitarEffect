@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -27,381 +27,380 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
   24              	I2CS_I2CInit:
   25              	.LFB0:
   26              		.file 1 ".\\Generated_Source\\PSoC4\\I2CS_I2C.c"
-   1:.\Generated_Source\PSoC4/I2CS_I2C.c **** /*******************************************************************************
-   2:.\Generated_Source\PSoC4/I2CS_I2C.c **** * File Name: I2CS_I2C.c
-   3:.\Generated_Source\PSoC4/I2CS_I2C.c **** * Version 3.10
+   1:.\Generated_Source\PSoC4/I2CS_I2C.c **** /***************************************************************************//**
+   2:.\Generated_Source\PSoC4/I2CS_I2C.c **** * \file I2CS_I2C.c
+   3:.\Generated_Source\PSoC4/I2CS_I2C.c **** * \version 3.20
    4:.\Generated_Source\PSoC4/I2CS_I2C.c **** *
-   5:.\Generated_Source\PSoC4/I2CS_I2C.c **** * Description:
+   5:.\Generated_Source\PSoC4/I2CS_I2C.c **** * \brief
    6:.\Generated_Source\PSoC4/I2CS_I2C.c **** *  This file provides the source code to the API for the SCB Component in
    7:.\Generated_Source\PSoC4/I2CS_I2C.c **** *  I2C mode.
    8:.\Generated_Source\PSoC4/I2CS_I2C.c **** *
    9:.\Generated_Source\PSoC4/I2CS_I2C.c **** * Note:
   10:.\Generated_Source\PSoC4/I2CS_I2C.c **** *
   11:.\Generated_Source\PSoC4/I2CS_I2C.c **** *******************************************************************************
-  12:.\Generated_Source\PSoC4/I2CS_I2C.c **** * Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
-  13:.\Generated_Source\PSoC4/I2CS_I2C.c **** * You may use this file only in accordance with the license, terms, conditions,
-  14:.\Generated_Source\PSoC4/I2CS_I2C.c **** * disclaimers, and limitations in the end user license agreement accompanying
-  15:.\Generated_Source\PSoC4/I2CS_I2C.c **** * the software package with which this file was provided.
-  16:.\Generated_Source\PSoC4/I2CS_I2C.c **** *******************************************************************************/
-  17:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-  18:.\Generated_Source\PSoC4/I2CS_I2C.c **** #include "I2CS_PVT.h"
-  19:.\Generated_Source\PSoC4/I2CS_I2C.c **** #include "I2CS_I2C_PVT.h"
-  20:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  12:.\Generated_Source\PSoC4/I2CS_I2C.c **** * \copyright
+  13:.\Generated_Source\PSoC4/I2CS_I2C.c **** * Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
+  14:.\Generated_Source\PSoC4/I2CS_I2C.c **** * You may use this file only in accordance with the license, terms, conditions,
+  15:.\Generated_Source\PSoC4/I2CS_I2C.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  16:.\Generated_Source\PSoC4/I2CS_I2C.c **** * the software package with which this file was provided.
+  17:.\Generated_Source\PSoC4/I2CS_I2C.c **** *******************************************************************************/
+  18:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  19:.\Generated_Source\PSoC4/I2CS_I2C.c **** #include "I2CS_PVT.h"
+  20:.\Generated_Source\PSoC4/I2CS_I2C.c **** #include "I2CS_I2C_PVT.h"
   21:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-  22:.\Generated_Source\PSoC4/I2CS_I2C.c **** /***************************************
-  23:.\Generated_Source\PSoC4/I2CS_I2C.c **** *      I2C Private Vars
-  24:.\Generated_Source\PSoC4/I2CS_I2C.c **** ***************************************/
-  25:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-  26:.\Generated_Source\PSoC4/I2CS_I2C.c **** volatile uint8 I2CS_state;  /* Current state of I2C FSM */
-  27:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-  28:.\Generated_Source\PSoC4/I2CS_I2C.c **** #if(I2CS_SCB_MODE_UNCONFIG_CONST_CFG)
-  29:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-  30:.\Generated_Source\PSoC4/I2CS_I2C.c ****     /***************************************
-  31:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  Configuration Structure Initialization
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 2
+  22:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  23:.\Generated_Source\PSoC4/I2CS_I2C.c **** /***************************************
+  24:.\Generated_Source\PSoC4/I2CS_I2C.c **** *      I2C Private Vars
+  25:.\Generated_Source\PSoC4/I2CS_I2C.c **** ***************************************/
+  26:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  27:.\Generated_Source\PSoC4/I2CS_I2C.c **** volatile uint8 I2CS_state;  /* Current state of I2C FSM */
+  28:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  29:.\Generated_Source\PSoC4/I2CS_I2C.c **** #if(I2CS_SCB_MODE_UNCONFIG_CONST_CFG)
+  30:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  31:.\Generated_Source\PSoC4/I2CS_I2C.c ****     /***************************************
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 2
 
 
-  32:.\Generated_Source\PSoC4/I2CS_I2C.c ****     ***************************************/
-  33:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-  34:.\Generated_Source\PSoC4/I2CS_I2C.c ****     /* Constant configuration of I2C */
-  35:.\Generated_Source\PSoC4/I2CS_I2C.c ****     const I2CS_I2C_INIT_STRUCT I2CS_configI2C =
-  36:.\Generated_Source\PSoC4/I2CS_I2C.c ****     {
-  37:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_MODE,
-  38:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_OVS_FACTOR_LOW,
-  39:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_OVS_FACTOR_HIGH,
-  40:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_MEDIAN_FILTER_ENABLE,
-  41:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_SLAVE_ADDRESS,
-  42:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_SLAVE_ADDRESS_MASK,
-  43:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_ACCEPT_ADDRESS,
-  44:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_WAKE_ENABLE,
-  45:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_BYTE_MODE_ENABLE,
-  46:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_DATA_RATE,
-  47:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_ACCEPT_GENERAL_CALL,
-  48:.\Generated_Source\PSoC4/I2CS_I2C.c ****     };
-  49:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-  50:.\Generated_Source\PSoC4/I2CS_I2C.c ****     /*******************************************************************************
-  51:.\Generated_Source\PSoC4/I2CS_I2C.c ****     * Function Name: I2CS_I2CInit
-  52:.\Generated_Source\PSoC4/I2CS_I2C.c ****     ********************************************************************************
-  53:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
-  54:.\Generated_Source\PSoC4/I2CS_I2C.c ****     * Summary:
-  55:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  Configures the SCB for I2C operation.
-  56:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
-  57:.\Generated_Source\PSoC4/I2CS_I2C.c ****     * Parameters:
-  58:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  config:  Pointer to a structure that contains the following ordered list of
-  59:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *           fields. These fields match the selections available in the
-  60:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *           customizer.
-  61:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
-  62:.\Generated_Source\PSoC4/I2CS_I2C.c ****     * Return:
-  63:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  None
-  64:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
-  65:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *******************************************************************************/
-  66:.\Generated_Source\PSoC4/I2CS_I2C.c ****     void I2CS_I2CInit(const I2CS_I2C_INIT_STRUCT *config)
-  67:.\Generated_Source\PSoC4/I2CS_I2C.c ****     {
-  68:.\Generated_Source\PSoC4/I2CS_I2C.c ****         uint32 medianFilter;
-  69:.\Generated_Source\PSoC4/I2CS_I2C.c ****         uint32 locEnableWake;
-  70:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-  71:.\Generated_Source\PSoC4/I2CS_I2C.c ****         if(NULL == config)
-  72:.\Generated_Source\PSoC4/I2CS_I2C.c ****         {
-  73:.\Generated_Source\PSoC4/I2CS_I2C.c ****             CYASSERT(0u != 0u); /* Halt execution due to bad function parameter */
-  74:.\Generated_Source\PSoC4/I2CS_I2C.c ****         }
-  75:.\Generated_Source\PSoC4/I2CS_I2C.c ****         else
-  76:.\Generated_Source\PSoC4/I2CS_I2C.c ****         {
-  77:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure pins */
-  78:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_SetPins(I2CS_SCB_MODE_I2C, I2CS_DUMMY_PARAM,
-  79:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                      I2CS_DUMMY_PARAM);
-  80:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-  81:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Store internal configuration */
-  82:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_scbMode       = (uint8) I2CS_SCB_MODE_I2C;
-  83:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_scbEnableWake = (uint8) config->enableWake;
-  84:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_scbEnableIntr = (uint8) I2CS_SCB_IRQ_INTERNAL;
-  85:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-  86:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_mode          = (uint8) config->mode;
-  87:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_acceptAddr    = (uint8) config->acceptAddr;
-  88:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 3
+  32:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  Configuration Structure Initialization
+  33:.\Generated_Source\PSoC4/I2CS_I2C.c ****     ***************************************/
+  34:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  35:.\Generated_Source\PSoC4/I2CS_I2C.c ****     /* Constant configuration of I2C */
+  36:.\Generated_Source\PSoC4/I2CS_I2C.c ****     const I2CS_I2C_INIT_STRUCT I2CS_configI2C =
+  37:.\Generated_Source\PSoC4/I2CS_I2C.c ****     {
+  38:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_MODE,
+  39:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_OVS_FACTOR_LOW,
+  40:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_OVS_FACTOR_HIGH,
+  41:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_MEDIAN_FILTER_ENABLE,
+  42:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_SLAVE_ADDRESS,
+  43:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_SLAVE_ADDRESS_MASK,
+  44:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_ACCEPT_ADDRESS,
+  45:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_WAKE_ENABLE,
+  46:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_BYTE_MODE_ENABLE,
+  47:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_DATA_RATE,
+  48:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_ACCEPT_GENERAL_CALL,
+  49:.\Generated_Source\PSoC4/I2CS_I2C.c ****     };
+  50:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  51:.\Generated_Source\PSoC4/I2CS_I2C.c ****     /*******************************************************************************
+  52:.\Generated_Source\PSoC4/I2CS_I2C.c ****     * Function Name: I2CS_I2CInit
+  53:.\Generated_Source\PSoC4/I2CS_I2C.c ****     ****************************************************************************//**
+  54:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
+  55:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
+  56:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  Configures the I2CS for I2C operation.
+  57:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
+  58:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  This function is intended specifically to be used when the I2CS 
+  59:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  configuration is set to “Unconfigured I2CS” in the customizer. 
+  60:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  After initializing the I2CS in I2C mode using this function, 
+  61:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  the component can be enabled using the I2CS_Start() or 
+  62:.\Generated_Source\PSoC4/I2CS_I2C.c ****     * I2CS_Enable() function.
+  63:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  This function uses a pointer to a structure that provides the configuration 
+  64:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  settings. This structure contains the same information that would otherwise 
+  65:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  be provided by the customizer settings.
+  66:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
+  67:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  \param config: pointer to a structure that contains the following list of 
+  68:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *   fields. These fields match the selections available in the customizer. 
+  69:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *   Refer to the customizer for further description of the settings.
+  70:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
+  71:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *******************************************************************************/
+  72:.\Generated_Source\PSoC4/I2CS_I2C.c ****     void I2CS_I2CInit(const I2CS_I2C_INIT_STRUCT *config)
+  73:.\Generated_Source\PSoC4/I2CS_I2C.c ****     {
+  74:.\Generated_Source\PSoC4/I2CS_I2C.c ****         uint32 medianFilter;
+  75:.\Generated_Source\PSoC4/I2CS_I2C.c ****         uint32 locEnableWake;
+  76:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  77:.\Generated_Source\PSoC4/I2CS_I2C.c ****         if(NULL == config)
+  78:.\Generated_Source\PSoC4/I2CS_I2C.c ****         {
+  79:.\Generated_Source\PSoC4/I2CS_I2C.c ****             CYASSERT(0u != 0u); /* Halt execution due to bad function parameter */
+  80:.\Generated_Source\PSoC4/I2CS_I2C.c ****         }
+  81:.\Generated_Source\PSoC4/I2CS_I2C.c ****         else
+  82:.\Generated_Source\PSoC4/I2CS_I2C.c ****         {
+  83:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure pins */
+  84:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_SetPins(I2CS_SCB_MODE_I2C, I2CS_DUMMY_PARAM,
+  85:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                      I2CS_DUMMY_PARAM);
+  86:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  87:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Store internal configuration */
+  88:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_scbMode       = (uint8) I2CS_SCB_MODE_I2C;
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 3
 
 
-  89:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #if (I2CS_CY_SCBIP_V0)
-  90:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Adjust SDA filter settings. Ticket ID#150521 */
-  91:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_SET_I2C_CFG_SDA_FILT_TRIM(I2CS_EC_AM_I2C_CFG_SDA_FILT_TRIM);
-  92:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #endif /* (I2CS_CY_SCBIP_V0) */
-  93:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
-  94:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Adjust AF and DF filter settings. Ticket ID#176179 */
-  95:.\Generated_Source\PSoC4/I2CS_I2C.c ****             if (((I2CS_I2C_MODE_SLAVE != config->mode) &&
-  96:.\Generated_Source\PSoC4/I2CS_I2C.c ****                  (config->dataRate <= I2CS_I2C_DATA_RATE_FS_MODE_MAX)) ||
-  97:.\Generated_Source\PSoC4/I2CS_I2C.c ****                  (I2CS_I2C_MODE_SLAVE == config->mode))
-  98:.\Generated_Source\PSoC4/I2CS_I2C.c ****             {
-  99:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 /* AF = 1, DF = 0 */
- 100:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 I2CS_I2C_CFG_ANALOG_FITER_ENABLE;
- 101:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 medianFilter = I2CS_DIGITAL_FILTER_DISABLE;
- 102:.\Generated_Source\PSoC4/I2CS_I2C.c ****             }
- 103:.\Generated_Source\PSoC4/I2CS_I2C.c ****             else
+  89:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_scbEnableWake = (uint8) config->enableWake;
+  90:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_scbEnableIntr = (uint8) I2CS_SCB_IRQ_INTERNAL;
+  91:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  92:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_mode          = (uint8) config->mode;
+  93:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_acceptAddr    = (uint8) config->acceptAddr;
+  94:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+  95:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #if (I2CS_CY_SCBIP_V0)
+  96:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Adjust SDA filter settings. Ticket ID#150521 */
+  97:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_SET_I2C_CFG_SDA_FILT_TRIM(I2CS_EC_AM_I2C_CFG_SDA_FILT_TRIM);
+  98:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #endif /* (I2CS_CY_SCBIP_V0) */
+  99:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 100:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Adjust AF and DF filter settings. Ticket ID#176179 */
+ 101:.\Generated_Source\PSoC4/I2CS_I2C.c ****             if (((I2CS_I2C_MODE_SLAVE != config->mode) &&
+ 102:.\Generated_Source\PSoC4/I2CS_I2C.c ****                  (config->dataRate <= I2CS_I2C_DATA_RATE_FS_MODE_MAX)) ||
+ 103:.\Generated_Source\PSoC4/I2CS_I2C.c ****                  (I2CS_I2C_MODE_SLAVE == config->mode))
  104:.\Generated_Source\PSoC4/I2CS_I2C.c ****             {
- 105:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 /* AF = 0, DF = 1 */
- 106:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 I2CS_I2C_CFG_ANALOG_FITER_DISABLE;
- 107:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 medianFilter = I2CS_DIGITAL_FILTER_ENABLE;
+ 105:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 /* AF = 1, DF = 0 */
+ 106:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 I2CS_I2C_CFG_ANALOG_FITER_ENABLE;
+ 107:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 medianFilter = I2CS_DIGITAL_FILTER_DISABLE;
  108:.\Generated_Source\PSoC4/I2CS_I2C.c ****             }
- 109:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 110:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #if (!I2CS_CY_SCBIP_V0)
- 111:.\Generated_Source\PSoC4/I2CS_I2C.c ****             locEnableWake = (I2CS_I2C_MULTI_MASTER_SLAVE) ? (0u) : (config->enableWake);
- 112:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #else
- 113:.\Generated_Source\PSoC4/I2CS_I2C.c ****             locEnableWake = config->enableWake;
- 114:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #endif /* (!I2CS_CY_SCBIP_V0) */
+ 109:.\Generated_Source\PSoC4/I2CS_I2C.c ****             else
+ 110:.\Generated_Source\PSoC4/I2CS_I2C.c ****             {
+ 111:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 /* AF = 0, DF = 1 */
+ 112:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 I2CS_I2C_CFG_ANALOG_FITER_DISABLE;
+ 113:.\Generated_Source\PSoC4/I2CS_I2C.c ****                 medianFilter = I2CS_DIGITAL_FILTER_ENABLE;
+ 114:.\Generated_Source\PSoC4/I2CS_I2C.c ****             }
  115:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 116:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure I2C interface */
- 117:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_CTRL_REG     = I2CS_GET_CTRL_BYTE_MODE  (config->enableByteMode) |
- 118:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                             I2CS_GET_CTRL_ADDR_ACCEPT(config->acceptAddr)     |
- 119:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                             I2CS_GET_CTRL_EC_AM_MODE (locEnableWake);
- 120:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 121:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_I2C_CTRL_REG = I2CS_GET_I2C_CTRL_HIGH_PHASE_OVS(config->oversampleHigh) |
- 122:.\Generated_Source\PSoC4/I2CS_I2C.c ****                     I2CS_GET_I2C_CTRL_LOW_PHASE_OVS (config->oversampleLow)                        
- 123:.\Generated_Source\PSoC4/I2CS_I2C.c ****                     I2CS_GET_I2C_CTRL_S_GENERAL_IGNORE((uint32)(0u == config->acceptGeneralAddr))  
- 124:.\Generated_Source\PSoC4/I2CS_I2C.c ****                     I2CS_GET_I2C_CTRL_SL_MSTR_MODE  (config->mode);
- 125:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 126:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure RX direction */
- 127:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_RX_CTRL_REG      = I2CS_GET_RX_CTRL_MEDIAN(medianFilter) |
- 128:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                 I2CS_I2C_RX_CTRL;
- 129:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_RX_FIFO_CTRL_REG = I2CS_CLEAR_REG;
- 130:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 131:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Set default address and mask */
- 132:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_RX_MATCH_REG    = ((I2CS_I2C_SLAVE) ?
- 133:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                 (I2CS_GET_I2C_8BIT_ADDRESS(config->slaveAddr) |
- 134:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                  I2CS_GET_RX_MATCH_MASK(config->slaveAddrMask)) :
- 135:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                 (I2CS_CLEAR_REG));
+ 116:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #if (!I2CS_CY_SCBIP_V0)
+ 117:.\Generated_Source\PSoC4/I2CS_I2C.c ****             locEnableWake = (I2CS_I2C_MULTI_MASTER_SLAVE) ? (0u) : (config->enableWake);
+ 118:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #else
+ 119:.\Generated_Source\PSoC4/I2CS_I2C.c ****             locEnableWake = config->enableWake;
+ 120:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #endif /* (!I2CS_CY_SCBIP_V0) */
+ 121:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 122:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure I2C interface */
+ 123:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_CTRL_REG     = I2CS_GET_CTRL_BYTE_MODE  (config->enableByteMode) |
+ 124:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                             I2CS_GET_CTRL_ADDR_ACCEPT(config->acceptAddr)     |
+ 125:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                             I2CS_GET_CTRL_EC_AM_MODE (locEnableWake);
+ 126:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 127:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_I2C_CTRL_REG = I2CS_GET_I2C_CTRL_HIGH_PHASE_OVS(config->oversampleHigh) |
+ 128:.\Generated_Source\PSoC4/I2CS_I2C.c ****                     I2CS_GET_I2C_CTRL_LOW_PHASE_OVS (config->oversampleLow)                        
+ 129:.\Generated_Source\PSoC4/I2CS_I2C.c ****                     I2CS_GET_I2C_CTRL_S_GENERAL_IGNORE((uint32)(0u == config->acceptGeneralAddr))  
+ 130:.\Generated_Source\PSoC4/I2CS_I2C.c ****                     I2CS_GET_I2C_CTRL_SL_MSTR_MODE  (config->mode);
+ 131:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 132:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure RX direction */
+ 133:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_RX_CTRL_REG      = I2CS_GET_RX_CTRL_MEDIAN(medianFilter) |
+ 134:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                 I2CS_I2C_RX_CTRL;
+ 135:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_RX_FIFO_CTRL_REG = I2CS_CLEAR_REG;
  136:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 137:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 138:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure TX direction */
- 139:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_TX_CTRL_REG      = I2CS_I2C_TX_CTRL;
- 140:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_TX_FIFO_CTRL_REG = I2CS_CLEAR_REG;
- 141:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 142:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure interrupt with I2C handler but do not enable it */
- 143:.\Generated_Source\PSoC4/I2CS_I2C.c ****             CyIntDisable    (I2CS_ISR_NUMBER);
- 144:.\Generated_Source\PSoC4/I2CS_I2C.c ****             CyIntSetPriority(I2CS_ISR_NUMBER, I2CS_ISR_PRIORITY);
- 145:.\Generated_Source\PSoC4/I2CS_I2C.c ****             (void) CyIntSetVector(I2CS_ISR_NUMBER, &I2CS_I2C_ISR);
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 4
+ 137:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Set default address and mask */
+ 138:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_RX_MATCH_REG    = ((I2CS_I2C_SLAVE) ?
+ 139:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                 (I2CS_GET_I2C_8BIT_ADDRESS(config->slaveAddr) |
+ 140:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                  I2CS_GET_RX_MATCH_MASK(config->slaveAddrMask)) :
+ 141:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                 (I2CS_CLEAR_REG));
+ 142:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 143:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 144:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure TX direction */
+ 145:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_TX_CTRL_REG      = I2CS_I2C_TX_CTRL;
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 4
 
 
- 146:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 147:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure interrupt sources */
- 148:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #if(!I2CS_CY_SCBIP_V1)
- 149:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_SPI_EC_MASK_REG = I2CS_NO_INTR_SOURCES;
- 150:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #endif /* (!I2CS_CY_SCBIP_V1) */
- 151:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 152:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_I2C_EC_MASK_REG = I2CS_NO_INTR_SOURCES;
- 153:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_RX_MASK_REG     = I2CS_NO_INTR_SOURCES;
- 154:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_TX_MASK_REG     = I2CS_NO_INTR_SOURCES;
- 155:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 156:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_SLAVE_MASK_REG  = ((I2CS_I2C_SLAVE) ?
- 157:.\Generated_Source\PSoC4/I2CS_I2C.c ****                             (I2CS_GET_INTR_SLAVE_I2C_GENERAL(config->acceptGeneralAddr) |
- 158:.\Generated_Source\PSoC4/I2CS_I2C.c ****                              I2CS_I2C_INTR_SLAVE_MASK) : (I2CS_CLEAR_REG));
- 159:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 160:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_MASTER_MASK_REG = ((I2CS_I2C_MASTER) ?
- 161:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                      (I2CS_I2C_INTR_MASTER_MASK) :
- 162:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                      (I2CS_CLEAR_REG));
- 163:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 164:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure global variables */
- 165:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_state = I2CS_I2C_FSM_IDLE;
- 166:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 167:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Internal slave variables */
- 168:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_slStatus        = 0u;
- 169:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_slRdBufIndex    = 0u;
- 170:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_slWrBufIndex    = 0u;
- 171:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_slOverFlowCount = 0u;
+ 146:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_TX_FIFO_CTRL_REG = I2CS_CLEAR_REG;
+ 147:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 148:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure interrupt with I2C handler but do not enable it */
+ 149:.\Generated_Source\PSoC4/I2CS_I2C.c ****             CyIntDisable    (I2CS_ISR_NUMBER);
+ 150:.\Generated_Source\PSoC4/I2CS_I2C.c ****             CyIntSetPriority(I2CS_ISR_NUMBER, I2CS_ISR_PRIORITY);
+ 151:.\Generated_Source\PSoC4/I2CS_I2C.c ****             (void) CyIntSetVector(I2CS_ISR_NUMBER, &I2CS_I2C_ISR);
+ 152:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 153:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure interrupt sources */
+ 154:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #if(!I2CS_CY_SCBIP_V1)
+ 155:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_SPI_EC_MASK_REG = I2CS_NO_INTR_SOURCES;
+ 156:.\Generated_Source\PSoC4/I2CS_I2C.c ****         #endif /* (!I2CS_CY_SCBIP_V1) */
+ 157:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 158:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_I2C_EC_MASK_REG = I2CS_NO_INTR_SOURCES;
+ 159:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_RX_MASK_REG     = I2CS_NO_INTR_SOURCES;
+ 160:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_TX_MASK_REG     = I2CS_NO_INTR_SOURCES;
+ 161:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 162:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_SLAVE_MASK_REG  = ((I2CS_I2C_SLAVE) ?
+ 163:.\Generated_Source\PSoC4/I2CS_I2C.c ****                             (I2CS_GET_INTR_SLAVE_I2C_GENERAL(config->acceptGeneralAddr) |
+ 164:.\Generated_Source\PSoC4/I2CS_I2C.c ****                              I2CS_I2C_INTR_SLAVE_MASK) : (I2CS_CLEAR_REG));
+ 165:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 166:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_INTR_MASTER_MASK_REG = ((I2CS_I2C_MASTER) ?
+ 167:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                      (I2CS_I2C_INTR_MASTER_MASK) :
+ 168:.\Generated_Source\PSoC4/I2CS_I2C.c ****                                                      (I2CS_CLEAR_REG));
+ 169:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 170:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Configure global variables */
+ 171:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_state = I2CS_I2C_FSM_IDLE;
  172:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 173:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Internal master variables */
- 174:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_mstrStatus     = 0u;
- 175:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_mstrRdBufIndex = 0u;
- 176:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_mstrWrBufIndex = 0u;
- 177:.\Generated_Source\PSoC4/I2CS_I2C.c ****         }
- 178:.\Generated_Source\PSoC4/I2CS_I2C.c ****     }
- 179:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 180:.\Generated_Source\PSoC4/I2CS_I2C.c **** #else
- 181:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 182:.\Generated_Source\PSoC4/I2CS_I2C.c ****     /*******************************************************************************
- 183:.\Generated_Source\PSoC4/I2CS_I2C.c ****     * Function Name: I2CS_I2CInit
- 184:.\Generated_Source\PSoC4/I2CS_I2C.c ****     ********************************************************************************
- 185:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
- 186:.\Generated_Source\PSoC4/I2CS_I2C.c ****     * Summary:
- 187:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  Configures the SCB for the I2C operation.
- 188:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
- 189:.\Generated_Source\PSoC4/I2CS_I2C.c ****     * Parameters:
- 190:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  None
+ 173:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Internal slave variables */
+ 174:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_slStatus        = 0u;
+ 175:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_slRdBufIndex    = 0u;
+ 176:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_slWrBufIndex    = 0u;
+ 177:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_slOverFlowCount = 0u;
+ 178:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 179:.\Generated_Source\PSoC4/I2CS_I2C.c ****             /* Internal master variables */
+ 180:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_mstrStatus     = 0u;
+ 181:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_mstrRdBufIndex = 0u;
+ 182:.\Generated_Source\PSoC4/I2CS_I2C.c ****             I2CS_mstrWrBufIndex = 0u;
+ 183:.\Generated_Source\PSoC4/I2CS_I2C.c ****         }
+ 184:.\Generated_Source\PSoC4/I2CS_I2C.c ****     }
+ 185:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 186:.\Generated_Source\PSoC4/I2CS_I2C.c **** #else
+ 187:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 188:.\Generated_Source\PSoC4/I2CS_I2C.c ****     /*******************************************************************************
+ 189:.\Generated_Source\PSoC4/I2CS_I2C.c ****     * Function Name: I2CS_I2CInit
+ 190:.\Generated_Source\PSoC4/I2CS_I2C.c ****     ****************************************************************************//**
  191:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
- 192:.\Generated_Source\PSoC4/I2CS_I2C.c ****     * Return:
- 193:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  None
- 194:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
- 195:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *******************************************************************************/
- 196:.\Generated_Source\PSoC4/I2CS_I2C.c ****     void I2CS_I2CInit(void)
- 197:.\Generated_Source\PSoC4/I2CS_I2C.c ****     {
-  27              		.loc 1 197 0
+ 192:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *  Configures the SCB for the I2C operation.
+ 193:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *
+ 194:.\Generated_Source\PSoC4/I2CS_I2C.c ****     *******************************************************************************/
+ 195:.\Generated_Source\PSoC4/I2CS_I2C.c ****     void I2CS_I2CInit(void)
+ 196:.\Generated_Source\PSoC4/I2CS_I2C.c ****     {
+  27              		.loc 1 196 0
   28              		.cfi_startproc
   29 0000 80B5     		push	{r7, lr}
   30              		.cfi_def_cfa_offset 8
   31              		.cfi_offset 7, -8
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 5
-
-
   32              		.cfi_offset 14, -4
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 5
+
+
   33 0002 00AF     		add	r7, sp, #0
   34              		.cfi_def_cfa_register 7
- 198:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #if(I2CS_CY_SCBIP_V0)
- 199:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Adjust SDA filter settings. Ticket ID#150521 */
- 200:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_SET_I2C_CFG_SDA_FILT_TRIM(I2CS_EC_AM_I2C_CFG_SDA_FILT_TRIM);
-  35              		.loc 1 200 0
+ 197:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #if(I2CS_CY_SCBIP_V0)
+ 198:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Adjust SDA filter settings. Ticket ID#150521 */
+ 199:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_SET_I2C_CFG_SDA_FILT_TRIM(I2CS_EC_AM_I2C_CFG_SDA_FILT_TRIM);
+  35              		.loc 1 199 0
   36 0004 254B     		ldr	r3, .L2
   37 0006 254A     		ldr	r2, .L2
   38 0008 1268     		ldr	r2, [r2]
   39 000a 0C21     		mov	r1, #12
   40 000c 0A43     		orr	r2, r1
   41 000e 1A60     		str	r2, [r3]
- 201:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #endif /* (I2CS_CY_SCBIP_V0) */
- 202:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 203:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Adjust AF and DF filter settings. Ticket ID#176179 */
- 204:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_CFG_ANALOG_FITER_ENABLE_ADJ;
- 205:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 206:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure I2C interface */
- 207:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_CTRL_REG     = I2CS_I2C_DEFAULT_CTRL;
-  42              		.loc 1 207 0
+ 200:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #endif /* (I2CS_CY_SCBIP_V0) */
+ 201:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 202:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Adjust AF and DF filter settings. Ticket ID#176179 */
+ 203:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_CFG_ANALOG_FITER_ENABLE_ADJ;
+ 204:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 205:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure I2C interface */
+ 206:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_CTRL_REG     = I2CS_I2C_DEFAULT_CTRL;
+  42              		.loc 1 206 0
   43 0010 234B     		ldr	r3, .L2+4
   44 0012 0022     		mov	r2, #0
   45 0014 1A60     		str	r2, [r3]
- 208:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_CTRL_REG = I2CS_I2C_DEFAULT_I2C_CTRL;
-  46              		.loc 1 208 0
+ 207:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_I2C_CTRL_REG = I2CS_I2C_DEFAULT_I2C_CTRL;
+  46              		.loc 1 207 0
   47 0016 234B     		ldr	r3, .L2+8
   48 0018 234A     		ldr	r2, .L2+12
   49 001a 1A60     		str	r2, [r3]
- 209:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 210:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure RX direction */
- 211:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_RX_CTRL_REG      = I2CS_I2C_DEFAULT_RX_CTRL;
-  50              		.loc 1 211 0
+ 208:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 209:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure RX direction */
+ 210:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_RX_CTRL_REG      = I2CS_I2C_DEFAULT_RX_CTRL;
+  50              		.loc 1 210 0
   51 001c 234B     		ldr	r3, .L2+16
   52 001e 244A     		ldr	r2, .L2+20
   53 0020 1A60     		str	r2, [r3]
- 212:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_RX_FIFO_CTRL_REG = I2CS_I2C_DEFAULT_RX_FIFO_CTRL;
-  54              		.loc 1 212 0
+ 211:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_RX_FIFO_CTRL_REG = I2CS_I2C_DEFAULT_RX_FIFO_CTRL;
+  54              		.loc 1 211 0
   55 0022 244B     		ldr	r3, .L2+24
   56 0024 0022     		mov	r2, #0
   57 0026 1A60     		str	r2, [r3]
- 213:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 214:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Set default address and mask */
- 215:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_RX_MATCH_REG     = I2CS_I2C_DEFAULT_RX_MATCH;
-  58              		.loc 1 215 0
+ 212:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 213:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Set default address and mask */
+ 214:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_RX_MATCH_REG     = I2CS_I2C_DEFAULT_RX_MATCH;
+  58              		.loc 1 214 0
   59 0028 234B     		ldr	r3, .L2+28
   60 002a 244A     		ldr	r2, .L2+32
   61 002c 1A60     		str	r2, [r3]
- 216:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 217:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure TX direction */
- 218:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_TX_CTRL_REG      = I2CS_I2C_DEFAULT_TX_CTRL;
-  62              		.loc 1 218 0
+ 215:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 216:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure TX direction */
+ 217:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_TX_CTRL_REG      = I2CS_I2C_DEFAULT_TX_CTRL;
+  62              		.loc 1 217 0
   63 002e 244B     		ldr	r3, .L2+36
   64 0030 1F4A     		ldr	r2, .L2+20
   65 0032 1A60     		str	r2, [r3]
- 219:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_TX_FIFO_CTRL_REG = I2CS_I2C_DEFAULT_TX_FIFO_CTRL;
-  66              		.loc 1 219 0
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 6
-
-
+ 218:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_TX_FIFO_CTRL_REG = I2CS_I2C_DEFAULT_TX_FIFO_CTRL;
+  66              		.loc 1 218 0
   67 0034 234B     		ldr	r3, .L2+40
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 6
+
+
   68 0036 0022     		mov	r2, #0
   69 0038 1A60     		str	r2, [r3]
- 220:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 221:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure interrupt with I2C handler but do not enable it */
- 222:.\Generated_Source\PSoC4/I2CS_I2C.c ****         CyIntDisable    (I2CS_ISR_NUMBER);
-  70              		.loc 1 222 0
+ 219:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 220:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure interrupt with I2C handler but do not enable it */
+ 221:.\Generated_Source\PSoC4/I2CS_I2C.c ****         CyIntDisable    (I2CS_ISR_NUMBER);
+  70              		.loc 1 221 0
   71 003a 0B20     		mov	r0, #11
   72 003c FFF7FEFF 		bl	CyIntDisable
- 223:.\Generated_Source\PSoC4/I2CS_I2C.c ****         CyIntSetPriority(I2CS_ISR_NUMBER, I2CS_ISR_PRIORITY);
-  73              		.loc 1 223 0
+ 222:.\Generated_Source\PSoC4/I2CS_I2C.c ****         CyIntSetPriority(I2CS_ISR_NUMBER, I2CS_ISR_PRIORITY);
+  73              		.loc 1 222 0
   74 0040 0B20     		mov	r0, #11
   75 0042 0321     		mov	r1, #3
   76 0044 FFF7FEFF 		bl	CyIntSetPriority
- 224:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #if(!I2CS_I2C_EXTERN_INTR_HANDLER)
- 225:.\Generated_Source\PSoC4/I2CS_I2C.c ****         (void) CyIntSetVector(I2CS_ISR_NUMBER, &I2CS_I2C_ISR);
-  77              		.loc 1 225 0
+ 223:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #if(!I2CS_I2C_EXTERN_INTR_HANDLER)
+ 224:.\Generated_Source\PSoC4/I2CS_I2C.c ****         (void) CyIntSetVector(I2CS_ISR_NUMBER, &I2CS_I2C_ISR);
+  77              		.loc 1 224 0
   78 0048 1F4B     		ldr	r3, .L2+44
   79 004a 0B20     		mov	r0, #11
   80 004c 191C     		mov	r1, r3
   81 004e FFF7FEFF 		bl	CyIntSetVector
- 226:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #endif /* (I2CS_I2C_EXTERN_INTR_HANDLER) */
- 227:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 228:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure interrupt sources */
- 229:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #if(!I2CS_CY_SCBIP_V1)
- 230:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_SPI_EC_MASK_REG = I2CS_I2C_DEFAULT_INTR_SPI_EC_MASK;
-  82              		.loc 1 230 0
+ 225:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #endif /* (I2CS_I2C_EXTERN_INTR_HANDLER) */
+ 226:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 227:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure interrupt sources */
+ 228:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #if(!I2CS_CY_SCBIP_V1)
+ 229:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_SPI_EC_MASK_REG = I2CS_I2C_DEFAULT_INTR_SPI_EC_MASK;
+  82              		.loc 1 229 0
   83 0052 1E4B     		ldr	r3, .L2+48
   84 0054 0022     		mov	r2, #0
   85 0056 1A60     		str	r2, [r3]
- 231:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #endif /* (!I2CS_CY_SCBIP_V1) */
- 232:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 233:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_I2C_EC_MASK_REG = I2CS_I2C_DEFAULT_INTR_I2C_EC_MASK;
-  86              		.loc 1 233 0
+ 230:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #endif /* (!I2CS_CY_SCBIP_V1) */
+ 231:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 232:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_I2C_EC_MASK_REG = I2CS_I2C_DEFAULT_INTR_I2C_EC_MASK;
+  86              		.loc 1 232 0
   87 0058 1D4B     		ldr	r3, .L2+52
   88 005a 0022     		mov	r2, #0
   89 005c 1A60     		str	r2, [r3]
- 234:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_SLAVE_MASK_REG  = I2CS_I2C_DEFAULT_INTR_SLAVE_MASK;
-  90              		.loc 1 234 0
+ 233:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_SLAVE_MASK_REG  = I2CS_I2C_DEFAULT_INTR_SLAVE_MASK;
+  90              		.loc 1 233 0
   91 005e 1D4B     		ldr	r3, .L2+56
   92 0060 4C22     		mov	r2, #76
   93 0062 FF32     		add	r2, r2, #255
   94 0064 1A60     		str	r2, [r3]
- 235:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_MASTER_MASK_REG = I2CS_I2C_DEFAULT_INTR_MASTER_MASK;
-  95              		.loc 1 235 0
+ 234:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_MASTER_MASK_REG = I2CS_I2C_DEFAULT_INTR_MASTER_MASK;
+  95              		.loc 1 234 0
   96 0066 1C4B     		ldr	r3, .L2+60
   97 0068 0022     		mov	r2, #0
   98 006a 1A60     		str	r2, [r3]
- 236:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_RX_MASK_REG     = I2CS_I2C_DEFAULT_INTR_RX_MASK;
-  99              		.loc 1 236 0
+ 235:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_RX_MASK_REG     = I2CS_I2C_DEFAULT_INTR_RX_MASK;
+  99              		.loc 1 235 0
  100 006c 1B4B     		ldr	r3, .L2+64
  101 006e 0022     		mov	r2, #0
  102 0070 1A60     		str	r2, [r3]
- 237:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_TX_MASK_REG     = I2CS_I2C_DEFAULT_INTR_TX_MASK;
- 103              		.loc 1 237 0
+ 236:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_INTR_TX_MASK_REG     = I2CS_I2C_DEFAULT_INTR_TX_MASK;
+ 103              		.loc 1 236 0
  104 0072 1B4B     		ldr	r3, .L2+68
  105 0074 0022     		mov	r2, #0
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 7
-
-
  106 0076 1A60     		str	r2, [r3]
- 238:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 239:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure global variables */
- 240:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_state = I2CS_I2C_FSM_IDLE;
- 107              		.loc 1 240 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 7
+
+
+ 237:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 238:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Configure global variables */
+ 239:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_state = I2CS_I2C_FSM_IDLE;
+ 107              		.loc 1 239 0
  108 0078 1A4B     		ldr	r3, .L2+72
  109 007a 1022     		mov	r2, #16
  110 007c 1A70     		strb	r2, [r3]
- 241:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 242:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #if(I2CS_I2C_SLAVE)
- 243:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Internal slave variable */
- 244:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_slStatus        = 0u;
- 111              		.loc 1 244 0
+ 240:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 241:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #if(I2CS_I2C_SLAVE)
+ 242:.\Generated_Source\PSoC4/I2CS_I2C.c ****         /* Internal slave variable */
+ 243:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_slStatus        = 0u;
+ 111              		.loc 1 243 0
  112 007e 1A4B     		ldr	r3, .L2+76
  113 0080 0022     		mov	r2, #0
  114 0082 1A70     		strb	r2, [r3]
- 245:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_slRdBufIndex    = 0u;
- 115              		.loc 1 245 0
+ 244:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_slRdBufIndex    = 0u;
+ 115              		.loc 1 244 0
  116 0084 194B     		ldr	r3, .L2+80
  117 0086 0022     		mov	r2, #0
  118 0088 1A60     		str	r2, [r3]
- 246:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_slWrBufIndex    = 0u;
- 119              		.loc 1 246 0
+ 245:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_slWrBufIndex    = 0u;
+ 119              		.loc 1 245 0
  120 008a 194B     		ldr	r3, .L2+84
  121 008c 0022     		mov	r2, #0
  122 008e 1A60     		str	r2, [r3]
- 247:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_slOverFlowCount = 0u;
- 123              		.loc 1 247 0
+ 246:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_slOverFlowCount = 0u;
+ 123              		.loc 1 246 0
  124 0090 184B     		ldr	r3, .L2+88
  125 0092 0022     		mov	r2, #0
  126 0094 1A70     		strb	r2, [r3]
- 248:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #endif /* (I2CS_I2C_SLAVE) */
- 249:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 250:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #if(I2CS_I2C_MASTER)
- 251:.\Generated_Source\PSoC4/I2CS_I2C.c ****     /* Internal master variable */
- 252:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_mstrStatus     = 0u;
- 253:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_mstrRdBufIndex = 0u;
- 254:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_mstrWrBufIndex = 0u;
- 255:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #endif /* (I2CS_I2C_MASTER) */
- 256:.\Generated_Source\PSoC4/I2CS_I2C.c ****     }
- 127              		.loc 1 256 0
+ 247:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #endif /* (I2CS_I2C_SLAVE) */
+ 248:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
+ 249:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #if(I2CS_I2C_MASTER)
+ 250:.\Generated_Source\PSoC4/I2CS_I2C.c ****     /* Internal master variable */
+ 251:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_mstrStatus     = 0u;
+ 252:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_mstrRdBufIndex = 0u;
+ 253:.\Generated_Source\PSoC4/I2CS_I2C.c ****         I2CS_mstrWrBufIndex = 0u;
+ 254:.\Generated_Source\PSoC4/I2CS_I2C.c ****     #endif /* (I2CS_I2C_MASTER) */
+ 255:.\Generated_Source\PSoC4/I2CS_I2C.c ****     }
+ 127              		.loc 1 255 0
  128 0096 BD46     		mov	sp, r7
  129              		@ sp needed
  130 0098 80BD     		pop	{r7, pc}
@@ -418,10 +417,10 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  141 00b8 10030740 		.word	1074201360
  142 00bc 1000FE00 		.word	16646160
  143 00c0 00020740 		.word	1074201088
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 8
-
-
  144 00c4 04020740 		.word	1074201092
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 8
+
+
  145 00c8 00000000 		.word	I2CS_I2C_ISR
  146 00cc C80E0740 		.word	1074204360
  147 00d0 880E0740 		.word	1074204296
@@ -445,26 +444,19 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  165              		.type	I2CS_I2CStop, %function
  166              	I2CS_I2CStop:
  167              	.LFB1:
- 257:.\Generated_Source\PSoC4/I2CS_I2C.c **** #endif /* (I2CS_SCB_MODE_UNCONFIG_CONST_CFG) */
+ 256:.\Generated_Source\PSoC4/I2CS_I2C.c **** #endif /* (I2CS_SCB_MODE_UNCONFIG_CONST_CFG) */
+ 257:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
  258:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 259:.\Generated_Source\PSoC4/I2CS_I2C.c **** 
- 260:.\Generated_Source\PSoC4/I2CS_I2C.c **** /*******************************************************************************
- 261:.\Generated_Source\PSoC4/I2CS_I2C.c **** * Function Name: I2CS_I2CStop
- 262:.\Generated_Source\PSoC4/I2CS_I2C.c **** ********************************************************************************
- 263:.\Generated_Source\PSoC4/I2CS_I2C.c **** *
- 264:.\Generated_Source\PSoC4/I2CS_I2C.c **** * Summary:
- 265:.\Generated_Source\PSoC4/I2CS_I2C.c **** *  Resets the I2C FSM into the default state.
- 266:.\Generated_Source\PSoC4/I2CS_I2C.c **** *
- 267:.\Generated_Source\PSoC4/I2CS_I2C.c **** * Parameters:
- 268:.\Generated_Source\PSoC4/I2CS_I2C.c **** *  None
- 269:.\Generated_Source\PSoC4/I2CS_I2C.c **** *
- 270:.\Generated_Source\PSoC4/I2CS_I2C.c **** * Return:
- 271:.\Generated_Source\PSoC4/I2CS_I2C.c **** *  None
- 272:.\Generated_Source\PSoC4/I2CS_I2C.c **** *
- 273:.\Generated_Source\PSoC4/I2CS_I2C.c **** *******************************************************************************/
- 274:.\Generated_Source\PSoC4/I2CS_I2C.c **** void I2CS_I2CStop(void)
- 275:.\Generated_Source\PSoC4/I2CS_I2C.c **** {
- 168              		.loc 1 275 0
+ 259:.\Generated_Source\PSoC4/I2CS_I2C.c **** /*******************************************************************************
+ 260:.\Generated_Source\PSoC4/I2CS_I2C.c **** * Function Name: I2CS_I2CStop
+ 261:.\Generated_Source\PSoC4/I2CS_I2C.c **** ****************************************************************************//**
+ 262:.\Generated_Source\PSoC4/I2CS_I2C.c **** *
+ 263:.\Generated_Source\PSoC4/I2CS_I2C.c **** *  Resets the I2C FSM into the default state.
+ 264:.\Generated_Source\PSoC4/I2CS_I2C.c **** *
+ 265:.\Generated_Source\PSoC4/I2CS_I2C.c **** *******************************************************************************/
+ 266:.\Generated_Source\PSoC4/I2CS_I2C.c **** void I2CS_I2CStop(void)
+ 267:.\Generated_Source\PSoC4/I2CS_I2C.c **** {
+ 168              		.loc 1 267 0
  169              		.cfi_startproc
  170 0000 80B5     		push	{r7, lr}
  171              		.cfi_def_cfa_offset 8
@@ -472,16 +464,13 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  173              		.cfi_offset 14, -4
  174 0002 00AF     		add	r7, sp, #0
  175              		.cfi_def_cfa_register 7
- 276:.\Generated_Source\PSoC4/I2CS_I2C.c ****     I2CS_state = I2CS_I2C_FSM_IDLE;
- 176              		.loc 1 276 0
+ 268:.\Generated_Source\PSoC4/I2CS_I2C.c ****     I2CS_state = I2CS_I2C_FSM_IDLE;
+ 176              		.loc 1 268 0
  177 0004 024B     		ldr	r3, .L5
  178 0006 1022     		mov	r2, #16
  179 0008 1A70     		strb	r2, [r3]
- 277:.\Generated_Source\PSoC4/I2CS_I2C.c **** }
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 9
-
-
- 180              		.loc 1 277 0
+ 269:.\Generated_Source\PSoC4/I2CS_I2C.c **** }
+ 180              		.loc 1 269 0
  181 000a BD46     		mov	sp, r7
  182              		@ sp needed
  183 000c 80BD     		pop	{r7, pc}
@@ -489,6 +478,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  185 000e C046     		.align	2
  186              	.L5:
  187 0010 00000000 		.word	I2CS_state
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 9
+
+
  188              		.cfi_endproc
  189              	.LFE1:
  190              		.size	I2CS_I2CStop, .-I2CS_I2CStop
@@ -503,137 +495,137 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  199 0006 00000000 		.4byte	.Ldebug_abbrev0
  200 000a 04       		.byte	0x4
  201 000b 01       		.uleb128 0x1
- 202 000c E8000000 		.4byte	.LASF23
+ 202 000c 7B010000 		.4byte	.LASF23
  203 0010 01       		.byte	0x1
- 204 0011 02020000 		.4byte	.LASF24
- 205 0015 22000000 		.4byte	.LASF25
+ 204 0011 57010000 		.4byte	.LASF24
+ 205 0015 7A000000 		.4byte	.LASF25
  206 0019 00000000 		.4byte	.Ldebug_ranges0+0
  207 001d 00000000 		.4byte	0
  208 0021 00000000 		.4byte	.Ldebug_line0
  209 0025 02       		.uleb128 0x2
  210 0026 01       		.byte	0x1
  211 0027 06       		.byte	0x6
- 212 0028 D1010000 		.4byte	.LASF0
+ 212 0028 26010000 		.4byte	.LASF0
  213 002c 02       		.uleb128 0x2
  214 002d 01       		.byte	0x1
  215 002e 08       		.byte	0x8
- 216 002f 76010000 		.4byte	.LASF1
+ 216 002f CB000000 		.4byte	.LASF1
  217 0033 02       		.uleb128 0x2
  218 0034 02       		.byte	0x2
  219 0035 05       		.byte	0x5
- 220 0036 F8010000 		.4byte	.LASF2
+ 220 0036 4D010000 		.4byte	.LASF2
  221 003a 02       		.uleb128 0x2
  222 003b 02       		.byte	0x2
  223 003c 07       		.byte	0x7
- 224 003d BE010000 		.4byte	.LASF3
+ 224 003d 13010000 		.4byte	.LASF3
  225 0041 02       		.uleb128 0x2
  226 0042 04       		.byte	0x4
  227 0043 05       		.byte	0x5
- 228 0044 96010000 		.4byte	.LASF4
+ 228 0044 EB000000 		.4byte	.LASF4
  229 0048 02       		.uleb128 0x2
  230 0049 04       		.byte	0x4
  231 004a 07       		.byte	0x7
- 232 004b 96000000 		.4byte	.LASF5
+ 232 004b 28000000 		.4byte	.LASF5
  233 004f 02       		.uleb128 0x2
  234 0050 08       		.byte	0x8
  235 0051 05       		.byte	0x5
  236 0052 00000000 		.4byte	.LASF6
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 10
-
-
  237 0056 02       		.uleb128 0x2
  238 0057 08       		.byte	0x8
  239 0058 07       		.byte	0x7
- 240 0059 A8000000 		.4byte	.LASF7
+ 240 0059 3A000000 		.4byte	.LASF7
  241 005d 03       		.uleb128 0x3
  242 005e 04       		.byte	0x4
  243 005f 05       		.byte	0x5
  244 0060 696E7400 		.ascii	"int\000"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 10
+
+
  245 0064 02       		.uleb128 0x2
  246 0065 04       		.byte	0x4
  247 0066 07       		.byte	0x7
  248 0067 15000000 		.4byte	.LASF8
  249 006b 04       		.uleb128 0x4
- 250 006c 90000000 		.4byte	.LASF9
+ 250 006c 22000000 		.4byte	.LASF9
  251 0070 02       		.byte	0x2
- 252 0071 3801     		.2byte	0x138
+ 252 0071 9801     		.2byte	0x198
  253 0073 2C000000 		.4byte	0x2c
  254 0077 04       		.uleb128 0x4
  255 0078 0E000000 		.4byte	.LASF10
  256 007c 02       		.byte	0x2
- 257 007d 3A01     		.2byte	0x13a
+ 257 007d 9A01     		.2byte	0x19a
  258 007f 48000000 		.4byte	0x48
  259 0083 02       		.uleb128 0x2
  260 0084 04       		.byte	0x4
  261 0085 04       		.byte	0x4
- 262 0086 CD000000 		.4byte	.LASF11
+ 262 0086 5F000000 		.4byte	.LASF11
  263 008a 02       		.uleb128 0x2
  264 008b 08       		.byte	0x8
  265 008c 04       		.byte	0x4
- 266 008d 9F010000 		.4byte	.LASF12
+ 266 008d F4000000 		.4byte	.LASF12
  267 0091 02       		.uleb128 0x2
  268 0092 01       		.byte	0x1
  269 0093 08       		.byte	0x8
- 270 0094 91010000 		.4byte	.LASF13
+ 270 0094 E6000000 		.4byte	.LASF13
  271 0098 05       		.uleb128 0x5
  272 0099 6B000000 		.4byte	0x6b
  273 009d 04       		.uleb128 0x4
- 274 009e B8010000 		.4byte	.LASF14
+ 274 009e 0D010000 		.4byte	.LASF14
  275 00a2 02       		.byte	0x2
- 276 00a3 E401     		.2byte	0x1e4
+ 276 00a3 4402     		.2byte	0x244
  277 00a5 A9000000 		.4byte	0xa9
  278 00a9 05       		.uleb128 0x5
  279 00aa 77000000 		.4byte	0x77
  280 00ae 02       		.uleb128 0x2
  281 00af 04       		.byte	0x4
  282 00b0 07       		.byte	0x7
- 283 00b1 EF010000 		.4byte	.LASF15
+ 283 00b1 44010000 		.4byte	.LASF15
  284 00b5 06       		.uleb128 0x6
- 285 00b6 84010000 		.4byte	.LASF16
+ 285 00b6 D9000000 		.4byte	.LASF16
  286 00ba 01       		.byte	0x1
- 287 00bb C4       		.byte	0xc4
+ 287 00bb C3       		.byte	0xc3
  288 00bc 00000000 		.4byte	.LFB0
  289 00c0 F8000000 		.4byte	.LFE0-.LFB0
  290 00c4 01       		.uleb128 0x1
  291 00c5 9C       		.byte	0x9c
  292 00c6 07       		.uleb128 0x7
- 293 00c7 26020000 		.4byte	.LASF17
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 11
-
-
+ 293 00c7 09020000 		.4byte	.LASF17
  294 00cb 01       		.byte	0x1
- 295 00cc 1201     		.2byte	0x112
+ 295 00cc 0A01     		.2byte	0x10a
  296 00ce 00000000 		.4byte	.LFB1
  297 00d2 14000000 		.4byte	.LFE1-.LFB1
  298 00d6 01       		.uleb128 0x1
  299 00d7 9C       		.byte	0x9c
  300 00d8 08       		.uleb128 0x8
- 301 00d9 33020000 		.4byte	.LASF18
+ 301 00d9 16020000 		.4byte	.LASF18
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 11
+
+
  302 00dd 01       		.byte	0x1
- 303 00de 1A       		.byte	0x1a
+ 303 00de 1B       		.byte	0x1b
  304 00df 98000000 		.4byte	0x98
  305 00e3 05       		.uleb128 0x5
  306 00e4 03       		.byte	0x3
  307 00e5 00000000 		.4byte	I2CS_state
  308 00e9 09       		.uleb128 0x9
- 309 00ea BF000000 		.4byte	.LASF19
+ 309 00ea 51000000 		.4byte	.LASF19
  310 00ee 03       		.byte	0x3
- 311 00ef 20       		.byte	0x20
+ 311 00ef 21       		.byte	0x21
  312 00f0 98000000 		.4byte	0x98
  313 00f4 09       		.uleb128 0x9
- 314 00f5 A6010000 		.4byte	.LASF20
+ 314 00f5 FB000000 		.4byte	.LASF20
  315 00f9 03       		.byte	0x3
- 316 00fa 25       		.byte	0x25
+ 316 00fa 26       		.byte	0x26
  317 00fb A9000000 		.4byte	0xa9
  318 00ff 09       		.uleb128 0x9
- 319 0100 DD010000 		.4byte	.LASF21
+ 319 0100 32010000 		.4byte	.LASF21
  320 0104 03       		.byte	0x3
- 321 0105 2A       		.byte	0x2a
+ 321 0105 2B       		.byte	0x2b
  322 0106 A9000000 		.4byte	0xa9
  323 010a 09       		.uleb128 0x9
- 324 010b D3000000 		.4byte	.LASF22
+ 324 010b 65000000 		.4byte	.LASF22
  325 010f 03       		.byte	0x3
- 326 0110 2C       		.byte	0x2c
+ 326 0110 2D       		.byte	0x2d
  327 0111 98000000 		.4byte	0x98
  328 0115 00       		.byte	0
  329              		.section	.debug_abbrev,"",%progbits
@@ -658,9 +650,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  348 0011 00       		.byte	0
  349 0012 00       		.byte	0
  350 0013 02       		.uleb128 0x2
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 12
-
-
  351 0014 24       		.uleb128 0x24
  352 0015 00       		.byte	0
  353 0016 0B       		.uleb128 0xb
@@ -669,6 +658,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  356 0019 0B       		.uleb128 0xb
  357 001a 03       		.uleb128 0x3
  358 001b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 12
+
+
  359 001c 00       		.byte	0
  360 001d 00       		.byte	0
  361 001e 03       		.uleb128 0x3
@@ -718,9 +710,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  405 004a 11       		.uleb128 0x11
  406 004b 01       		.uleb128 0x1
  407 004c 12       		.uleb128 0x12
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 13
-
-
  408 004d 06       		.uleb128 0x6
  409 004e 40       		.uleb128 0x40
  410 004f 18       		.uleb128 0x18
@@ -729,6 +718,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  413 0053 00       		.byte	0
  414 0054 00       		.byte	0
  415 0055 07       		.uleb128 0x7
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 13
+
+
  416 0056 2E       		.uleb128 0x2e
  417 0057 00       		.byte	0
  418 0058 3F       		.uleb128 0x3f
@@ -778,9 +770,6 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  462 0085 3B       		.uleb128 0x3b
  463 0086 0B       		.uleb128 0xb
  464 0087 49       		.uleb128 0x49
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 14
-
-
  465 0088 13       		.uleb128 0x13
  466 0089 3F       		.uleb128 0x3f
  467 008a 19       		.uleb128 0x19
@@ -789,6 +778,9 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  470 008d 00       		.byte	0
  471 008e 00       		.byte	0
  472 008f 00       		.byte	0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 14
+
+
  473              		.section	.debug_aranges,"",%progbits
  474 0000 24000000 		.4byte	0x24
  475 0004 0200     		.2byte	0x2
@@ -831,141 +823,134 @@ ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 1
  503      676E6564 
  503      20696E74 
  503      00
- 504              	.LASF25:
- 505 0022 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Google Drive\\Virtuell"
- 505      73657273 
- 505      5C4C756B 
- 505      61732043 
- 505      72657574 
- 506 0051 65205265 		.ascii	"e Realitaeten\\PSoCWorkspace\\VRProject\\SCB_I2cCom"
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 15
+ 504              	.LASF9:
+ 505 0022 75696E74 		.ascii	"uint8\000"
+ 505      3800
+ 506              	.LASF5:
+ 507 0028 6C6F6E67 		.ascii	"long unsigned int\000"
+ 507      20756E73 
+ 507      69676E65 
+ 507      6420696E 
+ 507      7400
+ 508              	.LASF7:
+ 509 003a 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 509      206C6F6E 
+ 509      6720756E 
+ 509      7369676E 
+ 509      65642069 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 15
 
 
- 506      616C6974 
- 506      61657465 
- 506      6E5C5053 
- 506      6F43576F 
- 507 0081 6D536C61 		.ascii	"mSlave01.cydsn\000"
- 507      76653031 
- 507      2E637964 
- 507      736E00
- 508              	.LASF9:
- 509 0090 75696E74 		.ascii	"uint8\000"
- 509      3800
- 510              	.LASF5:
- 511 0096 6C6F6E67 		.ascii	"long unsigned int\000"
- 511      20756E73 
- 511      69676E65 
- 511      6420696E 
- 511      7400
- 512              	.LASF7:
- 513 00a8 6C6F6E67 		.ascii	"long long unsigned int\000"
- 513      206C6F6E 
- 513      6720756E 
- 513      7369676E 
- 513      65642069 
- 514              	.LASF19:
- 515 00bf 49324353 		.ascii	"I2CS_slStatus\000"
- 515      5F736C53 
- 515      74617475 
- 515      7300
- 516              	.LASF11:
- 517 00cd 666C6F61 		.ascii	"float\000"
- 517      7400
- 518              	.LASF22:
- 519 00d3 49324353 		.ascii	"I2CS_slOverFlowCount\000"
- 519      5F736C4F 
- 519      76657246 
- 519      6C6F7743 
- 519      6F756E74 
- 520              	.LASF23:
- 521 00e8 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 521      4320342E 
- 521      392E3320 
- 521      32303135 
- 521      30333033 
- 522 011b 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
- 522      20726576 
- 522      6973696F 
- 522      6E203232 
- 522      31323230 
- 523 014e 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
- 523      66756E63 
- 523      74696F6E 
- 523      2D736563 
- 523      74696F6E 
- 524              	.LASF1:
- 525 0176 756E7369 		.ascii	"unsigned char\000"
- 525      676E6564 
- 525      20636861 
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 16
+ 510              	.LASF19:
+ 511 0051 49324353 		.ascii	"I2CS_slStatus\000"
+ 511      5F736C53 
+ 511      74617475 
+ 511      7300
+ 512              	.LASF11:
+ 513 005f 666C6F61 		.ascii	"float\000"
+ 513      7400
+ 514              	.LASF22:
+ 515 0065 49324353 		.ascii	"I2CS_slOverFlowCount\000"
+ 515      5F736C4F 
+ 515      76657246 
+ 515      6C6F7743 
+ 515      6F756E74 
+ 516              	.LASF25:
+ 517 007a 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 517      73657273 
+ 517      5C4C756B 
+ 517      61732043 
+ 517      72657574 
+ 518 00a8 65445350 		.ascii	"eDSPPSoC-I2C\\PSoC4_I2C_Slave.cydsn\000"
+ 518      50536F43 
+ 518      2D493243 
+ 518      5C50536F 
+ 518      43345F49 
+ 519              	.LASF1:
+ 520 00cb 756E7369 		.ascii	"unsigned char\000"
+ 520      676E6564 
+ 520      20636861 
+ 520      7200
+ 521              	.LASF16:
+ 522 00d9 49324353 		.ascii	"I2CS_I2CInit\000"
+ 522      5F493243 
+ 522      496E6974 
+ 522      00
+ 523              	.LASF13:
+ 524 00e6 63686172 		.ascii	"char\000"
+ 524      00
+ 525              	.LASF4:
+ 526 00eb 6C6F6E67 		.ascii	"long int\000"
+ 526      20696E74 
+ 526      00
+ 527              	.LASF12:
+ 528 00f4 646F7562 		.ascii	"double\000"
+ 528      6C6500
+ 529              	.LASF20:
+ 530 00fb 49324353 		.ascii	"I2CS_slWrBufIndex\000"
+ 530      5F736C57 
+ 530      72427566 
+ 530      496E6465 
+ 530      7800
+ 531              	.LASF14:
+ 532 010d 72656733 		.ascii	"reg32\000"
+ 532      3200
+ 533              	.LASF3:
+ 534 0113 73686F72 		.ascii	"short unsigned int\000"
+ 534      7420756E 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccoFOppd.s 			page 16
 
 
- 525      7200
- 526              	.LASF16:
- 527 0184 49324353 		.ascii	"I2CS_I2CInit\000"
- 527      5F493243 
- 527      496E6974 
- 527      00
- 528              	.LASF13:
- 529 0191 63686172 		.ascii	"char\000"
- 529      00
- 530              	.LASF4:
- 531 0196 6C6F6E67 		.ascii	"long int\000"
- 531      20696E74 
- 531      00
- 532              	.LASF12:
- 533 019f 646F7562 		.ascii	"double\000"
- 533      6C6500
- 534              	.LASF20:
- 535 01a6 49324353 		.ascii	"I2CS_slWrBufIndex\000"
- 535      5F736C57 
- 535      72427566 
- 535      496E6465 
- 535      7800
- 536              	.LASF14:
- 537 01b8 72656733 		.ascii	"reg32\000"
- 537      3200
- 538              	.LASF3:
- 539 01be 73686F72 		.ascii	"short unsigned int\000"
- 539      7420756E 
- 539      7369676E 
- 539      65642069 
- 539      6E7400
- 540              	.LASF0:
- 541 01d1 7369676E 		.ascii	"signed char\000"
- 541      65642063 
- 541      68617200 
- 542              	.LASF21:
- 543 01dd 49324353 		.ascii	"I2CS_slRdBufIndex\000"
- 543      5F736C52 
- 543      64427566 
- 543      496E6465 
- 543      7800
- 544              	.LASF15:
- 545 01ef 73697A65 		.ascii	"sizetype\000"
- 545      74797065 
- 545      00
- 546              	.LASF2:
- 547 01f8 73686F72 		.ascii	"short int\000"
- 547      7420696E 
- 547      7400
- 548              	.LASF24:
- 549 0202 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\I2CS_I2C.c\000"
- 549      6E657261 
- 549      7465645F 
- 549      536F7572 
- 549      63655C50 
- 550              	.LASF17:
- 551 0226 49324353 		.ascii	"I2CS_I2CStop\000"
-ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccSvhcSG.s 			page 17
-
-
- 551      5F493243 
- 551      53746F70 
- 551      00
- 552              	.LASF18:
- 553 0233 49324353 		.ascii	"I2CS_state\000"
- 553      5F737461 
- 553      746500
- 554              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 534      7369676E 
+ 534      65642069 
+ 534      6E7400
+ 535              	.LASF0:
+ 536 0126 7369676E 		.ascii	"signed char\000"
+ 536      65642063 
+ 536      68617200 
+ 537              	.LASF21:
+ 538 0132 49324353 		.ascii	"I2CS_slRdBufIndex\000"
+ 538      5F736C52 
+ 538      64427566 
+ 538      496E6465 
+ 538      7800
+ 539              	.LASF15:
+ 540 0144 73697A65 		.ascii	"sizetype\000"
+ 540      74797065 
+ 540      00
+ 541              	.LASF2:
+ 542 014d 73686F72 		.ascii	"short int\000"
+ 542      7420696E 
+ 542      7400
+ 543              	.LASF24:
+ 544 0157 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\I2CS_I2C.c\000"
+ 544      6E657261 
+ 544      7465645F 
+ 544      536F7572 
+ 544      63655C50 
+ 545              	.LASF23:
+ 546 017b 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 546      4320342E 
+ 546      392E3320 
+ 546      32303135 
+ 546      30333033 
+ 547 01ae 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 547      20726576 
+ 547      6973696F 
+ 547      6E203232 
+ 547      31323230 
+ 548 01e1 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 548      66756E63 
+ 548      74696F6E 
+ 548      2D736563 
+ 548      74696F6E 
+ 549              	.LASF17:
+ 550 0209 49324353 		.ascii	"I2CS_I2CStop\000"
+ 550      5F493243 
+ 550      53746F70 
+ 550      00
+ 551              	.LASF18:
+ 552 0216 49324353 		.ascii	"I2CS_state\000"
+ 552      5F737461 
+ 552      746500
+ 553              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

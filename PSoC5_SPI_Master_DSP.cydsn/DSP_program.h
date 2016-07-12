@@ -1,5 +1,14 @@
+/*
+* Copyright:
+* Released under Creative Commons Attribution Share-Alike 4.0 license.This 
+* allows for both personal and commercial derivative works, as long as they 
+* credit freeDSP and release their designs under the same license. The freeDSP 
+* brand and freeDSP logo are protected by copyright and cannot be used without 
+* formal permission. Please contact Sebastian Merchel for further information.
+* https://creativecommons.org/licenses/by-sa/4.0/legalcode
+*/
 //Block Write
-//Time:  18:52:36 - 474ms
+//Time:  19:4:46 - 865ms
 //IC:  IC 2
 //Param Name:  Program Data
 //Param Address:  0xC000
@@ -90,7 +99,7 @@
 0x00, 	0x94, 	0x08, 	0x87,
 0x0B, 	0xE1, 	0x00, 	0x1C,
 0x05, 	0x4D, 	0x10, 	0x1E,
-0x0C, 	0x00, 	0xFC, 	0x10,
+0x0C, 	0x00, 	0xFC, 	0x50,
 0x06, 	0x40, 	0x10, 	0x0E,
 0xC0, 	0x00, 	0x00, 	0x00,
 0x82, 	0x0F, 	0x00, 	0x27,

@@ -1,14 +1,15 @@
-/*******************************************************************************
-* File Name: UART_1.h
-* Version 3.10
+/***************************************************************************//**
+* \file UART_1.h
+* \version 3.20
 *
-* Description:
+* \brief
 *  This file provides constants and parameter values for the SCB Component.
 *
 * Note:
 *
 ********************************************************************************
-* Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* \copyright
+* Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -98,78 +99,595 @@ typedef struct
 *        Function Prototypes
 ***************************************/
 
+/**
+* \addtogroup group_general
+* @{
+*/
+
 /* Start and Stop APIs */
 void UART_1_Init(void);
 void UART_1_Enable(void);
 void UART_1_Start(void);
 void UART_1_Stop(void);
 
+/** @} general */
+
+/**
+* \addtogroup group_power
+* @{
+*/
 /* Sleep and Wakeup APis */
 void UART_1_Sleep(void);
 void UART_1_Wakeup(void);
+/** @} power */ 
 
+/**
+* \addtogroup group_interrupt
+* @{
+*/
 #if (UART_1_SCB_IRQ_INTERNAL)
     /* Custom interrupt handler */
     void UART_1_SetCustomInterruptHandler(void (*func)(void));
 #endif /* (UART_1_SCB_IRQ_INTERNAL) */
+/** @} interrupt */
 
 /* Interface to internal interrupt component */
 #if (UART_1_SCB_IRQ_INTERNAL)
-    #define UART_1_EnableInt()        CyIntEnable      (UART_1_ISR_NUMBER)
-    #define UART_1_DisableInt()       CyIntDisable     (UART_1_ISR_NUMBER)
+    /**
+    * \addtogroup group_interrupt
+    * @{
+    */    
+    /*******************************************************************************
+    * Function Name: UART_1_EnableInt
+    ****************************************************************************//**
+    *
+    *  When using an Internal interrupt, this enables the interrupt in the NVIC. 
+    *  When using an external interrupt the API for the interrupt component must 
+    *  be used to enable the interrupt.
+    *
+    *******************************************************************************/
+    #define UART_1_EnableInt()    CyIntEnable(UART_1_ISR_NUMBER)
+    
+    
+    /*******************************************************************************
+    * Function Name: UART_1_DisableInt
+    ****************************************************************************//**
+    *
+    *  When using an Internal interrupt, this disables the interrupt in the NVIC. 
+    *  When using an external interrupt the API for the interrupt component must 
+    *  be used to disable the interrupt.
+    *
+    *******************************************************************************/    
+    #define UART_1_DisableInt()   CyIntDisable(UART_1_ISR_NUMBER)
+    /** @} interrupt */
+
+    /*******************************************************************************
+    * Function Name: UART_1_ClearPendingInt
+    ****************************************************************************//**
+    *
+    *  This function clears the interrupt pending status in the NVIC. 
+    *
+    *******************************************************************************/
     #define UART_1_ClearPendingInt()  CyIntClearPending(UART_1_ISR_NUMBER)
 #endif /* (UART_1_SCB_IRQ_INTERNAL) */
 
 #if (UART_1_UART_RX_WAKEUP_IRQ)
-    #define UART_1_RxWakeEnableInt()        CyIntEnable      (UART_1_RX_WAKE_ISR_NUMBER)
-    #define UART_1_RxWakeDisableInt()       CyIntDisable     (UART_1_RX_WAKE_ISR_NUMBER)
+    /*******************************************************************************
+    * Function Name: UART_1_RxWakeEnableInt
+    ****************************************************************************//**
+    *
+    *  This function enables the interrupt (RX_WAKE) pending status in the NVIC. 
+    *
+    *******************************************************************************/    
+    #define UART_1_RxWakeEnableInt()  CyIntEnable(UART_1_RX_WAKE_ISR_NUMBER)
+    
+
+    /*******************************************************************************
+    * Function Name: UART_1_RxWakeDisableInt
+    ****************************************************************************//**
+    *
+    *  This function disables the interrupt (RX_WAKE) pending status in the NVIC.  
+    *
+    *******************************************************************************/
+    #define UART_1_RxWakeDisableInt() CyIntDisable(UART_1_RX_WAKE_ISR_NUMBER)
+    
+    
+    /*******************************************************************************
+    * Function Name: UART_1_RxWakeClearPendingInt
+    ****************************************************************************//**
+    *
+    *  This function clears the interrupt (RX_WAKE) pending status in the NVIC. 
+    *
+    *******************************************************************************/    
     #define UART_1_RxWakeClearPendingInt()  CyIntClearPending(UART_1_RX_WAKE_ISR_NUMBER)
 #endif /* (UART_1_UART_RX_WAKEUP_IRQ) */
 
+/**
+* \addtogroup group_interrupt
+* @{
+*/
 /* Get interrupt cause */
+/*******************************************************************************
+* Function Name: UART_1_GetInterruptCause
+****************************************************************************//**
+*
+*  Returns a mask of bits showing the source of the current triggered interrupt. 
+*  This is useful for modes of operation where an interrupt can be generated by 
+*  conditions in multiple interrupt source registers.
+*
+*  \return
+*   Mask with the OR of the following conditions that have been triggered.
+*    - UART_1_INTR_CAUSE_MASTER - Interrupt from Master
+*    - UART_1_INTR_CAUSE_SLAVE - Interrupt from Slave
+*    - UART_1_INTR_CAUSE_TX - Interrupt from TX
+*    - UART_1_INTR_CAUSE_RX - Interrupt from RX
+*
+*******************************************************************************/
 #define UART_1_GetInterruptCause()    (UART_1_INTR_CAUSE_REG)
 
+
 /* APIs to service INTR_RX register */
+/*******************************************************************************
+* Function Name: UART_1_GetRxInterruptSource
+****************************************************************************//**
+*
+*  Returns RX interrupt request register. This register contains current status 
+*  of RX interrupt sources.
+*
+*  \return
+*   Current status of RX interrupt sources.
+*   Each constant is a bit field value. The value returned may have multiple 
+*   bits set to indicate the current status.
+*   - UART_1_INTR_RX_FIFO_LEVEL - The number of data elements in the 
+      RX FIFO is greater than the value of RX FIFO level.
+*   - UART_1_INTR_RX_NOT_EMPTY - Receiver FIFO is not empty.
+*   - UART_1_INTR_RX_FULL - Receiver FIFO is full.
+*   - UART_1_INTR_RX_OVERFLOW - Attempt to write to a full 
+*     receiver FIFO.
+*   - UART_1_INTR_RX_UNDERFLOW - Attempt to read from an empty 
+*     receiver FIFO.
+*   - UART_1_INTR_RX_FRAME_ERROR - UART framing error detected.
+*   - UART_1_INTR_RX_PARITY_ERROR - UART parity error detected.
+*
+*******************************************************************************/
+#define UART_1_GetRxInterruptSource() (UART_1_INTR_RX_REG)
+
+
+/*******************************************************************************
+* Function Name: UART_1_SetRxInterruptMode
+****************************************************************************//**
+*
+*  Writes RX interrupt mask register. This register configures which bits from 
+*  RX interrupt request register will trigger an interrupt event.
+*
+*  \param interruptMask: RX interrupt sources to be enabled (refer to 
+*   UART_1_GetRxInterruptSource() function for bit fields values).
+*
+*******************************************************************************/
 #define UART_1_SetRxInterruptMode(interruptMask)     UART_1_WRITE_INTR_RX_MASK(interruptMask)
-#define UART_1_ClearRxInterruptSource(interruptMask) UART_1_CLEAR_INTR_RX(interruptMask)
-#define UART_1_SetRxInterrupt(interruptMask)         UART_1_SET_INTR_RX(interruptMask)
-#define UART_1_GetRxInterruptSource()                (UART_1_INTR_RX_REG)
-#define UART_1_GetRxInterruptMode()                  (UART_1_INTR_RX_MASK_REG)
-#define UART_1_GetRxInterruptSourceMasked()          (UART_1_INTR_RX_MASKED_REG)
+
+
+/*******************************************************************************
+* Function Name: UART_1_GetRxInterruptMode
+****************************************************************************//**
+*
+*  Returns RX interrupt mask register This register specifies which bits from 
+*  RX interrupt request register will trigger an interrupt event.
+*
+*  \return 
+*   RX interrupt sources to be enabled (refer to 
+*   UART_1_GetRxInterruptSource() function for bit fields values).
+*
+*******************************************************************************/
+#define UART_1_GetRxInterruptMode()   (UART_1_INTR_RX_MASK_REG)
+
+
+/*******************************************************************************
+* Function Name: UART_1_GetRxInterruptSourceMasked
+****************************************************************************//**
+*
+*  Returns RX interrupt masked request register. This register contains logical
+*  AND of corresponding bits from RX interrupt request and mask registers.
+*  This function is intended to be used in the interrupt service routine to 
+*  identify which of enabled RX interrupt sources cause interrupt event.
+*
+*  \return 
+*   Current status of enabled RX interrupt sources (refer to 
+*   UART_1_GetRxInterruptSource() function for bit fields values).
+*
+*******************************************************************************/
+#define UART_1_GetRxInterruptSourceMasked()   (UART_1_INTR_RX_MASKED_REG)
+
+
+/*******************************************************************************
+* Function Name: UART_1_ClearRxInterruptSource
+****************************************************************************//**
+*
+*  Clears RX interrupt sources in the interrupt request register.
+*
+*  \param interruptMask: RX interrupt sources to be cleared (refer to 
+*   UART_1_GetRxInterruptSource() function for bit fields values).
+*
+*  \sideeffects 
+*   The side effects are listed in the table below for each 
+*   affected interrupt source. Refer to section RX FIFO interrupt sources for 
+*   detailed description.
+*   - UART_1_INTR_RX_FIFO_LEVEL Interrupt source is not cleared when 
+*     the receiver FIFO has more entries than level.
+*   - UART_1_INTR_RX_NOT_EMPTY Interrupt source is not cleared when
+*     receiver FIFO is not empty.
+*   - UART_1_INTR_RX_FULL Interrupt source is not cleared when 
+*      receiver FIFO is full.
+*
+*******************************************************************************/
+#define UART_1_ClearRxInterruptSource(interruptMask)  UART_1_CLEAR_INTR_RX(interruptMask)
+
+
+/*******************************************************************************
+* Function Name: UART_1_SetRxInterrupt
+****************************************************************************//**
+*
+*  Sets RX interrupt sources in the interrupt request register.
+*
+*  \param interruptMask: RX interrupt sources to set in the RX interrupt request 
+*   register (refer to UART_1_GetRxInterruptSource() function for bit 
+*   fields values).
+*
+*******************************************************************************/
+#define UART_1_SetRxInterrupt(interruptMask)  UART_1_SET_INTR_RX(interruptMask)
+
 void UART_1_SetRxFifoLevel(uint32 level);
 
+
 /* APIs to service INTR_TX register */
-#define UART_1_SetTxInterruptMode(interruptMask)     UART_1_WRITE_INTR_TX_MASK(interruptMask)
-#define UART_1_ClearTxInterruptSource(interruptMask) UART_1_CLEAR_INTR_TX(interruptMask)
-#define UART_1_SetTxInterrupt(interruptMask)         UART_1_SET_INTR_TX(interruptMask)
-#define UART_1_GetTxInterruptSource()                (UART_1_INTR_TX_REG)
-#define UART_1_GetTxInterruptMode()                  (UART_1_INTR_TX_MASK_REG)
-#define UART_1_GetTxInterruptSourceMasked()          (UART_1_INTR_TX_MASKED_REG)
+/*******************************************************************************
+* Function Name: UART_1_GetTxInterruptSource
+****************************************************************************//**
+*
+*  Returns TX interrupt request register. This register contains current status 
+*  of TX interrupt sources.
+* 
+*  \return 
+*   Current status of TX interrupt sources.
+*   Each constant is a bit field value. The value returned may have multiple 
+*   bits set to indicate the current status.
+*   - UART_1_INTR_TX_FIFO_LEVEL - The number of data elements in the 
+*     TX FIFO is less than the value of TX FIFO level.
+*   - UART_1_INTR_TX_NOT_FULL - Transmitter FIFO is not full.
+*   - UART_1_INTR_TX_EMPTY - Transmitter FIFO is empty.
+*   - UART_1_INTR_TX_OVERFLOW - Attempt to write to a full 
+*     transmitter FIFO.
+*   - UART_1_INTR_TX_UNDERFLOW - Attempt to read from an empty 
+*     transmitter FIFO.
+*   - UART_1_INTR_TX_UART_NACK - UART received a NACK in SmartCard 
+*   mode.
+*   - UART_1_INTR_TX_UART_DONE - UART transfer is complete. 
+*     All data elements from the TX FIFO are sent.
+*   - UART_1_INTR_TX_UART_ARB_LOST - Value on the TX line of the UART
+*     does not match the value on the RX line.
+*
+*******************************************************************************/
+#define UART_1_GetTxInterruptSource() (UART_1_INTR_TX_REG)
+
+
+/*******************************************************************************
+* Function Name: UART_1_SetTxInterruptMode
+****************************************************************************//**
+*
+*  Writes TX interrupt mask register. This register configures which bits from 
+*  TX interrupt request register will trigger an interrupt event.
+*
+*  \param interruptMask: TX interrupt sources to be enabled (refer to 
+*   UART_1_GetTxInterruptSource() function for bit field values).
+*
+*******************************************************************************/
+#define UART_1_SetTxInterruptMode(interruptMask)  UART_1_WRITE_INTR_TX_MASK(interruptMask)
+
+
+/*******************************************************************************
+* Function Name: UART_1_GetTxInterruptMode
+****************************************************************************//**
+*
+*  Returns TX interrupt mask register This register specifies which bits from 
+*  TX interrupt request register will trigger an interrupt event.
+*
+*  \return 
+*   Enabled TX interrupt sources (refer to 
+*   UART_1_GetTxInterruptSource() function for bit field values).
+*   
+*******************************************************************************/
+#define UART_1_GetTxInterruptMode()   (UART_1_INTR_TX_MASK_REG)
+
+
+/*******************************************************************************
+* Function Name: UART_1_GetTxInterruptSourceMasked
+****************************************************************************//**
+*
+*  Returns TX interrupt masked request register. This register contains logical
+*  AND of corresponding bits from TX interrupt request and mask registers.
+*  This function is intended to be used in the interrupt service routine to identify 
+*  which of enabled TX interrupt sources cause interrupt event.
+*
+*  \return 
+*   Current status of enabled TX interrupt sources (refer to 
+*   UART_1_GetTxInterruptSource() function for bit field values).
+*
+*******************************************************************************/
+#define UART_1_GetTxInterruptSourceMasked()   (UART_1_INTR_TX_MASKED_REG)
+
+
+/*******************************************************************************
+* Function Name: UART_1_ClearTxInterruptSource
+****************************************************************************//**
+*
+*  Clears TX interrupt sources in the interrupt request register.
+*
+*  \param interruptMask: TX interrupt sources to be cleared (refer to 
+*   UART_1_GetTxInterruptSource() function for bit field values).
+*
+*  \sideeffects 
+*   The side effects are listed in the table below for each affected interrupt 
+*   source. Refer to section TX FIFO interrupt sources for detailed description.
+*   - UART_1_INTR_TX_FIFO_LEVEL - Interrupt source is not cleared when 
+*     transmitter FIFO has less entries than level.
+*   - UART_1_INTR_TX_NOT_FULL - Interrupt source is not cleared when
+*     transmitter FIFO has empty entries.
+*   - UART_1_INTR_TX_EMPTY - Interrupt source is not cleared when 
+*     transmitter FIFO is empty.
+*   - UART_1_INTR_TX_UNDERFLOW - Interrupt source is not cleared when 
+*     transmitter FIFO is empty and I2C mode with clock stretching is selected. 
+*     Put data into the transmitter FIFO before clearing it. This behavior only 
+*     applicable for PSoC 4100/PSoC 4200 devices.
+*
+*******************************************************************************/
+#define UART_1_ClearTxInterruptSource(interruptMask)  UART_1_CLEAR_INTR_TX(interruptMask)
+
+
+/*******************************************************************************
+* Function Name: UART_1_SetTxInterrupt
+****************************************************************************//**
+*
+*  Sets RX interrupt sources in the interrupt request register.
+*
+*  \param interruptMask: RX interrupt sources to set in the RX interrupt request 
+*   register (refer to UART_1_GetRxInterruptSource() function for bit 
+*   fields values).
+*
+*******************************************************************************/
+#define UART_1_SetTxInterrupt(interruptMask)  UART_1_SET_INTR_TX(interruptMask)
+
 void UART_1_SetTxFifoLevel(uint32 level);
 
+
 /* APIs to service INTR_MASTER register */
-#define UART_1_SetMasterInterruptMode(interruptMask)    UART_1_WRITE_INTR_MASTER_MASK(interruptMask)
-#define UART_1_ClearMasterInterruptSource(interruptMask) UART_1_CLEAR_INTR_MASTER(interruptMask)
-#define UART_1_SetMasterInterrupt(interruptMask)         UART_1_SET_INTR_MASTER(interruptMask)
-#define UART_1_GetMasterInterruptSource()                (UART_1_INTR_MASTER_REG)
-#define UART_1_GetMasterInterruptMode()                  (UART_1_INTR_MASTER_MASK_REG)
-#define UART_1_GetMasterInterruptSourceMasked()          (UART_1_INTR_MASTER_MASKED_REG)
+/*******************************************************************************
+* Function Name: UART_1_GetMasterInterruptSource
+****************************************************************************//**
+*
+*  Returns Master interrupt request register. This register contains current 
+*  status of Master interrupt sources.
+*
+*  \return 
+*   Current status of Master interrupt sources. 
+*   Each constant is a bit field value. The value returned may have multiple 
+*   bits set to indicate the current status.
+*   - UART_1_INTR_MASTER_SPI_DONE - SPI master transfer is complete.
+*     Refer to Interrupt sources section for detailed description.
+*   - UART_1_INTR_MASTER_I2C_ARB_LOST - I2C master lost arbitration.
+*   - UART_1_INTR_MASTER_I2C_NACK - I2C master received negative 
+*    acknowledgement (NAK).
+*   - UART_1_INTR_MASTER_I2C_ACK - I2C master received acknowledgement.
+*   - UART_1_INTR_MASTER_I2C_STOP - I2C master generated STOP.
+*   - UART_1_INTR_MASTER_I2C_BUS_ERROR - I2C master bus error 
+*     (detection of unexpected START or STOP condition).
+*
+*******************************************************************************/
+#define UART_1_GetMasterInterruptSource() (UART_1_INTR_MASTER_REG)
+
+/*******************************************************************************
+* Function Name: UART_1_SetMasterInterruptMode
+****************************************************************************//**
+*
+*  Writes Master interrupt mask register. This register configures which bits 
+*  from Master interrupt request register will trigger an interrupt event.
+*
+*  \param interruptMask: Master interrupt sources to be enabled (refer to 
+*   UART_1_GetMasterInterruptSource() function for bit field values).
+*
+*******************************************************************************/
+#define UART_1_SetMasterInterruptMode(interruptMask)  UART_1_WRITE_INTR_MASTER_MASK(interruptMask)
+
+/*******************************************************************************
+* Function Name: UART_1_GetMasterInterruptMode
+****************************************************************************//**
+*
+*  Returns Master interrupt mask register This register specifies which bits 
+*  from Master interrupt request register will trigger an interrupt event.
+*
+*  \return 
+*   Enabled Master interrupt sources (refer to 
+*   UART_1_GetMasterInterruptSource() function for return values).
+*
+*******************************************************************************/
+#define UART_1_GetMasterInterruptMode()   (UART_1_INTR_MASTER_MASK_REG)
+
+/*******************************************************************************
+* Function Name: UART_1_GetMasterInterruptSourceMasked
+****************************************************************************//**
+*
+*  Returns Master interrupt masked request register. This register contains 
+*  logical AND of corresponding bits from Master interrupt request and mask 
+*  registers.
+*  This function is intended to be used in the interrupt service routine to 
+*  identify which of enabled Master interrupt sources cause interrupt event.
+*
+*  \return 
+*   Current status of enabled Master interrupt sources (refer to 
+*   UART_1_GetMasterInterruptSource() function for return values).
+*
+*******************************************************************************/
+#define UART_1_GetMasterInterruptSourceMasked()   (UART_1_INTR_MASTER_MASKED_REG)
+
+/*******************************************************************************
+* Function Name: UART_1_ClearMasterInterruptSource
+****************************************************************************//**
+*
+*  Clears Master interrupt sources in the interrupt request register.
+*
+*  \param interruptMask: Master interrupt sources to be cleared (refer to 
+*   UART_1_GetMasterInterruptSource() function for bit field values).
+*
+*******************************************************************************/
+#define UART_1_ClearMasterInterruptSource(interruptMask)  UART_1_CLEAR_INTR_MASTER(interruptMask)
+
+/*******************************************************************************
+* Function Name: UART_1_SetMasterInterrupt
+****************************************************************************//**
+*
+*  Sets Master interrupt sources in the interrupt request register.
+*
+*  \param interruptMask: Master interrupt sources to set in the Master interrupt
+*   request register (refer to UART_1_GetMasterInterruptSource() 
+*   function for bit field values).
+*
+*******************************************************************************/
+#define UART_1_SetMasterInterrupt(interruptMask)  UART_1_SET_INTR_MASTER(interruptMask)
+
 
 /* APIs to service INTR_SLAVE register */
-#define UART_1_SetSlaveInterruptMode(interruptMask)     UART_1_WRITE_INTR_SLAVE_MASK(interruptMask)
-#define UART_1_ClearSlaveInterruptSource(interruptMask) UART_1_CLEAR_INTR_SLAVE(interruptMask)
-#define UART_1_SetSlaveInterrupt(interruptMask)         UART_1_SET_INTR_SLAVE(interruptMask)
-#define UART_1_GetSlaveInterruptSource()                (UART_1_INTR_SLAVE_REG)
-#define UART_1_GetSlaveInterruptMode()                  (UART_1_INTR_SLAVE_MASK_REG)
-#define UART_1_GetSlaveInterruptSourceMasked()          (UART_1_INTR_SLAVE_MASKED_REG)
+/*******************************************************************************
+* Function Name: UART_1_GetSlaveInterruptSource
+****************************************************************************//**
+*
+*  Returns Slave interrupt request register. This register contains current 
+*  status of Slave interrupt sources.
+*
+*  \return 
+*   Current status of Slave interrupt sources.
+*   Each constant is a bit field value. The value returned may have multiple 
+*   bits set to indicate the current status.
+*   - UART_1_INTR_SLAVE_I2C_ARB_LOST - I2C slave lost arbitration: 
+*     the value driven on the SDA line is not the same as the value observed 
+*     on the SDA line.
+*   - UART_1_INTR_SLAVE_I2C_NACK - I2C slave received negative 
+*     acknowledgement (NAK).
+*   - UART_1_INTR_SLAVE_I2C_ACK - I2C slave received 
+*     acknowledgement (ACK).
+*   - UART_1_INTR_SLAVE_I2C_WRITE_STOP - Stop or Repeated Start 
+*     event for write transfer intended for this slave (address matching 
+*     is performed).
+*   - UART_1_INTR_SLAVE_I2C_STOP - Stop or Repeated Start event 
+*     for (read or write) transfer intended for this slave (address matching 
+*     is performed).
+*   - UART_1_INTR_SLAVE_I2C_START - I2C slave received Start 
+*     condition.
+*   - UART_1_INTR_SLAVE_I2C_ADDR_MATCH - I2C slave received matching 
+*     address.
+*   - UART_1_INTR_SLAVE_I2C_GENERAL - I2C Slave received general 
+*     call address.
+*   - UART_1_INTR_SLAVE_I2C_BUS_ERROR - I2C slave bus error (detection 
+*      of unexpected Start or Stop condition).
+*   - UART_1_INTR_SLAVE_SPI_BUS_ERROR - SPI slave select line is 
+*      deselected at an expected time while the SPI transfer.
+*
+*******************************************************************************/
+#define UART_1_GetSlaveInterruptSource()  (UART_1_INTR_SLAVE_REG)
+
+/*******************************************************************************
+* Function Name: UART_1_SetSlaveInterruptMode
+****************************************************************************//**
+*
+*  Writes Slave interrupt mask register. 
+*  This register configures which bits from Slave interrupt request register 
+*  will trigger an interrupt event.
+*
+*  \param interruptMask: Slave interrupt sources to be enabled (refer to 
+*   UART_1_GetSlaveInterruptSource() function for bit field values).
+*
+*******************************************************************************/
+#define UART_1_SetSlaveInterruptMode(interruptMask)   UART_1_WRITE_INTR_SLAVE_MASK(interruptMask)
+
+/*******************************************************************************
+* Function Name: UART_1_GetSlaveInterruptMode
+****************************************************************************//**
+*
+*  Returns Slave interrupt mask register.
+*  This register specifies which bits from Slave interrupt request register 
+*  will trigger an interrupt event.
+*
+*  \return 
+*   Enabled Slave interrupt sources(refer to 
+*   UART_1_GetSlaveInterruptSource() function for bit field values).
+*
+*******************************************************************************/
+#define UART_1_GetSlaveInterruptMode()    (UART_1_INTR_SLAVE_MASK_REG)
+
+/*******************************************************************************
+* Function Name: UART_1_GetSlaveInterruptSourceMasked
+****************************************************************************//**
+*
+*  Returns Slave interrupt masked request register. This register contains 
+*  logical AND of corresponding bits from Slave interrupt request and mask 
+*  registers.
+*  This function is intended to be used in the interrupt service routine to 
+*  identify which of enabled Slave interrupt sources cause interrupt event.
+*
+*  \return 
+*   Current status of enabled Slave interrupt sources (refer to 
+*   UART_1_GetSlaveInterruptSource() function for return values).
+*
+*******************************************************************************/
+#define UART_1_GetSlaveInterruptSourceMasked()    (UART_1_INTR_SLAVE_MASKED_REG)
+
+/*******************************************************************************
+* Function Name: UART_1_ClearSlaveInterruptSource
+****************************************************************************//**
+*
+*  Clears Slave interrupt sources in the interrupt request register.
+*
+*  \param interruptMask: Slave interrupt sources to be cleared (refer to 
+*   UART_1_GetSlaveInterruptSource() function for return values).
+*
+*******************************************************************************/
+#define UART_1_ClearSlaveInterruptSource(interruptMask)   UART_1_CLEAR_INTR_SLAVE(interruptMask)
+
+/*******************************************************************************
+* Function Name: UART_1_SetSlaveInterrupt
+****************************************************************************//**
+*
+*  Sets Slave interrupt sources in the interrupt request register.
+*
+*  \param interruptMask: Slave interrupt sources to set in the Slave interrupt 
+*   request register (refer to UART_1_GetSlaveInterruptSource() 
+*   function for return values).
+*
+*******************************************************************************/
+#define UART_1_SetSlaveInterrupt(interruptMask)   UART_1_SET_INTR_SLAVE(interruptMask)
+
+/** @} interrupt */ 
 
 
 /***************************************
 *     Vars with External Linkage
 ***************************************/
 
-extern uint8 UART_1_initVar;
+/**
+* \addtogroup group_globals
+* @{
+*/
 
+/** UART_1_initVar indicates whether the UART_1 
+*  component has been initialized. The variable is initialized to 0 
+*  and set to 1 the first time SCB_Start() is called. This allows 
+*  the component to restart without reinitialization after the first 
+*  call to the UART_1_Start() routine.
+*
+*  If re-initialization of the component is required, then the 
+*  UART_1_Init() function can be called before the 
+*  UART_1_Start() or UART_1_Enable() function.
+*/
+extern uint8 UART_1_initVar;
+/** @} globals */
 
 /***************************************
 *              Registers
@@ -251,8 +769,13 @@ extern uint8 UART_1_initVar;
 #define UART_1_RX_FIFO_RD_SILENT_REG  (*(reg32 *) UART_1_SCB__RX_FIFO_RD_SILENT)
 #define UART_1_RX_FIFO_RD_SILENT_PTR  ( (reg32 *) UART_1_SCB__RX_FIFO_RD_SILENT)
 
-#define UART_1_EZBUF_DATA00_REG       (*(reg32 *) UART_1_SCB__EZ_DATA00)
-#define UART_1_EZBUF_DATA00_PTR       ( (reg32 *) UART_1_SCB__EZ_DATA00)
+#ifdef UART_1_SCB__EZ_DATA0
+    #define UART_1_EZBUF_DATA0_REG    (*(reg32 *) UART_1_SCB__EZ_DATA0)
+    #define UART_1_EZBUF_DATA0_PTR    ( (reg32 *) UART_1_SCB__EZ_DATA0)
+#else
+    #define UART_1_EZBUF_DATA0_REG    (*(reg32 *) UART_1_SCB__EZ_DATA00)
+    #define UART_1_EZBUF_DATA0_PTR    ( (reg32 *) UART_1_SCB__EZ_DATA00)
+#endif /* UART_1_SCB__EZ_DATA00 */
 
 #define UART_1_INTR_CAUSE_REG         (*(reg32 *) UART_1_SCB__INTR_CAUSE)
 #define UART_1_INTR_CAUSE_PTR         ( (reg32 *) UART_1_SCB__INTR_CAUSE)
@@ -325,13 +848,12 @@ extern uint8 UART_1_initVar;
 #define UART_1_INTR_RX_MASKED_REG     (*(reg32 *) UART_1_SCB__INTR_RX_MASKED)
 #define UART_1_INTR_RX_MASKED_PTR     ( (reg32 *) UART_1_SCB__INTR_RX_MASKED)
 
-#if (UART_1_CY_SCBIP_V0 || UART_1_CY_SCBIP_V1)
-    #define UART_1_FF_DATA_NR_LOG2_PLUS1_MASK (0x0Fu) /* FF_DATA_NR_LOG2_PLUS1 = 4, MASK = 2^4 - 1 = 15 */
-    #define UART_1_FF_DATA_NR_LOG2_MASK       (0x07u) /* FF_DATA_NR_LOG2 = 3, MASK = 2^3 - 1 = 7 */
-#else
-    #define UART_1_FF_DATA_NR_LOG2_PLUS1_MASK (0x1Fu) /* FF_DATA_NR_LOG2_PLUS1 = 5, MASK = 2^5 - 1 = 31 */
-    #define UART_1_FF_DATA_NR_LOG2_MASK       (0x0Fu) /* FF_DATA_NR_LOG2 = 4, MASK = 2^4 - 1 = 15 */
-#endif /* (UART_1_CY_SCBIP_V0 || UART_1_CY_SCBIP_V1) */
+/* Defines get from SCB IP parameters. */
+#define UART_1_FIFO_SIZE      (8u)  /* TX or RX FIFO size. */
+#define UART_1_EZ_DATA_NR     (32u)  /* Number of words in EZ memory. */ 
+#define UART_1_ONE_BYTE_WIDTH (8u)            /* Number of bits in one byte. */
+#define UART_1_FF_DATA_NR_LOG2_MASK       (0x07u)      /* Number of bits to represent a FIFO address. */
+#define UART_1_FF_DATA_NR_LOG2_PLUS1_MASK (0x0Fu) /* Number of bits to represent #bytes in FIFO. */
 
 
 /***************************************
@@ -923,11 +1445,6 @@ extern uint8 UART_1_initVar;
                                              UART_1_INTR_RX_PARITY_ERROR | \
                                              UART_1_INTR_RX_BAUD_DETECT  | \
                                              UART_1_INTR_RX_BREAK_DETECT)
-
-/* General usage HW definitions */
-#define UART_1_ONE_BYTE_WIDTH (8u)   /* Number of bits in one byte           */
-#define UART_1_FIFO_SIZE      (8u)   /* Size of TX or RX FIFO: defined by HW */
-#define UART_1_EZBUFFER_SIZE  (32u)  /* EZ Buffer size: defined by HW        */
 
 /* I2C and EZI2C slave address defines */
 #define UART_1_I2C_SLAVE_ADDR_POS    (0x01u)    /* 7-bit address shift */
@@ -1585,6 +2102,10 @@ extern uint8 UART_1_initVar;
 #endif /* (!UART_1_CY_SCBIP_V1) */
 
 #define UART_1_CY_SCBIP_V1_I2C_ONLY   (UART_1_CY_SCBIP_V1)
+#define UART_1_EZBUFFER_SIZE          (UART_1_EZ_DATA_NR)
+
+#define UART_1_EZBUF_DATA00_REG   UART_1_EZBUF_DATA0_REG
+#define UART_1_EZBUF_DATA00_PTR   UART_1_EZBUF_DATA0_PTR
 
 #endif /* (CY_SCB_UART_1_H) */
 

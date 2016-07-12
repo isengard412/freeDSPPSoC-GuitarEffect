@@ -1,15 +1,16 @@
-/*******************************************************************************
-* File Name: UART_1_UART_BOOT.c
-* Version 3.10
+/***************************************************************************//**
+* \file UART_1_UART_BOOT.c
+* \version 3.20
 *
-* Description:
+* \brief
 *  This file provides the source code of the bootloader communication APIs
 *  for the SCB Component UART mode.
 *
 * Note:
 *
 ********************************************************************************
-* Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* \copyright
+* Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -22,16 +23,9 @@
 
 /*******************************************************************************
 * Function Name: UART_1_UartCyBtldrCommStart
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
 *  Starts the UART component.
-*
-* Parameters:
-*  None
-*
-* Return:
-*  None
 *
 *******************************************************************************/
 void UART_1_UartCyBtldrCommStart(void)
@@ -42,16 +36,9 @@ void UART_1_UartCyBtldrCommStart(void)
 
 /*******************************************************************************
 * Function Name: UART_1_UartCyBtldrCommStop
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
 *  Disables the UART component.
-*
-* Parameters:
-*  None
-*
-* Return:
-*  None
 *
 *******************************************************************************/
 void UART_1_UartCyBtldrCommStop(void)
@@ -62,16 +49,9 @@ void UART_1_UartCyBtldrCommStop(void)
 
 /*******************************************************************************
 * Function Name: UART_1_UartCyBtldrCommReset
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
 *  Resets the receive and transmit communication buffers.
-*
-* Parameters:
-*  None
-*
-* Return:
-*  None
 *
 *******************************************************************************/
 void UART_1_UartCyBtldrCommReset(void)
@@ -84,26 +64,24 @@ void UART_1_UartCyBtldrCommReset(void)
 
 /*******************************************************************************
 * Function Name: UART_1_UartCyBtldrCommRead
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
 *  Allows the caller to read data from the bootloader host (the host writes the
 *  data). The function handles polling to allow a block of data to be completely
 *  received from the host device.
 *
-* Parameters:
-*  pData:    Pointer to storage for the block of data to be read from the
-*            bootloader host
-*  size:     Number of bytes to be read.
-*  count:    Pointer to the variable to write the number of bytes actually
-*            read.
-*  timeOut:  Number of units in 10 ms to wait before returning because of a
-*            timeout.
+*  \param pData: Pointer to storage for the block of data to be read from the
+*   bootloader host
+*  \param size: Number of bytes to be read.
+*  \param count: Pointer to the variable to write the number of bytes actually
+*   read.
+*  \param timeOut Number of units in 10 ms to wait before returning
+*   because of a timeout.
 *
-* Return:
-*  Returns CYRET_SUCCESS if no problem was encountered or returns the value
-*  that best describes the problem. For more information refer to the
-*  "Return Codes" section of the System Reference Guide.
+*  \return
+*   Returns CYRET_SUCCESS if no problem was encountered or returns the value
+*   that best describes the problem. For more information refer to the
+*   "Return Codes" section of the System Reference Guide.
 *
 *******************************************************************************/
 cystatus UART_1_UartCyBtldrCommRead(uint8 pData[], uint16 size, uint16 * count, uint8 timeOut)
@@ -160,27 +138,26 @@ cystatus UART_1_UartCyBtldrCommRead(uint8 pData[], uint16 size, uint16 * count, 
 
 /*******************************************************************************
 * Function Name: UART_1_UartCyBtldrCommWrite
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
 *  Allows the caller to write data to the bootloader host (the host reads the
 *  data). The function does not use timeout and returns after data has been
 *  copied into the transmit buffer. The data transmission starts immediately
 *  after the first data element is written into the buffer and lasts until all
 *  data elements from the buffer are sent.
 *
-* Parameters:
-*  pData:    Pointer to the block of data to be written to the bootloader host.
-*  size:     Number of bytes to be written.
-*  count:    Pointer to the variable to write the number of bytes actually
-*            written.
-*  timeOut:  The timeout is not used by this function. The function returns
-*            as soon as data is copied into the transmit buffer.
+*  \param pData: Pointer to the block of data to be written to the bootloader
+*   host.
+*  \param size: Number of bytes to be written.
+*  \param count: Pointer to the variable to write the number of bytes actually
+*   written.
+*  \param timeOut: The timeout is not used by this function.
+*   The function returns as soon as data is copied into the transmit buffer.
 *
-* Return:
-*  Returns CYRET_SUCCESS if no problem was encountered or returns the value
-*  that best describes the problem. For more information refer to the
-*  "Return Codes" section of the System Reference Guide.
+*  \return
+*   Returns CYRET_SUCCESS if no problem was encountered or returns the value
+*   that best describes the problem. For more information refer to the
+*   "Return Codes" section of the System Reference Guide.
 *
 *******************************************************************************/
 cystatus UART_1_UartCyBtldrCommWrite(const uint8 pData[], uint16 size, uint16 * count, uint8 timeOut)
