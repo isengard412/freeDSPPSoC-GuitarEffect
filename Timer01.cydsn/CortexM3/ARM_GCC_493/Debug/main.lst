@@ -1,0 +1,742 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"main.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.comm	InterruptCnt,1,1
+  19              		.section	.text.InterruptHandler,"ax",%progbits
+  20              		.align	2
+  21              		.global	InterruptHandler
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	InterruptHandler, %function
+  25              	InterruptHandler:
+  26              	.LFB63:
+  27              		.file 1 ".\\main.c"
+   1:.\main.c      **** /********************************************************************************
+   2:.\main.c      **** * File Name: main.c
+   3:.\main.c      **** *
+   4:.\main.c      **** * Version : 1.00
+   5:.\main.c      **** *
+   6:.\main.c      **** * Description: 
+   7:.\main.c      **** *  This is a source code for example project of 16 bit Timer UDB Block.
+   8:.\main.c      **** *
+   9:.\main.c      **** * Test Result:
+  10:.\main.c      **** *  Watch capture output on P0_0, tc output on P0_1, and Period, Compare and 
+  11:.\main.c      **** *  Count value on LCD.
+  12:.\main.c      **** *
+  13:.\main.c      **** ********************************************************************************
+  14:.\main.c      **** * Copyright 2012, Cypress Semiconductor Corporation. All rights reserved.
+  15:.\main.c      **** * This software is owned by Cypress Semiconductor Corporation and is protected
+  16:.\main.c      **** * by and subject to worldwide patent and copyright laws and treaties.
+  17:.\main.c      **** * Therefore, you may use this software only as provided in the license agreement
+  18:.\main.c      **** * accompanying the software package from which you obtained this software.
+  19:.\main.c      **** * CYPRESS AND ITS SUPPLIERS MAKE NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  20:.\main.c      **** * WITH REGARD TO THIS SOFTWARE, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT,
+  21:.\main.c      **** * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+  22:.\main.c      **** *******************************************************************************/
+  23:.\main.c      **** #include <device.h>
+  24:.\main.c      **** 
+  25:.\main.c      **** uint8 InterruptCnt;
+  26:.\main.c      **** 
+  27:.\main.c      **** 
+  28:.\main.c      **** /*******************************************************************************
+  29:.\main.c      **** * Define Interrupt service routine and allocate an vector to the Interrupt
+  30:.\main.c      **** ********************************************************************************/
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 2
+
+
+  31:.\main.c      **** CY_ISR(InterruptHandler)
+  32:.\main.c      **** {
+  28              		.loc 1 32 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 7, -4
+  36 0002 00AF     		add	r7, sp, #0
+  37              		.cfi_def_cfa_register 7
+  33:.\main.c      **** 	/* Read Status register in order to clear the sticky Terminal Count (TC) bit 
+  34:.\main.c      **** 	 * in the status register. Note that the function is not called, but rather 
+  35:.\main.c      **** 	 * the status is read directly.
+  36:.\main.c      **** 	 */
+  37:.\main.c      ****    	Timer_1_STATUS;
+  38              		.loc 1 37 0
+  39 0004 054B     		ldr	r3, .L2
+  40 0006 1B78     		ldrb	r3, [r3]
+  38:.\main.c      ****     
+  39:.\main.c      **** 	/* Increment the Counter to indicate the keep track of the number of 
+  40:.\main.c      ****      * interrupts received */
+  41:.\main.c      ****     InterruptCnt++;    
+  41              		.loc 1 41 0
+  42 0008 054B     		ldr	r3, .L2+4
+  43 000a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  44 000c 0133     		adds	r3, r3, #1
+  45 000e DAB2     		uxtb	r2, r3
+  46 0010 034B     		ldr	r3, .L2+4
+  47 0012 1A70     		strb	r2, [r3]
+  42:.\main.c      **** }
+  48              		.loc 1 42 0
+  49 0014 BD46     		mov	sp, r7
+  50              		.cfi_def_cfa_register 13
+  51              		@ sp needed
+  52 0016 5DF8047B 		ldr	r7, [sp], #4
+  53              		.cfi_restore 7
+  54              		.cfi_def_cfa_offset 0
+  55 001a 7047     		bx	lr
+  56              	.L3:
+  57              		.align	2
+  58              	.L2:
+  59 001c 63640040 		.word	1073767523
+  60 0020 00000000 		.word	InterruptCnt
+  61              		.cfi_endproc
+  62              	.LFE63:
+  63              		.size	InterruptHandler, .-InterruptHandler
+  64              		.section	.rodata
+  65              		.align	2
+  66              	.LC0:
+  67 0000 544D522D 		.ascii	"TMR-16\000"
+  67      313600
+  68 0007 00       		.align	2
+  69              	.LC1:
+  70 0008 496E7443 		.ascii	"IntCnt:\000"
+  70      6E743A00 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 3
+
+
+  71              		.section	.text.main,"ax",%progbits
+  72              		.align	2
+  73              		.global	main
+  74              		.thumb
+  75              		.thumb_func
+  76              		.type	main, %function
+  77              	main:
+  78              	.LFB64:
+  43:.\main.c      **** 
+  44:.\main.c      **** 
+  45:.\main.c      **** /*******************************************************************************
+  46:.\main.c      **** * Function Name: main
+  47:.\main.c      **** ********************************************************************************
+  48:.\main.c      **** *
+  49:.\main.c      **** * Summary:
+  50:.\main.c      **** * Main function performs following functions:
+  51:.\main.c      **** * 1: Enables the clock
+  52:.\main.c      **** * 2: Start the Timer
+  53:.\main.c      **** * 3: Initializes the LCD
+  54:.\main.c      **** * 4: Print Period, capture, counter value on LCD
+  55:.\main.c      **** * 
+  56:.\main.c      **** * Parameters:
+  57:.\main.c      **** *  None.
+  58:.\main.c      **** *
+  59:.\main.c      **** * Return:
+  60:.\main.c      **** *  None.
+  61:.\main.c      **** *
+  62:.\main.c      **** *******************************************************************************/
+  63:.\main.c      **** int main()
+  64:.\main.c      **** {   
+  79              		.loc 1 64 0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 1, uses_anonymous_args = 0
+  83 0000 80B5     		push	{r7, lr}
+  84              		.cfi_def_cfa_offset 8
+  85              		.cfi_offset 7, -8
+  86              		.cfi_offset 14, -4
+  87 0002 00AF     		add	r7, sp, #0
+  88              		.cfi_def_cfa_register 7
+  65:.\main.c      ****     /* Enable the global interrupt */
+  66:.\main.c      ****     CyGlobalIntEnable;
+  89              		.loc 1 66 0
+  90              	@ 66 ".\main.c" 1
+  91 0004 62B6     		CPSIE   i
+  92              	@ 0 "" 2
+  67:.\main.c      ****     
+  68:.\main.c      ****     /* Enable the Interrupt component connected to Timer interrupt */
+  69:.\main.c      ****     TimerISR_StartEx(InterruptHandler);
+  93              		.loc 1 69 0
+  94              		.thumb
+  95 0006 1E48     		ldr	r0, .L6
+  96 0008 FFF7FEFF 		bl	TimerISR_StartEx
+  70:.\main.c      **** 
+  71:.\main.c      **** 	/* Start the components */
+  72:.\main.c      ****     Timer_1_Start();
+  97              		.loc 1 72 0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 4
+
+
+  98 000c FFF7FEFF 		bl	Timer_1_Start
+  73:.\main.c      **** 
+  74:.\main.c      ****     /* Display TMR-16 on LCD */
+  75:.\main.c      ****     LCD_Start();
+  99              		.loc 1 75 0
+ 100 0010 FFF7FEFF 		bl	LCD_Start
+  76:.\main.c      ****     LCD_Position(0u, 0u);
+ 101              		.loc 1 76 0
+ 102 0014 0020     		movs	r0, #0
+ 103 0016 0021     		movs	r1, #0
+ 104 0018 FFF7FEFF 		bl	LCD_Position
+  77:.\main.c      ****     LCD_PrintString("TMR-16"); 
+ 105              		.loc 1 77 0
+ 106 001c 1948     		ldr	r0, .L6+4
+ 107 001e FFF7FEFF 		bl	LCD_PrintString
+ 108              	.L5:
+  78:.\main.c      **** 
+  79:.\main.c      ****     for(;;)
+  80:.\main.c      ****     {
+  81:.\main.c      ****         /* To display Period on LCD */
+  82:.\main.c      ****         LCD_Position(0u, 7u);
+ 109              		.loc 1 82 0 discriminator 1
+ 110 0022 0020     		movs	r0, #0
+ 111 0024 0721     		movs	r1, #7
+ 112 0026 FFF7FEFF 		bl	LCD_Position
+  83:.\main.c      ****         LCD_PrintInt16(Timer_1_ReadPeriod());
+ 113              		.loc 1 83 0 discriminator 1
+ 114 002a FFF7FEFF 		bl	Timer_1_ReadPeriod
+ 115 002e 0346     		mov	r3, r0
+ 116 0030 1846     		mov	r0, r3
+ 117 0032 FFF7FEFF 		bl	LCD_PrintInt16
+  84:.\main.c      **** 
+  85:.\main.c      ****         /* To display Capture value on LCD */
+  86:.\main.c      ****         LCD_Position(0u, 12u);
+ 118              		.loc 1 86 0 discriminator 1
+ 119 0036 0020     		movs	r0, #0
+ 120 0038 0C21     		movs	r1, #12
+ 121 003a FFF7FEFF 		bl	LCD_Position
+  87:.\main.c      ****         LCD_PrintInt16(Timer_1_ReadCapture());
+ 122              		.loc 1 87 0 discriminator 1
+ 123 003e FFF7FEFF 		bl	Timer_1_ReadCapture
+ 124 0042 0346     		mov	r3, r0
+ 125 0044 1846     		mov	r0, r3
+ 126 0046 FFF7FEFF 		bl	LCD_PrintInt16
+  88:.\main.c      **** 
+  89:.\main.c      ****         /* To display count on LCD */
+  90:.\main.c      ****         LCD_Position(1u, 0u);
+ 127              		.loc 1 90 0 discriminator 1
+ 128 004a 0120     		movs	r0, #1
+ 129 004c 0021     		movs	r1, #0
+ 130 004e FFF7FEFF 		bl	LCD_Position
+  91:.\main.c      ****         LCD_PrintInt16(Timer_1_ReadCounter());
+ 131              		.loc 1 91 0 discriminator 1
+ 132 0052 FFF7FEFF 		bl	Timer_1_ReadCounter
+ 133 0056 0346     		mov	r3, r0
+ 134 0058 1846     		mov	r0, r3
+ 135 005a FFF7FEFF 		bl	LCD_PrintInt16
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 5
+
+
+  92:.\main.c      **** 
+  93:.\main.c      ****         /* To display Interrupt count on LCD */
+  94:.\main.c      ****         LCD_Position(1u, 5u);
+ 136              		.loc 1 94 0 discriminator 1
+ 137 005e 0120     		movs	r0, #1
+ 138 0060 0521     		movs	r1, #5
+ 139 0062 FFF7FEFF 		bl	LCD_Position
+  95:.\main.c      ****         LCD_PrintString("IntCnt:");
+ 140              		.loc 1 95 0 discriminator 1
+ 141 0066 0848     		ldr	r0, .L6+8
+ 142 0068 FFF7FEFF 		bl	LCD_PrintString
+  96:.\main.c      ****         LCD_PrintInt16(InterruptCnt);
+ 143              		.loc 1 96 0 discriminator 1
+ 144 006c 074B     		ldr	r3, .L6+12
+ 145 006e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 146 0070 9BB2     		uxth	r3, r3
+ 147 0072 1846     		mov	r0, r3
+ 148 0074 FFF7FEFF 		bl	LCD_PrintInt16
+  97:.\main.c      **** 		
+  98:.\main.c      **** 		CyDelay(100u);
+ 149              		.loc 1 98 0 discriminator 1
+ 150 0078 6420     		movs	r0, #100
+ 151 007a FFF7FEFF 		bl	CyDelay
+  99:.\main.c      ****     }
+ 152              		.loc 1 99 0 discriminator 1
+ 153 007e D0E7     		b	.L5
+ 154              	.L7:
+ 155              		.align	2
+ 156              	.L6:
+ 157 0080 00000000 		.word	InterruptHandler
+ 158 0084 00000000 		.word	.LC0
+ 159 0088 08000000 		.word	.LC1
+ 160 008c 00000000 		.word	InterruptCnt
+ 161              		.cfi_endproc
+ 162              	.LFE64:
+ 163              		.size	main, .-main
+ 164              		.text
+ 165              	.Letext0:
+ 166              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 167              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 168              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 169              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 170              		.section	.debug_info,"",%progbits
+ 171              	.Ldebug_info0:
+ 172 0000 FF000000 		.4byte	0xff
+ 173 0004 0400     		.2byte	0x4
+ 174 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 175 000a 04       		.byte	0x4
+ 176 000b 01       		.uleb128 0x1
+ 177 000c D0000000 		.4byte	.LASF21
+ 178 0010 01       		.byte	0x1
+ 179 0011 5E010000 		.4byte	.LASF22
+ 180 0015 33000000 		.4byte	.LASF23
+ 181 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 182 001d 00000000 		.4byte	0
+ 183 0021 00000000 		.4byte	.Ldebug_line0
+ 184 0025 02       		.uleb128 0x2
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 6
+
+
+ 185 0026 01       		.byte	0x1
+ 186 0027 06       		.byte	0x6
+ 187 0028 84010000 		.4byte	.LASF0
+ 188 002c 02       		.uleb128 0x2
+ 189 002d 01       		.byte	0x1
+ 190 002e 08       		.byte	0x8
+ 191 002f AB000000 		.4byte	.LASF1
+ 192 0033 02       		.uleb128 0x2
+ 193 0034 02       		.byte	0x2
+ 194 0035 05       		.byte	0x5
+ 195 0036 A0010000 		.4byte	.LASF2
+ 196 003a 02       		.uleb128 0x2
+ 197 003b 02       		.byte	0x2
+ 198 003c 07       		.byte	0x7
+ 199 003d 0E000000 		.4byte	.LASF3
+ 200 0041 03       		.uleb128 0x3
+ 201 0042 90010000 		.4byte	.LASF9
+ 202 0046 02       		.byte	0x2
+ 203 0047 3F       		.byte	0x3f
+ 204 0048 4C000000 		.4byte	0x4c
+ 205 004c 02       		.uleb128 0x2
+ 206 004d 04       		.byte	0x4
+ 207 004e 05       		.byte	0x5
+ 208 004f 6E010000 		.4byte	.LASF4
+ 209 0053 02       		.uleb128 0x2
+ 210 0054 04       		.byte	0x4
+ 211 0055 07       		.byte	0x7
+ 212 0056 82000000 		.4byte	.LASF5
+ 213 005a 02       		.uleb128 0x2
+ 214 005b 08       		.byte	0x8
+ 215 005c 05       		.byte	0x5
+ 216 005d 00000000 		.4byte	.LASF6
+ 217 0061 02       		.uleb128 0x2
+ 218 0062 08       		.byte	0x8
+ 219 0063 07       		.byte	0x7
+ 220 0064 94000000 		.4byte	.LASF7
+ 221 0068 04       		.uleb128 0x4
+ 222 0069 04       		.byte	0x4
+ 223 006a 05       		.byte	0x5
+ 224 006b 696E7400 		.ascii	"int\000"
+ 225 006f 02       		.uleb128 0x2
+ 226 0070 04       		.byte	0x4
+ 227 0071 07       		.byte	0x7
+ 228 0072 21000000 		.4byte	.LASF8
+ 229 0076 03       		.uleb128 0x3
+ 230 0077 AA010000 		.4byte	.LASF10
+ 231 007b 03       		.byte	0x3
+ 232 007c 2C       		.byte	0x2c
+ 233 007d 41000000 		.4byte	0x41
+ 234 0081 05       		.uleb128 0x5
+ 235 0082 7C000000 		.4byte	.LASF11
+ 236 0086 04       		.byte	0x4
+ 237 0087 9201     		.2byte	0x192
+ 238 0089 2C000000 		.4byte	0x2c
+ 239 008d 02       		.uleb128 0x2
+ 240 008e 04       		.byte	0x4
+ 241 008f 04       		.byte	0x4
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 7
+
+
+ 242 0090 9A010000 		.4byte	.LASF12
+ 243 0094 02       		.uleb128 0x2
+ 244 0095 08       		.byte	0x8
+ 245 0096 04       		.byte	0x4
+ 246 0097 67010000 		.4byte	.LASF13
+ 247 009b 02       		.uleb128 0x2
+ 248 009c 01       		.byte	0x1
+ 249 009d 08       		.byte	0x8
+ 250 009e B9000000 		.4byte	.LASF14
+ 251 00a2 05       		.uleb128 0x5
+ 252 00a3 CB000000 		.4byte	.LASF15
+ 253 00a7 04       		.byte	0x4
+ 254 00a8 3C02     		.2byte	0x23c
+ 255 00aa AE000000 		.4byte	0xae
+ 256 00ae 06       		.uleb128 0x6
+ 257 00af 81000000 		.4byte	0x81
+ 258 00b3 02       		.uleb128 0x2
+ 259 00b4 04       		.byte	0x4
+ 260 00b5 07       		.byte	0x7
+ 261 00b6 C3010000 		.4byte	.LASF16
+ 262 00ba 07       		.uleb128 0x7
+ 263 00bb B2010000 		.4byte	.LASF17
+ 264 00bf 01       		.byte	0x1
+ 265 00c0 1F       		.byte	0x1f
+ 266 00c1 00000000 		.4byte	.LFB63
+ 267 00c5 24000000 		.4byte	.LFE63-.LFB63
+ 268 00c9 01       		.uleb128 0x1
+ 269 00ca 9C       		.byte	0x9c
+ 270 00cb 08       		.uleb128 0x8
+ 271 00cc 2E000000 		.4byte	.LASF18
+ 272 00d0 01       		.byte	0x1
+ 273 00d1 3F       		.byte	0x3f
+ 274 00d2 68000000 		.4byte	0x68
+ 275 00d6 00000000 		.4byte	.LFB64
+ 276 00da 90000000 		.4byte	.LFE64-.LFB64
+ 277 00de 01       		.uleb128 0x1
+ 278 00df 9C       		.byte	0x9c
+ 279 00e0 09       		.uleb128 0x9
+ 280 00e1 77010000 		.4byte	.LASF19
+ 281 00e5 05       		.byte	0x5
+ 282 00e6 9606     		.2byte	0x696
+ 283 00e8 EC000000 		.4byte	0xec
+ 284 00ec 06       		.uleb128 0x6
+ 285 00ed 76000000 		.4byte	0x76
+ 286 00f1 0A       		.uleb128 0xa
+ 287 00f2 BE000000 		.4byte	.LASF20
+ 288 00f6 01       		.byte	0x1
+ 289 00f7 19       		.byte	0x19
+ 290 00f8 81000000 		.4byte	0x81
+ 291 00fc 05       		.uleb128 0x5
+ 292 00fd 03       		.byte	0x3
+ 293 00fe 00000000 		.4byte	InterruptCnt
+ 294 0102 00       		.byte	0
+ 295              		.section	.debug_abbrev,"",%progbits
+ 296              	.Ldebug_abbrev0:
+ 297 0000 01       		.uleb128 0x1
+ 298 0001 11       		.uleb128 0x11
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 8
+
+
+ 299 0002 01       		.byte	0x1
+ 300 0003 25       		.uleb128 0x25
+ 301 0004 0E       		.uleb128 0xe
+ 302 0005 13       		.uleb128 0x13
+ 303 0006 0B       		.uleb128 0xb
+ 304 0007 03       		.uleb128 0x3
+ 305 0008 0E       		.uleb128 0xe
+ 306 0009 1B       		.uleb128 0x1b
+ 307 000a 0E       		.uleb128 0xe
+ 308 000b 55       		.uleb128 0x55
+ 309 000c 17       		.uleb128 0x17
+ 310 000d 11       		.uleb128 0x11
+ 311 000e 01       		.uleb128 0x1
+ 312 000f 10       		.uleb128 0x10
+ 313 0010 17       		.uleb128 0x17
+ 314 0011 00       		.byte	0
+ 315 0012 00       		.byte	0
+ 316 0013 02       		.uleb128 0x2
+ 317 0014 24       		.uleb128 0x24
+ 318 0015 00       		.byte	0
+ 319 0016 0B       		.uleb128 0xb
+ 320 0017 0B       		.uleb128 0xb
+ 321 0018 3E       		.uleb128 0x3e
+ 322 0019 0B       		.uleb128 0xb
+ 323 001a 03       		.uleb128 0x3
+ 324 001b 0E       		.uleb128 0xe
+ 325 001c 00       		.byte	0
+ 326 001d 00       		.byte	0
+ 327 001e 03       		.uleb128 0x3
+ 328 001f 16       		.uleb128 0x16
+ 329 0020 00       		.byte	0
+ 330 0021 03       		.uleb128 0x3
+ 331 0022 0E       		.uleb128 0xe
+ 332 0023 3A       		.uleb128 0x3a
+ 333 0024 0B       		.uleb128 0xb
+ 334 0025 3B       		.uleb128 0x3b
+ 335 0026 0B       		.uleb128 0xb
+ 336 0027 49       		.uleb128 0x49
+ 337 0028 13       		.uleb128 0x13
+ 338 0029 00       		.byte	0
+ 339 002a 00       		.byte	0
+ 340 002b 04       		.uleb128 0x4
+ 341 002c 24       		.uleb128 0x24
+ 342 002d 00       		.byte	0
+ 343 002e 0B       		.uleb128 0xb
+ 344 002f 0B       		.uleb128 0xb
+ 345 0030 3E       		.uleb128 0x3e
+ 346 0031 0B       		.uleb128 0xb
+ 347 0032 03       		.uleb128 0x3
+ 348 0033 08       		.uleb128 0x8
+ 349 0034 00       		.byte	0
+ 350 0035 00       		.byte	0
+ 351 0036 05       		.uleb128 0x5
+ 352 0037 16       		.uleb128 0x16
+ 353 0038 00       		.byte	0
+ 354 0039 03       		.uleb128 0x3
+ 355 003a 0E       		.uleb128 0xe
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 9
+
+
+ 356 003b 3A       		.uleb128 0x3a
+ 357 003c 0B       		.uleb128 0xb
+ 358 003d 3B       		.uleb128 0x3b
+ 359 003e 05       		.uleb128 0x5
+ 360 003f 49       		.uleb128 0x49
+ 361 0040 13       		.uleb128 0x13
+ 362 0041 00       		.byte	0
+ 363 0042 00       		.byte	0
+ 364 0043 06       		.uleb128 0x6
+ 365 0044 35       		.uleb128 0x35
+ 366 0045 00       		.byte	0
+ 367 0046 49       		.uleb128 0x49
+ 368 0047 13       		.uleb128 0x13
+ 369 0048 00       		.byte	0
+ 370 0049 00       		.byte	0
+ 371 004a 07       		.uleb128 0x7
+ 372 004b 2E       		.uleb128 0x2e
+ 373 004c 00       		.byte	0
+ 374 004d 3F       		.uleb128 0x3f
+ 375 004e 19       		.uleb128 0x19
+ 376 004f 03       		.uleb128 0x3
+ 377 0050 0E       		.uleb128 0xe
+ 378 0051 3A       		.uleb128 0x3a
+ 379 0052 0B       		.uleb128 0xb
+ 380 0053 3B       		.uleb128 0x3b
+ 381 0054 0B       		.uleb128 0xb
+ 382 0055 27       		.uleb128 0x27
+ 383 0056 19       		.uleb128 0x19
+ 384 0057 11       		.uleb128 0x11
+ 385 0058 01       		.uleb128 0x1
+ 386 0059 12       		.uleb128 0x12
+ 387 005a 06       		.uleb128 0x6
+ 388 005b 40       		.uleb128 0x40
+ 389 005c 18       		.uleb128 0x18
+ 390 005d 9742     		.uleb128 0x2117
+ 391 005f 19       		.uleb128 0x19
+ 392 0060 00       		.byte	0
+ 393 0061 00       		.byte	0
+ 394 0062 08       		.uleb128 0x8
+ 395 0063 2E       		.uleb128 0x2e
+ 396 0064 00       		.byte	0
+ 397 0065 3F       		.uleb128 0x3f
+ 398 0066 19       		.uleb128 0x19
+ 399 0067 03       		.uleb128 0x3
+ 400 0068 0E       		.uleb128 0xe
+ 401 0069 3A       		.uleb128 0x3a
+ 402 006a 0B       		.uleb128 0xb
+ 403 006b 3B       		.uleb128 0x3b
+ 404 006c 0B       		.uleb128 0xb
+ 405 006d 49       		.uleb128 0x49
+ 406 006e 13       		.uleb128 0x13
+ 407 006f 11       		.uleb128 0x11
+ 408 0070 01       		.uleb128 0x1
+ 409 0071 12       		.uleb128 0x12
+ 410 0072 06       		.uleb128 0x6
+ 411 0073 40       		.uleb128 0x40
+ 412 0074 18       		.uleb128 0x18
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 10
+
+
+ 413 0075 9642     		.uleb128 0x2116
+ 414 0077 19       		.uleb128 0x19
+ 415 0078 00       		.byte	0
+ 416 0079 00       		.byte	0
+ 417 007a 09       		.uleb128 0x9
+ 418 007b 34       		.uleb128 0x34
+ 419 007c 00       		.byte	0
+ 420 007d 03       		.uleb128 0x3
+ 421 007e 0E       		.uleb128 0xe
+ 422 007f 3A       		.uleb128 0x3a
+ 423 0080 0B       		.uleb128 0xb
+ 424 0081 3B       		.uleb128 0x3b
+ 425 0082 05       		.uleb128 0x5
+ 426 0083 49       		.uleb128 0x49
+ 427 0084 13       		.uleb128 0x13
+ 428 0085 3F       		.uleb128 0x3f
+ 429 0086 19       		.uleb128 0x19
+ 430 0087 3C       		.uleb128 0x3c
+ 431 0088 19       		.uleb128 0x19
+ 432 0089 00       		.byte	0
+ 433 008a 00       		.byte	0
+ 434 008b 0A       		.uleb128 0xa
+ 435 008c 34       		.uleb128 0x34
+ 436 008d 00       		.byte	0
+ 437 008e 03       		.uleb128 0x3
+ 438 008f 0E       		.uleb128 0xe
+ 439 0090 3A       		.uleb128 0x3a
+ 440 0091 0B       		.uleb128 0xb
+ 441 0092 3B       		.uleb128 0x3b
+ 442 0093 0B       		.uleb128 0xb
+ 443 0094 49       		.uleb128 0x49
+ 444 0095 13       		.uleb128 0x13
+ 445 0096 3F       		.uleb128 0x3f
+ 446 0097 19       		.uleb128 0x19
+ 447 0098 02       		.uleb128 0x2
+ 448 0099 18       		.uleb128 0x18
+ 449 009a 00       		.byte	0
+ 450 009b 00       		.byte	0
+ 451 009c 00       		.byte	0
+ 452              		.section	.debug_aranges,"",%progbits
+ 453 0000 24000000 		.4byte	0x24
+ 454 0004 0200     		.2byte	0x2
+ 455 0006 00000000 		.4byte	.Ldebug_info0
+ 456 000a 04       		.byte	0x4
+ 457 000b 00       		.byte	0
+ 458 000c 0000     		.2byte	0
+ 459 000e 0000     		.2byte	0
+ 460 0010 00000000 		.4byte	.LFB63
+ 461 0014 24000000 		.4byte	.LFE63-.LFB63
+ 462 0018 00000000 		.4byte	.LFB64
+ 463 001c 90000000 		.4byte	.LFE64-.LFB64
+ 464 0020 00000000 		.4byte	0
+ 465 0024 00000000 		.4byte	0
+ 466              		.section	.debug_ranges,"",%progbits
+ 467              	.Ldebug_ranges0:
+ 468 0000 00000000 		.4byte	.LFB63
+ 469 0004 24000000 		.4byte	.LFE63
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 11
+
+
+ 470 0008 00000000 		.4byte	.LFB64
+ 471 000c 90000000 		.4byte	.LFE64
+ 472 0010 00000000 		.4byte	0
+ 473 0014 00000000 		.4byte	0
+ 474              		.section	.debug_line,"",%progbits
+ 475              	.Ldebug_line0:
+ 476 0000 AD010000 		.section	.debug_str,"MS",%progbits,1
+ 476      02004901 
+ 476      00000201 
+ 476      FB0E0D00 
+ 476      01010101 
+ 477              	.LASF6:
+ 478 0000 6C6F6E67 		.ascii	"long long int\000"
+ 478      206C6F6E 
+ 478      6720696E 
+ 478      7400
+ 479              	.LASF3:
+ 480 000e 73686F72 		.ascii	"short unsigned int\000"
+ 480      7420756E 
+ 480      7369676E 
+ 480      65642069 
+ 480      6E7400
+ 481              	.LASF8:
+ 482 0021 756E7369 		.ascii	"unsigned int\000"
+ 482      676E6564 
+ 482      20696E74 
+ 482      00
+ 483              	.LASF18:
+ 484 002e 6D61696E 		.ascii	"main\000"
+ 484      00
+ 485              	.LASF23:
+ 486 0033 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 486      73657273 
+ 486      5C4C756B 
+ 486      61732043 
+ 486      72657574 
+ 487 0061 65445350 		.ascii	"eDSPPSoC-I2C\\Timer01.cydsn\000"
+ 487      50536F43 
+ 487      2D493243 
+ 487      5C54696D 
+ 487      65723031 
+ 488              	.LASF11:
+ 489 007c 75696E74 		.ascii	"uint8\000"
+ 489      3800
+ 490              	.LASF5:
+ 491 0082 6C6F6E67 		.ascii	"long unsigned int\000"
+ 491      20756E73 
+ 491      69676E65 
+ 491      6420696E 
+ 491      7400
+ 492              	.LASF7:
+ 493 0094 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 493      206C6F6E 
+ 493      6720756E 
+ 493      7369676E 
+ 493      65642069 
+ 494              	.LASF1:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 12
+
+
+ 495 00ab 756E7369 		.ascii	"unsigned char\000"
+ 495      676E6564 
+ 495      20636861 
+ 495      7200
+ 496              	.LASF14:
+ 497 00b9 63686172 		.ascii	"char\000"
+ 497      00
+ 498              	.LASF20:
+ 499 00be 496E7465 		.ascii	"InterruptCnt\000"
+ 499      72727570 
+ 499      74436E74 
+ 499      00
+ 500              	.LASF15:
+ 501 00cb 72656738 		.ascii	"reg8\000"
+ 501      00
+ 502              	.LASF21:
+ 503 00d0 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 503      4320342E 
+ 503      392E3320 
+ 503      32303135 
+ 503      30333033 
+ 504 0103 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 504      20726576 
+ 504      6973696F 
+ 504      6E203232 
+ 504      31323230 
+ 505 0136 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 505      66756E63 
+ 505      74696F6E 
+ 505      2D736563 
+ 505      74696F6E 
+ 506              	.LASF22:
+ 507 015e 2E5C6D61 		.ascii	".\\main.c\000"
+ 507      696E2E63 
+ 507      00
+ 508              	.LASF13:
+ 509 0167 646F7562 		.ascii	"double\000"
+ 509      6C6500
+ 510              	.LASF4:
+ 511 016e 6C6F6E67 		.ascii	"long int\000"
+ 511      20696E74 
+ 511      00
+ 512              	.LASF19:
+ 513 0177 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 513      52784275 
+ 513      66666572 
+ 513      00
+ 514              	.LASF0:
+ 515 0184 7369676E 		.ascii	"signed char\000"
+ 515      65642063 
+ 515      68617200 
+ 516              	.LASF9:
+ 517 0190 5F5F696E 		.ascii	"__int32_t\000"
+ 517      7433325F 
+ 517      7400
+ 518              	.LASF12:
+ 519 019a 666C6F61 		.ascii	"float\000"
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\ccxvyfsf.s 			page 13
+
+
+ 519      7400
+ 520              	.LASF2:
+ 521 01a0 73686F72 		.ascii	"short int\000"
+ 521      7420696E 
+ 521      7400
+ 522              	.LASF10:
+ 523 01aa 696E7433 		.ascii	"int32_t\000"
+ 523      325F7400 
+ 524              	.LASF17:
+ 525 01b2 496E7465 		.ascii	"InterruptHandler\000"
+ 525      72727570 
+ 525      7448616E 
+ 525      646C6572 
+ 525      00
+ 526              	.LASF16:
+ 527 01c3 73697A65 		.ascii	"sizetype\000"
+ 527      74797065 
+ 527      00
+ 528              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

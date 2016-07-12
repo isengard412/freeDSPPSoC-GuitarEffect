@@ -24,13 +24,22 @@ int32 pitch_target = 0;
 int32 cache = 0x4;
 
 CY_ISR_PROTO(spi_rx_interrupt);
+CY_ISR_PROTO(timeout_interrupt);
 
 
 CY_ISR(SPI_Rx)
 {
     
     cache = (int32)SPISreadNumber(0u);
-    
+    Timeout_timer_Start();
+    Timeout_timer_WriteCounter(255);
+    LED_Write(!LED_Read());
+}
+CY_ISR(Timeout_inter)
+{
+    Timeout_timer_STATUS;
+    Timeout_timer_Stop();
+    cache=130;
 }
 
 
@@ -63,6 +72,11 @@ int main()
     I2Sinit();
     /* Activatind PSoC Communication */
     SPISinit();
+    /* Activatind Timeout Timer */
+    //Timeout_timer_Start();
+    timeout_interrupt_StartEx(Timeout_inter);
+    timeout_interrupt_SetPriority(1u);
+    
     
     /***** Initialization completed *****/
     
@@ -83,21 +97,21 @@ int main()
         {
             pitch_target=cache;
             /* Wert zwischen +-34953 */
-            pitch_target = (pitch_target-113)*200;
+            pitch_target = (pitch_target-113)*100;
         }
         else
         {
-            DSPInput((uint32)cache);
+            if(cache==0) DSPInput(2);
+            else DSPInput((uint32)cache);
             cache = 130;
         }
-        if(pitch_target>pitch+0xF) pitch+=0x1;
+        if(pitch_target>pitch+5000) pitch+=4000;
         else
         { 
-            if(pitch_target<pitch-0xF) pitch-=0x1;
+            if(pitch_target<pitch-0x2000) pitch-=1500;
             else pitch=pitch_target;
         }
-        LED_Write(!LED_Read());
-        DSPpitch(pitch_target);
+        DSPpitch(pitch);
 
     }  /* End of forever loop */
 }  /* End of main */

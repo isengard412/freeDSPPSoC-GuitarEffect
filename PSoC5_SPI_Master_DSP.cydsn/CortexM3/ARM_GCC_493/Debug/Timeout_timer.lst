@@ -1,0 +1,2377 @@
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.file	"Timeout_timer.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.global	Timeout_timer_initVar
+  19              		.bss
+  20              		.type	Timeout_timer_initVar, %object
+  21              		.size	Timeout_timer_initVar, 1
+  22              	Timeout_timer_initVar:
+  23 0000 00       		.space	1
+  24              		.section	.text.Timeout_timer_Init,"ax",%progbits
+  25              		.align	2
+  26              		.global	Timeout_timer_Init
+  27              		.thumb
+  28              		.thumb_func
+  29              		.type	Timeout_timer_Init, %function
+  30              	Timeout_timer_Init:
+  31              	.LFB0:
+  32              		.file 1 ".\\Generated_Source\\PSoC5\\Timeout_timer.c"
+   1:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC5/Timeout_timer.c **** * File Name: Timeout_timer.c
+   3:.\Generated_Source\PSoC5/Timeout_timer.c **** * Version 2.70
+   4:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+   5:.\Generated_Source\PSoC5/Timeout_timer.c **** * Description:
+   6:.\Generated_Source\PSoC5/Timeout_timer.c **** *  The Timer component consists of a 8, 16, 24 or 32-bit timer with
+   7:.\Generated_Source\PSoC5/Timeout_timer.c **** *  a selectable period between 2 and 2^Width - 1.  The timer may free run
+   8:.\Generated_Source\PSoC5/Timeout_timer.c **** *  or be used as a capture timer as well.  The capture can be initiated
+   9:.\Generated_Source\PSoC5/Timeout_timer.c **** *  by a positive or negative edge signal as well as via software.
+  10:.\Generated_Source\PSoC5/Timeout_timer.c **** *  A trigger input can be programmed to enable the timer on rising edge
+  11:.\Generated_Source\PSoC5/Timeout_timer.c **** *  falling edge, either edge or continous run.
+  12:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Interrupts may be generated due to a terminal count condition
+  13:.\Generated_Source\PSoC5/Timeout_timer.c **** *  or a capture event.
+  14:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+  15:.\Generated_Source\PSoC5/Timeout_timer.c **** * Note:
+  16:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+  17:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+  18:.\Generated_Source\PSoC5/Timeout_timer.c **** * Copyright 2008-2014, Cypress Semiconductor Corporation.  All rights reserved.
+  19:.\Generated_Source\PSoC5/Timeout_timer.c **** * You may use this file only in accordance with the license, terms, conditions,
+  20:.\Generated_Source\PSoC5/Timeout_timer.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  21:.\Generated_Source\PSoC5/Timeout_timer.c **** * the software package with which this file was provided.
+  22:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************/
+  23:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  24:.\Generated_Source\PSoC5/Timeout_timer.c **** #include "Timeout_timer.h"
+  25:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 2
+
+
+  26:.\Generated_Source\PSoC5/Timeout_timer.c **** uint8 Timeout_timer_initVar = 0u;
+  27:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  28:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  29:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+  30:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_Init
+  31:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+  32:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+  33:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+  34:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Initialize to the schematic state
+  35:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+  36:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+  37:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+  38:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+  39:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+  40:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+  41:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+  42:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+  43:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_Init(void) 
+  44:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+  33              		.loc 1 44 0
+  34              		.cfi_startproc
+  35              		@ args = 0, pretend = 0, frame = 8
+  36              		@ frame_needed = 1, uses_anonymous_args = 0
+  37 0000 80B5     		push	{r7, lr}
+  38              		.cfi_def_cfa_offset 8
+  39              		.cfi_offset 7, -8
+  40              		.cfi_offset 14, -4
+  41 0002 82B0     		sub	sp, sp, #8
+  42              		.cfi_def_cfa_offset 16
+  43 0004 00AF     		add	r7, sp, #0
+  44              		.cfi_def_cfa_register 7
+  45:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if(!Timeout_timer_UsingFixedFunction)
+  46:.\Generated_Source\PSoC5/Timeout_timer.c ****             /* Interrupt State Backup for Critical Region*/
+  47:.\Generated_Source\PSoC5/Timeout_timer.c ****             uint8 Timeout_timer_interruptState;
+  48:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Interrupt state back up for Fixed Function only */
+  49:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  50:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (Timeout_timer_UsingFixedFunction)
+  51:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Clear all bits but the enable bit (if it's already set) for Timer operation */
+  52:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL &= Timeout_timer_CTRL_ENABLE;
+  53:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  54:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Clear the mode bits for continuous run mode */
+  55:.\Generated_Source\PSoC5/Timeout_timer.c ****         #if (CY_PSOC5A)
+  56:.\Generated_Source\PSoC5/Timeout_timer.c ****             Timeout_timer_CONTROL2 &= ((uint8)(~Timeout_timer_CTRL_MODE_MASK));
+  57:.\Generated_Source\PSoC5/Timeout_timer.c ****         #endif /* Clear bits in CONTROL2 only in PSOC5A */
+  58:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  59:.\Generated_Source\PSoC5/Timeout_timer.c ****         #if (CY_PSOC3 || CY_PSOC5LP)
+  60:.\Generated_Source\PSoC5/Timeout_timer.c ****             Timeout_timer_CONTROL3 &= ((uint8)(~Timeout_timer_CTRL_MODE_MASK));
+  61:.\Generated_Source\PSoC5/Timeout_timer.c ****         #endif /* CONTROL3 register exists only in PSoC3 OR PSoC5LP */
+  62:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  63:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Check if One Shot mode is enabled i.e. RunMode !=0*/
+  64:.\Generated_Source\PSoC5/Timeout_timer.c ****         #if (Timeout_timer_RunModeUsed != 0x0u)
+  65:.\Generated_Source\PSoC5/Timeout_timer.c ****             /* Set 3rd bit of Control register to enable one shot mode */
+  66:.\Generated_Source\PSoC5/Timeout_timer.c ****             Timeout_timer_CONTROL |= 0x04u;
+  67:.\Generated_Source\PSoC5/Timeout_timer.c ****         #endif /* One Shot enabled only when RunModeUsed is not Continuous*/
+  68:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  69:.\Generated_Source\PSoC5/Timeout_timer.c ****         #if (Timeout_timer_RunModeUsed == 2)
+  70:.\Generated_Source\PSoC5/Timeout_timer.c ****             #if (CY_PSOC5A)
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 3
+
+
+  71:.\Generated_Source\PSoC5/Timeout_timer.c ****                 /* Set last 2 bits of control2 register if one shot(halt on
+  72:.\Generated_Source\PSoC5/Timeout_timer.c ****                 interrupt) is enabled*/
+  73:.\Generated_Source\PSoC5/Timeout_timer.c ****                 Timeout_timer_CONTROL2 |= 0x03u;
+  74:.\Generated_Source\PSoC5/Timeout_timer.c ****             #endif /* Set One-Shot Halt on Interrupt bit in CONTROL2 for PSoC5A */
+  75:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  76:.\Generated_Source\PSoC5/Timeout_timer.c ****             #if (CY_PSOC3 || CY_PSOC5LP)
+  77:.\Generated_Source\PSoC5/Timeout_timer.c ****                 /* Set last 2 bits of control3 register if one shot(halt on
+  78:.\Generated_Source\PSoC5/Timeout_timer.c ****                 interrupt) is enabled*/
+  79:.\Generated_Source\PSoC5/Timeout_timer.c ****                 Timeout_timer_CONTROL3 |= 0x03u;
+  80:.\Generated_Source\PSoC5/Timeout_timer.c ****             #endif /* Set One-Shot Halt on Interrupt bit in CONTROL3 for PSoC3 or PSoC5LP */
+  81:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  82:.\Generated_Source\PSoC5/Timeout_timer.c ****         #endif /* Remove section if One Shot Halt on Interrupt is not enabled */
+  83:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  84:.\Generated_Source\PSoC5/Timeout_timer.c ****         #if (Timeout_timer_UsingHWEnable != 0)
+  85:.\Generated_Source\PSoC5/Timeout_timer.c ****             #if (CY_PSOC5A)
+  86:.\Generated_Source\PSoC5/Timeout_timer.c ****                 /* Set the default Run Mode of the Timer to Continuous */
+  87:.\Generated_Source\PSoC5/Timeout_timer.c ****                 Timeout_timer_CONTROL2 |= Timeout_timer_CTRL_MODE_PULSEWIDTH;
+  88:.\Generated_Source\PSoC5/Timeout_timer.c ****             #endif /* Set Continuous Run Mode in CONTROL2 for PSoC5A */
+  89:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  90:.\Generated_Source\PSoC5/Timeout_timer.c ****             #if (CY_PSOC3 || CY_PSOC5LP)
+  91:.\Generated_Source\PSoC5/Timeout_timer.c ****                 /* Clear and Set ROD and COD bits of CFG2 register */
+  92:.\Generated_Source\PSoC5/Timeout_timer.c ****                 Timeout_timer_CONTROL3 &= ((uint8)(~Timeout_timer_CTRL_RCOD_MASK));
+  93:.\Generated_Source\PSoC5/Timeout_timer.c ****                 Timeout_timer_CONTROL3 |= Timeout_timer_CTRL_RCOD;
+  94:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  95:.\Generated_Source\PSoC5/Timeout_timer.c ****                 /* Clear and Enable the HW enable bit in CFG2 register */
+  96:.\Generated_Source\PSoC5/Timeout_timer.c ****                 Timeout_timer_CONTROL3 &= ((uint8)(~Timeout_timer_CTRL_ENBL_MASK));
+  97:.\Generated_Source\PSoC5/Timeout_timer.c ****                 Timeout_timer_CONTROL3 |= Timeout_timer_CTRL_ENBL;
+  98:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+  99:.\Generated_Source\PSoC5/Timeout_timer.c ****                 /* Set the default Run Mode of the Timer to Continuous */
+ 100:.\Generated_Source\PSoC5/Timeout_timer.c ****                 Timeout_timer_CONTROL3 |= Timeout_timer_CTRL_MODE_CONTINUOUS;
+ 101:.\Generated_Source\PSoC5/Timeout_timer.c ****             #endif /* Set Continuous Run Mode in CONTROL3 for PSoC3ES3 or PSoC5A */
+ 102:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 103:.\Generated_Source\PSoC5/Timeout_timer.c ****         #endif /* Configure Run Mode with hardware enable */
+ 104:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 105:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Clear and Set SYNCTC and SYNCCMP bits of RT1 register */
+ 106:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_RT1 &= ((uint8)(~Timeout_timer_RT1_MASK));
+ 107:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_RT1 |= Timeout_timer_SYNC;
+ 108:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 109:.\Generated_Source\PSoC5/Timeout_timer.c ****         /*Enable DSI Sync all all inputs of the Timer*/
+ 110:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_RT1 &= ((uint8)(~Timeout_timer_SYNCDSI_MASK));
+ 111:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_RT1 |= Timeout_timer_SYNCDSI_EN;
+ 112:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 113:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Set the IRQ to use the status register interrupts */
+ 114:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL2 |= Timeout_timer_CTRL2_IRQ_SEL;
+ 115:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Configuring registers of fixed function implementation */
+ 116:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 117:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* Set Initial values from Configuration */
+ 118:.\Generated_Source\PSoC5/Timeout_timer.c ****     Timeout_timer_WritePeriod(Timeout_timer_INIT_PERIOD);
+  45              		.loc 1 118 0
+  46 0006 3120     		movs	r0, #49
+  47 0008 FFF7FEFF 		bl	Timeout_timer_WritePeriod
+ 119:.\Generated_Source\PSoC5/Timeout_timer.c ****     Timeout_timer_WriteCounter(Timeout_timer_INIT_PERIOD);
+  48              		.loc 1 119 0
+  49 000c 3120     		movs	r0, #49
+  50 000e FFF7FEFF 		bl	Timeout_timer_WriteCounter
+ 120:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 121:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (Timeout_timer_UsingHWCaptureCounter)/* Capture counter is enabled */
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 4
+
+
+ 122:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CAPTURE_COUNT_CTRL |= Timeout_timer_CNTR_ENABLE;
+ 123:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_SetCaptureCount(Timeout_timer_INIT_CAPTURE_COUNT);
+ 124:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Configure capture counter value */
+ 125:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 126:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (!Timeout_timer_UsingFixedFunction)
+ 127:.\Generated_Source\PSoC5/Timeout_timer.c ****         #if (Timeout_timer_SoftwareCaptureMode)
+ 128:.\Generated_Source\PSoC5/Timeout_timer.c ****             Timeout_timer_SetCaptureMode(Timeout_timer_INIT_CAPTURE_MODE);
+ 129:.\Generated_Source\PSoC5/Timeout_timer.c ****         #endif /* Set Capture Mode for UDB implementation if capture mode is software controlled */
+ 130:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 131:.\Generated_Source\PSoC5/Timeout_timer.c ****         #if (Timeout_timer_SoftwareTriggerMode)
+ 132:.\Generated_Source\PSoC5/Timeout_timer.c ****             #if (!Timeout_timer_UDB_CONTROL_REG_REMOVED)
+ 133:.\Generated_Source\PSoC5/Timeout_timer.c ****                 if (0u == (Timeout_timer_CONTROL & Timeout_timer__B_TIMER__TM_SOFTWARE))
+ 134:.\Generated_Source\PSoC5/Timeout_timer.c ****                 {
+ 135:.\Generated_Source\PSoC5/Timeout_timer.c ****                     Timeout_timer_SetTriggerMode(Timeout_timer_INIT_TRIGGER_MODE);
+ 136:.\Generated_Source\PSoC5/Timeout_timer.c ****                 }
+ 137:.\Generated_Source\PSoC5/Timeout_timer.c ****             #endif /* (!Timeout_timer_UDB_CONTROL_REG_REMOVED) */
+ 138:.\Generated_Source\PSoC5/Timeout_timer.c ****         #endif /* Set trigger mode for UDB Implementation if trigger mode is software controlled */
+ 139:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 140:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* CyEnterCriticalRegion and CyExitCriticalRegion are used to mark following region critica
+ 141:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Enter Critical Region*/
+ 142:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_interruptState = CyEnterCriticalSection();
+  51              		.loc 1 142 0
+  52 0012 FFF7FEFF 		bl	CyEnterCriticalSection
+  53 0016 0346     		mov	r3, r0
+  54 0018 FB71     		strb	r3, [r7, #7]
+ 143:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 144:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Use the interrupt output of the status register for IRQ output */
+ 145:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_STATUS_AUX_CTRL |= Timeout_timer_STATUS_ACTL_INT_EN_MASK;
+  55              		.loc 1 145 0
+  56 001a 0A4A     		ldr	r2, .L2
+  57 001c 094B     		ldr	r3, .L2
+  58 001e 1B78     		ldrb	r3, [r3]
+  59 0020 DBB2     		uxtb	r3, r3
+  60 0022 43F01003 		orr	r3, r3, #16
+  61 0026 DBB2     		uxtb	r3, r3
+  62 0028 1370     		strb	r3, [r2]
+ 146:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 147:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Exit Critical Region*/
+ 148:.\Generated_Source\PSoC5/Timeout_timer.c ****         CyExitCriticalSection(Timeout_timer_interruptState);
+  63              		.loc 1 148 0
+  64 002a FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+  65 002c 1846     		mov	r0, r3
+  66 002e FFF7FEFF 		bl	CyExitCriticalSection
+ 149:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 150:.\Generated_Source\PSoC5/Timeout_timer.c ****         #if (Timeout_timer_EnableTriggerMode)
+ 151:.\Generated_Source\PSoC5/Timeout_timer.c ****             Timeout_timer_EnableTrigger();
+ 152:.\Generated_Source\PSoC5/Timeout_timer.c ****         #endif /* Set Trigger enable bit for UDB implementation in the control register*/
+ 153:.\Generated_Source\PSoC5/Timeout_timer.c **** 		
+ 154:.\Generated_Source\PSoC5/Timeout_timer.c **** 		
+ 155:.\Generated_Source\PSoC5/Timeout_timer.c ****         #if (Timeout_timer_InterruptOnCaptureCount && !Timeout_timer_UDB_CONTROL_REG_REMOVED)
+ 156:.\Generated_Source\PSoC5/Timeout_timer.c ****             Timeout_timer_SetInterruptCount(Timeout_timer_INIT_INT_CAPTURE_COUNT);
+ 157:.\Generated_Source\PSoC5/Timeout_timer.c ****         #endif /* Set interrupt count in UDB implementation if interrupt count feature is checked.*
+ 158:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 159:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_ClearFIFO();
+  67              		.loc 1 159 0
+  68 0032 FFF7FEFF 		bl	Timeout_timer_ClearFIFO
+ 160:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Configure additional features of UDB implementation */
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 5
+
+
+ 161:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 162:.\Generated_Source\PSoC5/Timeout_timer.c ****     Timeout_timer_SetInterruptMode(Timeout_timer_INIT_INTERRUPT_MODE);
+  69              		.loc 1 162 0
+  70 0036 0120     		movs	r0, #1
+  71 0038 FFF7FEFF 		bl	Timeout_timer_SetInterruptMode
+ 163:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+  72              		.loc 1 163 0
+  73 003c 0837     		adds	r7, r7, #8
+  74              		.cfi_def_cfa_offset 8
+  75 003e BD46     		mov	sp, r7
+  76              		.cfi_def_cfa_register 13
+  77              		@ sp needed
+  78 0040 80BD     		pop	{r7, pc}
+  79              	.L3:
+  80 0042 00BF     		.align	2
+  81              	.L2:
+  82 0044 92640040 		.word	1073767570
+  83              		.cfi_endproc
+  84              	.LFE0:
+  85              		.size	Timeout_timer_Init, .-Timeout_timer_Init
+  86              		.section	.text.Timeout_timer_Enable,"ax",%progbits
+  87              		.align	2
+  88              		.global	Timeout_timer_Enable
+  89              		.thumb
+  90              		.thumb_func
+  91              		.type	Timeout_timer_Enable, %function
+  92              	Timeout_timer_Enable:
+  93              	.LFB1:
+ 164:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 165:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 166:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 167:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_Enable
+ 168:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 169:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 170:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 171:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Enable the Timer
+ 172:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 173:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 174:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 175:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 176:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 177:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 178:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 179:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 180:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_Enable(void) 
+ 181:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+  94              		.loc 1 181 0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 1, uses_anonymous_args = 0
+  98              		@ link register save eliminated.
+  99 0000 80B4     		push	{r7}
+ 100              		.cfi_def_cfa_offset 4
+ 101              		.cfi_offset 7, -4
+ 102 0002 00AF     		add	r7, sp, #0
+ 103              		.cfi_def_cfa_register 7
+ 182:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* Globally Enable the Fixed Function Block chosen */
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 6
+
+
+ 183:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (Timeout_timer_UsingFixedFunction)
+ 184:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_GLOBAL_ENABLE |= Timeout_timer_BLOCK_EN_MASK;
+ 185:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_GLOBAL_STBY_ENABLE |= Timeout_timer_BLOCK_STBY_EN_MASK;
+ 186:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Set Enable bit for enabling Fixed function timer*/
+ 187:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 188:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* Remove assignment if control register is removed */
+ 189:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (!Timeout_timer_UDB_CONTROL_REG_REMOVED || Timeout_timer_UsingFixedFunction)
+ 190:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL |= Timeout_timer_CTRL_ENABLE;
+ 104              		.loc 1 190 0
+ 105 0004 054A     		ldr	r2, .L5
+ 106 0006 054B     		ldr	r3, .L5
+ 107 0008 1B78     		ldrb	r3, [r3]
+ 108 000a DBB2     		uxtb	r3, r3
+ 109 000c 63F07F03 		orn	r3, r3, #127
+ 110 0010 DBB2     		uxtb	r3, r3
+ 111 0012 1370     		strb	r3, [r2]
+ 191:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Remove assignment if control register is removed */
+ 192:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 112              		.loc 1 192 0
+ 113 0014 BD46     		mov	sp, r7
+ 114              		.cfi_def_cfa_register 13
+ 115              		@ sp needed
+ 116 0016 5DF8047B 		ldr	r7, [sp], #4
+ 117              		.cfi_restore 7
+ 118              		.cfi_def_cfa_offset 0
+ 119 001a 7047     		bx	lr
+ 120              	.L6:
+ 121              		.align	2
+ 122              	.L5:
+ 123 001c 72640040 		.word	1073767538
+ 124              		.cfi_endproc
+ 125              	.LFE1:
+ 126              		.size	Timeout_timer_Enable, .-Timeout_timer_Enable
+ 127              		.section	.text.Timeout_timer_Start,"ax",%progbits
+ 128              		.align	2
+ 129              		.global	Timeout_timer_Start
+ 130              		.thumb
+ 131              		.thumb_func
+ 132              		.type	Timeout_timer_Start, %function
+ 133              	Timeout_timer_Start:
+ 134              	.LFB2:
+ 193:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 194:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 195:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 196:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_Start
+ 197:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 198:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 199:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 200:.\Generated_Source\PSoC5/Timeout_timer.c **** *  The start function initializes the timer with the default values, the
+ 201:.\Generated_Source\PSoC5/Timeout_timer.c **** *  enables the timerto begin counting.  It does not enable interrupts,
+ 202:.\Generated_Source\PSoC5/Timeout_timer.c **** *  the EnableInt command should be called if interrupt generation is required.
+ 203:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 204:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 205:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 206:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 207:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 208:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 7
+
+
+ 209:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 210:.\Generated_Source\PSoC5/Timeout_timer.c **** * Global variables:
+ 211:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Timeout_timer_initVar: Is modified when this function is called for the
+ 212:.\Generated_Source\PSoC5/Timeout_timer.c **** *   first time. Is used to ensure that initialization happens only once.
+ 213:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 214:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 215:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_Start(void) 
+ 216:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 135              		.loc 1 216 0
+ 136              		.cfi_startproc
+ 137              		@ args = 0, pretend = 0, frame = 0
+ 138              		@ frame_needed = 1, uses_anonymous_args = 0
+ 139 0000 80B5     		push	{r7, lr}
+ 140              		.cfi_def_cfa_offset 8
+ 141              		.cfi_offset 7, -8
+ 142              		.cfi_offset 14, -4
+ 143 0002 00AF     		add	r7, sp, #0
+ 144              		.cfi_def_cfa_register 7
+ 217:.\Generated_Source\PSoC5/Timeout_timer.c ****     if(Timeout_timer_initVar == 0u)
+ 145              		.loc 1 217 0
+ 146 0004 054B     		ldr	r3, .L9
+ 147 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 148 0008 002B     		cmp	r3, #0
+ 149 000a 04D1     		bne	.L8
+ 218:.\Generated_Source\PSoC5/Timeout_timer.c ****     {
+ 219:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_Init();
+ 150              		.loc 1 219 0
+ 151 000c FFF7FEFF 		bl	Timeout_timer_Init
+ 220:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 221:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_initVar = 1u;   /* Clear this bit for Initialization */
+ 152              		.loc 1 221 0
+ 153 0010 024B     		ldr	r3, .L9
+ 154 0012 0122     		movs	r2, #1
+ 155 0014 1A70     		strb	r2, [r3]
+ 156              	.L8:
+ 222:.\Generated_Source\PSoC5/Timeout_timer.c ****     }
+ 223:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 224:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* Enable the Timer */
+ 225:.\Generated_Source\PSoC5/Timeout_timer.c ****     Timeout_timer_Enable();
+ 157              		.loc 1 225 0
+ 158 0016 FFF7FEFF 		bl	Timeout_timer_Enable
+ 226:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 159              		.loc 1 226 0
+ 160 001a 80BD     		pop	{r7, pc}
+ 161              	.L10:
+ 162              		.align	2
+ 163              	.L9:
+ 164 001c 00000000 		.word	Timeout_timer_initVar
+ 165              		.cfi_endproc
+ 166              	.LFE2:
+ 167              		.size	Timeout_timer_Start, .-Timeout_timer_Start
+ 168              		.section	.text.Timeout_timer_Stop,"ax",%progbits
+ 169              		.align	2
+ 170              		.global	Timeout_timer_Stop
+ 171              		.thumb
+ 172              		.thumb_func
+ 173              		.type	Timeout_timer_Stop, %function
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 8
+
+
+ 174              	Timeout_timer_Stop:
+ 175              	.LFB3:
+ 227:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 228:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 229:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 230:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_Stop
+ 231:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 232:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 233:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 234:.\Generated_Source\PSoC5/Timeout_timer.c **** *  The stop function halts the timer, but does not change any modes or disable
+ 235:.\Generated_Source\PSoC5/Timeout_timer.c **** *  interrupts.
+ 236:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 237:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 238:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 239:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 240:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 241:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 242:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 243:.\Generated_Source\PSoC5/Timeout_timer.c **** * Side Effects: If the Enable mode is set to Hardware only then this function
+ 244:.\Generated_Source\PSoC5/Timeout_timer.c **** *               has no effect on the operation of the timer.
+ 245:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 246:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 247:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_Stop(void) 
+ 248:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 176              		.loc 1 248 0
+ 177              		.cfi_startproc
+ 178              		@ args = 0, pretend = 0, frame = 0
+ 179              		@ frame_needed = 1, uses_anonymous_args = 0
+ 180              		@ link register save eliminated.
+ 181 0000 80B4     		push	{r7}
+ 182              		.cfi_def_cfa_offset 4
+ 183              		.cfi_offset 7, -4
+ 184 0002 00AF     		add	r7, sp, #0
+ 185              		.cfi_def_cfa_register 7
+ 249:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* Disable Timer */
+ 250:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if(!Timeout_timer_UDB_CONTROL_REG_REMOVED || Timeout_timer_UsingFixedFunction)
+ 251:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL &= ((uint8)(~Timeout_timer_CTRL_ENABLE));
+ 186              		.loc 1 251 0
+ 187 0004 054A     		ldr	r2, .L12
+ 188 0006 054B     		ldr	r3, .L12
+ 189 0008 1B78     		ldrb	r3, [r3]
+ 190 000a DBB2     		uxtb	r3, r3
+ 191 000c 03F07F03 		and	r3, r3, #127
+ 192 0010 DBB2     		uxtb	r3, r3
+ 193 0012 1370     		strb	r3, [r2]
+ 252:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Remove assignment if control register is removed */
+ 253:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 254:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* Globally disable the Fixed Function Block chosen */
+ 255:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (Timeout_timer_UsingFixedFunction)
+ 256:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_GLOBAL_ENABLE &= ((uint8)(~Timeout_timer_BLOCK_EN_MASK));
+ 257:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_GLOBAL_STBY_ENABLE &= ((uint8)(~Timeout_timer_BLOCK_STBY_EN_MASK));
+ 258:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Disable global enable for the Timer Fixed function block to stop the Timer*/
+ 259:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 194              		.loc 1 259 0
+ 195 0014 BD46     		mov	sp, r7
+ 196              		.cfi_def_cfa_register 13
+ 197              		@ sp needed
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 9
+
+
+ 198 0016 5DF8047B 		ldr	r7, [sp], #4
+ 199              		.cfi_restore 7
+ 200              		.cfi_def_cfa_offset 0
+ 201 001a 7047     		bx	lr
+ 202              	.L13:
+ 203              		.align	2
+ 204              	.L12:
+ 205 001c 72640040 		.word	1073767538
+ 206              		.cfi_endproc
+ 207              	.LFE3:
+ 208              		.size	Timeout_timer_Stop, .-Timeout_timer_Stop
+ 209              		.section	.text.Timeout_timer_SetInterruptMode,"ax",%progbits
+ 210              		.align	2
+ 211              		.global	Timeout_timer_SetInterruptMode
+ 212              		.thumb
+ 213              		.thumb_func
+ 214              		.type	Timeout_timer_SetInterruptMode, %function
+ 215              	Timeout_timer_SetInterruptMode:
+ 216              	.LFB4:
+ 260:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 261:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 262:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 263:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_SetInterruptMode
+ 264:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 265:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 266:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 267:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function selects which of the interrupt inputs may cause an interrupt.
+ 268:.\Generated_Source\PSoC5/Timeout_timer.c **** *  The twosources are caputure and terminal.  One, both or neither may
+ 269:.\Generated_Source\PSoC5/Timeout_timer.c **** *  be selected.
+ 270:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 271:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 272:.\Generated_Source\PSoC5/Timeout_timer.c **** *  interruptMode:   This parameter is used to enable interrups on either/or
+ 273:.\Generated_Source\PSoC5/Timeout_timer.c **** *                   terminal count or capture.
+ 274:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 275:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 276:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 277:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 278:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 279:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_SetInterruptMode(uint8 interruptMode) 
+ 280:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 217              		.loc 1 280 0
+ 218              		.cfi_startproc
+ 219              		@ args = 0, pretend = 0, frame = 8
+ 220              		@ frame_needed = 1, uses_anonymous_args = 0
+ 221              		@ link register save eliminated.
+ 222 0000 80B4     		push	{r7}
+ 223              		.cfi_def_cfa_offset 4
+ 224              		.cfi_offset 7, -4
+ 225 0002 83B0     		sub	sp, sp, #12
+ 226              		.cfi_def_cfa_offset 16
+ 227 0004 00AF     		add	r7, sp, #0
+ 228              		.cfi_def_cfa_register 7
+ 229 0006 0346     		mov	r3, r0
+ 230 0008 FB71     		strb	r3, [r7, #7]
+ 281:.\Generated_Source\PSoC5/Timeout_timer.c ****     Timeout_timer_STATUS_MASK = interruptMode;
+ 231              		.loc 1 281 0
+ 232 000a 044A     		ldr	r2, .L15
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 10
+
+
+ 233 000c FB79     		ldrb	r3, [r7, #7]
+ 234 000e 1370     		strb	r3, [r2]
+ 282:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 235              		.loc 1 282 0
+ 236 0010 0C37     		adds	r7, r7, #12
+ 237              		.cfi_def_cfa_offset 4
+ 238 0012 BD46     		mov	sp, r7
+ 239              		.cfi_def_cfa_register 13
+ 240              		@ sp needed
+ 241 0014 5DF8047B 		ldr	r7, [sp], #4
+ 242              		.cfi_restore 7
+ 243              		.cfi_def_cfa_offset 0
+ 244 0018 7047     		bx	lr
+ 245              	.L16:
+ 246 001a 00BF     		.align	2
+ 247              	.L15:
+ 248 001c 82640040 		.word	1073767554
+ 249              		.cfi_endproc
+ 250              	.LFE4:
+ 251              		.size	Timeout_timer_SetInterruptMode, .-Timeout_timer_SetInterruptMode
+ 252              		.section	.text.Timeout_timer_SoftwareCapture,"ax",%progbits
+ 253              		.align	2
+ 254              		.global	Timeout_timer_SoftwareCapture
+ 255              		.thumb
+ 256              		.thumb_func
+ 257              		.type	Timeout_timer_SoftwareCapture, %function
+ 258              	Timeout_timer_SoftwareCapture:
+ 259              	.LFB5:
+ 283:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 284:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 285:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 286:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_SoftwareCapture
+ 287:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 288:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 289:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 290:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function forces a capture independent of the capture signal.
+ 291:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 292:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 293:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 294:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 295:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 296:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 297:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 298:.\Generated_Source\PSoC5/Timeout_timer.c **** * Side Effects:
+ 299:.\Generated_Source\PSoC5/Timeout_timer.c **** *  An existing hardware capture could be overwritten.
+ 300:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 301:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 302:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_SoftwareCapture(void) 
+ 303:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 260              		.loc 1 303 0
+ 261              		.cfi_startproc
+ 262              		@ args = 0, pretend = 0, frame = 0
+ 263              		@ frame_needed = 1, uses_anonymous_args = 0
+ 264              		@ link register save eliminated.
+ 265 0000 80B4     		push	{r7}
+ 266              		.cfi_def_cfa_offset 4
+ 267              		.cfi_offset 7, -4
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 11
+
+
+ 268 0002 00AF     		add	r7, sp, #0
+ 269              		.cfi_def_cfa_register 7
+ 304:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* Generate a software capture by reading the counter register */
+ 305:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if(Timeout_timer_UsingFixedFunction)
+ 306:.\Generated_Source\PSoC5/Timeout_timer.c ****         (void)CY_GET_REG16(Timeout_timer_COUNTER_LSB_PTR);
+ 307:.\Generated_Source\PSoC5/Timeout_timer.c ****     #else
+ 308:.\Generated_Source\PSoC5/Timeout_timer.c ****         (void)CY_GET_REG8(Timeout_timer_COUNTER_LSB_PTR_8BIT);
+ 270              		.loc 1 308 0
+ 271 0004 024B     		ldr	r3, .L18
+ 272 0006 1B78     		ldrb	r3, [r3]
+ 309:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif/* (Timeout_timer_UsingFixedFunction) */
+ 310:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* Capture Data is now in the FIFO */
+ 311:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 273              		.loc 1 311 0
+ 274 0008 BD46     		mov	sp, r7
+ 275              		.cfi_def_cfa_register 13
+ 276              		@ sp needed
+ 277 000a 5DF8047B 		ldr	r7, [sp], #4
+ 278              		.cfi_restore 7
+ 279              		.cfi_def_cfa_offset 0
+ 280 000e 7047     		bx	lr
+ 281              	.L19:
+ 282              		.align	2
+ 283              	.L18:
+ 284 0010 01640040 		.word	1073767425
+ 285              		.cfi_endproc
+ 286              	.LFE5:
+ 287              		.size	Timeout_timer_SoftwareCapture, .-Timeout_timer_SoftwareCapture
+ 288              		.section	.text.Timeout_timer_ReadStatusRegister,"ax",%progbits
+ 289              		.align	2
+ 290              		.global	Timeout_timer_ReadStatusRegister
+ 291              		.thumb
+ 292              		.thumb_func
+ 293              		.type	Timeout_timer_ReadStatusRegister, %function
+ 294              	Timeout_timer_ReadStatusRegister:
+ 295              	.LFB6:
+ 312:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 313:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 314:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 315:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_ReadStatusRegister
+ 316:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 317:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 318:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 319:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Reads the status register and returns it's state. This function should use
+ 320:.\Generated_Source\PSoC5/Timeout_timer.c **** *  defined types for the bit-field information as the bits in this register may
+ 321:.\Generated_Source\PSoC5/Timeout_timer.c **** *  be permuteable.
+ 322:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 323:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 324:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 325:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 326:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 327:.\Generated_Source\PSoC5/Timeout_timer.c **** *  The contents of the status register
+ 328:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 329:.\Generated_Source\PSoC5/Timeout_timer.c **** * Side Effects:
+ 330:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Status register bits may be clear on read.
+ 331:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 332:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 12
+
+
+ 333:.\Generated_Source\PSoC5/Timeout_timer.c **** uint8   Timeout_timer_ReadStatusRegister(void) 
+ 334:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 296              		.loc 1 334 0
+ 297              		.cfi_startproc
+ 298              		@ args = 0, pretend = 0, frame = 0
+ 299              		@ frame_needed = 1, uses_anonymous_args = 0
+ 300              		@ link register save eliminated.
+ 301 0000 80B4     		push	{r7}
+ 302              		.cfi_def_cfa_offset 4
+ 303              		.cfi_offset 7, -4
+ 304 0002 00AF     		add	r7, sp, #0
+ 305              		.cfi_def_cfa_register 7
+ 335:.\Generated_Source\PSoC5/Timeout_timer.c ****     return (Timeout_timer_STATUS);
+ 306              		.loc 1 335 0
+ 307 0004 034B     		ldr	r3, .L22
+ 308 0006 1B78     		ldrb	r3, [r3]
+ 309 0008 DBB2     		uxtb	r3, r3
+ 336:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 310              		.loc 1 336 0
+ 311 000a 1846     		mov	r0, r3
+ 312 000c BD46     		mov	sp, r7
+ 313              		.cfi_def_cfa_register 13
+ 314              		@ sp needed
+ 315 000e 5DF8047B 		ldr	r7, [sp], #4
+ 316              		.cfi_restore 7
+ 317              		.cfi_def_cfa_offset 0
+ 318 0012 7047     		bx	lr
+ 319              	.L23:
+ 320              		.align	2
+ 321              	.L22:
+ 322 0014 62640040 		.word	1073767522
+ 323              		.cfi_endproc
+ 324              	.LFE6:
+ 325              		.size	Timeout_timer_ReadStatusRegister, .-Timeout_timer_ReadStatusRegister
+ 326              		.section	.text.Timeout_timer_ReadControlRegister,"ax",%progbits
+ 327              		.align	2
+ 328              		.global	Timeout_timer_ReadControlRegister
+ 329              		.thumb
+ 330              		.thumb_func
+ 331              		.type	Timeout_timer_ReadControlRegister, %function
+ 332              	Timeout_timer_ReadControlRegister:
+ 333              	.LFB7:
+ 337:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 338:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 339:.\Generated_Source\PSoC5/Timeout_timer.c **** #if (!Timeout_timer_UDB_CONTROL_REG_REMOVED) /* Remove API if control register is unused */
+ 340:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 341:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 342:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 343:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_ReadControlRegister
+ 344:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 345:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 346:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 347:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Reads the control register and returns it's value.
+ 348:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 349:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 350:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 351:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 13
+
+
+ 352:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 353:.\Generated_Source\PSoC5/Timeout_timer.c **** *  The contents of the control register
+ 354:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 355:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 356:.\Generated_Source\PSoC5/Timeout_timer.c **** uint8 Timeout_timer_ReadControlRegister(void) 
+ 357:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 334              		.loc 1 357 0
+ 335              		.cfi_startproc
+ 336              		@ args = 0, pretend = 0, frame = 0
+ 337              		@ frame_needed = 1, uses_anonymous_args = 0
+ 338              		@ link register save eliminated.
+ 339 0000 80B4     		push	{r7}
+ 340              		.cfi_def_cfa_offset 4
+ 341              		.cfi_offset 7, -4
+ 342 0002 00AF     		add	r7, sp, #0
+ 343              		.cfi_def_cfa_register 7
+ 358:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (!Timeout_timer_UDB_CONTROL_REG_REMOVED) 
+ 359:.\Generated_Source\PSoC5/Timeout_timer.c ****         return ((uint8)Timeout_timer_CONTROL);
+ 344              		.loc 1 359 0
+ 345 0004 034B     		ldr	r3, .L26
+ 346 0006 1B78     		ldrb	r3, [r3]
+ 347 0008 DBB2     		uxtb	r3, r3
+ 360:.\Generated_Source\PSoC5/Timeout_timer.c ****     #else
+ 361:.\Generated_Source\PSoC5/Timeout_timer.c ****         return (0);
+ 362:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* (!Timeout_timer_UDB_CONTROL_REG_REMOVED) */
+ 363:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 348              		.loc 1 363 0
+ 349 000a 1846     		mov	r0, r3
+ 350 000c BD46     		mov	sp, r7
+ 351              		.cfi_def_cfa_register 13
+ 352              		@ sp needed
+ 353 000e 5DF8047B 		ldr	r7, [sp], #4
+ 354              		.cfi_restore 7
+ 355              		.cfi_def_cfa_offset 0
+ 356 0012 7047     		bx	lr
+ 357              	.L27:
+ 358              		.align	2
+ 359              	.L26:
+ 360 0014 72640040 		.word	1073767538
+ 361              		.cfi_endproc
+ 362              	.LFE7:
+ 363              		.size	Timeout_timer_ReadControlRegister, .-Timeout_timer_ReadControlRegister
+ 364              		.section	.text.Timeout_timer_WriteControlRegister,"ax",%progbits
+ 365              		.align	2
+ 366              		.global	Timeout_timer_WriteControlRegister
+ 367              		.thumb
+ 368              		.thumb_func
+ 369              		.type	Timeout_timer_WriteControlRegister, %function
+ 370              	Timeout_timer_WriteControlRegister:
+ 371              	.LFB8:
+ 364:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 365:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 366:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 367:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_WriteControlRegister
+ 368:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 369:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 370:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 14
+
+
+ 371:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Sets the bit-field of the control register.
+ 372:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 373:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 374:.\Generated_Source\PSoC5/Timeout_timer.c **** *  control: The contents of the control register
+ 375:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 376:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 377:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 378:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 379:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_WriteControlRegister(uint8 control) 
+ 380:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 372              		.loc 1 380 0
+ 373              		.cfi_startproc
+ 374              		@ args = 0, pretend = 0, frame = 8
+ 375              		@ frame_needed = 1, uses_anonymous_args = 0
+ 376              		@ link register save eliminated.
+ 377 0000 80B4     		push	{r7}
+ 378              		.cfi_def_cfa_offset 4
+ 379              		.cfi_offset 7, -4
+ 380 0002 83B0     		sub	sp, sp, #12
+ 381              		.cfi_def_cfa_offset 16
+ 382 0004 00AF     		add	r7, sp, #0
+ 383              		.cfi_def_cfa_register 7
+ 384 0006 0346     		mov	r3, r0
+ 385 0008 FB71     		strb	r3, [r7, #7]
+ 381:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (!Timeout_timer_UDB_CONTROL_REG_REMOVED) 
+ 382:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL = control;
+ 386              		.loc 1 382 0
+ 387 000a 044A     		ldr	r2, .L29
+ 388 000c FB79     		ldrb	r3, [r7, #7]
+ 389 000e 1370     		strb	r3, [r2]
+ 383:.\Generated_Source\PSoC5/Timeout_timer.c ****     #else
+ 384:.\Generated_Source\PSoC5/Timeout_timer.c ****         control = 0u;
+ 385:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* (!Timeout_timer_UDB_CONTROL_REG_REMOVED) */
+ 386:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 390              		.loc 1 386 0
+ 391 0010 0C37     		adds	r7, r7, #12
+ 392              		.cfi_def_cfa_offset 4
+ 393 0012 BD46     		mov	sp, r7
+ 394              		.cfi_def_cfa_register 13
+ 395              		@ sp needed
+ 396 0014 5DF8047B 		ldr	r7, [sp], #4
+ 397              		.cfi_restore 7
+ 398              		.cfi_def_cfa_offset 0
+ 399 0018 7047     		bx	lr
+ 400              	.L30:
+ 401 001a 00BF     		.align	2
+ 402              	.L29:
+ 403 001c 72640040 		.word	1073767538
+ 404              		.cfi_endproc
+ 405              	.LFE8:
+ 406              		.size	Timeout_timer_WriteControlRegister, .-Timeout_timer_WriteControlRegister
+ 407              		.section	.text.Timeout_timer_ReadPeriod,"ax",%progbits
+ 408              		.align	2
+ 409              		.global	Timeout_timer_ReadPeriod
+ 410              		.thumb
+ 411              		.thumb_func
+ 412              		.type	Timeout_timer_ReadPeriod, %function
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 15
+
+
+ 413              	Timeout_timer_ReadPeriod:
+ 414              	.LFB9:
+ 387:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 388:.\Generated_Source\PSoC5/Timeout_timer.c **** #endif /* Remove API if control register is unused */
+ 389:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 390:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 391:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 392:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_ReadPeriod
+ 393:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 394:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 395:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 396:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function returns the current value of the Period.
+ 397:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 398:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 399:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 400:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 401:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 402:.\Generated_Source\PSoC5/Timeout_timer.c **** *  The present value of the counter.
+ 403:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 404:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 405:.\Generated_Source\PSoC5/Timeout_timer.c **** uint8 Timeout_timer_ReadPeriod(void) 
+ 406:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 415              		.loc 1 406 0
+ 416              		.cfi_startproc
+ 417              		@ args = 0, pretend = 0, frame = 0
+ 418              		@ frame_needed = 1, uses_anonymous_args = 0
+ 419              		@ link register save eliminated.
+ 420 0000 80B4     		push	{r7}
+ 421              		.cfi_def_cfa_offset 4
+ 422              		.cfi_offset 7, -4
+ 423 0002 00AF     		add	r7, sp, #0
+ 424              		.cfi_def_cfa_register 7
+ 407:.\Generated_Source\PSoC5/Timeout_timer.c ****    #if(Timeout_timer_UsingFixedFunction)
+ 408:.\Generated_Source\PSoC5/Timeout_timer.c ****        return ((uint8)CY_GET_REG16(Timeout_timer_PERIOD_LSB_PTR));
+ 409:.\Generated_Source\PSoC5/Timeout_timer.c ****    #else
+ 410:.\Generated_Source\PSoC5/Timeout_timer.c ****        return (CY_GET_REG8(Timeout_timer_PERIOD_LSB_PTR));
+ 425              		.loc 1 410 0
+ 426 0004 034B     		ldr	r3, .L33
+ 427 0006 1B78     		ldrb	r3, [r3]
+ 428 0008 DBB2     		uxtb	r3, r3
+ 411:.\Generated_Source\PSoC5/Timeout_timer.c ****    #endif /* (Timeout_timer_UsingFixedFunction) */
+ 412:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 429              		.loc 1 412 0
+ 430 000a 1846     		mov	r0, r3
+ 431 000c BD46     		mov	sp, r7
+ 432              		.cfi_def_cfa_register 13
+ 433              		@ sp needed
+ 434 000e 5DF8047B 		ldr	r7, [sp], #4
+ 435              		.cfi_restore 7
+ 436              		.cfi_def_cfa_offset 0
+ 437 0012 7047     		bx	lr
+ 438              	.L34:
+ 439              		.align	2
+ 440              	.L33:
+ 441 0014 21640040 		.word	1073767457
+ 442              		.cfi_endproc
+ 443              	.LFE9:
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 16
+
+
+ 444              		.size	Timeout_timer_ReadPeriod, .-Timeout_timer_ReadPeriod
+ 445              		.section	.text.Timeout_timer_WritePeriod,"ax",%progbits
+ 446              		.align	2
+ 447              		.global	Timeout_timer_WritePeriod
+ 448              		.thumb
+ 449              		.thumb_func
+ 450              		.type	Timeout_timer_WritePeriod, %function
+ 451              	Timeout_timer_WritePeriod:
+ 452              	.LFB10:
+ 413:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 414:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 415:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 416:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_WritePeriod
+ 417:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 418:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 419:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 420:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function is used to change the period of the counter.  The new period
+ 421:.\Generated_Source\PSoC5/Timeout_timer.c **** *  will be loaded the next time terminal count is detected.
+ 422:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 423:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 424:.\Generated_Source\PSoC5/Timeout_timer.c **** *  period: This value may be between 1 and (2^Resolution)-1.  A value of 0 will
+ 425:.\Generated_Source\PSoC5/Timeout_timer.c **** *          result in the counter remaining at zero.
+ 426:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 427:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 428:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 429:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 430:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 431:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_WritePeriod(uint8 period) 
+ 432:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 453              		.loc 1 432 0
+ 454              		.cfi_startproc
+ 455              		@ args = 0, pretend = 0, frame = 8
+ 456              		@ frame_needed = 1, uses_anonymous_args = 0
+ 457              		@ link register save eliminated.
+ 458 0000 80B4     		push	{r7}
+ 459              		.cfi_def_cfa_offset 4
+ 460              		.cfi_offset 7, -4
+ 461 0002 83B0     		sub	sp, sp, #12
+ 462              		.cfi_def_cfa_offset 16
+ 463 0004 00AF     		add	r7, sp, #0
+ 464              		.cfi_def_cfa_register 7
+ 465 0006 0346     		mov	r3, r0
+ 466 0008 FB71     		strb	r3, [r7, #7]
+ 433:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if(Timeout_timer_UsingFixedFunction)
+ 434:.\Generated_Source\PSoC5/Timeout_timer.c ****         uint16 period_temp = (uint16)period;
+ 435:.\Generated_Source\PSoC5/Timeout_timer.c ****         CY_SET_REG16(Timeout_timer_PERIOD_LSB_PTR, period_temp);
+ 436:.\Generated_Source\PSoC5/Timeout_timer.c ****     #else
+ 437:.\Generated_Source\PSoC5/Timeout_timer.c ****         CY_SET_REG8(Timeout_timer_PERIOD_LSB_PTR, period);
+ 467              		.loc 1 437 0
+ 468 000a 044A     		ldr	r2, .L36
+ 469 000c FB79     		ldrb	r3, [r7, #7]
+ 470 000e 1370     		strb	r3, [r2]
+ 438:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /*Write Period value with appropriate resolution suffix depending on UDB or fixed functi
+ 439:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 471              		.loc 1 439 0
+ 472 0010 0C37     		adds	r7, r7, #12
+ 473              		.cfi_def_cfa_offset 4
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 17
+
+
+ 474 0012 BD46     		mov	sp, r7
+ 475              		.cfi_def_cfa_register 13
+ 476              		@ sp needed
+ 477 0014 5DF8047B 		ldr	r7, [sp], #4
+ 478              		.cfi_restore 7
+ 479              		.cfi_def_cfa_offset 0
+ 480 0018 7047     		bx	lr
+ 481              	.L37:
+ 482 001a 00BF     		.align	2
+ 483              	.L36:
+ 484 001c 21640040 		.word	1073767457
+ 485              		.cfi_endproc
+ 486              	.LFE10:
+ 487              		.size	Timeout_timer_WritePeriod, .-Timeout_timer_WritePeriod
+ 488              		.section	.text.Timeout_timer_ReadCapture,"ax",%progbits
+ 489              		.align	2
+ 490              		.global	Timeout_timer_ReadCapture
+ 491              		.thumb
+ 492              		.thumb_func
+ 493              		.type	Timeout_timer_ReadCapture, %function
+ 494              	Timeout_timer_ReadCapture:
+ 495              	.LFB11:
+ 440:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 441:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 442:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 443:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_ReadCapture
+ 444:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 445:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 446:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 447:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function returns the last value captured.
+ 448:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 449:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 450:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 451:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 452:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 453:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Present Capture value.
+ 454:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 455:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 456:.\Generated_Source\PSoC5/Timeout_timer.c **** uint8 Timeout_timer_ReadCapture(void) 
+ 457:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 496              		.loc 1 457 0
+ 497              		.cfi_startproc
+ 498              		@ args = 0, pretend = 0, frame = 0
+ 499              		@ frame_needed = 1, uses_anonymous_args = 0
+ 500              		@ link register save eliminated.
+ 501 0000 80B4     		push	{r7}
+ 502              		.cfi_def_cfa_offset 4
+ 503              		.cfi_offset 7, -4
+ 504 0002 00AF     		add	r7, sp, #0
+ 505              		.cfi_def_cfa_register 7
+ 458:.\Generated_Source\PSoC5/Timeout_timer.c ****    #if(Timeout_timer_UsingFixedFunction)
+ 459:.\Generated_Source\PSoC5/Timeout_timer.c ****        return ((uint8)CY_GET_REG16(Timeout_timer_CAPTURE_LSB_PTR));
+ 460:.\Generated_Source\PSoC5/Timeout_timer.c ****    #else
+ 461:.\Generated_Source\PSoC5/Timeout_timer.c ****        return (CY_GET_REG8(Timeout_timer_CAPTURE_LSB_PTR));
+ 506              		.loc 1 461 0
+ 507 0004 034B     		ldr	r3, .L40
+ 508 0006 1B78     		ldrb	r3, [r3]
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 18
+
+
+ 509 0008 DBB2     		uxtb	r3, r3
+ 462:.\Generated_Source\PSoC5/Timeout_timer.c ****    #endif /* (Timeout_timer_UsingFixedFunction) */
+ 463:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 510              		.loc 1 463 0
+ 511 000a 1846     		mov	r0, r3
+ 512 000c BD46     		mov	sp, r7
+ 513              		.cfi_def_cfa_register 13
+ 514              		@ sp needed
+ 515 000e 5DF8047B 		ldr	r7, [sp], #4
+ 516              		.cfi_restore 7
+ 517              		.cfi_def_cfa_offset 0
+ 518 0012 7047     		bx	lr
+ 519              	.L41:
+ 520              		.align	2
+ 521              	.L40:
+ 522 0014 41640040 		.word	1073767489
+ 523              		.cfi_endproc
+ 524              	.LFE11:
+ 525              		.size	Timeout_timer_ReadCapture, .-Timeout_timer_ReadCapture
+ 526              		.section	.text.Timeout_timer_WriteCounter,"ax",%progbits
+ 527              		.align	2
+ 528              		.global	Timeout_timer_WriteCounter
+ 529              		.thumb
+ 530              		.thumb_func
+ 531              		.type	Timeout_timer_WriteCounter, %function
+ 532              	Timeout_timer_WriteCounter:
+ 533              	.LFB12:
+ 464:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 465:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 466:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 467:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_WriteCounter
+ 468:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 469:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 470:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 471:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This funtion is used to set the counter to a specific value
+ 472:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 473:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 474:.\Generated_Source\PSoC5/Timeout_timer.c **** *  counter:  New counter value.
+ 475:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 476:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 477:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 478:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 479:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 480:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_WriteCounter(uint8 counter) 
+ 481:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 534              		.loc 1 481 0
+ 535              		.cfi_startproc
+ 536              		@ args = 0, pretend = 0, frame = 8
+ 537              		@ frame_needed = 1, uses_anonymous_args = 0
+ 538              		@ link register save eliminated.
+ 539 0000 80B4     		push	{r7}
+ 540              		.cfi_def_cfa_offset 4
+ 541              		.cfi_offset 7, -4
+ 542 0002 83B0     		sub	sp, sp, #12
+ 543              		.cfi_def_cfa_offset 16
+ 544 0004 00AF     		add	r7, sp, #0
+ 545              		.cfi_def_cfa_register 7
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 19
+
+
+ 546 0006 0346     		mov	r3, r0
+ 547 0008 FB71     		strb	r3, [r7, #7]
+ 482:.\Generated_Source\PSoC5/Timeout_timer.c ****    #if(Timeout_timer_UsingFixedFunction)
+ 483:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* This functionality is removed until a FixedFunction HW update to
+ 484:.\Generated_Source\PSoC5/Timeout_timer.c ****          * allow this register to be written
+ 485:.\Generated_Source\PSoC5/Timeout_timer.c ****          */
+ 486:.\Generated_Source\PSoC5/Timeout_timer.c ****         CY_SET_REG16(Timeout_timer_COUNTER_LSB_PTR, (uint16)counter);
+ 487:.\Generated_Source\PSoC5/Timeout_timer.c ****         
+ 488:.\Generated_Source\PSoC5/Timeout_timer.c ****     #else
+ 489:.\Generated_Source\PSoC5/Timeout_timer.c ****         CY_SET_REG8(Timeout_timer_COUNTER_LSB_PTR, counter);
+ 548              		.loc 1 489 0
+ 549 000a 044A     		ldr	r2, .L43
+ 550 000c FB79     		ldrb	r3, [r7, #7]
+ 551 000e 1370     		strb	r3, [r2]
+ 490:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Set Write Counter only for the UDB implementation (Write Counter not available in fix
+ 491:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 552              		.loc 1 491 0
+ 553 0010 0C37     		adds	r7, r7, #12
+ 554              		.cfi_def_cfa_offset 4
+ 555 0012 BD46     		mov	sp, r7
+ 556              		.cfi_def_cfa_register 13
+ 557              		@ sp needed
+ 558 0014 5DF8047B 		ldr	r7, [sp], #4
+ 559              		.cfi_restore 7
+ 560              		.cfi_def_cfa_offset 0
+ 561 0018 7047     		bx	lr
+ 562              	.L44:
+ 563 001a 00BF     		.align	2
+ 564              	.L43:
+ 565 001c 01640040 		.word	1073767425
+ 566              		.cfi_endproc
+ 567              	.LFE12:
+ 568              		.size	Timeout_timer_WriteCounter, .-Timeout_timer_WriteCounter
+ 569              		.section	.text.Timeout_timer_ReadCounter,"ax",%progbits
+ 570              		.align	2
+ 571              		.global	Timeout_timer_ReadCounter
+ 572              		.thumb
+ 573              		.thumb_func
+ 574              		.type	Timeout_timer_ReadCounter, %function
+ 575              	Timeout_timer_ReadCounter:
+ 576              	.LFB13:
+ 492:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 493:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 494:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 495:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_ReadCounter
+ 496:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 497:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 498:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 499:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function returns the current counter value.
+ 500:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 501:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 502:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 503:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 504:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 505:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Present compare value.
+ 506:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 507:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 20
+
+
+ 508:.\Generated_Source\PSoC5/Timeout_timer.c **** uint8 Timeout_timer_ReadCounter(void) 
+ 509:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 577              		.loc 1 509 0
+ 578              		.cfi_startproc
+ 579              		@ args = 0, pretend = 0, frame = 0
+ 580              		@ frame_needed = 1, uses_anonymous_args = 0
+ 581              		@ link register save eliminated.
+ 582 0000 80B4     		push	{r7}
+ 583              		.cfi_def_cfa_offset 4
+ 584              		.cfi_offset 7, -4
+ 585 0002 00AF     		add	r7, sp, #0
+ 586              		.cfi_def_cfa_register 7
+ 510:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* Force capture by reading Accumulator */
+ 511:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* Must first do a software capture to be able to read the counter */
+ 512:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* It is up to the user code to make sure there isn't already captured data in the FIFO */
+ 513:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if(Timeout_timer_UsingFixedFunction)
+ 514:.\Generated_Source\PSoC5/Timeout_timer.c ****         (void)CY_GET_REG16(Timeout_timer_COUNTER_LSB_PTR);
+ 515:.\Generated_Source\PSoC5/Timeout_timer.c ****     #else
+ 516:.\Generated_Source\PSoC5/Timeout_timer.c ****         (void)CY_GET_REG8(Timeout_timer_COUNTER_LSB_PTR_8BIT);
+ 587              		.loc 1 516 0
+ 588 0004 044B     		ldr	r3, .L47
+ 589 0006 1B78     		ldrb	r3, [r3]
+ 517:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif/* (Timeout_timer_UsingFixedFunction) */
+ 518:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 519:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* Read the data from the FIFO (or capture register for Fixed Function)*/
+ 520:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if(Timeout_timer_UsingFixedFunction)
+ 521:.\Generated_Source\PSoC5/Timeout_timer.c ****         return ((uint8)CY_GET_REG16(Timeout_timer_CAPTURE_LSB_PTR));
+ 522:.\Generated_Source\PSoC5/Timeout_timer.c ****     #else
+ 523:.\Generated_Source\PSoC5/Timeout_timer.c ****         return (CY_GET_REG8(Timeout_timer_CAPTURE_LSB_PTR));
+ 590              		.loc 1 523 0
+ 591 0008 044B     		ldr	r3, .L47+4
+ 592 000a 1B78     		ldrb	r3, [r3]
+ 593 000c DBB2     		uxtb	r3, r3
+ 524:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* (Timeout_timer_UsingFixedFunction) */
+ 525:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 594              		.loc 1 525 0
+ 595 000e 1846     		mov	r0, r3
+ 596 0010 BD46     		mov	sp, r7
+ 597              		.cfi_def_cfa_register 13
+ 598              		@ sp needed
+ 599 0012 5DF8047B 		ldr	r7, [sp], #4
+ 600              		.cfi_restore 7
+ 601              		.cfi_def_cfa_offset 0
+ 602 0016 7047     		bx	lr
+ 603              	.L48:
+ 604              		.align	2
+ 605              	.L47:
+ 606 0018 01640040 		.word	1073767425
+ 607 001c 41640040 		.word	1073767489
+ 608              		.cfi_endproc
+ 609              	.LFE13:
+ 610              		.size	Timeout_timer_ReadCounter, .-Timeout_timer_ReadCounter
+ 611              		.section	.text.Timeout_timer_ClearFIFO,"ax",%progbits
+ 612              		.align	2
+ 613              		.global	Timeout_timer_ClearFIFO
+ 614              		.thumb
+ 615              		.thumb_func
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 21
+
+
+ 616              		.type	Timeout_timer_ClearFIFO, %function
+ 617              	Timeout_timer_ClearFIFO:
+ 618              	.LFB14:
+ 526:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 527:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 528:.\Generated_Source\PSoC5/Timeout_timer.c **** #if(!Timeout_timer_UsingFixedFunction) /* UDB Specific Functions */
+ 529:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 530:.\Generated_Source\PSoC5/Timeout_timer.c ****     
+ 531:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 532:.\Generated_Source\PSoC5/Timeout_timer.c ****  * The functions below this point are only available using the UDB
+ 533:.\Generated_Source\PSoC5/Timeout_timer.c ****  * implementation.  If a feature is selected, then the API is enabled.
+ 534:.\Generated_Source\PSoC5/Timeout_timer.c ****  ******************************************************************************/
+ 535:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 536:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 537:.\Generated_Source\PSoC5/Timeout_timer.c **** #if (Timeout_timer_SoftwareCaptureMode)
+ 538:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 539:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 540:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 541:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_SetCaptureMode
+ 542:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 543:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 544:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 545:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function sets the capture mode to either rising or falling edge.
+ 546:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 547:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 548:.\Generated_Source\PSoC5/Timeout_timer.c **** *  captureMode: This parameter sets the capture mode of the UDB capture feature
+ 549:.\Generated_Source\PSoC5/Timeout_timer.c **** *  The parameter values are defined using the
+ 550:.\Generated_Source\PSoC5/Timeout_timer.c **** *  #define Timeout_timer__B_TIMER__CM_NONE 0
+ 551:.\Generated_Source\PSoC5/Timeout_timer.c **** #define Timeout_timer__B_TIMER__CM_RISINGEDGE 1
+ 552:.\Generated_Source\PSoC5/Timeout_timer.c **** #define Timeout_timer__B_TIMER__CM_FALLINGEDGE 2
+ 553:.\Generated_Source\PSoC5/Timeout_timer.c **** #define Timeout_timer__B_TIMER__CM_EITHEREDGE 3
+ 554:.\Generated_Source\PSoC5/Timeout_timer.c **** #define Timeout_timer__B_TIMER__CM_SOFTWARE 4
+ 555:.\Generated_Source\PSoC5/Timeout_timer.c ****  identifiers
+ 556:.\Generated_Source\PSoC5/Timeout_timer.c **** *  The following are the possible values of the parameter
+ 557:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Timeout_timer__B_TIMER__CM_NONE        - Set Capture mode to None
+ 558:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Timeout_timer__B_TIMER__CM_RISINGEDGE  - Rising edge of Capture input
+ 559:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Timeout_timer__B_TIMER__CM_FALLINGEDGE - Falling edge of Capture input
+ 560:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Timeout_timer__B_TIMER__CM_EITHEREDGE  - Either edge of Capture input
+ 561:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 562:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 563:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 564:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 565:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 566:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_SetCaptureMode(uint8 captureMode) 
+ 567:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 568:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* This must only set to two bits of the control register associated */
+ 569:.\Generated_Source\PSoC5/Timeout_timer.c ****     captureMode = ((uint8)((uint8)captureMode << Timeout_timer_CTRL_CAP_MODE_SHIFT));
+ 570:.\Generated_Source\PSoC5/Timeout_timer.c ****     captureMode &= (Timeout_timer_CTRL_CAP_MODE_MASK);
+ 571:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 572:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (!Timeout_timer_UDB_CONTROL_REG_REMOVED)
+ 573:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Clear the Current Setting */
+ 574:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL &= ((uint8)(~Timeout_timer_CTRL_CAP_MODE_MASK));
+ 575:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 576:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Write The New Setting */
+ 577:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL |= captureMode;
+ 578:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* (!Timeout_timer_UDB_CONTROL_REG_REMOVED) */
+ 579:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 22
+
+
+ 580:.\Generated_Source\PSoC5/Timeout_timer.c **** #endif /* Remove API if Capture Mode is not Software Controlled */
+ 581:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 582:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 583:.\Generated_Source\PSoC5/Timeout_timer.c **** #if (Timeout_timer_SoftwareTriggerMode)
+ 584:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 585:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 586:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 587:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_SetTriggerMode
+ 588:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 589:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 590:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 591:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function sets the trigger input mode
+ 592:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 593:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 594:.\Generated_Source\PSoC5/Timeout_timer.c **** *  triggerMode: Pass one of the pre-defined Trigger Modes (except Software)
+ 595:.\Generated_Source\PSoC5/Timeout_timer.c ****     #define Timeout_timer__B_TIMER__TM_NONE 0x00u
+ 596:.\Generated_Source\PSoC5/Timeout_timer.c ****     #define Timeout_timer__B_TIMER__TM_RISINGEDGE 0x04u
+ 597:.\Generated_Source\PSoC5/Timeout_timer.c ****     #define Timeout_timer__B_TIMER__TM_FALLINGEDGE 0x08u
+ 598:.\Generated_Source\PSoC5/Timeout_timer.c ****     #define Timeout_timer__B_TIMER__TM_EITHEREDGE 0x0Cu
+ 599:.\Generated_Source\PSoC5/Timeout_timer.c ****     #define Timeout_timer__B_TIMER__TM_SOFTWARE 0x10u
+ 600:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 601:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 602:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 603:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 604:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 605:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_SetTriggerMode(uint8 triggerMode) 
+ 606:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 607:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* This must only set to two bits of the control register associated */
+ 608:.\Generated_Source\PSoC5/Timeout_timer.c ****     triggerMode &= Timeout_timer_CTRL_TRIG_MODE_MASK;
+ 609:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 610:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (!Timeout_timer_UDB_CONTROL_REG_REMOVED)   /* Remove assignment if control register is remo
+ 611:.\Generated_Source\PSoC5/Timeout_timer.c ****     
+ 612:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Clear the Current Setting */
+ 613:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL &= ((uint8)(~Timeout_timer_CTRL_TRIG_MODE_MASK));
+ 614:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 615:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Write The New Setting */
+ 616:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL |= (triggerMode | Timeout_timer__B_TIMER__TM_SOFTWARE);
+ 617:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Remove code section if control register is not used */
+ 618:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 619:.\Generated_Source\PSoC5/Timeout_timer.c **** #endif /* Remove API if Trigger Mode is not Software Controlled */
+ 620:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 621:.\Generated_Source\PSoC5/Timeout_timer.c **** #if (Timeout_timer_EnableTriggerMode)
+ 622:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 623:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 624:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 625:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_EnableTrigger
+ 626:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 627:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 628:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 629:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Sets the control bit enabling Hardware Trigger mode
+ 630:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 631:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 632:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 633:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 634:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 635:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 636:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 23
+
+
+ 637:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 638:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_EnableTrigger(void) 
+ 639:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 640:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (!Timeout_timer_UDB_CONTROL_REG_REMOVED)   /* Remove assignment if control register is remo
+ 641:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL |= Timeout_timer_CTRL_TRIG_EN;
+ 642:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Remove code section if control register is not used */
+ 643:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 644:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 645:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 646:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 647:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_DisableTrigger
+ 648:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 649:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 650:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 651:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Clears the control bit enabling Hardware Trigger mode
+ 652:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 653:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 654:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 655:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 656:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 657:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 658:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 659:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 660:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_DisableTrigger(void) 
+ 661:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 662:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (!Timeout_timer_UDB_CONTROL_REG_REMOVED )   /* Remove assignment if control register is rem
+ 663:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL &= ((uint8)(~Timeout_timer_CTRL_TRIG_EN));
+ 664:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* Remove code section if control register is not used */
+ 665:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 666:.\Generated_Source\PSoC5/Timeout_timer.c **** #endif /* Remove API is Trigger Mode is set to None */
+ 667:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 668:.\Generated_Source\PSoC5/Timeout_timer.c **** #if(Timeout_timer_InterruptOnCaptureCount)
+ 669:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 670:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 671:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 672:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_SetInterruptCount
+ 673:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 674:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 675:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 676:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function sets the capture count before an interrupt is triggered.
+ 677:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 678:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 679:.\Generated_Source\PSoC5/Timeout_timer.c **** *  interruptCount:  A value between 0 and 3 is valid.  If the value is 0, then
+ 680:.\Generated_Source\PSoC5/Timeout_timer.c **** *                   an interrupt will occur each time a capture occurs.
+ 681:.\Generated_Source\PSoC5/Timeout_timer.c **** *                   A value of 1 to 3 will cause the interrupt
+ 682:.\Generated_Source\PSoC5/Timeout_timer.c **** *                   to delay by the same number of captures.
+ 683:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 684:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 685:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 686:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 687:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 688:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_SetInterruptCount(uint8 interruptCount) 
+ 689:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 690:.\Generated_Source\PSoC5/Timeout_timer.c ****     /* This must only set to two bits of the control register associated */
+ 691:.\Generated_Source\PSoC5/Timeout_timer.c ****     interruptCount &= Timeout_timer_CTRL_INTCNT_MASK;
+ 692:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 693:.\Generated_Source\PSoC5/Timeout_timer.c ****     #if (!Timeout_timer_UDB_CONTROL_REG_REMOVED)
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 24
+
+
+ 694:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Clear the Current Setting */
+ 695:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL &= ((uint8)(~Timeout_timer_CTRL_INTCNT_MASK));
+ 696:.\Generated_Source\PSoC5/Timeout_timer.c ****         /* Write The New Setting */
+ 697:.\Generated_Source\PSoC5/Timeout_timer.c ****         Timeout_timer_CONTROL |= interruptCount;
+ 698:.\Generated_Source\PSoC5/Timeout_timer.c ****     #endif /* (!Timeout_timer_UDB_CONTROL_REG_REMOVED) */
+ 699:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 700:.\Generated_Source\PSoC5/Timeout_timer.c **** #endif /* Timeout_timer_InterruptOnCaptureCount */
+ 701:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 702:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 703:.\Generated_Source\PSoC5/Timeout_timer.c **** #if (Timeout_timer_UsingHWCaptureCounter)
+ 704:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 705:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 706:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 707:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_SetCaptureCount
+ 708:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 709:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 710:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 711:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function sets the capture count
+ 712:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 713:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 714:.\Generated_Source\PSoC5/Timeout_timer.c **** *  captureCount: A value between 2 and 127 inclusive is valid.  A value of 1
+ 715:.\Generated_Source\PSoC5/Timeout_timer.c **** *                to 127 will cause the interrupt to delay by the same number of
+ 716:.\Generated_Source\PSoC5/Timeout_timer.c **** *                captures.
+ 717:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 718:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 719:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 720:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 721:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 722:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_SetCaptureCount(uint8 captureCount) 
+ 723:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 724:.\Generated_Source\PSoC5/Timeout_timer.c ****     Timeout_timer_CAP_COUNT = captureCount;
+ 725:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 726:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 727:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 728:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 729:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_ReadCaptureCount
+ 730:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 731:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 732:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 733:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function reads the capture count setting
+ 734:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 735:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 736:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 737:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 738:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 739:.\Generated_Source\PSoC5/Timeout_timer.c **** *  Returns the Capture Count Setting
+ 740:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 741:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 742:.\Generated_Source\PSoC5/Timeout_timer.c **** uint8 Timeout_timer_ReadCaptureCount(void) 
+ 743:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 744:.\Generated_Source\PSoC5/Timeout_timer.c ****     return ((uint8)Timeout_timer_CAP_COUNT);
+ 745:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 746:.\Generated_Source\PSoC5/Timeout_timer.c **** #endif /* Timeout_timer_UsingHWCaptureCounter */
+ 747:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 748:.\Generated_Source\PSoC5/Timeout_timer.c **** 
+ 749:.\Generated_Source\PSoC5/Timeout_timer.c **** /*******************************************************************************
+ 750:.\Generated_Source\PSoC5/Timeout_timer.c **** * Function Name: Timeout_timer_ClearFIFO
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 25
+
+
+ 751:.\Generated_Source\PSoC5/Timeout_timer.c **** ********************************************************************************
+ 752:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 753:.\Generated_Source\PSoC5/Timeout_timer.c **** * Summary:
+ 754:.\Generated_Source\PSoC5/Timeout_timer.c **** *  This function clears all capture data from the capture FIFO
+ 755:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 756:.\Generated_Source\PSoC5/Timeout_timer.c **** * Parameters:
+ 757:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 758:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 759:.\Generated_Source\PSoC5/Timeout_timer.c **** * Return:
+ 760:.\Generated_Source\PSoC5/Timeout_timer.c **** *  void
+ 761:.\Generated_Source\PSoC5/Timeout_timer.c **** *
+ 762:.\Generated_Source\PSoC5/Timeout_timer.c **** *******************************************************************************/
+ 763:.\Generated_Source\PSoC5/Timeout_timer.c **** void Timeout_timer_ClearFIFO(void) 
+ 764:.\Generated_Source\PSoC5/Timeout_timer.c **** {
+ 619              		.loc 1 764 0
+ 620              		.cfi_startproc
+ 621              		@ args = 0, pretend = 0, frame = 0
+ 622              		@ frame_needed = 1, uses_anonymous_args = 0
+ 623 0000 80B5     		push	{r7, lr}
+ 624              		.cfi_def_cfa_offset 8
+ 625              		.cfi_offset 7, -8
+ 626              		.cfi_offset 14, -4
+ 627 0002 00AF     		add	r7, sp, #0
+ 628              		.cfi_def_cfa_register 7
+ 765:.\Generated_Source\PSoC5/Timeout_timer.c ****     while(0u != (Timeout_timer_ReadStatusRegister() & Timeout_timer_STATUS_FIFONEMP))
+ 629              		.loc 1 765 0
+ 630 0004 01E0     		b	.L50
+ 631              	.L51:
+ 766:.\Generated_Source\PSoC5/Timeout_timer.c ****     {
+ 767:.\Generated_Source\PSoC5/Timeout_timer.c ****         (void)Timeout_timer_ReadCapture();
+ 632              		.loc 1 767 0
+ 633 0006 FFF7FEFF 		bl	Timeout_timer_ReadCapture
+ 634              	.L50:
+ 765:.\Generated_Source\PSoC5/Timeout_timer.c ****     while(0u != (Timeout_timer_ReadStatusRegister() & Timeout_timer_STATUS_FIFONEMP))
+ 635              		.loc 1 765 0
+ 636 000a FFF7FEFF 		bl	Timeout_timer_ReadStatusRegister
+ 637 000e 0346     		mov	r3, r0
+ 638 0010 03F00803 		and	r3, r3, #8
+ 639 0014 002B     		cmp	r3, #0
+ 640 0016 F6D1     		bne	.L51
+ 768:.\Generated_Source\PSoC5/Timeout_timer.c ****     }
+ 769:.\Generated_Source\PSoC5/Timeout_timer.c **** }
+ 641              		.loc 1 769 0
+ 642 0018 80BD     		pop	{r7, pc}
+ 643              		.cfi_endproc
+ 644              	.LFE14:
+ 645              		.size	Timeout_timer_ClearFIFO, .-Timeout_timer_ClearFIFO
+ 646 001a 00BF     		.text
+ 647              	.Letext0:
+ 648              		.file 2 ".\\Generated_Source\\PSoC5\\cytypes.h"
+ 649              		.section	.debug_info,"",%progbits
+ 650              	.Ldebug_info0:
+ 651 0000 33020000 		.4byte	0x233
+ 652 0004 0400     		.2byte	0x4
+ 653 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 654 000a 04       		.byte	0x4
+ 655 000b 01       		.uleb128 0x1
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 26
+
+
+ 656 000c 58010000 		.4byte	.LASF34
+ 657 0010 01       		.byte	0x1
+ 658 0011 58000000 		.4byte	.LASF35
+ 659 0015 EC020000 		.4byte	.LASF36
+ 660 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 661 001d 00000000 		.4byte	0
+ 662 0021 00000000 		.4byte	.Ldebug_line0
+ 663 0025 02       		.uleb128 0x2
+ 664 0026 01       		.byte	0x1
+ 665 0027 06       		.byte	0x6
+ 666 0028 57030000 		.4byte	.LASF0
+ 667 002c 02       		.uleb128 0x2
+ 668 002d 01       		.byte	0x1
+ 669 002e 08       		.byte	0x8
+ 670 002f 0B010000 		.4byte	.LASF1
+ 671 0033 02       		.uleb128 0x2
+ 672 0034 02       		.byte	0x2
+ 673 0035 05       		.byte	0x5
+ 674 0036 B5020000 		.4byte	.LASF2
+ 675 003a 02       		.uleb128 0x2
+ 676 003b 02       		.byte	0x2
+ 677 003c 07       		.byte	0x7
+ 678 003d 88000000 		.4byte	.LASF3
+ 679 0041 02       		.uleb128 0x2
+ 680 0042 04       		.byte	0x4
+ 681 0043 05       		.byte	0x5
+ 682 0044 DE020000 		.4byte	.LASF4
+ 683 0048 02       		.uleb128 0x2
+ 684 0049 04       		.byte	0x4
+ 685 004a 07       		.byte	0x7
+ 686 004b 1E010000 		.4byte	.LASF5
+ 687 004f 02       		.uleb128 0x2
+ 688 0050 08       		.byte	0x8
+ 689 0051 05       		.byte	0x5
+ 690 0052 99020000 		.4byte	.LASF6
+ 691 0056 02       		.uleb128 0x2
+ 692 0057 08       		.byte	0x8
+ 693 0058 07       		.byte	0x7
+ 694 0059 33020000 		.4byte	.LASF7
+ 695 005d 03       		.uleb128 0x3
+ 696 005e 04       		.byte	0x4
+ 697 005f 05       		.byte	0x5
+ 698 0060 696E7400 		.ascii	"int\000"
+ 699 0064 02       		.uleb128 0x2
+ 700 0065 04       		.byte	0x4
+ 701 0066 07       		.byte	0x7
+ 702 0067 26020000 		.4byte	.LASF8
+ 703 006b 04       		.uleb128 0x4
+ 704 006c 30010000 		.4byte	.LASF12
+ 705 0070 02       		.byte	0x2
+ 706 0071 9201     		.2byte	0x192
+ 707 0073 2C000000 		.4byte	0x2c
+ 708 0077 02       		.uleb128 0x2
+ 709 0078 04       		.byte	0x4
+ 710 0079 04       		.byte	0x4
+ 711 007a 52000000 		.4byte	.LASF9
+ 712 007e 02       		.uleb128 0x2
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 27
+
+
+ 713 007f 08       		.byte	0x8
+ 714 0080 04       		.byte	0x4
+ 715 0081 E6010000 		.4byte	.LASF10
+ 716 0085 02       		.uleb128 0x2
+ 717 0086 01       		.byte	0x1
+ 718 0087 08       		.byte	0x8
+ 719 0088 E7020000 		.4byte	.LASF11
+ 720 008c 04       		.uleb128 0x4
+ 721 008d 19010000 		.4byte	.LASF13
+ 722 0091 02       		.byte	0x2
+ 723 0092 3C02     		.2byte	0x23c
+ 724 0094 98000000 		.4byte	0x98
+ 725 0098 05       		.uleb128 0x5
+ 726 0099 6B000000 		.4byte	0x6b
+ 727 009d 02       		.uleb128 0x2
+ 728 009e 04       		.byte	0x4
+ 729 009f 07       		.byte	0x7
+ 730 00a0 90020000 		.4byte	.LASF14
+ 731 00a4 06       		.uleb128 0x6
+ 732 00a5 D7000000 		.4byte	.LASF18
+ 733 00a9 01       		.byte	0x1
+ 734 00aa 2B       		.byte	0x2b
+ 735 00ab 00000000 		.4byte	.LFB0
+ 736 00af 48000000 		.4byte	.LFE0-.LFB0
+ 737 00b3 01       		.uleb128 0x1
+ 738 00b4 9C       		.byte	0x9c
+ 739 00b5 C8000000 		.4byte	0xc8
+ 740 00b9 07       		.uleb128 0x7
+ 741 00ba 5D020000 		.4byte	.LASF37
+ 742 00be 01       		.byte	0x1
+ 743 00bf 2F       		.byte	0x2f
+ 744 00c0 6B000000 		.4byte	0x6b
+ 745 00c4 02       		.uleb128 0x2
+ 746 00c5 91       		.byte	0x91
+ 747 00c6 77       		.sleb128 -9
+ 748 00c7 00       		.byte	0
+ 749 00c8 08       		.uleb128 0x8
+ 750 00c9 42030000 		.4byte	.LASF15
+ 751 00cd 01       		.byte	0x1
+ 752 00ce B4       		.byte	0xb4
+ 753 00cf 00000000 		.4byte	.LFB1
+ 754 00d3 20000000 		.4byte	.LFE1-.LFB1
+ 755 00d7 01       		.uleb128 0x1
+ 756 00d8 9C       		.byte	0x9c
+ 757 00d9 09       		.uleb128 0x9
+ 758 00da 1B000000 		.4byte	.LASF16
+ 759 00de 01       		.byte	0x1
+ 760 00df D7       		.byte	0xd7
+ 761 00e0 00000000 		.4byte	.LFB2
+ 762 00e4 20000000 		.4byte	.LFE2-.LFB2
+ 763 00e8 01       		.uleb128 0x1
+ 764 00e9 9C       		.byte	0x9c
+ 765 00ea 08       		.uleb128 0x8
+ 766 00eb 4A020000 		.4byte	.LASF17
+ 767 00ef 01       		.byte	0x1
+ 768 00f0 F7       		.byte	0xf7
+ 769 00f1 00000000 		.4byte	.LFB3
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 28
+
+
+ 770 00f5 20000000 		.4byte	.LFE3-.LFB3
+ 771 00f9 01       		.uleb128 0x1
+ 772 00fa 9C       		.byte	0x9c
+ 773 00fb 0A       		.uleb128 0xa
+ 774 00fc BF020000 		.4byte	.LASF19
+ 775 0100 01       		.byte	0x1
+ 776 0101 1701     		.2byte	0x117
+ 777 0103 00000000 		.4byte	.LFB4
+ 778 0107 20000000 		.4byte	.LFE4-.LFB4
+ 779 010b 01       		.uleb128 0x1
+ 780 010c 9C       		.byte	0x9c
+ 781 010d 21010000 		.4byte	0x121
+ 782 0111 0B       		.uleb128 0xb
+ 783 0112 A7020000 		.4byte	.LASF24
+ 784 0116 01       		.byte	0x1
+ 785 0117 1701     		.2byte	0x117
+ 786 0119 6B000000 		.4byte	0x6b
+ 787 011d 02       		.uleb128 0x2
+ 788 011e 91       		.byte	0x91
+ 789 011f 77       		.sleb128 -9
+ 790 0120 00       		.byte	0
+ 791 0121 0C       		.uleb128 0xc
+ 792 0122 7D030000 		.4byte	.LASF20
+ 793 0126 01       		.byte	0x1
+ 794 0127 2E01     		.2byte	0x12e
+ 795 0129 00000000 		.4byte	.LFB5
+ 796 012d 14000000 		.4byte	.LFE5-.LFB5
+ 797 0131 01       		.uleb128 0x1
+ 798 0132 9C       		.byte	0x9c
+ 799 0133 0D       		.uleb128 0xd
+ 800 0134 05020000 		.4byte	.LASF21
+ 801 0138 01       		.byte	0x1
+ 802 0139 4D01     		.2byte	0x14d
+ 803 013b 6B000000 		.4byte	0x6b
+ 804 013f 00000000 		.4byte	.LFB6
+ 805 0143 18000000 		.4byte	.LFE6-.LFB6
+ 806 0147 01       		.uleb128 0x1
+ 807 0148 9C       		.byte	0x9c
+ 808 0149 0D       		.uleb128 0xd
+ 809 014a 9B000000 		.4byte	.LASF22
+ 810 014e 01       		.byte	0x1
+ 811 014f 6401     		.2byte	0x164
+ 812 0151 6B000000 		.4byte	0x6b
+ 813 0155 00000000 		.4byte	.LFB7
+ 814 0159 18000000 		.4byte	.LFE7-.LFB7
+ 815 015d 01       		.uleb128 0x1
+ 816 015e 9C       		.byte	0x9c
+ 817 015f 0A       		.uleb128 0xa
+ 818 0160 2F000000 		.4byte	.LASF23
+ 819 0164 01       		.byte	0x1
+ 820 0165 7B01     		.2byte	0x17b
+ 821 0167 00000000 		.4byte	.LFB8
+ 822 016b 20000000 		.4byte	.LFE8-.LFB8
+ 823 016f 01       		.uleb128 0x1
+ 824 0170 9C       		.byte	0x9c
+ 825 0171 85010000 		.4byte	0x185
+ 826 0175 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 29
+
+
+ 827 0176 36010000 		.4byte	.LASF25
+ 828 017a 01       		.byte	0x1
+ 829 017b 7B01     		.2byte	0x17b
+ 830 017d 6B000000 		.4byte	0x6b
+ 831 0181 02       		.uleb128 0x2
+ 832 0182 91       		.byte	0x91
+ 833 0183 77       		.sleb128 -9
+ 834 0184 00       		.byte	0
+ 835 0185 0D       		.uleb128 0xd
+ 836 0186 F2000000 		.4byte	.LASF26
+ 837 018a 01       		.byte	0x1
+ 838 018b 9501     		.2byte	0x195
+ 839 018d 6B000000 		.4byte	0x6b
+ 840 0191 00000000 		.4byte	.LFB9
+ 841 0195 18000000 		.4byte	.LFE9-.LFB9
+ 842 0199 01       		.uleb128 0x1
+ 843 019a 9C       		.byte	0x9c
+ 844 019b 0A       		.uleb128 0xa
+ 845 019c 3E010000 		.4byte	.LASF27
+ 846 01a0 01       		.byte	0x1
+ 847 01a1 AF01     		.2byte	0x1af
+ 848 01a3 00000000 		.4byte	.LFB10
+ 849 01a7 20000000 		.4byte	.LFE10-.LFB10
+ 850 01ab 01       		.uleb128 0x1
+ 851 01ac 9C       		.byte	0x9c
+ 852 01ad C1010000 		.4byte	0x1c1
+ 853 01b1 0B       		.uleb128 0xb
+ 854 01b2 81000000 		.4byte	.LASF28
+ 855 01b6 01       		.byte	0x1
+ 856 01b7 AF01     		.2byte	0x1af
+ 857 01b9 6B000000 		.4byte	0x6b
+ 858 01bd 02       		.uleb128 0x2
+ 859 01be 91       		.byte	0x91
+ 860 01bf 77       		.sleb128 -9
+ 861 01c0 00       		.byte	0
+ 862 01c1 0D       		.uleb128 0xd
+ 863 01c2 63030000 		.4byte	.LASF29
+ 864 01c6 01       		.byte	0x1
+ 865 01c7 C801     		.2byte	0x1c8
+ 866 01c9 6B000000 		.4byte	0x6b
+ 867 01cd 00000000 		.4byte	.LFB11
+ 868 01d1 18000000 		.4byte	.LFE11-.LFB11
+ 869 01d5 01       		.uleb128 0x1
+ 870 01d6 9C       		.byte	0x9c
+ 871 01d7 0A       		.uleb128 0xa
+ 872 01d8 00000000 		.4byte	.LASF30
+ 873 01dc 01       		.byte	0x1
+ 874 01dd E001     		.2byte	0x1e0
+ 875 01df 00000000 		.4byte	.LFB12
+ 876 01e3 20000000 		.4byte	.LFE12-.LFB12
+ 877 01e7 01       		.uleb128 0x1
+ 878 01e8 9C       		.byte	0x9c
+ 879 01e9 FD010000 		.4byte	0x1fd
+ 880 01ed 0B       		.uleb128 0xb
+ 881 01ee EA000000 		.4byte	.LASF31
+ 882 01f2 01       		.byte	0x1
+ 883 01f3 E001     		.2byte	0x1e0
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 30
+
+
+ 884 01f5 6B000000 		.4byte	0x6b
+ 885 01f9 02       		.uleb128 0x2
+ 886 01fa 91       		.byte	0x91
+ 887 01fb 77       		.sleb128 -9
+ 888 01fc 00       		.byte	0
+ 889 01fd 0D       		.uleb128 0xd
+ 890 01fe BD000000 		.4byte	.LASF32
+ 891 0202 01       		.byte	0x1
+ 892 0203 FC01     		.2byte	0x1fc
+ 893 0205 6B000000 		.4byte	0x6b
+ 894 0209 00000000 		.4byte	.LFB13
+ 895 020d 20000000 		.4byte	.LFE13-.LFB13
+ 896 0211 01       		.uleb128 0x1
+ 897 0212 9C       		.byte	0x9c
+ 898 0213 0E       		.uleb128 0xe
+ 899 0214 ED010000 		.4byte	.LASF33
+ 900 0218 01       		.byte	0x1
+ 901 0219 FB02     		.2byte	0x2fb
+ 902 021b 00000000 		.4byte	.LFB14
+ 903 021f 1A000000 		.4byte	.LFE14-.LFB14
+ 904 0223 01       		.uleb128 0x1
+ 905 0224 9C       		.byte	0x9c
+ 906 0225 0F       		.uleb128 0xf
+ 907 0226 7A020000 		.4byte	.LASF38
+ 908 022a 01       		.byte	0x1
+ 909 022b 1A       		.byte	0x1a
+ 910 022c 6B000000 		.4byte	0x6b
+ 911 0230 05       		.uleb128 0x5
+ 912 0231 03       		.byte	0x3
+ 913 0232 00000000 		.4byte	Timeout_timer_initVar
+ 914 0236 00       		.byte	0
+ 915              		.section	.debug_abbrev,"",%progbits
+ 916              	.Ldebug_abbrev0:
+ 917 0000 01       		.uleb128 0x1
+ 918 0001 11       		.uleb128 0x11
+ 919 0002 01       		.byte	0x1
+ 920 0003 25       		.uleb128 0x25
+ 921 0004 0E       		.uleb128 0xe
+ 922 0005 13       		.uleb128 0x13
+ 923 0006 0B       		.uleb128 0xb
+ 924 0007 03       		.uleb128 0x3
+ 925 0008 0E       		.uleb128 0xe
+ 926 0009 1B       		.uleb128 0x1b
+ 927 000a 0E       		.uleb128 0xe
+ 928 000b 55       		.uleb128 0x55
+ 929 000c 17       		.uleb128 0x17
+ 930 000d 11       		.uleb128 0x11
+ 931 000e 01       		.uleb128 0x1
+ 932 000f 10       		.uleb128 0x10
+ 933 0010 17       		.uleb128 0x17
+ 934 0011 00       		.byte	0
+ 935 0012 00       		.byte	0
+ 936 0013 02       		.uleb128 0x2
+ 937 0014 24       		.uleb128 0x24
+ 938 0015 00       		.byte	0
+ 939 0016 0B       		.uleb128 0xb
+ 940 0017 0B       		.uleb128 0xb
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 31
+
+
+ 941 0018 3E       		.uleb128 0x3e
+ 942 0019 0B       		.uleb128 0xb
+ 943 001a 03       		.uleb128 0x3
+ 944 001b 0E       		.uleb128 0xe
+ 945 001c 00       		.byte	0
+ 946 001d 00       		.byte	0
+ 947 001e 03       		.uleb128 0x3
+ 948 001f 24       		.uleb128 0x24
+ 949 0020 00       		.byte	0
+ 950 0021 0B       		.uleb128 0xb
+ 951 0022 0B       		.uleb128 0xb
+ 952 0023 3E       		.uleb128 0x3e
+ 953 0024 0B       		.uleb128 0xb
+ 954 0025 03       		.uleb128 0x3
+ 955 0026 08       		.uleb128 0x8
+ 956 0027 00       		.byte	0
+ 957 0028 00       		.byte	0
+ 958 0029 04       		.uleb128 0x4
+ 959 002a 16       		.uleb128 0x16
+ 960 002b 00       		.byte	0
+ 961 002c 03       		.uleb128 0x3
+ 962 002d 0E       		.uleb128 0xe
+ 963 002e 3A       		.uleb128 0x3a
+ 964 002f 0B       		.uleb128 0xb
+ 965 0030 3B       		.uleb128 0x3b
+ 966 0031 05       		.uleb128 0x5
+ 967 0032 49       		.uleb128 0x49
+ 968 0033 13       		.uleb128 0x13
+ 969 0034 00       		.byte	0
+ 970 0035 00       		.byte	0
+ 971 0036 05       		.uleb128 0x5
+ 972 0037 35       		.uleb128 0x35
+ 973 0038 00       		.byte	0
+ 974 0039 49       		.uleb128 0x49
+ 975 003a 13       		.uleb128 0x13
+ 976 003b 00       		.byte	0
+ 977 003c 00       		.byte	0
+ 978 003d 06       		.uleb128 0x6
+ 979 003e 2E       		.uleb128 0x2e
+ 980 003f 01       		.byte	0x1
+ 981 0040 3F       		.uleb128 0x3f
+ 982 0041 19       		.uleb128 0x19
+ 983 0042 03       		.uleb128 0x3
+ 984 0043 0E       		.uleb128 0xe
+ 985 0044 3A       		.uleb128 0x3a
+ 986 0045 0B       		.uleb128 0xb
+ 987 0046 3B       		.uleb128 0x3b
+ 988 0047 0B       		.uleb128 0xb
+ 989 0048 27       		.uleb128 0x27
+ 990 0049 19       		.uleb128 0x19
+ 991 004a 11       		.uleb128 0x11
+ 992 004b 01       		.uleb128 0x1
+ 993 004c 12       		.uleb128 0x12
+ 994 004d 06       		.uleb128 0x6
+ 995 004e 40       		.uleb128 0x40
+ 996 004f 18       		.uleb128 0x18
+ 997 0050 9642     		.uleb128 0x2116
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 32
+
+
+ 998 0052 19       		.uleb128 0x19
+ 999 0053 01       		.uleb128 0x1
+ 1000 0054 13       		.uleb128 0x13
+ 1001 0055 00       		.byte	0
+ 1002 0056 00       		.byte	0
+ 1003 0057 07       		.uleb128 0x7
+ 1004 0058 34       		.uleb128 0x34
+ 1005 0059 00       		.byte	0
+ 1006 005a 03       		.uleb128 0x3
+ 1007 005b 0E       		.uleb128 0xe
+ 1008 005c 3A       		.uleb128 0x3a
+ 1009 005d 0B       		.uleb128 0xb
+ 1010 005e 3B       		.uleb128 0x3b
+ 1011 005f 0B       		.uleb128 0xb
+ 1012 0060 49       		.uleb128 0x49
+ 1013 0061 13       		.uleb128 0x13
+ 1014 0062 02       		.uleb128 0x2
+ 1015 0063 18       		.uleb128 0x18
+ 1016 0064 00       		.byte	0
+ 1017 0065 00       		.byte	0
+ 1018 0066 08       		.uleb128 0x8
+ 1019 0067 2E       		.uleb128 0x2e
+ 1020 0068 00       		.byte	0
+ 1021 0069 3F       		.uleb128 0x3f
+ 1022 006a 19       		.uleb128 0x19
+ 1023 006b 03       		.uleb128 0x3
+ 1024 006c 0E       		.uleb128 0xe
+ 1025 006d 3A       		.uleb128 0x3a
+ 1026 006e 0B       		.uleb128 0xb
+ 1027 006f 3B       		.uleb128 0x3b
+ 1028 0070 0B       		.uleb128 0xb
+ 1029 0071 27       		.uleb128 0x27
+ 1030 0072 19       		.uleb128 0x19
+ 1031 0073 11       		.uleb128 0x11
+ 1032 0074 01       		.uleb128 0x1
+ 1033 0075 12       		.uleb128 0x12
+ 1034 0076 06       		.uleb128 0x6
+ 1035 0077 40       		.uleb128 0x40
+ 1036 0078 18       		.uleb128 0x18
+ 1037 0079 9742     		.uleb128 0x2117
+ 1038 007b 19       		.uleb128 0x19
+ 1039 007c 00       		.byte	0
+ 1040 007d 00       		.byte	0
+ 1041 007e 09       		.uleb128 0x9
+ 1042 007f 2E       		.uleb128 0x2e
+ 1043 0080 00       		.byte	0
+ 1044 0081 3F       		.uleb128 0x3f
+ 1045 0082 19       		.uleb128 0x19
+ 1046 0083 03       		.uleb128 0x3
+ 1047 0084 0E       		.uleb128 0xe
+ 1048 0085 3A       		.uleb128 0x3a
+ 1049 0086 0B       		.uleb128 0xb
+ 1050 0087 3B       		.uleb128 0x3b
+ 1051 0088 0B       		.uleb128 0xb
+ 1052 0089 27       		.uleb128 0x27
+ 1053 008a 19       		.uleb128 0x19
+ 1054 008b 11       		.uleb128 0x11
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 33
+
+
+ 1055 008c 01       		.uleb128 0x1
+ 1056 008d 12       		.uleb128 0x12
+ 1057 008e 06       		.uleb128 0x6
+ 1058 008f 40       		.uleb128 0x40
+ 1059 0090 18       		.uleb128 0x18
+ 1060 0091 9642     		.uleb128 0x2116
+ 1061 0093 19       		.uleb128 0x19
+ 1062 0094 00       		.byte	0
+ 1063 0095 00       		.byte	0
+ 1064 0096 0A       		.uleb128 0xa
+ 1065 0097 2E       		.uleb128 0x2e
+ 1066 0098 01       		.byte	0x1
+ 1067 0099 3F       		.uleb128 0x3f
+ 1068 009a 19       		.uleb128 0x19
+ 1069 009b 03       		.uleb128 0x3
+ 1070 009c 0E       		.uleb128 0xe
+ 1071 009d 3A       		.uleb128 0x3a
+ 1072 009e 0B       		.uleb128 0xb
+ 1073 009f 3B       		.uleb128 0x3b
+ 1074 00a0 05       		.uleb128 0x5
+ 1075 00a1 27       		.uleb128 0x27
+ 1076 00a2 19       		.uleb128 0x19
+ 1077 00a3 11       		.uleb128 0x11
+ 1078 00a4 01       		.uleb128 0x1
+ 1079 00a5 12       		.uleb128 0x12
+ 1080 00a6 06       		.uleb128 0x6
+ 1081 00a7 40       		.uleb128 0x40
+ 1082 00a8 18       		.uleb128 0x18
+ 1083 00a9 9742     		.uleb128 0x2117
+ 1084 00ab 19       		.uleb128 0x19
+ 1085 00ac 01       		.uleb128 0x1
+ 1086 00ad 13       		.uleb128 0x13
+ 1087 00ae 00       		.byte	0
+ 1088 00af 00       		.byte	0
+ 1089 00b0 0B       		.uleb128 0xb
+ 1090 00b1 05       		.uleb128 0x5
+ 1091 00b2 00       		.byte	0
+ 1092 00b3 03       		.uleb128 0x3
+ 1093 00b4 0E       		.uleb128 0xe
+ 1094 00b5 3A       		.uleb128 0x3a
+ 1095 00b6 0B       		.uleb128 0xb
+ 1096 00b7 3B       		.uleb128 0x3b
+ 1097 00b8 05       		.uleb128 0x5
+ 1098 00b9 49       		.uleb128 0x49
+ 1099 00ba 13       		.uleb128 0x13
+ 1100 00bb 02       		.uleb128 0x2
+ 1101 00bc 18       		.uleb128 0x18
+ 1102 00bd 00       		.byte	0
+ 1103 00be 00       		.byte	0
+ 1104 00bf 0C       		.uleb128 0xc
+ 1105 00c0 2E       		.uleb128 0x2e
+ 1106 00c1 00       		.byte	0
+ 1107 00c2 3F       		.uleb128 0x3f
+ 1108 00c3 19       		.uleb128 0x19
+ 1109 00c4 03       		.uleb128 0x3
+ 1110 00c5 0E       		.uleb128 0xe
+ 1111 00c6 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 34
+
+
+ 1112 00c7 0B       		.uleb128 0xb
+ 1113 00c8 3B       		.uleb128 0x3b
+ 1114 00c9 05       		.uleb128 0x5
+ 1115 00ca 27       		.uleb128 0x27
+ 1116 00cb 19       		.uleb128 0x19
+ 1117 00cc 11       		.uleb128 0x11
+ 1118 00cd 01       		.uleb128 0x1
+ 1119 00ce 12       		.uleb128 0x12
+ 1120 00cf 06       		.uleb128 0x6
+ 1121 00d0 40       		.uleb128 0x40
+ 1122 00d1 18       		.uleb128 0x18
+ 1123 00d2 9742     		.uleb128 0x2117
+ 1124 00d4 19       		.uleb128 0x19
+ 1125 00d5 00       		.byte	0
+ 1126 00d6 00       		.byte	0
+ 1127 00d7 0D       		.uleb128 0xd
+ 1128 00d8 2E       		.uleb128 0x2e
+ 1129 00d9 00       		.byte	0
+ 1130 00da 3F       		.uleb128 0x3f
+ 1131 00db 19       		.uleb128 0x19
+ 1132 00dc 03       		.uleb128 0x3
+ 1133 00dd 0E       		.uleb128 0xe
+ 1134 00de 3A       		.uleb128 0x3a
+ 1135 00df 0B       		.uleb128 0xb
+ 1136 00e0 3B       		.uleb128 0x3b
+ 1137 00e1 05       		.uleb128 0x5
+ 1138 00e2 27       		.uleb128 0x27
+ 1139 00e3 19       		.uleb128 0x19
+ 1140 00e4 49       		.uleb128 0x49
+ 1141 00e5 13       		.uleb128 0x13
+ 1142 00e6 11       		.uleb128 0x11
+ 1143 00e7 01       		.uleb128 0x1
+ 1144 00e8 12       		.uleb128 0x12
+ 1145 00e9 06       		.uleb128 0x6
+ 1146 00ea 40       		.uleb128 0x40
+ 1147 00eb 18       		.uleb128 0x18
+ 1148 00ec 9742     		.uleb128 0x2117
+ 1149 00ee 19       		.uleb128 0x19
+ 1150 00ef 00       		.byte	0
+ 1151 00f0 00       		.byte	0
+ 1152 00f1 0E       		.uleb128 0xe
+ 1153 00f2 2E       		.uleb128 0x2e
+ 1154 00f3 00       		.byte	0
+ 1155 00f4 3F       		.uleb128 0x3f
+ 1156 00f5 19       		.uleb128 0x19
+ 1157 00f6 03       		.uleb128 0x3
+ 1158 00f7 0E       		.uleb128 0xe
+ 1159 00f8 3A       		.uleb128 0x3a
+ 1160 00f9 0B       		.uleb128 0xb
+ 1161 00fa 3B       		.uleb128 0x3b
+ 1162 00fb 05       		.uleb128 0x5
+ 1163 00fc 27       		.uleb128 0x27
+ 1164 00fd 19       		.uleb128 0x19
+ 1165 00fe 11       		.uleb128 0x11
+ 1166 00ff 01       		.uleb128 0x1
+ 1167 0100 12       		.uleb128 0x12
+ 1168 0101 06       		.uleb128 0x6
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 35
+
+
+ 1169 0102 40       		.uleb128 0x40
+ 1170 0103 18       		.uleb128 0x18
+ 1171 0104 9642     		.uleb128 0x2116
+ 1172 0106 19       		.uleb128 0x19
+ 1173 0107 00       		.byte	0
+ 1174 0108 00       		.byte	0
+ 1175 0109 0F       		.uleb128 0xf
+ 1176 010a 34       		.uleb128 0x34
+ 1177 010b 00       		.byte	0
+ 1178 010c 03       		.uleb128 0x3
+ 1179 010d 0E       		.uleb128 0xe
+ 1180 010e 3A       		.uleb128 0x3a
+ 1181 010f 0B       		.uleb128 0xb
+ 1182 0110 3B       		.uleb128 0x3b
+ 1183 0111 0B       		.uleb128 0xb
+ 1184 0112 49       		.uleb128 0x49
+ 1185 0113 13       		.uleb128 0x13
+ 1186 0114 3F       		.uleb128 0x3f
+ 1187 0115 19       		.uleb128 0x19
+ 1188 0116 02       		.uleb128 0x2
+ 1189 0117 18       		.uleb128 0x18
+ 1190 0118 00       		.byte	0
+ 1191 0119 00       		.byte	0
+ 1192 011a 00       		.byte	0
+ 1193              		.section	.debug_aranges,"",%progbits
+ 1194 0000 8C000000 		.4byte	0x8c
+ 1195 0004 0200     		.2byte	0x2
+ 1196 0006 00000000 		.4byte	.Ldebug_info0
+ 1197 000a 04       		.byte	0x4
+ 1198 000b 00       		.byte	0
+ 1199 000c 0000     		.2byte	0
+ 1200 000e 0000     		.2byte	0
+ 1201 0010 00000000 		.4byte	.LFB0
+ 1202 0014 48000000 		.4byte	.LFE0-.LFB0
+ 1203 0018 00000000 		.4byte	.LFB1
+ 1204 001c 20000000 		.4byte	.LFE1-.LFB1
+ 1205 0020 00000000 		.4byte	.LFB2
+ 1206 0024 20000000 		.4byte	.LFE2-.LFB2
+ 1207 0028 00000000 		.4byte	.LFB3
+ 1208 002c 20000000 		.4byte	.LFE3-.LFB3
+ 1209 0030 00000000 		.4byte	.LFB4
+ 1210 0034 20000000 		.4byte	.LFE4-.LFB4
+ 1211 0038 00000000 		.4byte	.LFB5
+ 1212 003c 14000000 		.4byte	.LFE5-.LFB5
+ 1213 0040 00000000 		.4byte	.LFB6
+ 1214 0044 18000000 		.4byte	.LFE6-.LFB6
+ 1215 0048 00000000 		.4byte	.LFB7
+ 1216 004c 18000000 		.4byte	.LFE7-.LFB7
+ 1217 0050 00000000 		.4byte	.LFB8
+ 1218 0054 20000000 		.4byte	.LFE8-.LFB8
+ 1219 0058 00000000 		.4byte	.LFB9
+ 1220 005c 18000000 		.4byte	.LFE9-.LFB9
+ 1221 0060 00000000 		.4byte	.LFB10
+ 1222 0064 20000000 		.4byte	.LFE10-.LFB10
+ 1223 0068 00000000 		.4byte	.LFB11
+ 1224 006c 18000000 		.4byte	.LFE11-.LFB11
+ 1225 0070 00000000 		.4byte	.LFB12
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 36
+
+
+ 1226 0074 20000000 		.4byte	.LFE12-.LFB12
+ 1227 0078 00000000 		.4byte	.LFB13
+ 1228 007c 20000000 		.4byte	.LFE13-.LFB13
+ 1229 0080 00000000 		.4byte	.LFB14
+ 1230 0084 1A000000 		.4byte	.LFE14-.LFB14
+ 1231 0088 00000000 		.4byte	0
+ 1232 008c 00000000 		.4byte	0
+ 1233              		.section	.debug_ranges,"",%progbits
+ 1234              	.Ldebug_ranges0:
+ 1235 0000 00000000 		.4byte	.LFB0
+ 1236 0004 48000000 		.4byte	.LFE0
+ 1237 0008 00000000 		.4byte	.LFB1
+ 1238 000c 20000000 		.4byte	.LFE1
+ 1239 0010 00000000 		.4byte	.LFB2
+ 1240 0014 20000000 		.4byte	.LFE2
+ 1241 0018 00000000 		.4byte	.LFB3
+ 1242 001c 20000000 		.4byte	.LFE3
+ 1243 0020 00000000 		.4byte	.LFB4
+ 1244 0024 20000000 		.4byte	.LFE4
+ 1245 0028 00000000 		.4byte	.LFB5
+ 1246 002c 14000000 		.4byte	.LFE5
+ 1247 0030 00000000 		.4byte	.LFB6
+ 1248 0034 18000000 		.4byte	.LFE6
+ 1249 0038 00000000 		.4byte	.LFB7
+ 1250 003c 18000000 		.4byte	.LFE7
+ 1251 0040 00000000 		.4byte	.LFB8
+ 1252 0044 20000000 		.4byte	.LFE8
+ 1253 0048 00000000 		.4byte	.LFB9
+ 1254 004c 18000000 		.4byte	.LFE9
+ 1255 0050 00000000 		.4byte	.LFB10
+ 1256 0054 20000000 		.4byte	.LFE10
+ 1257 0058 00000000 		.4byte	.LFB11
+ 1258 005c 18000000 		.4byte	.LFE11
+ 1259 0060 00000000 		.4byte	.LFB12
+ 1260 0064 20000000 		.4byte	.LFE12
+ 1261 0068 00000000 		.4byte	.LFB13
+ 1262 006c 20000000 		.4byte	.LFE13
+ 1263 0070 00000000 		.4byte	.LFB14
+ 1264 0074 1A000000 		.4byte	.LFE14
+ 1265 0078 00000000 		.4byte	0
+ 1266 007c 00000000 		.4byte	0
+ 1267              		.section	.debug_line,"",%progbits
+ 1268              	.Ldebug_line0:
+ 1269 0000 74010000 		.section	.debug_str,"MS",%progbits,1
+ 1269      02004C00 
+ 1269      00000201 
+ 1269      FB0E0D00 
+ 1269      01010101 
+ 1270              	.LASF30:
+ 1271 0000 54696D65 		.ascii	"Timeout_timer_WriteCounter\000"
+ 1271      6F75745F 
+ 1271      74696D65 
+ 1271      725F5772 
+ 1271      69746543 
+ 1272              	.LASF16:
+ 1273 001b 54696D65 		.ascii	"Timeout_timer_Start\000"
+ 1273      6F75745F 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 37
+
+
+ 1273      74696D65 
+ 1273      725F5374 
+ 1273      61727400 
+ 1274              	.LASF23:
+ 1275 002f 54696D65 		.ascii	"Timeout_timer_WriteControlRegister\000"
+ 1275      6F75745F 
+ 1275      74696D65 
+ 1275      725F5772 
+ 1275      69746543 
+ 1276              	.LASF9:
+ 1277 0052 666C6F61 		.ascii	"float\000"
+ 1277      7400
+ 1278              	.LASF35:
+ 1279 0058 2E5C4765 		.ascii	".\\Generated_Source\\PSoC5\\Timeout_timer.c\000"
+ 1279      6E657261 
+ 1279      7465645F 
+ 1279      536F7572 
+ 1279      63655C50 
+ 1280              	.LASF28:
+ 1281 0081 70657269 		.ascii	"period\000"
+ 1281      6F6400
+ 1282              	.LASF3:
+ 1283 0088 73686F72 		.ascii	"short unsigned int\000"
+ 1283      7420756E 
+ 1283      7369676E 
+ 1283      65642069 
+ 1283      6E7400
+ 1284              	.LASF22:
+ 1285 009b 54696D65 		.ascii	"Timeout_timer_ReadControlRegister\000"
+ 1285      6F75745F 
+ 1285      74696D65 
+ 1285      725F5265 
+ 1285      6164436F 
+ 1286              	.LASF32:
+ 1287 00bd 54696D65 		.ascii	"Timeout_timer_ReadCounter\000"
+ 1287      6F75745F 
+ 1287      74696D65 
+ 1287      725F5265 
+ 1287      6164436F 
+ 1288              	.LASF18:
+ 1289 00d7 54696D65 		.ascii	"Timeout_timer_Init\000"
+ 1289      6F75745F 
+ 1289      74696D65 
+ 1289      725F496E 
+ 1289      697400
+ 1290              	.LASF31:
+ 1291 00ea 636F756E 		.ascii	"counter\000"
+ 1291      74657200 
+ 1292              	.LASF26:
+ 1293 00f2 54696D65 		.ascii	"Timeout_timer_ReadPeriod\000"
+ 1293      6F75745F 
+ 1293      74696D65 
+ 1293      725F5265 
+ 1293      61645065 
+ 1294              	.LASF1:
+ 1295 010b 756E7369 		.ascii	"unsigned char\000"
+ 1295      676E6564 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 38
+
+
+ 1295      20636861 
+ 1295      7200
+ 1296              	.LASF13:
+ 1297 0119 72656738 		.ascii	"reg8\000"
+ 1297      00
+ 1298              	.LASF5:
+ 1299 011e 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1299      20756E73 
+ 1299      69676E65 
+ 1299      6420696E 
+ 1299      7400
+ 1300              	.LASF12:
+ 1301 0130 75696E74 		.ascii	"uint8\000"
+ 1301      3800
+ 1302              	.LASF25:
+ 1303 0136 636F6E74 		.ascii	"control\000"
+ 1303      726F6C00 
+ 1304              	.LASF27:
+ 1305 013e 54696D65 		.ascii	"Timeout_timer_WritePeriod\000"
+ 1305      6F75745F 
+ 1305      74696D65 
+ 1305      725F5772 
+ 1305      69746550 
+ 1306              	.LASF34:
+ 1307 0158 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1307      4320342E 
+ 1307      392E3320 
+ 1307      32303135 
+ 1307      30333033 
+ 1308 018b 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m3 -mthumb -g -O"
+ 1308      20726576 
+ 1308      6973696F 
+ 1308      6E203232 
+ 1308      31323230 
+ 1309 01be 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1309      66756E63 
+ 1309      74696F6E 
+ 1309      2D736563 
+ 1309      74696F6E 
+ 1310              	.LASF10:
+ 1311 01e6 646F7562 		.ascii	"double\000"
+ 1311      6C6500
+ 1312              	.LASF33:
+ 1313 01ed 54696D65 		.ascii	"Timeout_timer_ClearFIFO\000"
+ 1313      6F75745F 
+ 1313      74696D65 
+ 1313      725F436C 
+ 1313      65617246 
+ 1314              	.LASF21:
+ 1315 0205 54696D65 		.ascii	"Timeout_timer_ReadStatusRegister\000"
+ 1315      6F75745F 
+ 1315      74696D65 
+ 1315      725F5265 
+ 1315      61645374 
+ 1316              	.LASF8:
+ 1317 0226 756E7369 		.ascii	"unsigned int\000"
+ 1317      676E6564 
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 39
+
+
+ 1317      20696E74 
+ 1317      00
+ 1318              	.LASF7:
+ 1319 0233 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1319      206C6F6E 
+ 1319      6720756E 
+ 1319      7369676E 
+ 1319      65642069 
+ 1320              	.LASF17:
+ 1321 024a 54696D65 		.ascii	"Timeout_timer_Stop\000"
+ 1321      6F75745F 
+ 1321      74696D65 
+ 1321      725F5374 
+ 1321      6F7000
+ 1322              	.LASF37:
+ 1323 025d 54696D65 		.ascii	"Timeout_timer_interruptState\000"
+ 1323      6F75745F 
+ 1323      74696D65 
+ 1323      725F696E 
+ 1323      74657272 
+ 1324              	.LASF38:
+ 1325 027a 54696D65 		.ascii	"Timeout_timer_initVar\000"
+ 1325      6F75745F 
+ 1325      74696D65 
+ 1325      725F696E 
+ 1325      69745661 
+ 1326              	.LASF14:
+ 1327 0290 73697A65 		.ascii	"sizetype\000"
+ 1327      74797065 
+ 1327      00
+ 1328              	.LASF6:
+ 1329 0299 6C6F6E67 		.ascii	"long long int\000"
+ 1329      206C6F6E 
+ 1329      6720696E 
+ 1329      7400
+ 1330              	.LASF24:
+ 1331 02a7 696E7465 		.ascii	"interruptMode\000"
+ 1331      72727570 
+ 1331      744D6F64 
+ 1331      6500
+ 1332              	.LASF2:
+ 1333 02b5 73686F72 		.ascii	"short int\000"
+ 1333      7420696E 
+ 1333      7400
+ 1334              	.LASF19:
+ 1335 02bf 54696D65 		.ascii	"Timeout_timer_SetInterruptMode\000"
+ 1335      6F75745F 
+ 1335      74696D65 
+ 1335      725F5365 
+ 1335      74496E74 
+ 1336              	.LASF4:
+ 1337 02de 6C6F6E67 		.ascii	"long int\000"
+ 1337      20696E74 
+ 1337      00
+ 1338              	.LASF11:
+ 1339 02e7 63686172 		.ascii	"char\000"
+ 1339      00
+ARM GAS  C:\Users\LUKASC~1\AppData\Local\Temp\cc8m4F8g.s 			page 40
+
+
+ 1340              	.LASF36:
+ 1341 02ec 433A5C55 		.ascii	"C:\\Users\\Lukas Creutzburg\\Documents\\GitHub\\fre"
+ 1341      73657273 
+ 1341      5C4C756B 
+ 1341      61732043 
+ 1341      72657574 
+ 1342 031a 65445350 		.ascii	"eDSPPSoC-I2C\\PSoC5_SPI_Master_DSP.cydsn\000"
+ 1342      50536F43 
+ 1342      2D493243 
+ 1342      5C50536F 
+ 1342      43355F53 
+ 1343              	.LASF15:
+ 1344 0342 54696D65 		.ascii	"Timeout_timer_Enable\000"
+ 1344      6F75745F 
+ 1344      74696D65 
+ 1344      725F456E 
+ 1344      61626C65 
+ 1345              	.LASF0:
+ 1346 0357 7369676E 		.ascii	"signed char\000"
+ 1346      65642063 
+ 1346      68617200 
+ 1347              	.LASF29:
+ 1348 0363 54696D65 		.ascii	"Timeout_timer_ReadCapture\000"
+ 1348      6F75745F 
+ 1348      74696D65 
+ 1348      725F5265 
+ 1348      61644361 
+ 1349              	.LASF20:
+ 1350 037d 54696D65 		.ascii	"Timeout_timer_SoftwareCapture\000"
+ 1350      6F75745F 
+ 1350      74696D65 
+ 1350      725F536F 
+ 1350      66747761 
+ 1351              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

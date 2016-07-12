@@ -44,6 +44,10 @@ Archive member included because of file (symbol)
                               .\CortexM3\ARM_GCC_493\Debug\i2s.o (DmaDone_Disable)
 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
                               .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o) (USBFS_Dp_ClearInterrupt)
+.\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                              .\CortexM3\ARM_GCC_493\Debug\main.o (Timeout_timer_WriteCounter)
+.\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+                              .\CortexM3\ARM_GCC_493\Debug\main.o (timeout_interrupt_SetPriority)
 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
                               .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o) (CyFlash_SetWaitCycles)
 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
@@ -732,6 +736,37 @@ Discarded input sections
                 0x00000000       0x30 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
  .text.USBFS_Dp_ClearInterrupt
                 0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .text.Timeout_timer_SoftwareCapture
+                0x00000000       0x14 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .text.Timeout_timer_ReadControlRegister
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .text.Timeout_timer_WriteControlRegister
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .text.Timeout_timer_ReadPeriod
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .text.Timeout_timer_ReadCounter
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .bss           0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .text.timeout_interrupt_Start
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .text.timeout_interrupt_Stop
+                0x00000000       0x14 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .text.timeout_interrupt_Interrupt
+                0x00000000        0xc .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .text.timeout_interrupt_GetVector
+                0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .text.timeout_interrupt_GetPriority
+                0x00000000       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .text.timeout_interrupt_GetState
+                0x00000000       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .text.timeout_interrupt_SetPending
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .text.timeout_interrupt_ClearPending
+                0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
  .text          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
  .data          0x00000000        0x0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
  .bss           0x00000000        0x4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
@@ -1066,7 +1101,7 @@ END GROUP
                 0x00000800                ee_size = (CY_APPL_LOADABLE && ! (CY_EE_IN_BTLDR))?(CY_EE_SIZE / CY_APPL_MAX):CY_EE_SIZE
                 0x00000000                PROVIDE (CY_ECC_OFFSET, ecc_offset)
 
-.text           0x00000000     0x1e1e
+.text           0x00000000     0x207e
  CREATE_OBJECT_SYMBOLS
                 0x00000000                PROVIDE (__cy_interrupt_vector, RomVectors)
  *(.romvectors)
@@ -1080,244 +1115,293 @@ END GROUP
                 0x00000010                Reset
                 0x00000001                ASSERT ((. != __cy_reset), No reset code)
  *(.dma_init)
- .dma_init      0x00000028      0x270 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+ .dma_init      0x00000028      0x288 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
                 0x00000001                ASSERT ((((appl_start + .) <= 0x10000) || 0x0), DMA Init must be within the first 64k of flash)
  *(.text .text.* .gnu.linkonce.t.*)
- .text          0x00000298       0x5c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
- .text.SPI_Rx   0x000002f4       0x18 .\CortexM3\ARM_GCC_493\Debug\main.o
-                0x000002f4                SPI_Rx
- .text.main     0x0000030c       0xe8 .\CortexM3\ARM_GCC_493\Debug\main.o
-                0x0000030c                main
- .text.SPIinit  0x000003f4        0xc .\CortexM3\ARM_GCC_493\Debug\spimaster.o
-                0x000003f4                SPIinit
+ .text          0x000002b0       0x5c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .text.SPI_Rx   0x0000030c       0x38 .\CortexM3\ARM_GCC_493\Debug\main.o
+                0x0000030c                SPI_Rx
+ .text.Timeout_inter
+                0x00000344       0x1c .\CortexM3\ARM_GCC_493\Debug\main.o
+                0x00000344                Timeout_inter
+ .text.main     0x00000360       0xf8 .\CortexM3\ARM_GCC_493\Debug\main.o
+                0x00000360                main
+ .text.SPIinit  0x00000458        0xc .\CortexM3\ARM_GCC_493\Debug\spimaster.o
+                0x00000458                SPIinit
  .text.SPIsendArray
-                0x00000400       0x74 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
-                0x00000400                SPIsendArray
- .text.DSPinit  0x00000474      0x2a0 .\CortexM3\ARM_GCC_493\Debug\dsp.o
-                0x00000474                DSPinit
+                0x00000464       0x74 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
+                0x00000464                SPIsendArray
+ .text.DSPinit  0x000004d8      0x2a0 .\CortexM3\ARM_GCC_493\Debug\dsp.o
+                0x000004d8                DSPinit
  .text.DSPwrite
-                0x00000714       0xac .\CortexM3\ARM_GCC_493\Debug\dsp.o
-                0x00000714                DSPwrite
+                0x00000778       0xac .\CortexM3\ARM_GCC_493\Debug\dsp.o
+                0x00000778                DSPwrite
  .text.DSPwriteWord32
-                0x000007c0       0x50 .\CortexM3\ARM_GCC_493\Debug\dsp.o
-                0x000007c0                DSPwriteWord32
+                0x00000824       0x50 .\CortexM3\ARM_GCC_493\Debug\dsp.o
+                0x00000824                DSPwriteWord32
  .text.DSPwriteWord16
-                0x00000810       0x48 .\CortexM3\ARM_GCC_493\Debug\dsp.o
-                0x00000810                DSPwriteWord16
+                0x00000874       0x48 .\CortexM3\ARM_GCC_493\Debug\dsp.o
+                0x00000874                DSPwriteWord16
  .text.DSPsafeLoad
-                0x00000858       0x50 .\CortexM3\ARM_GCC_493\Debug\dsp.o
-                0x00000858                DSPsafeLoad
+                0x000008bc       0x50 .\CortexM3\ARM_GCC_493\Debug\dsp.o
+                0x000008bc                DSPsafeLoad
  .text.DSPInput
-                0x000008a8       0x1c .\CortexM3\ARM_GCC_493\Debug\dsp.o
-                0x000008a8                DSPInput
+                0x0000090c       0x1c .\CortexM3\ARM_GCC_493\Debug\dsp.o
+                0x0000090c                DSPInput
  .text.DSPpitch
-                0x000008c4       0x18 .\CortexM3\ARM_GCC_493\Debug\dsp.o
-                0x000008c4                DSPpitch
+                0x00000928       0x18 .\CortexM3\ARM_GCC_493\Debug\dsp.o
+                0x00000928                DSPpitch
  .text.TxDmaDone
-                0x000008dc       0x68 .\CortexM3\ARM_GCC_493\Debug\i2s.o
-                0x000008dc                TxDmaDone
- .text.I2Sinit  0x00000944       0x14 .\CortexM3\ARM_GCC_493\Debug\i2s.o
-                0x00000944                I2Sinit
+                0x00000940       0x68 .\CortexM3\ARM_GCC_493\Debug\i2s.o
+                0x00000940                TxDmaDone
+ .text.I2Sinit  0x000009a8       0x14 .\CortexM3\ARM_GCC_493\Debug\i2s.o
+                0x000009a8                I2Sinit
  .text.DmaTxConfiguration
-                0x00000958       0xdc .\CortexM3\ARM_GCC_493\Debug\i2s.o
-                0x00000958                DmaTxConfiguration
+                0x000009bc       0xdc .\CortexM3\ARM_GCC_493\Debug\i2s.o
+                0x000009bc                DmaTxConfiguration
  .text.SPISinit
-                0x00000a34        0xc .\CortexM3\ARM_GCC_493\Debug\spislave.o
-                0x00000a34                SPISinit
+                0x00000a98        0xc .\CortexM3\ARM_GCC_493\Debug\spislave.o
+                0x00000a98                SPISinit
  .text.SPISreadNumber
-                0x00000a40       0x34 .\CortexM3\ARM_GCC_493\Debug\spislave.o
-                0x00000a40                SPISreadNumber
+                0x00000aa4       0x34 .\CortexM3\ARM_GCC_493\Debug\spislave.o
+                0x00000aa4                SPISreadNumber
  .text.IntDefaultHandler
-                0x00000a74        0x8 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
-                0x00000a74                IntDefaultHandler
- .text.Start_c  0x00000a7c       0x98 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
-                0x00000a7c                Start_c
+                0x00000ad8        0x8 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x00000ad8                IntDefaultHandler
+ .text.Start_c  0x00000ae0       0x98 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x00000ae0                Start_c
  .text.initialize_psoc
-                0x00000b14       0x90 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
-                0x00000b14                initialize_psoc
+                0x00000b78       0x90 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x00000b78                initialize_psoc
  .text.CYMEMZERO
-                0x00000ba4       0x1c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+                0x00000c08       0x1c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
  .text.CYCONFIGCPY
-                0x00000bc0       0x1c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+                0x00000c24       0x1c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
  .text.CyClockStartupError
-                0x00000bdc        0xc .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+                0x00000c40        0xc .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
  .text.cfg_dma_init
-                0x00000be8      0x180 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+                0x00000c4c      0x180 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
  .text.ClockSetup
-                0x00000d68      0x12c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+                0x00000dcc      0x140 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
  .text.AnalogSetDefault
-                0x00000e94       0x44 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+                0x00000f0c       0x44 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
  .text.cyfitter_cfg
-                0x00000ed8      0x11c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
-                0x00000ed8                cyfitter_cfg
+                0x00000f50      0x110 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+                0x00000f50                cyfitter_cfg
  .text.SPIM_Init
-                0x00000ff4       0x6c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
-                0x00000ff4                SPIM_Init
+                0x00001060       0x6c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x00001060                SPIM_Init
  .text.SPIM_Enable
-                0x00001060       0x60 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
-                0x00001060                SPIM_Enable
+                0x000010cc       0x60 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x000010cc                SPIM_Enable
  .text.SPIM_Start
-                0x000010c0       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
-                0x000010c0                SPIM_Start
+                0x0000112c       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x0000112c                SPIM_Start
  .text.SPIM_EnableTxInt
-                0x000010e0       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
-                0x000010e0                SPIM_EnableTxInt
+                0x0000114c       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x0000114c                SPIM_EnableTxInt
  .text.SPIM_EnableRxInt
-                0x000010f8        0xc .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
-                0x000010f8                SPIM_EnableRxInt
+                0x00001164        0xc .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x00001164                SPIM_EnableRxInt
  .text.SPIM_DisableTxInt
-                0x00001104       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
-                0x00001104                SPIM_DisableTxInt
+                0x00001170       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x00001170                SPIM_DisableTxInt
  .text.SPIM_ReadTxStatus
-                0x0000111c       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
-                0x0000111c                SPIM_ReadTxStatus
+                0x00001188       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x00001188                SPIM_ReadTxStatus
  .text.SPIM_ReadRxStatus
-                0x00001158       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
-                0x00001158                SPIM_ReadRxStatus
+                0x000011c4       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x000011c4                SPIM_ReadRxStatus
  .text.SPIM_WriteTxData
-                0x00001178      0x110 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
-                0x00001178                SPIM_WriteTxData
+                0x000011e4      0x110 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x000011e4                SPIM_WriteTxData
  .text.SPIM_PutArray
-                0x00001288       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
-                0x00001288                SPIM_PutArray
+                0x000012f4       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x000012f4                SPIM_PutArray
  .text.SPIM_ClearFIFO
-                0x000012c0       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
-                0x000012c0                SPIM_ClearFIFO
+                0x0000132c       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x0000132c                SPIM_ClearFIFO
  .text.SPIM_TX_ISR
-                0x0000131c       0xd4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
-                0x0000131c                SPIM_TX_ISR
- .text          0x000013f0       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyBootAsmGnu.o)
-                0x000013f0                CyDelayCycles
-                0x00001400                CyEnterCriticalSection
-                0x00001408                CyExitCriticalSection
+                0x00001388       0xd4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
+                0x00001388                SPIM_TX_ISR
+ *fill*         0x0000145c        0x4 
+ .text          0x00001460       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyBootAsmGnu.o)
+                0x00001460                CyDelayCycles
+                0x00001470                CyEnterCriticalSection
+                0x00001478                CyExitCriticalSection
  .text.CyDmacConfigure
-                0x00001410       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
-                0x00001410                CyDmacConfigure
+                0x00001480       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+                0x00001480                CyDmacConfigure
  .text.CyDmaChDisable
-                0x0000146c       0x64 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
-                0x0000146c                CyDmaChDisable
+                0x000014dc       0x64 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+                0x000014dc                CyDmaChDisable
  .text.CyDmaChPriority
-                0x000014d0       0x60 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
-                0x000014d0                CyDmaChPriority
+                0x00001540       0x60 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+                0x00001540                CyDmaChPriority
  .text.CyDmaChSetExtendedAddress
-                0x00001530       0x7c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
-                0x00001530                CyDmaChSetExtendedAddress
+                0x000015a0       0x7c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+                0x000015a0                CyDmaChSetExtendedAddress
  .text.CyDmaChSetInitialTd
-                0x000015ac       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
-                0x000015ac                CyDmaChSetInitialTd
+                0x0000161c       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+                0x0000161c                CyDmaChSetInitialTd
  .text.CyDmaChSetConfiguration
-                0x000015e8       0xa0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
-                0x000015e8                CyDmaChSetConfiguration
+                0x00001658       0xa0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+                0x00001658                CyDmaChSetConfiguration
  .text.CyDmaTdAllocate
-                0x00001688       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
-                0x00001688                CyDmaTdAllocate
+                0x000016f8       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+                0x000016f8                CyDmaTdAllocate
  .text.CyDmaTdSetConfiguration
-                0x000016e4       0x80 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
-                0x000016e4                CyDmaTdSetConfiguration
+                0x00001754       0x80 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+                0x00001754                CyDmaTdSetConfiguration
  .text.CyDmaTdSetAddress
-                0x00001764       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
-                0x00001764                CyDmaTdSetAddress
- .text.CyHalt   0x000017c0       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
-                0x000017c0                CyHalt
- .text.CyDelay  0x000017d8       0x44 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
-                0x000017d8                CyDelay
+                0x000017d4       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+                0x000017d4                CyDmaTdSetAddress
+ .text.CyHalt   0x00001830       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
+                0x00001830                CyHalt
+ .text.CyDelay  0x00001848       0x44 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
+                0x00001848                CyDelay
  .text.CyDelayUs
-                0x0000181c       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
-                0x0000181c                CyDelayUs
+                0x0000188c       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
+                0x0000188c                CyDelayUs
  .text.CyIntSetVector
-                0x00001840       0x50 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
-                0x00001840                CyIntSetVector
+                0x000018b0       0x50 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
+                0x000018b0                CyIntSetVector
  .text.CyIntSetPriority
-                0x00001890       0x44 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
-                0x00001890                CyIntSetPriority
+                0x00001900       0x44 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
+                0x00001900                CyIntSetPriority
  .text.DSP_reset_Write
-                0x000018d4       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
-                0x000018d4                DSP_reset_Write
+                0x00001944       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
+                0x00001944                DSP_reset_Write
  .text.I2S_1_Enable
-                0x00001910       0x44 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
-                0x00001910                I2S_1_Enable
+                0x00001980       0x44 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
+                0x00001980                I2S_1_Enable
  .text.I2S_1_Init
-                0x00001954       0x2c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
-                0x00001954                I2S_1_Init
+                0x000019c4       0x2c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
+                0x000019c4                I2S_1_Init
  .text.I2S_1_Start
-                0x00001980       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
-                0x00001980                I2S_1_Start
+                0x000019f0       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
+                0x000019f0                I2S_1_Start
  .text.I2S_1_EnableTx
-                0x000019a0       0x44 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
-                0x000019a0                I2S_1_EnableTx
+                0x00001a10       0x44 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
+                0x00001a10                I2S_1_EnableTx
  .text.LED_Write
-                0x000019e4       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
-                0x000019e4                LED_Write
+                0x00001a54       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
+                0x00001a54                LED_Write
  .text.LED_Read
-                0x00001a20       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
-                0x00001a20                LED_Read
+                0x00001a90       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
+                0x00001a90                LED_Read
  .text.TxDma_DmaInitialize
-                0x00001a40       0x68 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
-                0x00001a40                TxDma_DmaInitialize
+                0x00001ab0       0x68 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
+                0x00001ab0                TxDma_DmaInitialize
  .text.SPIS_Init
-                0x00001aa8       0x50 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
-                0x00001aa8                SPIS_Init
+                0x00001b18       0x50 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+                0x00001b18                SPIS_Init
  .text.SPIS_Enable
-                0x00001af8       0x64 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
-                0x00001af8                SPIS_Enable
+                0x00001b68       0x64 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+                0x00001b68                SPIS_Enable
  .text.SPIS_Start
-                0x00001b5c       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
-                0x00001b5c                SPIS_Start
+                0x00001bcc       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+                0x00001bcc                SPIS_Start
  .text.SPIS_ReadTxStatus
-                0x00001b7c       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
-                0x00001b7c                SPIS_ReadTxStatus
+                0x00001bec       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+                0x00001bec                SPIS_ReadTxStatus
  .text.SPIS_ReadRxStatus
-                0x00001b9c       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
-                0x00001b9c                SPIS_ReadRxStatus
+                0x00001c0c       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+                0x00001c0c                SPIS_ReadRxStatus
  .text.SPIS_ReadRxData
-                0x00001bbc       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
-                0x00001bbc                SPIS_ReadRxData
+                0x00001c2c       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+                0x00001c2c                SPIS_ReadRxData
  .text.SPIS_GetRxBufferSize
-                0x00001bdc       0x30 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
-                0x00001bdc                SPIS_GetRxBufferSize
+                0x00001c4c       0x30 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+                0x00001c4c                SPIS_GetRxBufferSize
  .text.SPIS_ClearFIFO
-                0x00001c0c       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
-                0x00001c0c                SPIS_ClearFIFO
+                0x00001c7c       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+                0x00001c7c                SPIS_ClearFIFO
  .text.SPIS_RX_ISR
-                0x00001c68        0xc .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
-                0x00001c68                SPIS_RX_ISR
+                0x00001cd8        0xc .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
+                0x00001cd8                SPIS_RX_ISR
  .text.spi_rx_interrupt_StartEx
-                0x00001c74       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
-                0x00001c74                spi_rx_interrupt_StartEx
+                0x00001ce4       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
+                0x00001ce4                spi_rx_interrupt_StartEx
  .text.spi_rx_interrupt_SetVector
-                0x00001c98       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
-                0x00001c98                spi_rx_interrupt_SetVector
+                0x00001d08       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
+                0x00001d08                spi_rx_interrupt_SetVector
  .text.spi_rx_interrupt_SetPriority
-                0x00001cbc       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
-                0x00001cbc                spi_rx_interrupt_SetPriority
+                0x00001d2c       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
+                0x00001d2c                spi_rx_interrupt_SetPriority
  .text.spi_rx_interrupt_Enable
-                0x00001ce0       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
-                0x00001ce0                spi_rx_interrupt_Enable
+                0x00001d50       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
+                0x00001d50                spi_rx_interrupt_Enable
  .text.spi_rx_interrupt_Disable
-                0x00001cf8       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
-                0x00001cf8                spi_rx_interrupt_Disable
+                0x00001d68       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
+                0x00001d68                spi_rx_interrupt_Disable
  .text.DmaDone_StartEx
-                0x00001d10       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
-                0x00001d10                DmaDone_StartEx
+                0x00001d80       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
+                0x00001d80                DmaDone_StartEx
  .text.DmaDone_SetVector
-                0x00001d34       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
-                0x00001d34                DmaDone_SetVector
+                0x00001da4       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
+                0x00001da4                DmaDone_SetVector
  .text.DmaDone_SetPriority
-                0x00001d58       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
-                0x00001d58                DmaDone_SetPriority
+                0x00001dc8       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
+                0x00001dc8                DmaDone_SetPriority
  .text.DmaDone_Enable
-                0x00001d7c       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
-                0x00001d7c                DmaDone_Enable
+                0x00001dec       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
+                0x00001dec                DmaDone_Enable
  .text.DmaDone_Disable
-                0x00001d94       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
-                0x00001d94                DmaDone_Disable
+                0x00001e04       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
+                0x00001e04                DmaDone_Disable
+ .text.Timeout_timer_Init
+                0x00001e1c       0x48 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                0x00001e1c                Timeout_timer_Init
+ .text.Timeout_timer_Enable
+                0x00001e64       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                0x00001e64                Timeout_timer_Enable
+ .text.Timeout_timer_Start
+                0x00001e84       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                0x00001e84                Timeout_timer_Start
+ .text.Timeout_timer_Stop
+                0x00001ea4       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                0x00001ea4                Timeout_timer_Stop
+ .text.Timeout_timer_SetInterruptMode
+                0x00001ec4       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                0x00001ec4                Timeout_timer_SetInterruptMode
+ .text.Timeout_timer_ReadStatusRegister
+                0x00001ee4       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                0x00001ee4                Timeout_timer_ReadStatusRegister
+ .text.Timeout_timer_WritePeriod
+                0x00001efc       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                0x00001efc                Timeout_timer_WritePeriod
+ .text.Timeout_timer_ReadCapture
+                0x00001f1c       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                0x00001f1c                Timeout_timer_ReadCapture
+ .text.Timeout_timer_WriteCounter
+                0x00001f34       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                0x00001f34                Timeout_timer_WriteCounter
+ .text.Timeout_timer_ClearFIFO
+                0x00001f54       0x1c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                0x00001f54                Timeout_timer_ClearFIFO
+ .text.timeout_interrupt_StartEx
+                0x00001f70       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+                0x00001f70                timeout_interrupt_StartEx
+ .text.timeout_interrupt_SetVector
+                0x00001f94       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+                0x00001f94                timeout_interrupt_SetVector
+ .text.timeout_interrupt_SetPriority
+                0x00001fb8       0x24 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+                0x00001fb8                timeout_interrupt_SetPriority
+ .text.timeout_interrupt_Enable
+                0x00001fdc       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+                0x00001fdc                timeout_interrupt_Enable
+ .text.timeout_interrupt_Disable
+                0x00001ff4       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+                0x00001ff4                timeout_interrupt_Disable
  .text.__libc_init_array
-                0x00001dac       0x4c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
-                0x00001dac                __libc_init_array
- .text.memcpy   0x00001df8       0x16 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
-                0x00001df8                memcpy
- .text.memset   0x00001e0e       0x10 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
-                0x00001e0e                memset
+                0x0000200c       0x4c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+                0x0000200c                __libc_init_array
+ .text.memcpy   0x00002058       0x16 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
+                0x00002058                memcpy
+ .text.memset   0x0000206e       0x10 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+                0x0000206e                memset
  *(.plt)
  *(.gnu.warning)
  *(.glue_7t)
@@ -1330,80 +1414,79 @@ END GROUP
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  *(.gcc_except_table)
 
-.v4_bx          0x00001e20        0x0
+.v4_bx          0x00002080        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x00001e20        0x0
+.iplt           0x00002080        0x0
  .iplt          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
 
-.eh_frame       0x00001e20        0x4
+.eh_frame       0x00002080        0x4
  *(.eh_frame)
- .eh_frame      0x00001e20        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
- .eh_frame      0x00001e20        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strcmp.o)
+ .eh_frame      0x00002080        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .eh_frame      0x00002080        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strcmp.o)
                                  0x28 (size before relaxing)
- .eh_frame      0x00001e20        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
-                0x00001e24                PROVIDE (__exidx_start, .)
+ .eh_frame      0x00002080        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+                0x00002084                PROVIDE (__exidx_start, .)
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x00001e24                __exidx_end = .
+                0x00002084                __exidx_end = .
 
-.rodata         0x00001e24      0x15c
+.rodata         0x00002084      0x164
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata        0x00001e24      0x124 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
-                0x00001f48                . = ALIGN (0x4)
+ .rodata        0x00002084      0x130 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+                0x000021b4                . = ALIGN (0x4)
  *(.init)
- .init          0x00001f48        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
-                0x00001f48                _init
- .init          0x00001f4c        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
-                0x00001f54                . = ALIGN (0x4)
-                0x00001f54                __preinit_array_start = .
+ .init          0x000021b4        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
+                0x000021b4                _init
+ .init          0x000021b8        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+                0x000021c0                . = ALIGN (0x4)
+                0x000021c0                __preinit_array_start = .
  *(.preinit_array)
-                0x00001f54                __preinit_array_end = .
-                0x00001f54                . = ALIGN (0x4)
-                0x00001f54                __init_array_start = .
+                0x000021c0                __preinit_array_end = .
+                0x000021c0                . = ALIGN (0x4)
+                0x000021c0                __init_array_start = .
  *(SORT(.init_array.*))
  *(.init_array)
- .init_array    0x00001f54        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
- .init_array    0x00001f58        0x4 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
-                0x00001f5c                __init_array_end = .
-                0x00001f5c                . = ALIGN (0x4)
+ .init_array    0x000021c0        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .init_array    0x000021c4        0x4 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x000021c8                __init_array_end = .
+                0x000021c8                . = ALIGN (0x4)
  *(.fini)
- .fini          0x00001f5c        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
-                0x00001f5c                _fini
- .fini          0x00001f60        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
-                0x00001f68                . = ALIGN (0x4)
-                0x00001f68                __fini_array_start = .
+ .fini          0x000021c8        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crti.o
+                0x000021c8                _fini
+ .fini          0x000021cc        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+                0x000021d4                . = ALIGN (0x4)
+                0x000021d4                __fini_array_start = .
  *(.fini_array)
- .fini_array    0x00001f68        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
+ .fini_array    0x000021d4        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
  *(SORT(.fini_array.*))
-                0x00001f6c                __fini_array_end = .
-                0x00001f6c                . = ALIGN (0x4)
+                0x000021d8                __fini_array_end = .
+                0x000021d8                . = ALIGN (0x4)
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
-                0x00001f6c                . = ALIGN (0x4)
+                0x000021d8                . = ALIGN (0x4)
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x00001f6c                . = ALIGN (0x4)
-                0x00001f6c                __cy_regions = .
-                0x00001f6c        0x4 LONG 0x1f80 __cy_region_init_ram
-                0x00001f70        0x4 LONG 0x1fff8108 __cy_region_start_data
-                0x00001f74        0x4 LONG 0x6d0 __cy_region_init_size_ram
-                0x00001f78        0x4 LONG 0x350 __cy_region_zero_size_ram
-                0x00001f7c                __cy_regions_end = .
-                0x00001f80                . = ALIGN (0x8)
- *fill*         0x00001f7c        0x4 
-                0x00001f80                _etext = .
+                0x000021d8                . = ALIGN (0x4)
+                0x000021d8                __cy_regions = .
+                0x000021d8        0x4 LONG 0x21e8 __cy_region_init_ram
+                0x000021dc        0x4 LONG 0x1fff8108 __cy_region_start_data
+                0x000021e0        0x4 LONG 0x6d0 __cy_region_init_size_ram
+                0x000021e4        0x4 LONG 0x350 __cy_region_zero_size_ram
+                0x000021e8                __cy_regions_end = .
+                0x000021e8                . = ALIGN (0x8)
+                0x000021e8                _etext = .
 
 .cy_checksum_exclude
-                0x00001f80        0x0
+                0x000021e8        0x0
  *(.cy_checksum_exclude)
 
 .ramvectors     0x1fff8000      0x100
@@ -1418,7 +1501,7 @@ END GROUP
  .noinit        0x1fff8104        0x1 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
                 0x1fff8104                CyResetStatus
 
-.data           0x1fff8108      0x6d0 load address 0x00001f80
+.data           0x1fff8108      0x6d0 load address 0x000021e8
                 0x1fff8108                __cy_region_start_data = .
  *(.jcr)
  .jcr           0x1fff8108        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
@@ -1445,10 +1528,10 @@ END GROUP
  *(.ram)
                 0x1fff87d8                _edata = .
 
-.igot.plt       0x1fff87d8        0x0 load address 0x00002650
+.igot.plt       0x1fff87d8        0x0 load address 0x000028b8
  .igot.plt      0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
 
-.bss            0x1fff87d8      0x350 load address 0x00002650
+.bss            0x1fff87d8      0x350 load address 0x000028b8
                 0x1fff87d8                PROVIDE (__bss_start__, .)
  *(.shbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
@@ -1471,8 +1554,9 @@ END GROUP
                 0x1fff8831                I2S_1_initVar
  .bss           0x1fff8832        0x1 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
                 0x1fff8832                SPIS_initVar
+ .bss           0x1fff8833        0x1 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                0x1fff8833                Timeout_timer_initVar
  *(COMMON)
- *fill*         0x1fff8833        0x1 
  COMMON         0x1fff8834      0x1ee .\CortexM3\ARM_GCC_493\Debug\i2s.o
                 0x1fff8834                TxOutDmaCh
                 0x1fff8838                soundBuffer
@@ -1491,11 +1575,11 @@ END GROUP
                 0x1fff8b28                __end = .
                 0x1fff8b28                PROVIDE (end, .)
                 0x1fff8b28                PROVIDE (__bss_end__, .)
-                0x00001f80                __cy_region_init_ram = LOADADDR (.data)
+                0x000021e8                __cy_region_init_ram = LOADADDR (.data)
                 0x000006d0                __cy_region_init_size_ram = (_edata - ADDR (.data))
                 0x00000350                __cy_region_zero_size_ram = (_end - _edata)
 
-.heap           0x1fff8b28     0x1000 load address 0x00002650
+.heap           0x1fff8b28     0x1000 load address 0x000028b8
                 0x1fff8b28                . = _end
                 0x1fff9b28                . = (. + 0x1000)
  *fill*         0x1fff8b28     0x1000 
@@ -1515,9 +1599,9 @@ END GROUP
 .cyloadablemeta
  *(.cyloadablemeta)
 
-.cyconfigecc    0x80000000     0x1544
+.cyconfigecc    0x80000000     0x17c4
  *(.cyconfigecc)
- .cyconfigecc   0x80000000     0x1544 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .cyconfigecc   0x80000000     0x17c4 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
                 0x80000000                cy_meta_configecc
 
 .cycustnvl      0x90000000        0x4
@@ -1546,7 +1630,7 @@ END GROUP
  .cymeta        0x90500000        0xc .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
                 0x90500000                cy_metadata
 
-.rel.dyn        0x00002650        0x0 load address 0x9050000c
+.rel.dyn        0x000028b8        0x0 load address 0x9050000c
  .rel.iplt      0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtbegin.o
 
 .stab
@@ -1567,118 +1651,124 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0xe20
+.debug_aranges  0x00000000      0xf38
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x28 .\CortexM3\ARM_GCC_493\Debug\main.o
+                0x00000000       0x30 .\CortexM3\ARM_GCC_493\Debug\main.o
  .debug_aranges
-                0x00000028       0x40 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
+                0x00000030       0x40 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
  .debug_aranges
-                0x00000068       0x60 .\CortexM3\ARM_GCC_493\Debug\dsp.o
+                0x00000070       0x60 .\CortexM3\ARM_GCC_493\Debug\dsp.o
  .debug_aranges
-                0x000000c8       0x40 .\CortexM3\ARM_GCC_493\Debug\i2s.o
+                0x000000d0       0x40 .\CortexM3\ARM_GCC_493\Debug\i2s.o
  .debug_aranges
-                0x00000108       0x40 .\CortexM3\ARM_GCC_493\Debug\spislave.o
+                0x00000110       0x40 .\CortexM3\ARM_GCC_493\Debug\spislave.o
  .debug_aranges
-                0x00000148       0x18 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+                0x00000150       0x18 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
  .debug_aranges
-                0x00000160       0x48 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+                0x00000168       0x48 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
  .debug_aranges
-                0x000001a8       0x60 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+                0x000001b0       0x60 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
  .debug_aranges
-                0x00000208       0xd8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+                0x00000210       0xd8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
  .debug_aranges
-                0x000002e0       0x28 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
+                0x000002e8       0x28 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
  .debug_aranges
-                0x00000308       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyBootAsmGnu.o)
+                0x00000310       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyBootAsmGnu.o)
  .debug_aranges
-                0x00000328       0xd8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+                0x00000330       0xd8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
  .debug_aranges
-                0x00000400      0x298 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
+                0x00000408      0x298 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
  .debug_aranges
-                0x00000698       0x98 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
+                0x000006a0       0x98 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
  .debug_aranges
-                0x00000730       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
+                0x00000738       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
  .debug_aranges
-                0x00000768       0x50 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
+                0x00000770       0x50 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
  .debug_aranges
-                0x000007b8       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
+                0x000007c0       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
  .debug_aranges
-                0x000007f0       0x28 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
+                0x000007f8       0x28 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
  .debug_aranges
-                0x00000818       0xe0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+                0x00000820       0xe0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
  .debug_aranges
-                0x000008f8       0x28 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
+                0x00000900       0x28 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
  .debug_aranges
-                0x00000920       0x80 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
+                0x00000928       0x80 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
  .debug_aranges
-                0x000009a0       0xc8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
+                0x000009a8       0xc8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
  .debug_aranges
-                0x00000a68       0x98 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
+                0x00000a70       0x98 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
  .debug_aranges
-                0x00000b00       0x30 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
+                0x00000b08       0x30 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
  .debug_aranges
-                0x00000b30       0x40 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
+                0x00000b38       0x40 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
  .debug_aranges
-                0x00000b70       0x78 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
+                0x00000b78       0x78 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
  .debug_aranges
-                0x00000be8       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
+                0x00000bf0       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
  .debug_aranges
-                0x00000c08       0x80 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
+                0x00000c10       0x80 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
  .debug_aranges
-                0x00000c88       0x48 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
+                0x00000c90       0x48 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
  .debug_aranges
-                0x00000cd0       0x80 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
+                0x00000cd8       0x90 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
  .debug_aranges
-                0x00000d50       0x78 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
+                0x00000d68       0x80 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
  .debug_aranges
-                0x00000dc8       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
+                0x00000de8       0x80 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
  .debug_aranges
-                0x00000de8       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
+                0x00000e68       0x78 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
  .debug_aranges
-                0x00000e00       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
+                0x00000ee0       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
+ .debug_aranges
+                0x00000f00       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
+ .debug_aranges
+                0x00000f18       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x6c3a
+.debug_info     0x00000000     0x70cd
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0x180 .\CortexM3\ARM_GCC_493\Debug\main.o
- .debug_info    0x00000180      0x1b1 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
- .debug_info    0x00000331      0x3a9 .\CortexM3\ARM_GCC_493\Debug\dsp.o
- .debug_info    0x000006da      0x22c .\CortexM3\ARM_GCC_493\Debug\i2s.o
- .debug_info    0x00000906      0x1bf .\CortexM3\ARM_GCC_493\Debug\spislave.o
- .debug_info    0x00000ac5      0x13f .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
- .debug_info    0x00000c04      0x313 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
- .debug_info    0x00000f17      0x3b8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
- .debug_info    0x000012cf      0x481 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
- .debug_info    0x00001750      0x126 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
- .debug_info    0x00001876       0xa6 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyBootAsmGnu.o)
- .debug_info    0x0000191c      0x8b4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
- .debug_info    0x000021d0      0xe34 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
- .debug_info    0x00003004      0x561 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
- .debug_info    0x00003565      0x11e .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
- .debug_info    0x00003683      0x192 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
- .debug_info    0x00003815      0x11e .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
- .debug_info    0x00003933      0x114 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
- .debug_info    0x00003a47      0x431 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
- .debug_info    0x00003e78       0xaa .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
- .debug_info    0x00003f22      0x23a .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
- .debug_info    0x0000415c      0x70b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
- .debug_info    0x00004867      0x521 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
- .debug_info    0x00004d88      0x20d .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
- .debug_info    0x00004f95      0x186 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
- .debug_info    0x0000511b      0x85b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
- .debug_info    0x00005976       0xe8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
- .debug_info    0x00005a5e      0x23a .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
- .debug_info    0x00005c98      0x171 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
- .debug_info    0x00005e09      0x36a .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
- .debug_info    0x00006173      0x453 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
- .debug_info    0x000065c6      0x1bc .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
- .debug_info    0x00006782      0x25b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
- .debug_info    0x000069dd      0x25d .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
+ .debug_info    0x00000000      0x1a2 .\CortexM3\ARM_GCC_493\Debug\main.o
+ .debug_info    0x000001a2      0x1b1 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
+ .debug_info    0x00000353      0x3a9 .\CortexM3\ARM_GCC_493\Debug\dsp.o
+ .debug_info    0x000006fc      0x22c .\CortexM3\ARM_GCC_493\Debug\i2s.o
+ .debug_info    0x00000928      0x1bf .\CortexM3\ARM_GCC_493\Debug\spislave.o
+ .debug_info    0x00000ae7      0x13f .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .debug_info    0x00000c26      0x313 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_info    0x00000f39      0x3b8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+ .debug_info    0x000012f1      0x481 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+ .debug_info    0x00001772      0x126 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
+ .debug_info    0x00001898       0xa6 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyBootAsmGnu.o)
+ .debug_info    0x0000193e      0x8b4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+ .debug_info    0x000021f2      0xe34 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
+ .debug_info    0x00003026      0x561 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
+ .debug_info    0x00003587      0x11e .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
+ .debug_info    0x000036a5      0x192 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
+ .debug_info    0x00003837      0x11e .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
+ .debug_info    0x00003955      0x114 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
+ .debug_info    0x00003a69      0x431 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+ .debug_info    0x00003e9a       0xaa .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
+ .debug_info    0x00003f44      0x23a .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
+ .debug_info    0x0000417e      0x70b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
+ .debug_info    0x00004889      0x521 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
+ .debug_info    0x00004daa      0x20d .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
+ .debug_info    0x00004fb7      0x186 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
+ .debug_info    0x0000513d      0x85b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
+ .debug_info    0x00005998       0xe8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
+ .debug_info    0x00005a80      0x23a .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
+ .debug_info    0x00005cba      0x171 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
+ .debug_info    0x00005e2b      0x237 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .debug_info    0x00006062      0x23a .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .debug_info    0x0000629c      0x36a .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
+ .debug_info    0x00006606      0x453 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
+ .debug_info    0x00006a59      0x1bc .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
+ .debug_info    0x00006c15      0x25b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
+ .debug_info    0x00006e70      0x25d .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
 
-.debug_abbrev   0x00000000     0x23e5
+.debug_abbrev   0x00000000     0x2672
  *(.debug_abbrev)
  .debug_abbrev  0x00000000       0xaf .\CortexM3\ARM_GCC_493\Debug\main.o
  .debug_abbrev  0x000000af      0x108 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
@@ -1709,169 +1799,179 @@ END GROUP
  .debug_abbrev  0x00001c58       0x9b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
  .debug_abbrev  0x00001cf3      0x172 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
  .debug_abbrev  0x00001e65       0x90 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
- .debug_abbrev  0x00001ef5      0x13c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
- .debug_abbrev  0x00002031      0x16c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
- .debug_abbrev  0x0000219d       0xc5 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
- .debug_abbrev  0x00002262       0xb4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
- .debug_abbrev  0x00002316       0xcf .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
+ .debug_abbrev  0x00001ef5      0x11b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .debug_abbrev  0x00002010      0x172 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .debug_abbrev  0x00002182      0x13c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
+ .debug_abbrev  0x000022be      0x16c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
+ .debug_abbrev  0x0000242a       0xc5 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
+ .debug_abbrev  0x000024ef       0xb4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
+ .debug_abbrev  0x000025a3       0xcf .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
 
-.debug_line     0x00000000     0x3b2f
+.debug_line     0x00000000     0x3e3c
  *(.debug_line)
- .debug_line    0x00000000      0x1b8 .\CortexM3\ARM_GCC_493\Debug\main.o
- .debug_line    0x000001b8      0x1db .\CortexM3\ARM_GCC_493\Debug\spimaster.o
- .debug_line    0x00000393      0x2a1 .\CortexM3\ARM_GCC_493\Debug\dsp.o
- .debug_line    0x00000634      0x25d .\CortexM3\ARM_GCC_493\Debug\i2s.o
- .debug_line    0x00000891      0x1da .\CortexM3\ARM_GCC_493\Debug\spislave.o
- .debug_line    0x00000a6b       0x53 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
- .debug_line    0x00000abe      0x1d5 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
- .debug_line    0x00000c93      0x221 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
- .debug_line    0x00000eb4      0x28b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
- .debug_line    0x0000113f       0x98 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
- .debug_line    0x000011d7       0x68 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyBootAsmGnu.o)
- .debug_line    0x0000123f      0x2b7 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
- .debug_line    0x000014f6      0x872 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
- .debug_line    0x00001d68      0x381 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
- .debug_line    0x000020e9       0x9a .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
- .debug_line    0x00002183       0xe5 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
- .debug_line    0x00002268       0x94 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
- .debug_line    0x000022fc       0x91 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
- .debug_line    0x0000238d      0x278 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
- .debug_line    0x00002605       0x6a .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
- .debug_line    0x0000266f      0x174 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
- .debug_line    0x000027e3      0x2ff .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
- .debug_line    0x00002ae2      0x218 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
- .debug_line    0x00002cfa       0xbd .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
- .debug_line    0x00002db7       0xe4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
- .debug_line    0x00002e9b      0x3f1 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
- .debug_line    0x0000328c       0x77 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
- .debug_line    0x00003303      0x15b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
- .debug_line    0x0000345e       0xbe .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
- .debug_line    0x0000351c      0x207 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
- .debug_line    0x00003723      0x217 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
- .debug_line    0x0000393a       0x91 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
- .debug_line    0x000039cb       0x5f .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
- .debug_line    0x00003a2a      0x105 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
+ .debug_line    0x00000000      0x1d7 .\CortexM3\ARM_GCC_493\Debug\main.o
+ .debug_line    0x000001d7      0x1db .\CortexM3\ARM_GCC_493\Debug\spimaster.o
+ .debug_line    0x000003b2      0x2a1 .\CortexM3\ARM_GCC_493\Debug\dsp.o
+ .debug_line    0x00000653      0x25d .\CortexM3\ARM_GCC_493\Debug\i2s.o
+ .debug_line    0x000008b0      0x1da .\CortexM3\ARM_GCC_493\Debug\spislave.o
+ .debug_line    0x00000a8a       0x53 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .debug_line    0x00000add      0x1d5 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_line    0x00000cb2      0x222 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+ .debug_line    0x00000ed4      0x28b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+ .debug_line    0x0000115f       0x98 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
+ .debug_line    0x000011f7       0x68 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyBootAsmGnu.o)
+ .debug_line    0x0000125f      0x2b7 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+ .debug_line    0x00001516      0x872 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
+ .debug_line    0x00001d88      0x381 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
+ .debug_line    0x00002109       0x9a .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
+ .debug_line    0x000021a3       0xe5 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
+ .debug_line    0x00002288       0x94 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
+ .debug_line    0x0000231c       0x91 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
+ .debug_line    0x000023ad      0x278 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+ .debug_line    0x00002625       0x6a .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
+ .debug_line    0x0000268f      0x174 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
+ .debug_line    0x00002803      0x2ff .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
+ .debug_line    0x00002b02      0x218 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
+ .debug_line    0x00002d1a       0xbd .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
+ .debug_line    0x00002dd7       0xe4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
+ .debug_line    0x00002ebb      0x3f1 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
+ .debug_line    0x000032ac       0x77 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
+ .debug_line    0x00003323      0x15b .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
+ .debug_line    0x0000347e       0xbe .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
+ .debug_line    0x0000353c      0x178 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .debug_line    0x000036b4      0x175 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .debug_line    0x00003829      0x207 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
+ .debug_line    0x00003a30      0x217 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
+ .debug_line    0x00003c47       0x91 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
+ .debug_line    0x00003cd8       0x5f .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
+ .debug_line    0x00003d37      0x105 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
 
-.debug_frame    0x00000000     0x3bcc
+.debug_frame    0x00000000     0x4000
  *(.debug_frame)
- .debug_frame   0x00000000       0x48 .\CortexM3\ARM_GCC_493\Debug\main.o
- .debug_frame   0x00000048       0xc0 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
- .debug_frame   0x00000108      0x188 .\CortexM3\ARM_GCC_493\Debug\dsp.o
- .debug_frame   0x00000290       0xc0 .\CortexM3\ARM_GCC_493\Debug\i2s.o
- .debug_frame   0x00000350       0xc0 .\CortexM3\ARM_GCC_493\Debug\spislave.o
- .debug_frame   0x00000410       0xd8 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
- .debug_frame   0x000004e8      0x160 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
- .debug_frame   0x00000648      0x38c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
- .debug_frame   0x000009d4       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
- .debug_frame   0x00000a30      0x3d0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
- .debug_frame   0x00000e00      0xbe8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
- .debug_frame   0x000019e8      0x234 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
- .debug_frame   0x00001c1c       0xa8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
- .debug_frame   0x00001cc4      0x118 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
- .debug_frame   0x00001ddc       0xa8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
- .debug_frame   0x00001e84       0x58 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
- .debug_frame   0x00001edc      0x3c4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
- .debug_frame   0x000022a0       0x58 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
- .debug_frame   0x000022f8      0x1e8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
- .debug_frame   0x000024e0      0x37c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
- .debug_frame   0x0000285c      0x23c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
- .debug_frame   0x00002a98       0x74 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
- .debug_frame   0x00002b0c       0xbc .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
- .debug_frame   0x00002bc8      0x1f8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
- .debug_frame   0x00002dc0       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
- .debug_frame   0x00002df8      0x1e8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
- .debug_frame   0x00002fe0       0xf4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
- .debug_frame   0x000030d4      0x210 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
- .debug_frame   0x000032e4      0x1f8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
- .debug_frame   0x000034dc       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
- .debug_frame   0x00003514       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
- .debug_frame   0x0000354c       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
- .debug_frame   0x0000356c       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
- .debug_frame   0x00003594       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
- .debug_frame   0x000035c0       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
- .debug_frame   0x000035e8       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
- .debug_frame   0x00003608       0x8c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
- .debug_frame   0x00003694       0x58 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
- .debug_frame   0x000036ec       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-s_fpclassify.o)
- .debug_frame   0x00003714       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strlen.o)
- .debug_frame   0x00003734       0x6c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
- .debug_frame   0x000037a0       0x98 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
- .debug_frame   0x00003838       0x30 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-malloc.o)
- .debug_frame   0x00003868       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr.o)
- .debug_frame   0x00003890      0x230 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
- .debug_frame   0x00003ac0       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-callocr.o)
- .debug_frame   0x00003aec       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x00003b18       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x00003b44       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x00003b70       0x5c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
+ .debug_frame   0x00000000       0x64 .\CortexM3\ARM_GCC_493\Debug\main.o
+ .debug_frame   0x00000064       0xc0 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
+ .debug_frame   0x00000124      0x188 .\CortexM3\ARM_GCC_493\Debug\dsp.o
+ .debug_frame   0x000002ac       0xc0 .\CortexM3\ARM_GCC_493\Debug\i2s.o
+ .debug_frame   0x0000036c       0xc0 .\CortexM3\ARM_GCC_493\Debug\spislave.o
+ .debug_frame   0x0000042c       0xd8 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_frame   0x00000504      0x160 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+ .debug_frame   0x00000664      0x38c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+ .debug_frame   0x000009f0       0x5c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
+ .debug_frame   0x00000a4c      0x3d0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+ .debug_frame   0x00000e1c      0xbe8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
+ .debug_frame   0x00001a04      0x234 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
+ .debug_frame   0x00001c38       0xa8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
+ .debug_frame   0x00001ce0      0x118 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
+ .debug_frame   0x00001df8       0xa8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
+ .debug_frame   0x00001ea0       0x58 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
+ .debug_frame   0x00001ef8      0x3c4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+ .debug_frame   0x000022bc       0x58 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
+ .debug_frame   0x00002314      0x1e8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
+ .debug_frame   0x000024fc      0x37c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
+ .debug_frame   0x00002878      0x23c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
+ .debug_frame   0x00002ab4       0x74 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
+ .debug_frame   0x00002b28       0xbc .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
+ .debug_frame   0x00002be4      0x1f8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
+ .debug_frame   0x00002ddc       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
+ .debug_frame   0x00002e14      0x1e8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
+ .debug_frame   0x00002ffc       0xf4 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
+ .debug_frame   0x000030f0      0x230 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .debug_frame   0x00003320      0x1e8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .debug_frame   0x00003508      0x210 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
+ .debug_frame   0x00003718      0x1f8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
+ .debug_frame   0x00003910       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
+ .debug_frame   0x00003948       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
+ .debug_frame   0x00003980       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x000039a0       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
+ .debug_frame   0x000039c8       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+ .debug_frame   0x000039f4       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
+ .debug_frame   0x00003a1c       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+ .debug_frame   0x00003a3c       0x8c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
+ .debug_frame   0x00003ac8       0x58 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+ .debug_frame   0x00003b20       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-s_fpclassify.o)
+ .debug_frame   0x00003b48       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strlen.o)
+ .debug_frame   0x00003b68       0x6c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
+ .debug_frame   0x00003bd4       0x98 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
+ .debug_frame   0x00003c6c       0x30 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-malloc.o)
+ .debug_frame   0x00003c9c       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr.o)
+ .debug_frame   0x00003cc4      0x230 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+ .debug_frame   0x00003ef4       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-callocr.o)
+ .debug_frame   0x00003f20       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x00003f4c       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x00003f78       0x2c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x00003fa4       0x5c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
 
-.debug_str      0x00000000     0x2e68
+.debug_str      0x00000000     0x3204
  *(.debug_str)
- .debug_str     0x00000000      0x1a8 .\CortexM3\ARM_GCC_493\Debug\main.o
-                                0x203 (size before relaxing)
- .debug_str     0x000001a8       0x88 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
+ .debug_str     0x00000000      0x1bb .\CortexM3\ARM_GCC_493\Debug\main.o
+                                0x216 (size before relaxing)
+ .debug_str     0x000001bb       0x88 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
                                 0x23e (size before relaxing)
- .debug_str     0x00000230       0xab .\CortexM3\ARM_GCC_493\Debug\dsp.o
+ .debug_str     0x00000243       0xab .\CortexM3\ARM_GCC_493\Debug\dsp.o
                                 0x288 (size before relaxing)
- .debug_str     0x000002db       0x9b .\CortexM3\ARM_GCC_493\Debug\i2s.o
+ .debug_str     0x000002ee       0x96 .\CortexM3\ARM_GCC_493\Debug\i2s.o
                                 0x25f (size before relaxing)
- .debug_str     0x00000376       0x5b .\CortexM3\ARM_GCC_493\Debug\spislave.o
+ .debug_str     0x00000384       0x5b .\CortexM3\ARM_GCC_493\Debug\spislave.o
                                 0x24e (size before relaxing)
- .debug_str     0x000003d1       0x77 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
+ .debug_str     0x000003df       0x77 .\CortexM3\ARM_GCC_493\Debug\cymetadata.o
                                 0x200 (size before relaxing)
- .debug_str     0x00000448      0x12d .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_str     0x00000456      0x12d .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
                                 0x2e1 (size before relaxing)
- .debug_str     0x00000575      0x181 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+ .debug_str     0x00000583      0x181 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
                                 0x329 (size before relaxing)
- .debug_str     0x000006f6      0x28f .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+ .debug_str     0x00000704      0x28f .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
                                 0x42f (size before relaxing)
- .debug_str     0x00000985       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
+ .debug_str     0x00000993       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
                                 0x229 (size before relaxing)
- .debug_str     0x000009c1      0x36f .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+ .debug_str     0x000009cf      0x360 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
                                 0x527 (size before relaxing)
- .debug_str     0x00000d30      0x7b7 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
+ .debug_str     0x00000d2f      0x7b7 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
                                 0x9dc (size before relaxing)
- .debug_str     0x000014e7      0x367 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
+ .debug_str     0x000014e6      0x367 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
                                 0x541 (size before relaxing)
- .debug_str     0x0000184e       0x7c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
+ .debug_str     0x0000184d       0x7c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
                                 0x20c (size before relaxing)
- .debug_str     0x000018ca       0x8f .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
+ .debug_str     0x000018c9       0x8f .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
                                 0x22e (size before relaxing)
- .debug_str     0x00001959       0x53 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
+ .debug_str     0x00001958       0x53 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
                                 0x1ee (size before relaxing)
- .debug_str     0x000019ac       0x95 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
+ .debug_str     0x000019ab       0x95 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
                                 0x225 (size before relaxing)
- .debug_str     0x00001a41      0x205 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+ .debug_str     0x00001a40      0x205 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
                                 0x3ef (size before relaxing)
- .debug_str     0x00001c46       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
+ .debug_str     0x00001c45       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
                                 0x1bf (size before relaxing)
- .debug_str     0x00001c82      0x182 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
+ .debug_str     0x00001c81      0x182 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
                                 0x34a (size before relaxing)
- .debug_str     0x00001e04      0x3c9 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
+ .debug_str     0x00001e03      0x3c9 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
                                 0x5a7 (size before relaxing)
- .debug_str     0x000021cd      0x2d6 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
+ .debug_str     0x000021cc      0x2d6 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
                                 0x5b6 (size before relaxing)
- .debug_str     0x000024a3       0x59 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
+ .debug_str     0x000024a2       0x59 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
                                 0x2a0 (size before relaxing)
- .debug_str     0x000024fc       0x9e .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
+ .debug_str     0x000024fb       0x9e .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
                                 0x263 (size before relaxing)
- .debug_str     0x0000259a      0x262 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
+ .debug_str     0x00002599      0x262 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
                                 0x68a (size before relaxing)
- .debug_str     0x000027fc       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
+ .debug_str     0x000027fb       0x3c .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
                                 0x1f1 (size before relaxing)
- .debug_str     0x00002838      0x104 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
+ .debug_str     0x00002837      0x104 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
                                 0x2cc (size before relaxing)
- .debug_str     0x0000293c       0xa7 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
+ .debug_str     0x0000293b       0xa7 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
                                 0x249 (size before relaxing)
- .debug_str     0x000029e3      0x140 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
+ .debug_str     0x000029e2      0x20d .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+                                0x39b (size before relaxing)
+ .debug_str     0x00002bef      0x190 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+                                0x358 (size before relaxing)
+ .debug_str     0x00002d7f      0x140 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
                                 0x300 (size before relaxing)
- .debug_str     0x00002b23      0x128 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
+ .debug_str     0x00002ebf      0x128 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
                                 0x2fd (size before relaxing)
- .debug_str     0x00002c4b       0x3d .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
+ .debug_str     0x00002fe7       0x3d .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
                                 0x28d (size before relaxing)
- .debug_str     0x00002c88       0xf1 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
+ .debug_str     0x00003024       0xf1 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
                                 0x309 (size before relaxing)
- .debug_str     0x00002d79       0xef .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
+ .debug_str     0x00003115       0xef .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
                                 0x310 (size before relaxing)
 
 .debug_loc
@@ -1880,39 +1980,41 @@ END GROUP
 .debug_macinfo
  *(.debug_macinfo)
 
-.debug_ranges   0x00000000      0xbe0
+.debug_ranges   0x00000000      0xcd8
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x18 .\CortexM3\ARM_GCC_493\Debug\main.o
- .debug_ranges  0x00000018       0x30 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
- .debug_ranges  0x00000048       0x50 .\CortexM3\ARM_GCC_493\Debug\dsp.o
- .debug_ranges  0x00000098       0x30 .\CortexM3\ARM_GCC_493\Debug\i2s.o
- .debug_ranges  0x000000c8       0x30 .\CortexM3\ARM_GCC_493\Debug\spislave.o
- .debug_ranges  0x000000f8       0x38 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
- .debug_ranges  0x00000130       0x50 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
- .debug_ranges  0x00000180       0xc8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
- .debug_ranges  0x00000248       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
- .debug_ranges  0x00000260       0xc8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
- .debug_ranges  0x00000328      0x288 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
- .debug_ranges  0x000005b0       0x88 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
- .debug_ranges  0x00000638       0x28 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
- .debug_ranges  0x00000660       0x40 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
- .debug_ranges  0x000006a0       0x28 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
- .debug_ranges  0x000006c8       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
- .debug_ranges  0x000006e0       0xd0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
- .debug_ranges  0x000007b0       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
- .debug_ranges  0x000007c8       0x70 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
- .debug_ranges  0x00000838       0xb8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
- .debug_ranges  0x000008f0       0x88 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
- .debug_ranges  0x00000978       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
- .debug_ranges  0x00000998       0x30 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
- .debug_ranges  0x000009c8       0x68 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
- .debug_ranges  0x00000a30       0x10 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
- .debug_ranges  0x00000a40       0x70 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
- .debug_ranges  0x00000ab0       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
- .debug_ranges  0x00000ae8       0x70 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
- .debug_ranges  0x00000b58       0x68 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
- .debug_ranges  0x00000bc0       0x10 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
- .debug_ranges  0x00000bd0       0x10 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
+ .debug_ranges  0x00000000       0x20 .\CortexM3\ARM_GCC_493\Debug\main.o
+ .debug_ranges  0x00000020       0x30 .\CortexM3\ARM_GCC_493\Debug\spimaster.o
+ .debug_ranges  0x00000050       0x50 .\CortexM3\ARM_GCC_493\Debug\dsp.o
+ .debug_ranges  0x000000a0       0x30 .\CortexM3\ARM_GCC_493\Debug\i2s.o
+ .debug_ranges  0x000000d0       0x30 .\CortexM3\ARM_GCC_493\Debug\spislave.o
+ .debug_ranges  0x00000100       0x38 .\CortexM3\ARM_GCC_493\Debug\Cm3Start.o
+ .debug_ranges  0x00000138       0x50 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyfitter_cfg.o)
+ .debug_ranges  0x00000188       0xc8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM.o)
+ .debug_ranges  0x00000250       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIM_INT.o)
+ .debug_ranges  0x00000268       0xc8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyDmac.o)
+ .debug_ranges  0x00000330      0x288 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyLib.o)
+ .debug_ranges  0x000005b8       0x88 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(cyPm.o)
+ .debug_ranges  0x00000640       0x28 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DSP_reset.o)
+ .debug_ranges  0x00000668       0x40 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(I2S_1.o)
+ .debug_ranges  0x000006a8       0x28 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(LED.o)
+ .debug_ranges  0x000006d0       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(TxDMA_dma.o)
+ .debug_ranges  0x000006e8       0xd0 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS.o)
+ .debug_ranges  0x000007b8       0x18 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(SPIS_INT.o)
+ .debug_ranges  0x000007d0       0x70 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(spi_rx_interrupt.o)
+ .debug_ranges  0x00000840       0xb8 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS.o)
+ .debug_ranges  0x000008f8       0x88 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_drv.o)
+ .debug_ranges  0x00000980       0x20 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_episr.o)
+ .debug_ranges  0x000009a0       0x30 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_pm.o)
+ .debug_ranges  0x000009d0       0x68 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_std.o)
+ .debug_ranges  0x00000a38       0x10 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
+ .debug_ranges  0x00000a48       0x70 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
+ .debug_ranges  0x00000ab8       0x38 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
+ .debug_ranges  0x00000af0       0x80 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .debug_ranges  0x00000b70       0x70 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
+ .debug_ranges  0x00000be0       0x70 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
+ .debug_ranges  0x00000c50       0x68 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
+ .debug_ranges  0x00000cb8       0x10 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
+ .debug_ranges  0x00000cc8       0x10 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
 
 .comment        0x00000000       0x70
  .comment       0x00000000       0x70 .\CortexM3\ARM_GCC_493\Debug\main.o
@@ -1944,6 +2046,8 @@ END GROUP
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_vnd.o)
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(DmaDone.o)
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
+ .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
  .comment       0x00000000       0x71 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
@@ -2033,69 +2137,73 @@ END GROUP
  .ARM.attributes
                 0x000005e7       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_Dp.o)
  .ARM.attributes
-                0x0000061a       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
+                0x0000061a       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(Timeout_timer.o)
  .ARM.attributes
-                0x0000064d       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
+                0x0000064d       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(timeout_interrupt.o)
  .ARM.attributes
-                0x00000680       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
+                0x00000680       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CyFlash.o)
  .ARM.attributes
-                0x000006b3       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
+                0x000006b3       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(CySpc.o)
  .ARM.attributes
-                0x000006e6       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
+                0x000006e6       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_cls.o)
  .ARM.attributes
-                0x00000719       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
+                0x00000719       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_descr.o)
  .ARM.attributes
-                0x00000746       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
+                0x0000074c       0x33 .\CortexM3\ARM_GCC_493\Debug\PSoC5_SPI_Master_DSP.a(USBFS_audio.o)
  .ARM.attributes
-                0x00000773       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
+                0x0000077f       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-errno.o)
  .ARM.attributes
-                0x000007a0       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
+                0x000007ac       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-exit.o)
  .ARM.attributes
-                0x000007cd       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
+                0x000007d9       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-impure.o)
  .ARM.attributes
-                0x000007fa       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
+                0x00000806       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-init.o)
  .ARM.attributes
-                0x00000827       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
+                0x00000833       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memcpy.o)
  .ARM.attributes
-                0x00000854       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x00000860       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memset.o)
  .ARM.attributes
-                0x00000881       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-s_fpclassify.o)
+                0x0000088d       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_float.o)
  .ARM.attributes
-                0x000008ae       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strlen.o)
+                0x000008ba       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
  .ARM.attributes
-                0x000008db       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
+                0x000008e7       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-s_fpclassify.o)
  .ARM.attributes
-                0x00000908       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
+                0x00000914       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strlen.o)
  .ARM.attributes
-                0x00000935       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-malloc.o)
+                0x00000941       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-dtoa.o)
  .ARM.attributes
-                0x00000962       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr.o)
+                0x0000096e       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-locale.o)
  .ARM.attributes
-                0x0000098f       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
+                0x0000099b       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-malloc.o)
  .ARM.attributes
-                0x000009bc       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-callocr.o)
+                0x000009c8       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-memchr.o)
  .ARM.attributes
-                0x000009e9       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
+                0x000009f5       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-mprec.o)
  .ARM.attributes
-                0x00000a16       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
+                0x00000a22       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-callocr.o)
  .ARM.attributes
-                0x00000a43       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
+                0x00000a4f       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-freer.o)
  .ARM.attributes
-                0x00000a70       0x1b c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strcmp.o)
+                0x00000a7c       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-nano-mallocr.o)
  .ARM.attributes
-                0x00000a8b       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
+                0x00000aa9       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-sbrkr.o)
  .ARM.attributes
-                0x00000ab8       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m\libgcc.a(_arm_addsubdf3.o)
+                0x00000ad6       0x1b c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-strcmp.o)
  .ARM.attributes
-                0x00000ad5       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m\libgcc.a(_arm_muldivdf3.o)
+                0x00000af1       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv7-m\libg_nano.a(lib_a-reent.o)
  .ARM.attributes
-                0x00000af2       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m\libgcc.a(_arm_cmpdf2.o)
+                0x00000b1e       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m\libgcc.a(_arm_addsubdf3.o)
  .ARM.attributes
-                0x00000b0f       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m\libgcc.a(_arm_fixdfsi.o)
+                0x00000b3b       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m\libgcc.a(_arm_muldivdf3.o)
  .ARM.attributes
-                0x00000b2c       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+                0x00000b58       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m\libgcc.a(_arm_cmpdf2.o)
  .ARM.attributes
-                0x00000b59       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
+                0x00000b75       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m\libgcc.a(_arm_fixdfsi.o)
+ .ARM.attributes
+                0x00000b92       0x2d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtend.o
+ .ARM.attributes
+                0x00000bbf       0x1d c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv7-m/crtn.o
 
 /DISCARD/
  *(.note.GNU-stack)
